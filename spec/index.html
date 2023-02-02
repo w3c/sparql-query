@@ -253,9 +253,12 @@
         <h4>Data Descriptions</h4>
         <p>This document uses the [[[?TURTLE]]] [[?TURTLE]] data format to show each triple
           explicitly. Turtle allows IRIs to be abbreviated with prefixes:</p>
-        <pre class="data">@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-          @prefix :     &lt;http://example.org/book/&gt; .
-          :book1  dc:title  "SPARQL Tutorial" .</pre>
+        <pre class="data">
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX :     &lt;http://example.org/book/&gt;
+
+:book1  dc:title  "SPARQL Tutorial" .
+</pre>
       </section>
       <section id="docResultDesc">
         <h4>Result Descriptions</h4>
@@ -307,16 +310,16 @@
             (corresponds to the Concepts and Abstract Syntax term "<code>RDF URI reference</code>")
           </li>
           <li>
-            <a data-cite="RDF12-CONCEPTS#dfn-rdf-literal>literal</a>
+            <a data-cite="RDF12-CONCEPTS#dfn-rdf-literal">literal</a>
                           </li>
                <li>
-                 <a data-cite="RDF12-CONCEPTS#dfn-lexical-form>lexical form</a>
+                 <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
           </li>
           <li>
             plain literal
           </li>
           <li>
-            <a data-cite="RDF12-CONCEPTS#dfn-language-tag>language tag</a>
+            <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
                </li>
           <li>
             <a class="type typedLiteral" href=
@@ -324,11 +327,11 @@
               literal</a>
           </li>
           <li>
-            <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri>datatype IRI</a>
+            <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">datatype IRI</a>
             (corresponds to the Concepts and Abstract Syntax term "<code>recognized datatype URI</code>")
           </li>
           <li>
-            <a data-cite="RDF12-CONCEPTS#dfn-blank-node>blank node</a>
+            <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>
           </li>
         </ul>
         <p>In addition, we define the following terms:</p>
@@ -365,11 +368,13 @@
             &lt;http://example.org/book/book1&gt; &lt;http://purl.org/dc/elements/1.1/title&gt; "SPARQL Tutorial" .</pre>
           <div class="queryGroup">
             <p>Query:</p>
-            <pre class="query">SELECT ?title
-              WHERE
-              {
-              &lt;http://example.org/book/book1&gt; &lt;http://purl.org/dc/elements/1.1/title&gt; ?title .
-              }</pre>
+            <pre class="query">
+SELECT ?title
+WHERE
+{
+    &lt;http://example.org/book/book1&gt; &lt;http://purl.org/dc/elements/1.1/title&gt; ?title .
+}
+</pre>
             <p>This query, on the data above, has one solution:</p>
             <p>Query Result:</p>
             <div class="result">
@@ -395,22 +400,23 @@
           zero, one or multiple solutions to a query.</p>
         <p>Data:</p>
         <div class="exampleGroup">
-          <pre class="data">@prefix foaf:  &lt;<a href=
-                                                  "http://xmlns.com/foaf/0.1/">http://xmlns.com/foaf/0.1/</a>&gt; .
+<pre class="data">PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a  foaf:name   "Johnny Lee Outlaw" .
-            _:a  foaf:mbox   &lt;mailto:jlow@example.com&gt; .
-            _:b  foaf:name   "Peter Goodguy" .
-            _:b  foaf:mbox   &lt;mailto:peter@example.org&gt; .
-            _:c  foaf:mbox   &lt;mailto:carol@example.org&gt; .
-          </pre>
+_:a  foaf:name   "Johnny Lee Outlaw" .
+_:a  foaf:mbox   &lt;mailto:jlow@example.com&gt; .
+_:b  foaf:name   "Peter Goodguy" .
+_:b  foaf:mbox   &lt;mailto:peter@example.org&gt; .
+_:c  foaf:mbox   &lt;mailto:carol@example.org&gt; .
+</pre>
           <p>Query:</p>
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?name ?mbox
-              WHERE
-              { ?x foaf:name ?name .
-              ?x foaf:mbox ?mbox }</pre>
+            <pre class="query">
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox
+WHERE
+{ ?x foaf:name ?name .
+  ?x foaf:mbox ?mbox }
+</pre>
             <p>Query Result:</p>
             <div class="result">
               <table class="resultTable">
@@ -435,10 +441,14 @@
         <p>Each solution gives one way in which the selected variables can be bound to RDF terms so
           that the query pattern matches the data. The result set gives all the possible solutions. In
           the above example, the following two subsets of the data provided the two matches.</p>
-        <pre class="dataExcerpt untested"> _:a foaf:name  "Johnny Lee Outlaw" .
-          _:a foaf:box   &lt;mailto:jlow@example.com&gt; .</pre>
-        <pre class="dataExcerpt untested"> _:b foaf:name  "Peter Goodguy" .
-          _:b foaf:box   &lt;mailto:peter@example.org&gt; .</pre>
+        <pre class="dataExcerpt"> 
+_:a foaf:name  "Johnny Lee Outlaw" .
+_:a foaf:box   &lt;mailto:jlow@example.com&gt; .
+</pre>
+        <pre class="dataExcerpt"> 
+_:b foaf:name  "Peter Goodguy" .
+_:b foaf:box   &lt;mailto:peter@example.org&gt; .
+</pre>
         <p>This is a <a href="#BGPsparql">basic graph pattern match</a>; all the variables used in
           the query pattern must be bound in every solution.</p>
       </section>
@@ -446,14 +456,16 @@
         <h3>Matching RDF Literals</h3>
         <p>The data below contains three RDF literals:</p>
         <div class="exampleGroup">
-          <pre class="data">@prefix dt:   &lt;http://example.org/datatype#&gt; .
-            @prefix ns:   &lt;http://example.org/ns#&gt; .
-            @prefix :     &lt;http://example.org/ns#&gt; .
-            @prefix xsd:  &lt;<code>http://www.w3.org/2001/XMLSchema#&gt; .</code>
+          <pre class="data">
+@prefix dt:   &lt;http://example.org/datatype#&gt; .
+@prefix ns:   &lt;http://example.org/ns#&gt; .
+@prefix :     &lt;http://example.org/ns#&gt; .
+@prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
-            :x   ns:p     "cat"@en .
-            :y   ns:p     "42"^^xsd:integer .
-            :z   ns:p     "abc"^^dt:specialDatatype .</pre>
+:x   ns:p     "cat"@en .
+:y   ns:p     "42"^^xsd:integer .
+:z   ns:p     "abc"^^dt:specialDatatype .
+</pre>
           <p>Note that, in Turtle, <code>"cat"@en</code> is an RDF literal with a lexical form "cat"
             and a language tag "en"; <code>"42"^^xsd:integer</code> is a typed literal with the
             datatype <code>http://www.w3.org/2001/XMLSchema#integer</code>; and
@@ -558,17 +570,19 @@
           graph. Use of the same label within a result set indicates the same blank node.</p>
         <div class="exampleGroup">
           Data:
-          <pre class="data">@prefix foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+<pre class="data">
+@prefix foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a  foaf:name   "Alice" .
-            _:b  foaf:name   "Bob" .
-          </pre>
+_:a  foaf:name   "Alice" .
+_:b  foaf:name   "Bob" .
+</pre>
           <div class="queryGroup">
             Query:
-            <pre class="query">PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?x ?name
-              WHERE  { ?x foaf:name ?name }
-            </pre>
+<pre class="query">
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?x ?name
+WHERE  { ?x foaf:name ?name }
+</pre>
             <div class="result">
               <div id="table56"></div>
               <table class="resultTable">
@@ -592,7 +606,7 @@
           <p>The results above could equally be given with different blank node labels because the
             labels in the results only indicate whether RDF terms in the solutions are the same or
             different.</p>
-          <div class="result untested">
+          <div class="result">
             <div id="table57"></div>
             <table class="resultTable">
               <tbody>
@@ -623,27 +637,34 @@
         <h3>Creating Values with Expressions</h3>
         <p>SPARQL 1.1 allows to create values from complex expressions. The queries below show how to
           the <a href="#func-concat">CONCAT</a> function can be used to concatenate first names and
-          last names from foaf data, then assign the value using an <a href=
-                                                                       "#selectExpressions">expression in the <code>SELECT</code> clause</a> and also assign the
+          last names from foaf data, then assign the value using an 
+          <a href="#selectExpressions">expression in the <code>SELECT</code> clause</a> and also assign the
           value by using the <a href="#bind">BIND</a> form.</p>
         <div class="exampleGroup">
           Data:
-          <pre class="data">@prefix foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+@prefix foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
             
-            _:a  foaf:givenName   "John" .
-            _:a  foaf:surname  "Doe" .</pre>
+_:a  foaf:givenName   "John" .
+_:a  foaf:surname  "Doe" .
+</pre>
           <div class="queryGroup">
             Query:
-            <pre class="query">PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ( CONCAT(?G, " ", ?S) AS ?name )
-              WHERE  { ?P foaf:givenName ?G ; foaf:surname ?S }</pre>Query:
-            <pre class="query">PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?name
-              WHERE  { 
-              ?P foaf:givenName ?G ; 
-              foaf:surname ?S 
-              BIND(CONCAT(?G, " ", ?S) AS ?name)
-              }</pre>
+            <pre class="query">
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ( CONCAT(?G, " ", ?S) AS ?name )
+WHERE  { ?P foaf:givenName ?G ; foaf:surname ?S }
+</pre>
+            Query:
+<pre class="query">
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name
+WHERE  { 
+    ?P foaf:givenName ?G ; 
+       foaf:surname ?S 
+    BIND(CONCAT(?G, " ", ?S) AS ?name)
+}
+</pre>
             <div class="result">
               <div id="table59"></div>
               <table class="resultTable">
@@ -668,42 +689,50 @@
           results of matching the graph pattern of the query.</p>
         <div class="exampleGroup">
           <p>Data:</p>
-          <pre class="data">@prefix org:    &lt;http://example.com/ns#&gt; .
+          <pre class="data">
+@prefix org:    &lt;http://example.com/ns#&gt; .
 
-            _:a  org:employeeName   "Alice" .
-            _:a  org:employeeId     12345 .
+_:a  org:employeeName   "Alice" .
+_:a  org:employeeId     12345 .
 
-            _:b  org:employeeName   "Bob" .
-            _:b  org:employeeId     67890 .</pre>
+_:b  org:employeeName   "Bob" .
+_:b  org:employeeId     67890 .
+</pre>
           <div class="queryGroup">
             <p>Query:</p>
-            <pre class="query">PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
-              PREFIX org:    &lt;http://example.com/ns#&gt;
+            <pre class="query">
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX org:    &lt;http://example.com/ns#&gt;
 
-              CONSTRUCT { ?x foaf:name ?name }
-              WHERE  { ?x org:employeeName ?name }</pre>
+CONSTRUCT { ?x foaf:name ?name }
+WHERE  { ?x org:employeeName ?name }
+</pre>
             <p>Results:</p>
             <div class="result">
-              <pre class="resultGraph">@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+              <pre class="resultGraph">
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
                 
-                _:x foaf:name "Alice" .
-                _:y foaf:name "Bob" .</pre>
+_:x foaf:name "Alice" .
+_:y foaf:name "Bob" .
+</pre>
             </div>
           </div>
           <p>which can be serialized in <a href=
                                            "http://www.w3.org/TR/rdf-syntax-grammar/">RDF/XML</a> as:</p>
           <div class="result">
-            <pre class="resultGraph" style="text-align: left;">&lt;rdf:RDF
-              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-              xmlns:foaf="http://xmlns.com/foaf/0.1/"
-              &gt;
-              &lt;rdf:Description&gt;
-              &lt;foaf:name&gt;Alice&lt;/foaf:name&gt;
-              &lt;/rdf:Description&gt;
-              &lt;rdf:Description&gt;
-              &lt;foaf:name&gt;Bob&lt;/foaf:name&gt;
-              &lt;/rdf:Description&gt;
-              &lt;/rdf:RDF&gt;</pre>
+            <pre class="resultGraph" style="text-align: left;">
+&lt;rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/" &gt;
+
+  &lt;rdf:Description&gt;
+    &lt;foaf:name&gt;Alice&lt;/foaf:name&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description&gt;
+    &lt;foaf:name&gt;Bob&lt;/foaf:name&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;
+</pre>
           </div>
         </div>
       </section>
@@ -719,14 +748,15 @@
         section share one input graph:</p>
       <div class="exampleGroup">
         Data:
-        <pre class="data">@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-          @prefix :     &lt;http://example.org/book/&gt; .
-          @prefix ns:   &lt;http://example.org/ns#&gt; .
+        <pre class="data">
+@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix :     &lt;http://example.org/book/&gt; .
+@prefix ns:   &lt;http://example.org/ns#&gt; .
 
-          :book1  dc:title  "SPARQL Tutorial" .
-          :book1  ns:price  42 .
-          :book2  dc:title  "The Semantic Web" .
-          :book2  ns:price  23 .
+:book1  dc:title  "SPARQL Tutorial" .
+:book1  ns:price  42 .
+:book2  dc:title  "The Semantic Web" .
+:book2  ns:price  23 .
         </pre>
       </div>
       <section id="restrictString">
@@ -737,12 +767,14 @@
           using the <a href="#func-str">str</a> function.</p>
         <p>Query:</p>
         <div class="queryGroup">
-          <pre class="query">PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
-            SELECT  ?title
-            WHERE   { ?x dc:title ?title
-            FILTER regex(?title, "^SPARQL") 
-            }
-          </pre>
+          <pre class="query">
+PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
+SELECT  ?title
+WHERE   { 
+    ?x dc:title ?title
+    FILTER regex(?title, "^SPARQL") 
+}
+</pre>
           <p>Query Result:</p>
           <div class="result">
             <div id="table63"></div>
@@ -762,12 +794,14 @@
           flag.</p>
         <p>Query:</p>
         <div class="queryGroup">
-          <pre class="query">PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
-            SELECT  ?title
-            WHERE   { ?x dc:title ?title
-            FILTER regex(?title, "web", "i" ) 
-            }
-          </pre>
+          <pre class="query">
+PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
+SELECT  ?title
+WHERE   { 
+    ?x dc:title ?title
+    FILTER regex(?title, "web", "i" ) 
+}
+</pre>
           <p>Query Result:</p>
           <div class="result">
             <div id="table64"></div>
@@ -792,12 +826,17 @@
         <p>SPARQL <code>FILTER</code>s can restrict on arithmetic expressions.</p>
         <p>Query:</p>
         <div class="queryGroup">
-          <pre class="query">PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
-            PREFIX  ns:  &lt;http://example.org/ns#&gt;
-            SELECT  ?title ?price
-            WHERE   { ?x ns:price ?price .
-            FILTER (?price &lt; 30.5)
-            ?x dc:title ?title . }</pre>
+          <pre class="query">
+PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX  ns:  &lt;http://example.org/ns#&gt;
+
+SELECT  ?title ?price
+WHERE   {
+    ?x ns:price ?price .
+    FILTER (?price &lt; 30.5)
+    ?x dc:title ?title . 
+}
+</pre>
           <p>Query Result:</p>
           <div class="result">
             <div id="table58"></div>
@@ -830,9 +869,11 @@
     </section>
     <section id="sparqlSyntax">
       <h2>SPARQL Syntax</h2>
-      <p>This section covers the syntax used by SPARQL for <a href="#sparqlBasicTerms">RDF terms</a>
-        and <a href="#sparqlTriplePatterns">triple patterns</a>. The full grammar is given in <a href=
-                                                                                                 "#grammar">section 19</a>.</p>
+      <p>
+        This section covers the syntax used by SPARQL for <a href="#sparqlBasicTerms">RDF terms</a>
+        and <a href="#sparqlTriplePatterns">triple patterns</a>. 
+        The full grammar is given in <a href="#grammar">section 19</a>.
+      </p>
       <section id="syntaxTerms">
         <h3>RDF Term Syntax</h3>
         <section id="QSynIRI">
@@ -856,13 +897,14 @@
             <p>The <code>PREFIX</code> keyword associates a prefix label with an IRI. A prefixed name
               is a prefix label and a local part, separated by a colon "<code>:</code>". A prefixed
               name is mapped to an IRI by concatenating the IRI associated with the prefix and the
-              local part. The prefix label or the local part may be empty. Note that <a href=
-                                                                                        "#rPN_LOCAL">SPARQL local names</a> allow leading digits while <a data-cite=
-                                                                                                                                                          "XML-NAMES11#NT-LocalPart">XML local names</a> do not. <a href="#rPN_LOCAL">SPARQL local
-                names</a> also allow the non-alphanumeric characters allowed in IRIs via backslash
+              local part. The prefix label or the local part may be empty. 
+              Note that <a href="#rPN_LOCAL">SPARQL local names</a> allow leading digits while 
+              <a data-cite="XML-NAMES11#NT-LocalPart">XML local names</a> do not. 
+              <a href="#rPN_LOCAL">SPARQL local names</a> also allow the non-alphanumeric
+              characters allowed in IRIs via backslash
               character escapes (e.g. <code>ns:id\=123</code>). <a href="#rPN_LOCAL">SPARQL local
-                names</a> have more syntactic restrictions than <a href=
-                                                                   "http://www.w3.org/TR/curie/">CURIE</a>s.</p>
+                names</a> have more syntactic restrictions than 
+              <a href="http://www.w3.org/TR/curie/">CURIE</a>s.</p>
           </section>
           <section id="relIRIs">
             <h5>Relative IRIs</h5>
@@ -883,9 +925,9 @@
             <p>The following fragments are some of the different ways to write the same IRI:</p>
             <pre class="data">&lt;http://example.org/book/book1&gt;</pre>
             <pre class="data">BASE &lt;http://example.org/book/&gt;
-              &lt;book1&gt;</pre>
+&lt;book1&gt;</pre>
             <pre class="data">PREFIX book: &lt;http://example.org/book/&gt;
-              book:book1</pre>
+book:book1</pre>
           </section>
         </section>
         <section id="QSynLiterals">
@@ -946,38 +988,46 @@
             created blank node can also be used in further triple patterns in the subject and object
             positions.</p>
           <p>The following two forms</p>
-          <pre class="query untested">[ :p "v" ] .
+          <pre class="query">
+[ :p "v" ] .
           </pre>
-          <pre class="query untested">[] :p "v" .
+          <pre class="query">
+[] :p "v" .
           </pre>
           <p>allocate a unique blank node label (here "<code>b57</code>") and are equivalent to
             writing:</p>
-          <pre class="query untested">_:b57 :p "v" .
+          <pre class="query">
+_:b57 :p "v" .
           </pre>
           <p>This allocated blank node label can be used as the subject or object of further triple
             patterns. For example, as a subject:</p>
-          <pre class="query untested">[ :p "v" ] :q "w" .
+          <pre class="query">[ :p "v" ] :q "w" .
           </pre>
           <p>which is equivalent to the two triples:</p>
-          <pre class="query untested">_:b57 :p "v" .
-            _:b57 :q "w" .
+          <pre class="query">
+_:b57 :p "v" .
+_:b57 :q "w" .
           </pre>
           <p>and as an object:</p>
-          <pre class="query untested">:x :q [ :p "v" ] .
+          <pre class="query">
+:x :q [ :p "v" ] .
           </pre>
           <p>which is equivalent to the two triples:</p>
-          <pre class="query untested">:x  :q _:b57 .
-            _:b57 :p "v" .
+          <pre class="query">
+:x  :q _:b57 .
+_:b57 :p "v" .
           </pre>
           <p>Abbreviated blank node syntax can be combined with other abbreviations for <a href=
                                                                                            "#predObjLists">common subjects</a> and <a href="#objLists">common predicates</a>.</p>
-          <pre class="query untested">  [ foaf:name  ?name ;
-            foaf:mbox  &lt;mailto:alice@example.org&gt; ]
+          <pre class="query">
+[ foaf:name  ?name ;
+  foaf:mbox  &lt;mailto:alice@example.org&gt; ]
           </pre>
           <p>This is the same as writing the following basic graph pattern for some uniquely
             allocated blank node label, "<code>b18</code>":</p>
-          <pre class="query untested">  _:b18  foaf:name  ?name .
-            _:b18  foaf:mbox  &lt;mailto:alice@example.org&gt; .
+          <pre class="query">  
+_:b18  foaf:name  ?name .
+_:b18  foaf:mbox  &lt;mailto:alice@example.org&gt; .
           </pre>
         </section>
       </section>
@@ -986,106 +1036,120 @@
         <p><a href="#defn_TriplePattern">Triple Patterns</a> are written as subject, predicate and
           object; there are abbreviated ways of writing some common triple pattern constructs.</p>
         <p>The following examples express the same query:</p>
-        <pre class="query">PREFIX  dc: &lt;http://purl.org/dc/elements/1.1/&gt;
-          SELECT  ?title
-          WHERE   { &lt;http://example.org/book/book1&gt; dc:title ?title }  
-        </pre>
-        <pre class="query">PREFIX  dc: &lt;http://purl.org/dc/elements/1.1/&gt;
-          PREFIX  : &lt;http://example.org/book/&gt;
+        <pre class="query">
+PREFIX  dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+SELECT  ?title
+WHERE   { &lt;http://example.org/book/book1&gt; dc:title ?title }  
+</pre>
+        <pre class="query">
+PREFIX  dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX  : &lt;http://example.org/book/&gt;
 
-          SELECT  $title
-          WHERE   { :book1  dc:title  $title }
-        </pre>
-        <pre class="query">BASE    &lt;http://example.org/book/&gt;
-          PREFIX  dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+SELECT  $title
+WHERE   { :book1  dc:title  $title }
+</pre>
+        <pre class="query">
+BASE    &lt;http://example.org/book/&gt;
+PREFIX  dc: &lt;http://purl.org/dc/elements/1.1/&gt;
 
-          SELECT  $title
-          WHERE   { &lt;book1&gt;  dc:title  ?title }
-        </pre>
+SELECT  $title
+WHERE   { &lt;book1&gt;  dc:title  ?title }
+</pre>
         <section id="predObjLists">
           <h4>Predicate-Object Lists</h4>
           <p>Triple patterns with a common subject can be written so that the subject is only written
             once and is used for more than one triple pattern by employing the "<code>;</code>"
             notation.</p>
-          <pre class="query untested">    ?x  foaf:name  ?name ;
-            foaf:mbox  ?mbox .
+          <pre class="query">
+?x  foaf:name  ?name ;
+foaf:mbox  ?mbox .
           </pre>
           <p>This is the same as writing the triple patterns:</p>
-          <pre class="query untested">    ?x  foaf:name  ?name .
-            ?x  foaf:mbox  ?mbox .
+          <pre class="query"> 
+?x  foaf:name  ?name .
+?x  foaf:mbox  ?mbox .
           </pre>
         </section>
         <section id="objLists">
           <h4>Object Lists</h4>
           <p>If triple patterns share both subject and predicate, the objects may be separated by
             "<code>,</code>".</p>
-          <pre class="query untested">    ?x foaf:nick  "Alice" , "Alice_" .
+          <pre class="query">
+?x foaf:nick  "Alice" , "Alice_" .
           </pre>
           <p>is the same as writing the triple patterns:</p>
-          <pre class="query untested">   ?x  foaf:nick  "Alice" .
-            ?x  foaf:nick  "Alice_" .
+          <pre class="query">
+?x  foaf:nick  "Alice" .
+?x  foaf:nick  "Alice_" .
           </pre>
           <p>Object lists can be combined with predicate-object lists:</p>
-          <pre class="query untested">   ?x  foaf:name ?name ; foaf:nick  "Alice" , "Alice_" .
+          <pre class="query">
+?x  foaf:name ?name ; foaf:nick  "Alice" , "Alice_" .
           </pre>
           <p>is equivalent to:</p>
-          <pre class="query untested">   ?x  foaf:name  ?name .
-            ?x  foaf:nick  "Alice" .
-            ?x  foaf:nick  "Alice_" .
+          <pre class="query">
+?x  foaf:name  ?name .
+?x  foaf:nick  "Alice" .
+?x  foaf:nick  "Alice_" .
           </pre>
         </section>
         <section id="collections">
           <h4>RDF Collections</h4>
           <p><a data-cite="RDF11-MT#collections">RDF collections</a> can be written in triple
             patterns using the syntax "(element1 element2 ...)". The form "<code>()</code>" is an
-            alternative for the IRI <code><a href=
-                                             "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil">http://www.w3.org/1999/02/22-rdf-syntax-ns#nil</a></code>.
+            alternative for the IRI 
+            <code><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil">http://www.w3.org/1999/02/22-rdf-syntax-ns#nil</a></code>.
             When used with collection elements, such as <code>(1 ?x 3 4)</code>, triple patterns with
             blank nodes are allocated for the collection. The blank node at the head of the collection
             can be used as a subject or object in other triple patterns. The blank nodes allocated by
             the collection syntax do not occur elsewhere in the query.</p>
-          <pre class="query untested">(1 ?x 3 4) :p "w" .
+          <pre class="query">
+(1 ?x 3 4) :p "w" .
           </pre>
           <p>is syntactic sugar for (noting that <code>b0</code>, <code>b1</code>, <code>b2</code>
             and <code>b3</code> do not occur anywhere else in the query):</p>
-          <pre class="query untested">    _:b0  rdf:first  1 ;
-            rdf:rest   _:b1 .
-            _:b1  rdf:first  ?x ;
-            rdf:rest   _:b2 .
-            _:b2  rdf:first  3 ;
-            rdf:rest   _:b3 .
-            _:b3  rdf:first  4 ;
-            rdf:rest   rdf:nil .
-            _:b0  :p         "w" . 
+          <pre class="query">
+_:b0  rdf:first  1 ;
+      rdf:rest   _:b1 .
+_:b1  rdf:first  ?x ;
+      rdf:rest   _:b2 .
+_:b2  rdf:first  3 ;
+      rdf:rest   _:b3 .
+_:b3  rdf:first  4 ;
+      rdf:rest   rdf:nil .
+_:b0  :p         "w" . 
           </pre>
           <p>RDF collections can be nested and can involve other syntactic forms:</p>
-          <pre class="query untested">(1 [:p :q] ( 2 ) ) .
+          <pre class="query">(1 [:p :q] ( 2 ) ) .
           </pre>
           <p>is syntactic sugar for:</p>
-          <pre class="query untested">    _:b0  rdf:first  1 ;
-            rdf:rest   _:b1 .
-            _:b1  rdf:first  _:b2 .
-            _:b2  :p         :q .
-            _:b1  rdf:rest   _:b3 .
-            _:b3  rdf:first  _:b4 .
-            _:b4  rdf:first  2 ;
-            rdf:rest   rdf:nil .
-            _:b3  rdf:rest   rdf:nil .
+          <pre class="query">
+_:b0  rdf:first  1 ;
+      rdf:rest   _:b1 .
+_:b1  rdf:first  _:b2 .
+_:b2  :p         :q .
+_:b1  rdf:rest   _:b3 .
+_:b3  rdf:first  _:b4 .
+_:b4  rdf:first  2 ;
+      rdf:rest   rdf:nil .
+_:b3  rdf:rest   rdf:nil .
           </pre>
         </section>
         <section id="abbrevRdfType">
           <h4>rdf:type</h4>
           <p>The keyword "<code>a</code>" can be used as a predicate in a triple pattern and is an
-            alternative for the IRI&nbsp; <code><a href=
-                                                   "http://www.w3.org/1999/02/22-rdf-syntax-ns#type">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a></code>.
+            alternative for the IRI&nbsp; 
+            <code><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a></code>.
             This keyword is case-sensitive.</p>
-          <pre class="query untested">  ?x  a  :Class1 .
-            [ a :appClass ] :p "v" .
+          <pre class="query">  
+?x  a  :Class1 .
+[ a :appClass ] :p "v" .
           </pre>
           <p>is syntactic sugar for:</p>
-          <pre class="query untested">  ?x    rdf:type  :Class1 .
-            _:b0  rdf:type  :appClass .
-            _:b0  :p        "v" .
+          <pre class="query">
+?x    rdf:type  :Class1 .
+_:b0  rdf:type  :appClass .
+_:b0  :p        "v" .
           </pre>
         </section>
       </section>
@@ -1163,12 +1227,13 @@
           pattern.</p>
         <div class="exampleGroup">
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?name ?mbox
-              WHERE  {
-              ?x foaf:name ?name .
-              ?x foaf:mbox ?mbox .
-              }
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox
+WHERE  {
+    ?x foaf:name ?name .
+    ?x foaf:mbox ?mbox .
+}
             </pre>
           </div>
         </div>
@@ -1177,21 +1242,25 @@
             The same solutions would be obtained from a query that grouped the triple patterns into
             two basic graph patterns. For example, the query below has a different structure but
             would yield the same solutions as the previous query:
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?name ?mbox
-              WHERE  { { ?x foaf:name ?name . }
-              { ?x foaf:mbox ?mbox . }
-              }</pre>
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox
+WHERE  { 
+   { ?x foaf:name ?name . }
+   { ?x foaf:mbox ?mbox . }
+}
+</pre>
           </div>
         </div>
         <section id="emptyGroupPattern">
           <h4>Empty Group Pattern</h4>
           <p>The group pattern:</p>
-          <pre class="query untested">{ }</pre>
+          <pre class="query">{ }</pre>
           <p>matches any graph (including the empty graph) with one solution that does not bind any
             variables. For example:</p>
-          <pre class="query untested">SELECT ?x
-            WHERE {}
+          <pre class="query">
+SELECT ?x
+WHERE {}
           </pre>
           <p>matches with one solution in which variable <code>x</code> is not bound.</p>
         </section>
@@ -1202,28 +1271,31 @@
             the same solutions:</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query"> {  ?x foaf:name ?name .
-                ?x foaf:mbox ?mbox .
-                FILTER regex(?name, "Smith")
-                }
+              <pre class="query">
+{  ?x foaf:name ?name .
+   ?x foaf:mbox ?mbox .
+   FILTER regex(?name, "Smith")
+}
               </pre>
             </div>
           </div>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query"> {  FILTER regex(?name, "Smith")
-                ?x foaf:name ?name .
-                ?x foaf:mbox ?mbox .
-                }
+              <pre class="query">
+{  FILTER regex(?name, "Smith")
+   ?x foaf:name ?name .
+   ?x foaf:mbox ?mbox .
+}
               </pre>
             </div>
           </div>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query"> {  ?x foaf:name ?name .
-                FILTER regex(?name, "Smith")
-                ?x foaf:mbox ?mbox .
-                }
+              <pre class="query">
+{  ?x foaf:name ?name .
+   FILTER regex(?name, "Smith")
+   ?x foaf:mbox ?mbox .
+}
               </pre>
             </div>
           </div>
@@ -1232,20 +1304,23 @@
           <h4>Group Graph Pattern Examples</h4>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">  {
-                ?x foaf:name ?name .
-                ?x foaf:mbox ?mbox .
-                }</pre>
+              <pre class="query">
+{ ?x foaf:name ?name .
+  ?x foaf:mbox ?mbox .
+}
+</pre>
             </div>
           </div>
           <p>is a group of one basic graph pattern and that basic graph pattern consists of two
             triple patterns.</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">  {
-                ?x foaf:name ?name . FILTER regex(?name, "Smith")
-                ?x foaf:mbox ?mbox .
-                }</pre>
+              <pre class="query">
+{
+  ?x foaf:name ?name . FILTER regex(?name, "Smith")
+  ?x foaf:mbox ?mbox .
+}
+</pre>
             </div>
           </div>
           <p>is a group of one basic graph pattern and a filter, and that basic graph pattern
@@ -1253,11 +1328,13 @@
             basic graph patterns.</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">  {
-                ?x foaf:name ?name .
-                {}
-                ?x foaf:mbox ?mbox .
-                }</pre>
+              <pre class="query">
+{
+  ?x foaf:name ?name .
+  {}
+  ?x foaf:mbox ?mbox .
+}
+</pre>
             </div>
           </div>
           <p>is a group of three elements, a basic graph pattern of one triple pattern, an empty
@@ -1279,44 +1356,51 @@
         <h3>Optional Pattern Matching</h3>
         <p>Optional parts of the graph pattern may be specified syntactically with the OPTIONAL
           keyword applied to a graph pattern:</p>
-        <pre class="query untested"><i>pattern</i> OPTIONAL { <i>pattern</i> }
+        <pre class="query">
+<i>pattern</i> OPTIONAL { <i>pattern</i> }
         </pre>
         <div class="exampleGroup">
           <p>The syntactic form:</p>
-          <pre class="query untested">{ OPTIONAL { <i>pattern</i> } }
+          <pre class="query">
+{ OPTIONAL { <i>pattern</i> } }
           </pre>
           <p>is equivalent to:</p>
-          <pre class="query untested">{ { } OPTIONAL { <i>pattern</i> } }
+          <pre class="query">
+{ { } OPTIONAL { <i>pattern</i> } }
           </pre>
           <p>The <code>OPTIONAL</code> keyword is left-associative :</p>
-          <pre class="query untested"><i>pattern</i> OPTIONAL { <i>pattern</i> } OPTIONAL { pattern }
+          <pre class="query">
+<i>pattern</i> OPTIONAL { <i>pattern</i> } OPTIONAL { pattern }
           </pre>
           <p>is the same as:</p>
-          <pre class="query untested">
-            { <i>pattern</i> OPTIONAL { <i>pattern</i> } } OPTIONAL { pattern }
+          <pre class="query">
+{ <i>pattern</i> OPTIONAL { <i>pattern</i> } } OPTIONAL { pattern }
           </pre>
           <p>In an optional match, either the optional graph pattern matches a graph, thereby
             defining and adding bindings to one or more solutions, or it leaves a solution unchanged
             without adding any additional bindings.</p>
           <p>Data:</p>
-          <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
-            @prefix rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+          <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
 
-            _:a  rdf:type        foaf:Person .
-            _:a  foaf:name       "Alice" .
-            _:a  foaf:mbox       &lt;mailto:alice@example.com&gt; .
-            _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+_:a  rdf:type        foaf:Person .
+_:a  foaf:name       "Alice" .
+_:a  foaf:mbox       &lt;mailto:alice@example.com&gt; .
+_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
 
-            _:b  rdf:type        foaf:Person .
-            _:b  foaf:name       "Bob" .
-          </pre>
+_:b  rdf:type        foaf:Person .
+_:b  foaf:name       "Bob" .
+</pre>
           <div class="queryGroup">
             Query:
-            <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?name ?mbox
-              WHERE  { ?x foaf:name  ?name .
-              OPTIONAL { ?x  foaf:mbox  ?mbox }
-              }
+            <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox
+WHERE  {
+    ?x foaf:name  ?name .
+    OPTIONAL { ?x  foaf:mbox  ?mbox }
+}
             </pre>
             <p>With the data above, the query result is:</p>
             <div class="result">
@@ -1356,22 +1440,25 @@
         <h3>Constraints in Optional Pattern Matching</h3>
         <p>Constraints can be given in an optional graph pattern. For example:</p>
         <div class="exampleGroup">
-          <pre class="data">@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-            @prefix :     &lt;http://example.org/book/&gt; .
-            @prefix ns:   &lt;http://example.org/ns#&gt; .
+          <pre class="data">
+@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix :     &lt;http://example.org/book/&gt; .
+@prefix ns:   &lt;http://example.org/ns#&gt; .
 
-            :book1  dc:title  "SPARQL Tutorial" .
-            :book1  ns:price  42 .
-            :book2  dc:title  "The Semantic Web" .
-            :book2  ns:price  23 .
+:book1  dc:title  "SPARQL Tutorial" .
+:book1  ns:price  42 .
+:book2  dc:title  "The Semantic Web" .
+:book2  ns:price  23 .
           </pre>
           <div class="queryGroup">
-            <pre class="query">PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
-              PREFIX  ns:  &lt;http://example.org/ns#&gt;
-              SELECT  ?title ?price
-              WHERE   { ?x dc:title ?title .
-              OPTIONAL { ?x ns:price ?price . FILTER (?price &lt; 30) }
-              }
+            <pre class="query">
+PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX  ns:  &lt;http://example.org/ns#&gt;
+SELECT  ?title ?price
+WHERE   { 
+    ?x dc:title ?title .
+    OPTIONAL { ?x ns:price ?price . FILTER (?price &lt; 30) }
+}
             </pre>
             <div class="result">
               <div id="table93"></div>
@@ -1404,23 +1491,26 @@
           there are two optional graph patterns.</p>
         <div class="exampleGroup">
           Data:
-          <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a  foaf:name       "Alice" .
-            _:a  foaf:homepage   &lt;http://work.example.org/alice/&gt; .
+_:a  foaf:name       "Alice" .
+_:a  foaf:homepage   &lt;http://work.example.org/alice/&gt; .
 
-            _:b  foaf:name       "Bob" .
-            _:b  foaf:mbox       &lt;mailto:bob@work.example&gt; .
+_:b  foaf:name       "Bob" .
+_:b  foaf:mbox       &lt;mailto:bob@work.example&gt; .
           </pre>
           <div class="queryGroup">
             Query:
-            <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?name ?mbox ?hpage
-              WHERE  { ?x foaf:name  ?name .
-              OPTIONAL { ?x foaf:mbox ?mbox } .
-              OPTIONAL { ?x foaf:homepage ?hpage }
-              }
-            </pre>
+            <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox ?hpage
+WHERE  {
+    ?x foaf:name  ?name .
+    OPTIONAL { ?x foaf:mbox ?mbox } .
+    OPTIONAL { ?x foaf:homepage ?hpage }
+}
+</pre>
             <p>Query result:</p>
             <div class="result">
               <div id="table94"></div>
@@ -1456,25 +1546,27 @@
       <p>Pattern alternatives are syntactically specified with the <code>UNION</code> keyword.</p>
       <div class="exampleGroup">
         Data:
-        <pre class="data">@prefix dc10:  &lt;http://purl.org/dc/elements/1.0/&gt; .
-          @prefix dc11:  &lt;http://purl.org/dc/elements/1.1/&gt; .
+        <pre class="data">
+@prefix dc10:  &lt;http://purl.org/dc/elements/1.0/&gt; .
+@prefix dc11:  &lt;http://purl.org/dc/elements/1.1/&gt; .
 
-          _:a  dc10:title     "SPARQL Query Language Tutorial" .
-          _:a  dc10:creator   "Alice" .
+_:a  dc10:title     "SPARQL Query Language Tutorial" .
+_:a  dc10:creator   "Alice" .
 
-          _:b  dc11:title     "SPARQL Protocol Tutorial" .
-          _:b  dc11:creator   "Bob" .
+_:b  dc11:title     "SPARQL Protocol Tutorial" .
+_:b  dc11:creator   "Bob" .
 
-          _:c  dc10:title     "SPARQL" .
-          _:c  dc11:title     "SPARQL (updated)" .
+_:c  dc10:title     "SPARQL" .
+_:c  dc11:title     "SPARQL (updated)" .
         </pre>
         <div class="queryGroup">
           Query:
-          <pre class="query">PREFIX dc10:  &lt;http://purl.org/dc/elements/1.0/&gt;
-            PREFIX dc11:  &lt;http://purl.org/dc/elements/1.1/&gt;
+          <pre class="query">
+PREFIX dc10:  &lt;http://purl.org/dc/elements/1.0/&gt;
+PREFIX dc11:  &lt;http://purl.org/dc/elements/1.1/&gt;
 
-            SELECT ?title
-            WHERE  { { ?book dc10:title  ?title } UNION { ?book dc11:title  ?title } }
+SELECT ?title
+WHERE  { { ?book dc10:title  ?title } UNION { ?book dc11:title  ?title } }
           </pre>
           <p>Query result:</p>
           <div class="result">
@@ -1505,11 +1597,12 @@
           or version 1.1. To determine exactly how the information was recorded, a query could use
           different variables for the two alternatives:</p>
         <div class="queryGroup">
-          <pre class="query">PREFIX dc10:  &lt;http://purl.org/dc/elements/1.0/&gt;
-            PREFIX dc11:  &lt;http://purl.org/dc/elements/1.1/&gt;
+          <pre class="query">
+PREFIX dc10:  &lt;http://purl.org/dc/elements/1.0/&gt;
+PREFIX dc11:  &lt;http://purl.org/dc/elements/1.1/&gt;
 
-            SELECT ?x ?y
-            WHERE  { { ?book dc10:title ?x } UNION { ?book dc11:title  ?y } }
+SELECT ?x ?y
+WHERE  { { ?book dc10:title ?x } UNION { ?book dc11:title  ?y } }
           </pre>
           <div class="result">
             <div id="table98"></div>
@@ -1546,14 +1639,16 @@
         <p>The <code>UNION</code> pattern combines graph patterns; each alternative possibility can
           contain more than one triple pattern:</p>
         <div class="queryGroup">
-          <pre class="query">PREFIX dc10:  &lt;http://purl.org/dc/elements/1.0/&gt;
-            PREFIX dc11:  &lt;http://purl.org/dc/elements/1.1/&gt;
+          <pre class="query">
+PREFIX dc10:  &lt;http://purl.org/dc/elements/1.0/&gt;
+PREFIX dc11:  &lt;http://purl.org/dc/elements/1.1/&gt;
 
-            SELECT ?title ?author
-            WHERE  { { ?book dc10:title ?title .  ?book dc10:creator ?author }
-            UNION
-            { ?book dc11:title ?title .  ?book dc11:creator ?author }
-            }
+SELECT ?title ?author
+WHERE {
+    { ?book dc10:title ?title .  ?book dc10:creator ?author }
+      UNION
+    { ?book dc11:title ?title .  ?book dc11:creator ?author }
+}
           </pre>
           <div class="result">
             <div id="table99"></div>
@@ -1596,24 +1691,28 @@
             filter occurs. It does not generate any additional bindings.</p>
           <div class="exampleGroup">
             <p>Data:</p>
-            <pre class="data">@prefix  :       &lt;http://example/&gt; .
-              @prefix  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-              @prefix  foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
+            <pre class="data">
+@prefix  :       &lt;http://example/&gt; .
+@prefix  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix  foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-              :alice  rdf:type   foaf:Person .
-              :alice  foaf:name  "Alice" .
-              :bob    rdf:type   foaf:Person .     </pre>
+:alice  rdf:type   foaf:Person .
+:alice  foaf:name  "Alice" .
+:bob    rdf:type   foaf:Person .
+     </pre>
             <p>Query:</p>
             <div class="queryGroup">
-              <pre class="query">PREFIX  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
-                PREFIX  foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; 
+              <pre class="query">
+PREFIX  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
+PREFIX  foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; 
 
-                SELECT ?person
-                WHERE 
-                {
-                ?person rdf:type  foaf:Person .
-                FILTER NOT EXISTS { ?person foaf:name ?name }
-                }     </pre>
+SELECT ?person
+WHERE 
+{
+    ?person rdf:type  foaf:Person .
+    FILTER NOT EXISTS { ?person foaf:name ?name }
+}
+</pre>
               <p>Query Result:</p>
               <div class="result">
                 <table class="resultTable">
@@ -1637,15 +1736,16 @@
           <div class="exampleGroup">
             <p>Query:</p>
             <div class="queryGroup">
-              <pre class="query">PREFIX  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
-                PREFIX  foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; 
+              <pre class="query">
+PREFIX  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
+PREFIX  foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; 
 
-                SELECT ?person
-                WHERE 
-                {
-                ?person rdf:type  foaf:Person .
-                FILTER EXISTS { ?person foaf:name ?name }
-                }</pre>
+SELECT ?person
+WHERE {
+    ?person rdf:type  foaf:Person .
+    FILTER EXISTS { ?person foaf:name ?name }
+}
+</pre>
               <p>Query Result:</p>
               <div class="result">
                 <table class="resultTable">
@@ -1670,29 +1770,32 @@
           the solutions on the right-hand side.</p>
         <div class="exampleGroup">
           Data:
-          <pre class="data">@prefix :       &lt;http://example/&gt; .
-            @prefix foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+@prefix :       &lt;http://example/&gt; .
+@prefix foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            :alice  foaf:givenName "Alice" ;
-            foaf:familyName "Smith" .
+:alice  foaf:givenName "Alice" ;
+        foaf:familyName "Smith" .
 
-            :bob    foaf:givenName "Bob" ;
-            foaf:familyName "Jones" .
+:bob    foaf:givenName "Bob" ;
+        foaf:familyName "Jones" .
 
-            :carol  foaf:givenName "Carol" ;
-            foaf:familyName "Smith" .</pre>
+:carol  foaf:givenName "Carol" ;
+        foaf:familyName "Smith" .
+</pre>
           <div class="queryGroup">
             Query:
-            <pre class="query">PREFIX :       &lt;http://example/&gt;
-              PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+            <pre class="query">
+PREFIX :       &lt;http://example/&gt;
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
 
-              SELECT DISTINCT ?s
-              WHERE {
-              ?s ?p ?o .
-              MINUS {
-              ?s foaf:givenName "Bob" .
-              }
-              }</pre>
+SELECT DISTINCT ?s
+WHERE {
+    ?s ?p ?o .
+    MINUS {
+        ?s foaf:givenName "Bob" .
+    }
+}</pre>
             <p>Results:</p>
             <div class="result">
               <table class="resultTable">
@@ -1720,13 +1823,15 @@
           evaluation of two patterns. In some cases they can produce different answers.</p>
         <section id="neg-example-1">
           <h4>Example: Sharing of variables</h4>
-          <pre class="data">@prefix : &lt;http://example/&gt; .
-            :a :b :c .</pre>
-          <pre class="query">SELECT *
-            { 
-            ?s ?p ?o
-            FILTER NOT EXISTS { ?x ?y ?z }
-            }</pre>
+          <pre class="data">
+@prefix : &lt;http://example/&gt; .
+:a :b :c .
+</pre>
+          <pre class="query">
+SELECT * { 
+    ?s ?p ?o
+    FILTER NOT EXISTS { ?x ?y ?z }
+}</pre>
           <p>evaluates to a result set with no solutions because <code>{ ?x ?y ?z }</code> matches
             given any <code>?s ?p ?o</code>, so <code>NOT EXISTS { ?x ?y ?z }</code> eliminates any
             solutions.</p>
@@ -1744,12 +1849,12 @@
           <p>whereas with <code>MINUS</code>, there is no shared variable between the first part
             (<code>?s ?p ?o</code>) and the second (<code>?x ?y ?z</code>) so no bindings are
             eliminated.</p>
-          <pre class="query">SELECT *
-            { 
-            ?s ?p ?o 
-            MINUS 
-            { ?x ?y ?z }
-            }</pre>
+          <pre class="query">
+SELECT * { 
+    ?s ?p ?o 
+    MINUS 
+    { ?x ?y ?z }
+}</pre>
           <p>Results:</p>
           <div class="result">
             <table class="resultTable">
@@ -1771,12 +1876,13 @@
         <section id="neg-example-2">
           <h4>Example: Fixed pattern</h4>
           <p>Another case is where there is a concrete pattern (no variables) in the example:</p>
-          <pre class="query">PREFIX : &lt;http://example/&gt;
-            SELECT * 
-            { 
-            ?s ?p ?o 
-            FILTER NOT EXISTS { :a :b :c }
-            }</pre>
+          <pre class="query">
+PREFIX : &lt;http://example/&gt;
+SELECT * {  
+    ?s ?p ?o 
+    FILTER NOT EXISTS { :a :b :c }
+}
+</pre>
           <p>evaluates to a result set with no query solutions:</p>Results:
           <div class="result">
             <table class="resultTable">
@@ -1790,12 +1896,14 @@
             </table>
           </div>
           <p>whereas</p>
-          <pre class="query">PREFIX : &lt;http://example/&gt;
-            SELECT * 
-            { 
-            ?s ?p ?o 
-            MINUS { :a :b :c }
-            }</pre>
+          <pre class="query">
+PREFIX : &lt;http://example/&gt;
+SELECT * 
+{ 
+    ?s ?p ?o 
+    MINUS { :a :b :c }
+}
+</pre>
           <p>evaluates to result set with one query solution:</p>
           <p>Results:</p>
           <div class="result">
@@ -1821,24 +1929,27 @@
           <p>Differences also arise because in a filter, variables from the group are <a href=
                                                                                          "#scopeFilters">in scope</a>. In this example, the <code>FILTER</code> inside the <code>NOT
               EXISTS</code> has access to the value of ?n for the solution being considered.</p>
-          <pre class="data">@prefix : &lt;http://example.com/&gt; .
-            :a :p 1 .
-            :a :q 1 .
-            :a :q 2 .
+          <pre class="data">
+@prefix : &lt;http://example.com/&gt; .
+:a :p 1 .
+:a :q 1 .
+:a :q 2 .
 
-            :b :p 3.0 .
-            :b :q 4.0 .
-            :b :q 5.0 .</pre>
+:b :p 3.0 .
+:b :q 4.0 .
+:b :q 5.0 .
+</pre>
           <p>When using <code>FILTER NOT EXISTS</code>, the test is on each possible solution to
             <code>?x :p ?n</code>:</p>
-          <pre class="query">PREFIX : &lt;http://example.com/&gt;
-            SELECT * WHERE {
-            ?x :p ?n
-            FILTER NOT EXISTS {
-            ?x :q ?m .
-            FILTER(?n = ?m)
-            }
-            }</pre>
+          <pre class="query">
+PREFIX : &lt;http://example.com/&gt;
+SELECT * WHERE {
+    ?x :p ?n
+    FILTER NOT EXISTS {
+        ?x :q ?m .
+        FILTER(?n = ?m)
+    }
+}</pre>
           <div class="result">
             <table class="resultTable">
               <tbody>
@@ -1855,14 +1966,15 @@
           </div>
           <p>whereas with <code>MINUS</code>, the <code>FILTER</code> inside the pattern does not
             have a value for ?n and it is always unbound:</p>
-          <pre class="query">PREFIX : &lt;http://example/&gt;
-            SELECT * WHERE {
-            ?x :p ?n
-            MINUS {
-            ?x :q ?m .
-            FILTER(?n = ?m)
-            }
-            }</pre>
+          <pre class="query">
+PREFIX : &lt;http://example/&gt;
+SELECT * WHERE {
+    ?x :p ?n
+    MINUS {
+        ?x :q ?m .
+        FILTER(?n = ?m)
+    }
+}</pre>
           <div class="result">
             <table class="resultTable">
               <tbody>
@@ -1989,102 +2101,138 @@
       <section id="propertypath-examples">
         <h3>Examples</h3>
         <p><i>Alternatives</i>: Match one or both possibilities</p>
-        <pre class="query">  { :book1 dc:title|rdfs:label ?displayString }</pre>
-        <p>which could have writen:</p>
+        <pre class="query">  
+{ :book1 dc:title|rdfs:label ?displayString }
+</pre>
+        <p>which could have written:</p>
         <pre class="query">
-          { :book1 &lt;http://purl.org/dc/elements/1.1/title&gt; | &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; ?displayString }</pre>
+{ 
+   :book1 &lt;http://purl.org/dc/elements/1.1/title&gt; | &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; ?displayString
+}
+        </pre>
         <p><i>Sequence</i>: Find the name of any people that Alice knows.</p>
-        <pre class="query">  {
-          ?x foaf:mbox &lt;mailto:alice@example&gt; .
-          ?x foaf:knows/foaf:name ?name .
-          }</pre>
+        <pre class="query">
+{
+    ?x foaf:mbox &lt;mailto:alice@example&gt; .
+    ?x foaf:knows/foaf:name ?name .
+}</pre>
         <p><i>Sequence</i>: Find the names of people 2 "<code>foaf:knows</code>" links away.</p>
-        <pre class="query">  { 
-          ?x foaf:mbox &lt;mailto:alice@example&gt; .
-          ?x foaf:knows/foaf:knows/foaf:name ?name .
-          }</pre>
+        <pre class="query">
+{ 
+    ?x foaf:mbox &lt;mailto:alice@example&gt; .
+    ?x foaf:knows/foaf:knows/foaf:name ?name .
+}</pre>
         <p>This is the same as the SPARQL query:</p>
-        <pre class="query">  SELECT ?x ?name 
-          {
-          ?x  foaf:mbox &lt;mailto:alice@example&gt; .
-          ?x  foaf:knows [ foaf:knows [ foaf:name ?name ]]. 
-          }</pre>
+        <pre class="query">  
+SELECT ?x ?name {
+    ?x  foaf:mbox &lt;mailto:alice@example&gt; .
+    ?x  foaf:knows [ foaf:knows [ foaf:name ?name ]]. 
+}
+</pre>
         <p>or, with explicit variables:</p>
-        <pre class="query">  SELECT ?x ?name
-          {
-          ?x  foaf:mbox &lt;mailto:alice@example&gt; .
-          ?x  foaf:knows ?a1 .
-          ?a1 foaf:knows ?a2 .
-          ?a2 foaf:name ?name .
-          }</pre>
+        <pre class="query">
+SELECT ?x ?name {
+    ?x  foaf:mbox &lt;mailto:alice@example&gt; .
+    ?x  foaf:knows ?a1 .
+    ?a1 foaf:knows ?a2 .
+    ?a2 foaf:name ?name .
+}
+</pre>
         <p><i>Filtering duplicates</i>: Because someone Alice knows may well know Alice, the example
           above may include Alice herself. This could be avoided with:</p>
-        <pre class="query">  { ?x foaf:mbox &lt;mailto:alice@example&gt; .
-          ?x foaf:knows/foaf:knows ?y .
-          FILTER ( ?x != ?y )
-          ?y foaf:name ?name 
-          }</pre>
+        <pre class="query"> 
+ { ?x foaf:mbox &lt;mailto:alice@example&gt; .
+   ?x foaf:knows/foaf:knows ?y .
+   FILTER ( ?x != ?y )
+   ?y foaf:name ?name 
+ }</pre>
         <p><i>Inverse Property Paths</i>: These two are the same query: the second is just reversing
           the property direction which swaps the roles of subject and object.</p>
-        <pre class="query">  { ?x foaf:mbox &lt;mailto:alice@example&gt; }</pre>
-        <pre class="query">  { &lt;mailto:alice@example&gt; ^foaf:mbox ?x }</pre>
+        <pre class="query">
+{ ?x foaf:mbox &lt;mailto:alice@example&gt; }
+        </pre>
+        <pre class="query">
+{ &lt;mailto:alice@example&gt; ^foaf:mbox ?x }
+        </pre>
         <p><i>Inverse Path Sequence</i>: Find all the people who know someone <code>?x</code> knows.</p>
-        <pre class="query">  {
-          ?x foaf:knows/^foaf:knows ?y .  
-          FILTER(?x != ?y)
-          }</pre>
+        <pre class="query">
+{
+  ?x foaf:knows/^foaf:knows ?y .  
+  FILTER(?x != ?y)
+}
+</pre>
         <p>which is equivalent to (<code>?gen1</code> is a system generated variable):</p>
-        <pre class="query">  {
-          ?x foaf:knows ?gen1 .
-          ?y foaf:knows ?gen1 .  
-          FILTER(?x != ?y)
-          }</pre>
+        <pre class="query"> 
+{
+  ?x foaf:knows ?gen1 .
+  ?y foaf:knows ?gen1 .  
+  FILTER(?x != ?y)
+}
+</pre>
         <p><i>Arbitrary length match</i>: Find the names of all the people that can be reached from
           Alice by <code>foaf:knows</code>:</p>
-        <pre class="query">  {
-          ?x foaf:mbox &lt;mailto:alice@example&gt; .
-          ?x foaf:knows+/foaf:name ?name .
-          }</pre>
+        <pre class="query">
+{
+  ?x foaf:mbox &lt;mailto:alice@example&gt; .
+  ?x foaf:knows+/foaf:name ?name .
+}
+</pre>
         <p><i>Alternatives in an arbitrary length path</i>:</p>
-        <pre class="query">  { ?ancestor (ex:motherOf|ex:fatherOf)+ &lt;#me&gt; }</pre>
+        <pre class="query">
+{ ?ancestor (ex:motherOf|ex:fatherOf)+ &lt;#me&gt; }
+</pre>
         <p><i>Arbitrary length path match</i>: Some forms of limited inference are possible as well.
           For example, for RDFS, all types and supertypes of a resource:</p>
-        <pre class="query">  { &lt;http://example/thing&gt; rdf:type/rdfs:subClassOf* ?type }</pre>
+        <pre class="query">
+{ &lt;http://example/thing&gt; rdf:type/rdfs:subClassOf* ?type }
+        </pre>
         <p>All resources and all their inferred types:</p>
-        <pre class="query">  { ?x rdf:type/rdfs:subClassOf* ?type }</pre>
+        <pre class="query">
+{ ?x rdf:type/rdfs:subClassOf* ?type }
+        </pre>
         <p><i>Subproperty</i>:</p>
-        <pre class="query">  { ?x ?p ?v . ?p rdfs:subPropertyOf* :property }</pre>
+        <pre class="query">
+{ ?x ?p ?v . ?p rdfs:subPropertyOf* :property }
+        </pre>
         <p><i>Negated Property Paths</i>: Find nodes connected but not by rdf:type (either way
           round):</p>
-        <pre class="query">  { ?x !(rdf:type|^rdf:type) ?y }</pre>
+        <pre class="query"> 
+{ ?x !(rdf:type|^rdf:type) ?y }
+</pre>
         <p><i>Elements in an RDF collection</i>:</p>
-        <pre class="query">  { :list rdf:rest*/rdf:first ?element }</pre>
+        <pre class="query">
+{ :list rdf:rest*/rdf:first ?element }
+</pre>
         <p><i>Note: This path expression does not guarantee the order of the results.</i></p>
       </section>
       <section id="propertypath-syntaxforms">
         <h3>Property Paths and Equivalent Patterns</h3>
         <p>SPARQL property paths treat the RDF triples as a directed, possibly cyclic, graph with
-          named edges. Some property paths are equivalent to a <a href=
-                                                                  "#sparqlTranslatePathExpressions">translation</a> into triple patterns and SPARQL UNION graph
+          named edges. Some property paths are equivalent to a 
+          <a href="#sparqlTranslatePathExpressions">translation</a> into triple patterns and SPARQL UNION graph
           patterns. Evaluation of a property path expression can lead to duplicates because any
           variables introduced in the equivalent pattern are not part of the results and are not
           already used elsewhere. They are hidden by implicit projection of the results to just the
           variables given in the query.</p>
         <p>For example, on the data:</p>
-        <pre class="data">@prefix :       &lt;http://example/&gt; .
+        <pre class="data">
+@prefix :       &lt;http://example/&gt; .
 
-          :order  :item :z1 .
-          :order  :item :z2 .
+:order  :item :z1 .
+:order  :item :z2 .
 
-          :z1 :name "Small" .
-          :z1 :price 5 .
+:z1 :name "Small" .
+:z1 :price 5 .
 
-          :z2 :name "Large" .
-          :z2 :price 5 .</pre>
+:z2 :name "Large" .
+:z2 :price 5 .
+        </pre>
         <p>Query:</p>
-        <pre class="query">PREFIX :   &lt;http://example/&gt;
-          SELECT * 
-          {  ?s :item/:price ?x . }</pre>
+        <pre class="query">
+PREFIX :   &lt;http://example/&gt;
+SELECT * 
+{  ?s :item/:price ?x . }
+</pre>
         <p>Results:</p>
         <div class="result">
           <table class="resultTable">
@@ -2106,10 +2254,12 @@
         </div>
         <p>whereas if the query were written out to include the intermediate variable
           (<code>?_a</code>), no rows in the results are duplicates:</p>
-        <pre class="query">PREFIX :   &lt;http://example/&gt;
-          SELECT * 
-          {  ?s :item ?_a .
-          ?_a :price ?x . }</pre>
+        <pre class="query">
+PREFIX :   &lt;http://example/&gt;
+SELECT * 
+{  ?s :item ?_a .
+   ?_a :price ?x .
+}</pre>
         <p>Results:</p>
         <div class="result">
           <table class="resultTable">
@@ -2134,11 +2284,12 @@
         </div>
         <p>The equivalance to graphs patterns is particularly significant when query also involves an
           aggregation operation. The total cost of the order can be found with</p>
-        <pre class="query">  PREFIX :   &lt;http://example/&gt;
-          SELECT (sum(?x) AS ?total)
-          { 
-          :order :item/:price ?x
-          }</pre>
+        <pre class="query">
+PREFIX :   &lt;http://example/&gt;
+SELECT (sum(?x) AS ?total) { 
+    :order :item/:price ?x
+}
+        </pre>
         <div class="result">
           <table class="resultTable">
             <tbody>
@@ -2163,20 +2314,23 @@
           operator.</p>
         <p>For example, finding all the the possible types of a resource, including supertypes of
           resources, can be achieved with:</p>
-        <pre class="query">  PREFIX  rdfs:   &lt;http://www.w3.org/2000/01/rdf-schema#&gt; . 
-          PREFIX  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-          SELECT ?x ?type
-          { 
-          ?x rdf:type/rdfs:subClassOf* ?type
-          }</pre>
+        <pre class="query">
+PREFIX  rdfs:   &lt;http://www.w3.org/2000/01/rdf-schema#&gt; . 
+PREFIX  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+SELECT ?x ?type
+{ 
+    ?x rdf:type/rdfs:subClassOf* ?type
+}</pre>
         <p>Similarly, finding all the people <code>:x</code> connects to via the
           <code>foaf:knows</code> relationship,</p>
-        <pre class="query">  PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-          PREFIX :     &lt;http://example/&gt;
-          SELECT ?person
-          { 
-          :x foaf:knows+ ?person
-          }</pre>
+        <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX :     &lt;http://example/&gt;
+SELECT ?person
+{ 
+    :x foaf:knows+ ?person
+}
+        </pre>
         <p>Such connectivity matching does not introduce duplicates (it does not incorporate any
           count of the number of ways the connection can be made) even if the repeated path itself
           would otherwise result in duplicates.</p>
@@ -2206,41 +2360,47 @@
         <p>Example:</p>
         <div class="exampleGroup">
           <p>Data:</p>
-          <pre class="data">@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-            @prefix :     &lt;http://example.org/book/&gt; .
-            @prefix ns:   &lt;http://example.org/ns#&gt; .
+          <pre class="data">
+@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix :     &lt;http://example.org/book/&gt; .
+@prefix ns:   &lt;http://example.org/ns#&gt; .
 
-            :book1  dc:title     "SPARQL Tutorial" .
-            :book1  ns:price     42 .
-            :book1  ns:discount  0.2 .
+:book1  dc:title     "SPARQL Tutorial" .
+:book1  ns:price     42 .
+:book1  ns:discount  0.2 .
 
-            :book2  dc:title     "The Semantic Web" .
-            :book2  ns:price     23 .
-            :book2  ns:discount  0.25 .</pre>
+:book2  dc:title     "The Semantic Web" .
+:book2  ns:price     23 .
+:book2  ns:discount  0.25 .
+</pre>
           <p>Query:</p>
-          <pre class="query">PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
-            PREFIX  ns:  &lt;http://example.org/ns#&gt;
+          <pre class="query">
+PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX  ns:  &lt;http://example.org/ns#&gt;
 
-            SELECT  ?title ?price
-            {  ?x ns:price ?p .
-            ?x ns:discount ?discount
-            BIND (?p*(1-?discount) AS ?price)
-            FILTER(?price &lt; 20)
-            ?x dc:title ?title . 
-            }</pre>
+SELECT  ?title ?price
+{   
+    ?x ns:price ?p .
+    ?x ns:discount ?discount
+    BIND (?p*(1-?discount) AS ?price)
+    FILTER(?price &lt; 20)
+    ?x dc:title ?title . 
+}
+</pre>
           <p>Equivalent query (<code>BIND</code> ends the basic graph pattern; the
             <code>FILTER</code> applies to the whole group graph pattern):</p>
-          <pre class="query">PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
-            PREFIX  ns:  &lt;http://example.org/ns#&gt;
+          <pre class="query">
+PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX  ns:  &lt;http://example.org/ns#&gt;
 
-            SELECT  ?title ?price
-            {  { ?x ns:price ?p .
-            ?x ns:discount ?discount
-            BIND (?p*(1-?discount) AS ?price)
-            }
-            {?x dc:title ?title . }
-            FILTER(?price &lt; 20)
-            }</pre>
+SELECT  ?title ?price
+{  { ?x ns:price ?p .
+     ?x ns:discount ?discount
+     BIND (?p*(1-?discount) AS ?price)
+    }
+    {?x dc:title ?title . }
+    FILTER(?price &lt; 20)
+}</pre>
           <p>Results:</p>
           <div class="result">
             <table class="resultTable">
@@ -2261,8 +2421,8 @@
       <section id="inline-data">
         <h3>VALUES: Providing inline data</h3>
         <p>Data can be directly written in a graph pattern or added to a query using
-          <code>VALUES</code>. <code>VALUES</code> provides inline data as a <a href=
-                                                                                "#defn_sparqlSolutionSequence">solution sequence</a> which are combined with the results of
+          <code>VALUES</code>. <code>VALUES</code> provides inline data as a 
+          <a href="#defn_sparqlSolutionSequence">solution sequence</a> which are combined with the results of
           query evaluation by a <a href="#defn_algJoin">join</a> operation. It can be used by an
           application to provide specific requirements on query results and also by SPARQL query engine
           implementations that provide <a href="#basic-federated-query">federated query</a> through the
@@ -2274,14 +2434,20 @@
             values.</p>
           <p>In the following example, there is a table of two variables, <code>?x</code> and
             <code>?y</code>. The second row has no value for <code>?y</code>.</p>
-          <pre class="data">VALUES (?x ?y) {
-            (:uri1 1)
-            (:uri2 UNDEF)
-            }</pre>
+          <pre class="data">
+VALUES (?x ?y) {
+    (:uri1 1)
+    (:uri2 UNDEF)
+}
+          </pre>
           <p>Optionally, when there is a single variable and some values:</p>
-          <pre class="data">VALUES ?z { "abc" "def" }</pre>
+          <pre class="data">
+VALUES ?z { "abc" "def" }
+          </pre>
           <p>which is the same as using the general form:</p>
-          <pre class="data">VALUES (?z) { ("abc") ("def") }</pre>
+          <pre class="data">
+            VALUES (?z) { ("abc") ("def") }
+          </pre>
         </section>
         <section id="inline-data-examples">
           <h4>VALUES Examples</h4>
@@ -2289,26 +2455,29 @@
             <code>SELECT</code> query, including a <a href="#subqueries">subquery</a>.</p>
           <div class="exampleGroup">
             <p>Data:</p>
-            <pre class="data">@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-              @prefix :     &lt;http://example.org/book/&gt; .
-              @prefix ns:   &lt;http://example.org/ns#&gt; .
+            <pre class="data">
+@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix :     &lt;http://example.org/book/&gt; .
+@prefix ns:   &lt;http://example.org/ns#&gt; .
 
-              :book1  dc:title  "SPARQL Tutorial" .
-              :book1  ns:price  42 .
-              :book2  dc:title  "The Semantic Web" .
-              :book2  ns:price  23 .
+:book1  dc:title  "SPARQL Tutorial" .
+:book1  ns:price  42 .
+:book2  dc:title  "The Semantic Web" .
+:book2  ns:price  23 .
             </pre>
             <p>Query:</p>
-            <pre class="query">PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt; 
-              PREFIX :     &lt;http://example.org/book/&gt; 
-              PREFIX ns:   &lt;http://example.org/ns#&gt; 
+            <pre class="query">
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt; 
+PREFIX :     &lt;http://example.org/book/&gt; 
+PREFIX ns:   &lt;http://example.org/ns#&gt; 
 
-              SELECT ?book ?title ?price
-              {
-              VALUES ?book { :book1 :book3 }
-              ?book dc:title ?title ;
-              ns:price ?price .
-              }</pre>
+SELECT ?book ?title ?price
+{
+    VALUES ?book { :book1 :book3 }
+    ?book dc:title ?title ;
+          ns:price ?price .
+}
+            </pre>
             <p>Result:</p>
             <div class="result">
               <div id="table110"></div>
@@ -2330,19 +2499,21 @@
           </div>
           <p>If a variable has no value for a particular solution in the <code>VALUES</code> clause,
             the keyword <code>UNDEF</code> is used instead of an RDF term.</p>
-          <pre class="query">PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt; 
-            PREFIX :     &lt;http://example.org/book/&gt; 
-            PREFIX ns:   &lt;http://example.org/ns#&gt; 
+          <pre class="query">
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt; 
+PREFIX :     &lt;http://example.org/book/&gt; 
+PREFIX ns:   &lt;http://example.org/ns#&gt; 
 
-            SELECT ?book ?title ?price
-            {
-            ?book dc:title ?title ;
-            ns:price ?price .
-            VALUES (?book ?title)
-            { (UNDEF "SPARQL Tutorial")
-            (:book2 UNDEF)
-            }
-            }</pre>
+SELECT ?book ?title ?price
+{
+    ?book dc:title ?title ;
+          ns:price ?price .
+    VALUES (?book ?title) {
+        (UNDEF "SPARQL Tutorial")
+        (:book2 UNDEF)
+    }
+}
+          </pre>
           <div class="result">
             <div id="table111"></div>
             <table class="resultTable">
@@ -2367,19 +2538,20 @@
           </div>
           <p>In this example, the <code>VALUES</code> might have been specified to execute over the
             results of the <code>SELECT</code> query:</p>
-          <pre class="query">PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt; 
-            PREFIX :     &lt;http://example.org/book/&gt; 
-            PREFIX ns:   &lt;http://example.org/ns#&gt; 
+          <pre class="query">
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt; 
+PREFIX :     &lt;http://example.org/book/&gt; 
+PREFIX ns:   &lt;http://example.org/ns#&gt; 
 
-            SELECT ?book ?title ?price
-            {
-            ?book dc:title ?title ;
-            ns:price ?price .
-            }
-            VALUES (?book ?title)
-            { (UNDEF "SPARQL Tutorial")
-            (:book2 UNDEF)
-            }</pre>
+SELECT ?book ?title ?price {
+    ?book dc:title ?title ;
+          ns:price ?price .
+}
+VALUES (?book ?title) {
+    (UNDEF "SPARQL Tutorial")
+    (:book2 UNDEF)
+}
+          </pre>
           <p>This is a different query but, in the example situation, has the same results.</p>
         </section>
       </section>
@@ -2399,27 +2571,31 @@
         <h3>Aggregate Example</h3>
         <div class="exampleGroup">
           <p>Data:</p>
-          <pre class="data">@prefix : &lt;http://books.example/&gt; .
+          <pre class="data">
+@prefix : &lt;http://books.example/&gt; .
 
-            :org1 :affiliates :auth1, :auth2 .
-            :auth1 :writesBook :book1, :book2 .
-            :book1 :price 9 .
-            :book2 :price 5 .
-            :auth2 :writesBook :book3 .
-            :book3 :price 7 .
-            :org2 :affiliates :auth3 .
-            :auth3 :writesBook :book4 .
-            :book4 :price 7 .</pre>
+:org1 :affiliates :auth1, :auth2 .
+:auth1 :writesBook :book1, :book2 .
+:book1 :price 9 .
+:book2 :price 5 .
+:auth2 :writesBook :book3 .
+:book3 :price 7 .
+:org2 :affiliates :auth3 .
+:auth3 :writesBook :book4 .
+:book4 :price 7 .
+</pre>
           <p>Query:</p>
-          <pre class="query">PREFIX : &lt;http://books.example/&gt;
-            SELECT (SUM(?lprice) AS ?totalPrice)
-            WHERE {
-            ?org :affiliates ?auth .
-            ?auth :writesBook ?book .
-            ?book :price ?lprice .
-            }
-            GROUP BY ?org
-            HAVING (SUM(?lprice) &gt; 10)</pre>
+          <pre class="query">
+PREFIX : &lt;http://books.example/&gt;
+SELECT (SUM(?lprice) AS ?totalPrice)
+WHERE {
+    ?org :affiliates ?auth .
+    ?auth :writesBook ?book .
+    ?book :price ?lprice .
+}
+GROUP BY ?org
+HAVING (SUM(?lprice) &gt; 10)
+          </pre>
           <p>Results:</p>
           <div class="result">
             <table class="resultTable">
@@ -2468,12 +2644,14 @@
           might wish to group the solutions according to the value of ?x, and calculate the average of
           the values of ?y for each group.</p>
         <p>This could be written as:</p>
-        <pre class="query">SELECT (AVG(?y) AS ?avg)
-          WHERE {
-          ?a :x ?x ;
-          :y ?y .
-          }
-          GROUP BY ?x</pre>
+        <pre class="query">
+SELECT (AVG(?y) AS ?avg)
+WHERE {
+    ?a :x ?x ;
+    :y ?y .
+}
+GROUP BY ?x
+        </pre>
       </section>
       <section id="having">
         <h3>HAVING</h3>
@@ -2482,13 +2660,15 @@
         <p><code>HAVING</code> expressions have the same evaluation rules as projections from grouped
           queries, as described in the following section.</p>
         <p>An example of the use of <code>HAVING</code> is given below.</p>
-        <pre class="query">PREFIX : &lt;http://data.example/&gt;
-          SELECT (AVG(?size) AS ?asize)
-          WHERE {
-          ?x :size ?size
-          }
-          GROUP BY ?x
-          HAVING(AVG(?size) &gt; 10)</pre>
+        <pre class="query">
+PREFIX : &lt;http://data.example/&gt;
+SELECT (AVG(?size) AS ?asize)
+WHERE {
+    ?x :size ?size
+}
+GROUP BY ?x
+HAVING(AVG(?size) &gt; 10)
+        </pre>
         <p>This will return average sizes, grouped by the subject, but only where the mean size is
           greater than 10.</p>
       </section>
@@ -2500,12 +2680,14 @@
           from the level.</p>
         <p>For example, the following query is legal as ?x is given as a <code>GROUP BY</code>
           term.</p>
-        <pre class="query">PREFIX : &lt;http://example.com/data/#&gt;
-          SELECT ?x (MIN(?y) * 2 AS ?min)
-          WHERE {
-          ?x :p ?y .
-          ?x :q ?z .
-          } GROUP BY ?x (STR(?z))</pre>
+        <pre class="query">
+PREFIX : &lt;http://example.com/data/#&gt;
+SELECT ?x (MIN(?y) * 2 AS ?min)
+WHERE {
+    ?x :p ?y .
+    ?x :q ?z .
+} GROUP BY ?x (STR(?z))
+        </pre>
         <p>Note that it would not be legal to project <code>STR(?z)</code> as this is not a simple
           variable expression. However, with <code>GROUP BY (STR(?z) AS ?strZ)</code> it would be
           possible to project <code>?strZ</code>.</p>
@@ -2518,18 +2700,21 @@
         <p>This section shows an example query using aggregation, which demonstrates how errors are
           handled in results, in the presence of aggregates.</p>
         <p>Data:</p>
-        <pre class="data">@prefix : &lt;http://example.com/data/#&gt; .
+        <pre class="data">
+@prefix : &lt;http://example.com/data/#&gt; .
 
-          :x :p 1, 2, 3, 4 .
-          :y :p 1, _:b2, 3, 4 .
-          :z :p 1.0, 2.0, 3.0, 4 .</pre>
+:x :p 1, 2, 3, 4 .
+:y :p 1, _:b2, 3, 4 .
+:z :p 1.0, 2.0, 3.0, 4 .
+        </pre>
         <p>Query:</p>
-        <pre class="query">PREFIX : &lt;http://example.com/data/#&gt;
-          SELECT ?g (AVG(?p) AS ?avg) ((MIN(?p) + MAX(?p)) / 2 AS ?c)
-          WHERE {
-          ?g :p ?p .
-          }
-          GROUP BY ?g</pre>
+        <pre class="query">
+PREFIX : &lt;http://example.com/data/#&gt;
+SELECT ?g (AVG(?p) AS ?avg) ((MIN(?p) + MAX(?p)) / 2 AS ?c)
+WHERE {
+    ?g :p ?p .
+}
+GROUP BY ?g</pre>
         <p>Result:</p>
         <div class="result">
           <table class="resultTable">
@@ -2574,27 +2759,32 @@
       <h3 id="subquery-example">Example</h3>
       <p>Data:</p>
       <div class="exampleGroup">
-        <pre class="data">@prefix : &lt;http://people.example/&gt; .
+        <pre class="data">
+@prefix : &lt;http://people.example/&gt; .
 
-          :alice :name "Alice", "Alice Foo", "A. Foo" .
-          :alice :knows :bob, :carol .
-          :bob :name "Bob", "Bob Bar", "B. Bar" .
-          :carol :name "Carol", "Carol Baz", "C. Baz" .</pre>
+:alice :name "Alice", "Alice Foo", "A. Foo" .
+:alice :knows :bob, :carol .
+:bob :name "Bob", "Bob Bar", "B. Bar" .
+:carol :name "Carol", "Carol Baz", "C. Baz" .
+        </pre>
         <p>Return a name (the one with the lowest sort order) for all the people that know Alice and
           have a name.</p>
         <p>Query:</p>
-        <pre class="query">PREFIX : &lt;http://people.example/&gt;
-          PREFIX : &lt;http://people.example/&gt;
-          SELECT ?y ?minName
-          WHERE {
-          :alice :knows ?y .
-          {
-          SELECT ?y (MIN(?name) AS ?minName)
-          WHERE {
+        <pre class="query">
+PREFIX : &lt;http://people.example/&gt;
+PREFIX : &lt;http://people.example/&gt;
+
+SELECT ?y ?minName
+WHERE {
+    :alice :knows ?y .
+    {
+      SELECT ?y (MIN(?name) AS ?minName)
+      WHERE {
           ?y :name ?name .
-          } GROUP BY ?y
-          }
-          }</pre>
+      } GROUP BY ?y
+    }
+}
+        </pre>
       </div>
       <p>Results:</p>
       <div class="result">
@@ -2616,10 +2806,12 @@
         </table>
       </div>
       <p>This result is achieved by first evaluating the inner query:</p>
-      <pre class="query">SELECT ?y (MIN(?name) AS ?minName)
-        WHERE {
-        ?y :name ?name .
-        } GROUP BY ?y</pre>
+      <pre class="query">
+SELECT ?y (MIN(?name) AS ?minName)
+WHERE {
+    ?y :name ?name .
+} GROUP BY ?y
+</pre>
       <p>This produces the following solution sequence:</p>
       <div class="result">
         <table class="resultTable">
@@ -2690,23 +2882,26 @@
         </ul>
         <div class="exampleGroup">
           <b>Example 1:</b>
-          <pre class="data"># <b>Default graph</b>
-            @prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+          <pre class="data">
+# <b>Default graph</b>
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
 
-            &lt;http://example.org/bob&gt;    dc:publisher  "Bob" .
-            &lt;http://example.org/alice&gt;  dc:publisher  "Alice" .
+&lt;http://example.org/bob&gt;    dc:publisher  "Bob" .
+&lt;http://example.org/alice&gt;  dc:publisher  "Alice" .
           </pre>
-          <pre class="data"># <b>Named graph: http://example.org/bob</b>
-            @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+# <b>Named graph: http://example.org/bob</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a foaf:name "Bob" .
-            _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
+_:a foaf:name "Bob" .
+_:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
           </pre>
-          <pre class="data"># <b>Named graph: http://example.org/alice</b>
-            @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+# <b>Named graph: http://example.org/alice</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a foaf:name "Alice" .
-            _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
+_:a foaf:name "Alice" .
+_:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
           </pre>
         </div>
         <p>In this example, the default graph contains the names of the publishers of two named
@@ -2720,26 +2915,30 @@
           includes an RDF merge of the named graphs in the default graph, re-labeling blank nodes to
           keep them distinct.</p>
         <div class="exampleGroup">
-          <pre class="data"># <b>Default graph</b>
-            @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+# <b>Default graph</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:x foaf:name "Bob" .
-            _:x foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
+_:x foaf:name "Bob" .
+_:x foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
 
-            _:y foaf:name "Alice" .
-            _:y foaf:mbox &lt;mailto:alice@work.example.org&gt; .
+_:y foaf:name "Alice" .
+_:y foaf:mbox &lt;mailto:alice@work.example.org&gt; .
           </pre>
-          <pre class="data"># <b>Named graph: http://example.org/bob</b>
-            @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+# <b>Named graph: http://example.org/bob</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a foaf:name "Bob" .
-            _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
+_:a foaf:name "Bob" .
+_:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
           </pre>
-          <pre class="data"># <b>Named graph: http://example.org/alice</b>
-            @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+# <b>Named graph: http://example.org/alice</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a foaf:name "Alice" .
-            _:a foaf:mbox &lt;<a href="mailto:alice@work.example">mailto:alice@work.example</a>&gt; .</pre>
+_:a foaf:name "Alice" .
+_:a foaf:mbox &lt;<a href="mailto:alice@work.example">mailto:alice@work.example</a>&gt; .
+          </pre>
           <p>In an RDF merge, blank nodes in the merged graph are not shared with blank nodes from
             the graphs being merged.</p>
         </div>
@@ -2773,17 +2972,19 @@
           <p>In this example, the RDF Dataset contains a single default graph and no named
             graphs:</p>
           <div class="exampleGroup">
-            <pre class="data"><b># Default graph (located at http://example.org/foaf/aliceFoaf)
-              </b>@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+            <pre class="data">
+<b># Default graph (located at http://example.org/foaf/aliceFoaf)</b>
+@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-              _:a  foaf:name     "Alice" .
-              _:a  foaf:mbox     &lt;mailto:alice@work.example&gt; .
+_:a  foaf:name     "Alice" .
+_:a  foaf:mbox     &lt;mailto:alice@work.example&gt; .
             </pre>
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                SELECT  ?name
-                FROM    &lt;http://example.org/foaf/aliceFoaf&gt;
-                WHERE   { ?x foaf:name ?name }
+              <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT  ?name
+FROM    &lt;http://example.org/foaf/aliceFoaf&gt;
+WHERE   { ?x foaf:name ?name }
               </pre>
               <div class="result">
                 <div id="table102"></div>
@@ -2801,8 +3002,8 @@
             </div>
           </div>
           <p>If a query provides more than one <code>FROM</code> clause, providing more than one IRI
-            to indicate the default graph, then the default graph is the <a data-cite=
-                                                                            "RDF11-MT#graphdefs">RDF merge</a> of the graphs obtained from representations of the
+            to indicate the default graph, then the default graph is the 
+            <a data-cite="RDF11-MT#graphdefs">RDF merge</a> of the graphs obtained from representations of the
             resources identified by the given IRIs.</p>
         </section>
         <section id="namedGraphs">
@@ -2811,65 +3012,75 @@
               NAMED</code> clause. Each IRI is used to provide one named graph in the RDF Dataset. Using
             the same IRI in two or more <code>FROM NAMED</code> clauses results in one named graph with
             that IRI appearing in the dataset.</p>
-          <pre class="data"><b># Graph: http://example.org/bob</b>
-            @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+<b># Graph: http://example.org/bob</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a foaf:name "Bob" .
-            _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
+_:a foaf:name "Bob" .
+_:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
           </pre>
-          <pre class="data"><b># Graph: http://example.org/alice</b>
-            @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+<b># Graph: http://example.org/alice</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a foaf:name "Alice" .
-            _:a foaf:mbox &lt;mailto:alice@work.example&gt; .
+_:a foaf:name "Alice" .
+_:a foaf:mbox &lt;mailto:alice@work.example&gt; .
           </pre>
           <div class="queryGroup">
-            <pre class="query">...
-              FROM NAMED &lt;http://example.org/alice&gt;
-              FROM NAMED &lt;http://example.org/bob&gt;
-              ...</pre>
+            <pre class="query">
+...
+FROM NAMED &lt;http://example.org/alice&gt;
+FROM NAMED &lt;http://example.org/bob&gt;
+...
+            </pre>
           </div>
-          <p>The <code>FROM NAMED</code> syntax suggests that the IRI identifies the corresponding
+          <p>
+            The <code>FROM NAMED</code> syntax suggests that the IRI identifies the corresponding
             graph, but the relationship between an IRI and a graph in an RDF dataset is indirect. The
             IRI identifies a resource, and the resource is represented by a graph (or, more precisely:
-            by a document that serializes a graph). For <a data-cite="?WEBARCH#intro">further
-              details</a> see [[?WEBARCH]].</p>
+            by a document that serializes a graph). For 
+            <a data-cite="?WEBARCH#intro">further details</a> see [[?WEBARCH]].
+          </p>
         </section>
         <section id="specDataset">
           <h4>Combining FROM and FROM NAMED</h4>
           <p>The <code>FROM</code> clause and <code>FROM NAMED</code> clause can be used in the same
             query.</p>
           <div class="exampleGroup">
-            <pre class="data"># <b>Default graph (located at http://example.org/dft.ttl)
-              </b>@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+            <pre class="data">
+# <b>Default graph (located at http://example.org/dft.ttl)
+</b>@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
 
-              &lt;http://example.org/bob&gt;    dc:publisher  "Bob Hacker" .
-              &lt;http://example.org/alice&gt;  dc:publisher  "Alice Hacker" .
+&lt;http://example.org/bob&gt;    dc:publisher  "Bob Hacker" .
+&lt;http://example.org/alice&gt;  dc:publisher  "Alice Hacker" .
             </pre>
-            <pre class="data"># <b>Named graph: http://example.org/bob</b>
-              @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+            <pre class="data">
+# <b>Named graph: http://example.org/bob</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-              _:a foaf:name "Bob" .
-              _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
+_:a foaf:name "Bob" .
+_:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
             </pre>
-            <pre class="data"># <b>Named graph: http://example.org/alice</b>
-              @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+            <pre class="data">
+# <b>Named graph: http://example.org/alice</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-              _:a foaf:name "Alice" .
-              _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
+_:a foaf:name "Alice" .
+_:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
             </pre>
-            <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-              PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+            <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
 
-              SELECT ?who ?g ?mbox
-              FROM &lt;http://example.org/dft.ttl&gt;
-              FROM NAMED &lt;http://example.org/alice&gt;
-              FROM NAMED &lt;http://example.org/bob&gt;
-              WHERE
-              {
-              ?g dc:publisher ?who .
-              GRAPH ?g { ?x foaf:mbox ?mbox }
-              }
+SELECT ?who ?g ?mbox
+FROM &lt;http://example.org/dft.ttl&gt;
+FROM NAMED &lt;http://example.org/alice&gt;
+FROM NAMED &lt;http://example.org/bob&gt;
+WHERE
+{
+    ?g dc:publisher ?who .
+    GRAPH ?g { ?x foaf:mbox ?mbox }
+}
             </pre>
           </div>
           <p>The RDF Dataset for this query contains a default graph and two named graphs. The
@@ -2894,34 +3105,36 @@
           default graph.</p>
         <p>The following two graphs will be used in examples:</p>
         <div class="exampleGroup">
-          <pre class="data"><b># Named graph: http://example.org/foaf/aliceFoaf
-            </b>@prefix  foaf:     &lt;http://xmlns.com/foaf/0.1/&gt; .
-            @prefix  rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-            @prefix  rdfs:     &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+          <pre class="data">
+<b># Named graph: http://example.org/foaf/aliceFoaf
+</b>@prefix  foaf:     &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix  rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix  rdfs:     &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
 
-            _:a  foaf:name     "Alice" .
-            _:a  foaf:mbox     &lt;mailto:alice@work.example&gt; .
-            _:a  foaf:knows    _:b .
+_:a  foaf:name     "Alice" .
+_:a  foaf:mbox     &lt;mailto:alice@work.example&gt; .
+_:a  foaf:knows    _:b .
 
-            _:b  foaf:name     "Bob" .
-            _:b  foaf:mbox     &lt;mailto:bob@work.example&gt; .
-            _:b  foaf:nick     "Bobby" .
-            _:b  rdfs:seeAlso  &lt;http://example.org/foaf/bobFoaf&gt; .
+_:b  foaf:name     "Bob" .
+_:b  foaf:mbox     &lt;mailto:bob@work.example&gt; .
+_:b  foaf:nick     "Bobby" .
+_:b  rdfs:seeAlso  &lt;http://example.org/foaf/bobFoaf&gt; .
 
-            &lt;http://example.org/foaf/bobFoaf&gt;
-            rdf:type      foaf:PersonalProfileDocument .
+&lt;http://example.org/foaf/bobFoaf&gt;
+rdf:type      foaf:PersonalProfileDocument .
           </pre>
-          <pre class="data"><b># Named graph: http://example.org/foaf/bobFoaf
-            </b>@prefix  foaf:     &lt;http://xmlns.com/foaf/0.1/&gt; .
-            @prefix  rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-            @prefix  rdfs:     &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+          <pre class="data">
+<b># Named graph: http://example.org/foaf/bobFoaf</b>
+@prefix  foaf:     &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix  rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix  rdfs:     &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
 
-            _:z  foaf:mbox     &lt;mailto:bob@work.example&gt; .
-            _:z  rdfs:seeAlso  &lt;http://example.org/foaf/bobFoaf&gt; .
-            _:z  foaf:nick     "Robert" .
+_:z  foaf:mbox     &lt;mailto:bob@work.example&gt; .
+_:z  rdfs:seeAlso  &lt;http://example.org/foaf/bobFoaf&gt; .
+_:z  foaf:nick     "Robert" .
 
-            &lt;http://example.org/foaf/bobFoaf&gt;
-            rdf:type      foaf:PersonalProfileDocument .
+&lt;http://example.org/foaf/bobFoaf&gt;
+        rdf:type      foaf:PersonalProfileDocument .
           </pre>
         </div>
         <section id="accessByLabel">
@@ -2931,18 +3144,19 @@
             graph being matched. The graph pattern is matched with the active graph being each of the
             named graphs in the dataset.</p>
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+            <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
-              SELECT ?src ?bobNick
-              FROM NAMED &lt;http://example.org/foaf/aliceFoaf&gt;
-              FROM NAMED &lt;http://example.org/foaf/bobFoaf&gt;
-              WHERE
-              {
-              GRAPH ?src
-              { ?x foaf:mbox &lt;mailto:bob@work.example&gt; .
-              ?x foaf:nick ?bobNick
-              }
-              }
+SELECT ?src ?bobNick
+FROM NAMED &lt;http://example.org/foaf/aliceFoaf&gt;
+FROM NAMED &lt;http://example.org/foaf/bobFoaf&gt;
+WHERE
+{
+    GRAPH ?src
+    { ?x foaf:mbox &lt;mailto:bob@work.example&gt; .
+      ?x foaf:nick ?bobNick
+    }
+}
             </pre>
             <p>The query result gives the name of the graphs where the information was found and the
               value for Bob's nick:</p>
@@ -2973,18 +3187,20 @@
             IRI. This sets the active graph to the graph named by the IRI. This query looks for Bob's
             nick as given in the graph <code>http://example.org/foaf/bobFoaf</code>.</p>
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-              PREFIX data: &lt;http://example.org/foaf/&gt;
+            <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX data: &lt;http://example.org/foaf/&gt;
 
-              SELECT ?nick
-              FROM NAMED &lt;http://example.org/foaf/aliceFoaf&gt;
-              FROM NAMED &lt;http://example.org/foaf/bobFoaf&gt;
-              WHERE
-              {
-              GRAPH data:bobFoaf {
-              ?x foaf:mbox &lt;mailto:bob@work.example&gt; .
-              ?x foaf:nick ?nick }
-              }
+SELECT ?nick
+FROM NAMED &lt;http://example.org/foaf/aliceFoaf&gt;
+FROM NAMED &lt;http://example.org/foaf/bobFoaf&gt;
+WHERE
+{
+    GRAPH data:bobFoaf {
+        ?x foaf:mbox &lt;mailto:bob@work.example&gt; .
+        ?x foaf:nick ?nick 
+    }
+}
             </pre>
             <p>which yields a single solution:</p>
             <div class="result">
@@ -3015,29 +3231,27 @@
             blank node used to match for variable <code>whom</code> from Alice's FOAF file is not the
             same as the blank node in the profile document (they are in different graphs).</p>
           <div class="queryGroup">
-            <pre class="query">PREFIX  data:  &lt;http://example.org/foaf/&gt;
-              PREFIX  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
-              PREFIX  rdfs:  &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            <pre class="query">
+PREFIX  data:  &lt;http://example.org/foaf/&gt;
+PREFIX  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX  rdfs:  &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
-              SELECT ?mbox ?nick ?ppd
-              FROM NAMED &lt;http://example.org/foaf/aliceFoaf&gt;
-              FROM NAMED &lt;http://example.org/foaf/bobFoaf&gt;
-              WHERE
-              {
-              GRAPH data:aliceFoaf
-              {
-              ?alice foaf:mbox &lt;mailto:alice@work.example&gt; ;
-              foaf:knows ?whom .
-              ?whom  foaf:mbox ?mbox ;
-              rdfs:seeAlso ?ppd .
-              ?ppd  a foaf:PersonalProfileDocument .
-              } .
-              GRAPH ?ppd
-              {
-              ?w foaf:mbox ?mbox ;
-              foaf:nick ?nick
-              }
-              }
+SELECT ?mbox ?nick ?ppd
+FROM NAMED &lt;http://example.org/foaf/aliceFoaf&gt;
+FROM NAMED &lt;http://example.org/foaf/bobFoaf&gt;
+WHERE {
+    GRAPH data:aliceFoaf {
+        ?alice foaf:mbox &lt;mailto:alice@work.example&gt; ;
+               foaf:knows ?whom .
+        ?whom  foaf:mbox ?mbox ;
+               rdfs:seeAlso ?ppd .
+        ?ppd  a foaf:PersonalProfileDocument .
+    }
+    GRAPH ?ppd {
+        ?w foaf:mbox ?mbox ;
+           foaf:nick ?nick
+    }
+}
             </pre>
             <div class="result">
               <div id="table107"></div>
@@ -3073,50 +3287,53 @@
             information about them.</p>
           <p>RDF Dataset:</p>
           <div class="exampleGroup">
-            <pre class="data"># <b>Default graph</b>
-              @prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
-              @prefix g:  &lt;tag:example.org,2005-06-06:&gt; .
-              @prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+            <pre class="data">
+# <b>Default graph</b>
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix g:  &lt;tag:example.org,2005-06-06:&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
-              g:graph1 dc:publisher "Bob" .
-              g:graph1 dc:date "2004-12-06"^^xsd:date .
+g:graph1 dc:publisher "Bob" .
+g:graph1 dc:date "2004-12-06"^^xsd:date .
 
-              g:graph2 dc:publisher "Bob" .
-              g:graph2 dc:date "2005-01-10"^^xsd:date .
+g:graph2 dc:publisher "Bob" .
+g:graph2 dc:date "2005-01-10"^^xsd:date .
             </pre>
             <pre class="data">
-              # <b>Graph: locally allocated IRI: tag:example.org,2005-06-06:graph1</b>
-              @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+# <b>Graph: locally allocated IRI: tag:example.org,2005-06-06:graph1</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-              _:a foaf:name "Alice" .
-              _:a foaf:mbox &lt;mailto:alice@work.example&gt; .
+_:a foaf:name "Alice" .
+_:a foaf:mbox &lt;mailto:alice@work.example&gt; .
 
-              _:b foaf:name "Bob" .
-              _:b foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
+_:b foaf:name "Bob" .
+_:b foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
             </pre>
             <pre class="data">
-              # <b>Graph: locally allocated IRI: tag:example.org,2005-06-06:graph2</b>
-              @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+# <b>Graph: locally allocated IRI: tag:example.org,2005-06-06:graph2</b>
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-              _:a foaf:name "Alice" .
-              _:a foaf:mbox &lt;mailto:alice@work.example&gt; .
+_:a foaf:name "Alice" .
+_:a foaf:mbox &lt;mailto:alice@work.example&gt; .
 
-              _:b foaf:name "Bob" .
-              _:b foaf:mbox &lt;mailto:bob@newcorp.example.org&gt; .
+_:b foaf:name "Bob" .
+_:b foaf:mbox &lt;mailto:bob@newcorp.example.org&gt; .
             </pre>
             <p>This query finds email addresses, detailing the name of the person and the date the
               information was discovered.</p>
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+              <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
 
-                SELECT ?name ?mbox ?date
-                WHERE
-                {  ?g dc:publisher ?name ;
-                dc:date ?date .
-                GRAPH ?g
-                { ?person foaf:name ?name ; foaf:mbox ?mbox }
-                }
+SELECT ?name ?mbox ?date
+WHERE {
+   ?g dc:publisher ?name ;
+      dc:date ?date .
+   GRAPH ?g { 
+       ?person foaf:name ?name ; foaf:mbox ?mbox
+   }
+}
               </pre>
               <p>The results show that the email address for "Bob" has changed.</p>
               <div class="result">
@@ -3193,33 +3410,36 @@
           <code>DESC()</code> modifier).</p>
         <div class="exampleGroup">
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
 
-              SELECT ?name
-              WHERE { ?x foaf:name ?name }
-              ORDER BY ?name
+SELECT ?name
+WHERE { ?x foaf:name ?name }
+ORDER BY ?name
             </pre>
           </div>
         </div>
         <div class="exampleGroup">
           <div class="queryGroup">
-            <pre class="query">PREFIX     :    &lt;http://example.org/ns#&gt;
-              PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+            <pre class="query">
+PREFIX     :    &lt;http://example.org/ns#&gt;
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
 
-              SELECT ?name
-              WHERE { ?x foaf:name ?name ; :empId ?emp }
-              ORDER BY DESC(?emp)
+SELECT ?name
+WHERE { ?x foaf:name ?name ; :empId ?emp }
+ORDER BY DESC(?emp)
             </pre>
           </div>
         </div>
         <div class="exampleGroup">
           <div class="queryGroup">
-            <pre class="query">PREFIX     :    &lt;http://example.org/ns#&gt;
-              PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+            <pre class="query">
+PREFIX     :    &lt;http://example.org/ns#&gt;
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
 
-              SELECT ?name
-              WHERE { ?x foaf:name ?name ; :empId ?emp }
-              ORDER BY ?name DESC(?emp)
+SELECT ?name
+WHERE { ?x foaf:name ?name ; :empId ?emp }
+ORDER BY ?name DESC(?emp)
             </pre>
           </div>
         </div>
@@ -3323,19 +3543,21 @@
         <p>The following example shows a query to extract just the names of people described in an
           RDF graph using FOAF properties.</p>
         <div class="exampleGroup">
-          <pre class="data">@prefix foaf:        &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+@prefix foaf:        &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a  foaf:name       "Alice" .
-            _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+_:a  foaf:name       "Alice" .
+_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
 
-            _:b  foaf:name       "Bob" .
-            _:b  foaf:mbox       &lt;mailto:bob@work.example&gt; .
+_:b  foaf:name       "Bob" .
+_:b  foaf:mbox       &lt;mailto:bob@work.example&gt; .
           </pre>
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?name
-              WHERE
-              { ?x foaf:name ?name }
+            <pre class="query">
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name
+WHERE
+{ ?x foaf:name ?name }
             </pre>
             <div class="result">
               <table class="resultTable">
@@ -3361,21 +3583,23 @@
           will preserve duplicate solutions.</p>
         <div class="exampleGroup">
           <p>Data:</p>
-          <pre class="data">@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:x    foaf:name   "Alice" .
-            _:x    foaf:mbox   &lt;mailto:alice@example.com&gt; .
+_:x    foaf:name   "Alice" .
+_:x    foaf:mbox   &lt;mailto:alice@example.com&gt; .
 
-            _:y    foaf:name   "Alice" .
-            _:y    foaf:mbox   &lt;mailto:asmith@example.com&gt; .
+_:y    foaf:name   "Alice" .
+_:y    foaf:mbox   &lt;mailto:asmith@example.com&gt; .
 
-            _:z    foaf:name   "Alice" .
-            _:z    foaf:mbox   &lt;mailto:alice.smith@example.com&gt; .
+_:z    foaf:name   "Alice" .
+_:z    foaf:mbox   &lt;mailto:alice.smith@example.com&gt; .
           </pre>
           <div class="queryGroup">
             <p>Query:</p>
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-              SELECT ?name WHERE { ?x foaf:name ?name }
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name WHERE { ?x foaf:name ?name }
             </pre>
             <div class="result">
               <p>Results:</p>
@@ -3405,8 +3629,9 @@
               solution solution that binds the same variables to the same RDF terms is returned from
               the query.</p>
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-                SELECT DISTINCT ?name WHERE { ?x foaf:name ?name }
+              <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT DISTINCT ?name WHERE { ?x foaf:name ?name }
               </pre>
               <div class="result">
                 <table class="resultTable">
@@ -3434,8 +3659,9 @@
               no <code>DISTINCT</code> or <code>REDUCED</code> modifier. For example, using the data
               above, the query</p>
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-                SELECT REDUCED ?name WHERE { ?x foaf:name ?name }
+              <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT REDUCED ?name WHERE { ?x foaf:name ?name }
               </pre>
               <p>may have one, two (shown here) or three solutions:</p>
               <div class="result">
@@ -3466,13 +3692,15 @@
             BY</code>.</p>
         <div class="exampleGroup">
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
 
-              SELECT  ?name
-              WHERE   { ?x foaf:name ?name }
-              ORDER BY ?name
-              LIMIT   5
-              OFFSET  10</pre>
+SELECT  ?name
+WHERE   { ?x foaf:name ?name }
+ORDER BY ?name
+LIMIT   5
+OFFSET  10
+            </pre>
           </div>
         </div>
       </section>
@@ -3483,11 +3711,12 @@
           limit, then at most the limit number of solutions will be returned.</p>
         <div class="exampleGroup">
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
 
-              SELECT ?name
-              WHERE { ?x foaf:name ?name }
-              LIMIT 20
+SELECT ?name
+WHERE { ?x foaf:name ?name }
+LIMIT 20
             </pre>
           </div>
         </div>
@@ -3538,25 +3767,28 @@
           <p>Use of <code>SELECT *</code> is only permitted when the query does not have a
             <code>GROUP BY</code> clause.</p>
           <div class="exampleGroup">
-            <pre class="data">@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+            <pre class="data">
+@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-              _:a    foaf:name   "Alice" .
-              _:a    foaf:knows  _:b .
-              _:a    foaf:knows  _:c .
+_:a    foaf:name   "Alice" .
+_:a    foaf:knows  _:b .
+_:a    foaf:knows  _:c .
 
-              _:b    foaf:name   "Bob" .
+_:b    foaf:name   "Bob" .
 
-              _:c    foaf:name   "Clare" .
-              _:c    foaf:nick   "CT" .           </pre>
+_:c    foaf:name   "Clare" .
+_:c    foaf:nick   "CT" .         
+            </pre>
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-                SELECT ?nameX ?nameY ?nickY
-                WHERE
-                { ?x foaf:knows ?y ;
-                foaf:name ?nameX .
-                ?y foaf:name ?nameY .
-                OPTIONAL { ?y foaf:nick ?nickY }
-                }</pre>
+              <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?nameX ?nameY ?nickY
+WHERE
+{ ?x foaf:knows ?y ;
+  foaf:name ?nameX .
+  ?y foaf:name ?nameY .
+  OPTIONAL { ?y foaf:nick ?nickY }
+}</pre>
               <div class="result">
                 <div id="table33"></div>
                 <table class="resultTable">
@@ -3583,56 +3815,60 @@
                 JSON, XML, CSV or TSV.</p>
               <p>[[[?SPARQL11-RESULTS-JSON]]]:</p>
               <div class="result">
-                <pre class="resultSet">{
-                  "head": {
-                  "vars": [ "nameX" , "nameY" , "nickY" ]
-                  } ,
-                  "results": {
-                  "bindings": [
-                  {
-                  "nameX": { "type": "literal" , "value": "Alice" } ,
-                  "nameY": { "type": "literal" , "value": "Bob" }
-                  } ,
-                  {
-                  "nameX": { "type": "literal" , "value": "Alice" } ,
-                  "nameY": { "type": "literal" , "value": "Clare" } ,
-                  "nickY": { "type": "literal" , "value": "CT" }
-                  }
-                  ]
-                  }
-                  }</pre>
+                <pre class="resultSet">
+{
+    "head": {
+        "vars": [ "nameX" , "nameY" , "nickY" ]
+    } ,
+    "results": {
+        "bindings": [
+          {
+            "nameX": { "type": "literal" , "value": "Alice" } ,
+            "nameY": { "type": "literal" , "value": "Bob" }
+          } ,
+          {
+            "nameX": { "type": "literal" , "value": "Alice" } ,
+            "nameY": { "type": "literal" , "value": "Clare" } ,
+            "nickY": { "type": "literal" , "value": "CT" }
+          }
+        ]
+    }
+}
+                </pre>
               </div>
               <p>[[[?RDF-SPARQL-XMLRES]]]:</p>
               <div class="result">
-                <pre class="resultSet">&lt;?xml version="1.0"?&gt;
-                  &lt;sparql xmlns="http://www.w3.org/2005/sparql-results#"&gt;
-                  &lt;head&gt;
-                  &lt;variable name="nameX"/&gt;
-                  &lt;variable name="nameY"/&gt;
-                  &lt;variable name="nickY"/&gt;
-                  &lt;/head&gt;
-                  &lt;results&gt;
-                  &lt;result&gt;
-                  &lt;binding name="nameX"&gt;
-                  &lt;literal&gt;Alice&lt;/literal&gt;
-                  &lt;/binding&gt;
-                  &lt;binding name="nameY"&gt;
-                  &lt;literal&gt;Bob&lt;/literal&gt;
-                  &lt;/binding&gt;
-                  &lt;/result&gt;
-                  &lt;result&gt;
-                  &lt;binding name="nameX"&gt;
-                  &lt;literal&gt;Alice&lt;/literal&gt;
-                  &lt;/binding&gt;
-                  &lt;binding name="nameY"&gt;
-                  &lt;literal&gt;Clare&lt;/literal&gt;
-                  &lt;/binding&gt;
-                  &lt;binding name="nickY"&gt;
-                  &lt;literal&gt;CT&lt;/literal&gt;
-                  &lt;/binding&gt;
-                  &lt;/result&gt;
-                  &lt;/results&gt;
-                  &lt;/sparql&gt;</pre>
+                <pre class="resultSet">
+&lt;?xml version="1.0"?&gt;
+&lt;sparql xmlns="http://www.w3.org/2005/sparql-results#"&gt;
+&lt;head&gt;
+&lt;variable name="nameX"/&gt;
+&lt;variable name="nameY"/&gt;
+&lt;variable name="nickY"/&gt;
+&lt;/head&gt;
+&lt;results&gt;
+&lt;result&gt;
+&lt;binding name="nameX"&gt;
+&lt;literal&gt;Alice&lt;/literal&gt;
+&lt;/binding&gt;
+&lt;binding name="nameY"&gt;
+&lt;literal&gt;Bob&lt;/literal&gt;
+&lt;/binding&gt;
+&lt;/result&gt;
+&lt;result&gt;
+&lt;binding name="nameX"&gt;
+&lt;literal&gt;Alice&lt;/literal&gt;
+&lt;/binding&gt;
+&lt;binding name="nameY"&gt;
+&lt;literal&gt;Clare&lt;/literal&gt;
+&lt;/binding&gt;
+&lt;binding name="nickY"&gt;
+&lt;literal&gt;CT&lt;/literal&gt;
+&lt;/binding&gt;
+&lt;/result&gt;
+&lt;/results&gt;
+&lt;/sparql&gt;
+                </pre>
               </div>
             </div>
           </div>
@@ -3651,26 +3887,29 @@
           <p>Example:</p>
           <div class="exampleGroup">
             <p>Data:</p>
-            <pre class="data">@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-              @prefix :     &lt;http://example.org/book/&gt; .
-              @prefix ns:   &lt;http://example.org/ns#&gt; .
+            <pre class="data">
+@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix :     &lt;http://example.org/book/&gt; .
+@prefix ns:   &lt;http://example.org/ns#&gt; .
 
-              :book1  dc:title  "SPARQL Tutorial" .
-              :book1  ns:price  42 .
-              :book1  ns:discount 0.2 .
+:book1  dc:title  "SPARQL Tutorial" .
+:book1  ns:price  42 .
+:book1  ns:discount 0.2 .
 
-              :book2  dc:title  "The Semantic Web" .
-              :book2  ns:price  23 .
-              :book2  ns:discount 0.25 .</pre>
+:book2  dc:title  "The Semantic Web" .
+:book2  ns:price  23 .
+:book2  ns:discount 0.25 .</pre>
             <p>Query:</p>
             <div class="queryGroup">
-              <pre class="query">PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
-                PREFIX  ns:  &lt;http://example.org/ns#&gt;
-                SELECT  ?title (?p*(1-?discount) AS ?price)
-                { ?x ns:price ?p .
-                ?x dc:title ?title . 
-                ?x ns:discount ?discount 
-                }</pre>
+              <pre class="query">
+PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX  ns:  &lt;http://example.org/ns#&gt;
+SELECT  ?title (?p*(1-?discount) AS ?price)
+{ ?x ns:price ?p .
+  ?x dc:title ?title . 
+  ?x ns:discount ?discount 
+}
+              </pre>
               <p>Results:</p>
               <div class="result">
                 <table class="resultTable">
@@ -3696,13 +3935,15 @@
             syntactically, in the same SELECT clause:</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
-                PREFIX  ns:  &lt;http://example.org/ns#&gt;
-                SELECT  ?title (?p AS ?fullPrice) (?fullPrice*(1-?discount) AS ?customerPrice)
-                { ?x ns:price ?p .
-                ?x dc:title ?title . 
-                ?x ns:discount ?discount 
-                }</pre>
+              <pre class="query">
+PREFIX  dc:  &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX  ns:  &lt;http://example.org/ns#&gt;
+SELECT  ?title (?p AS ?fullPrice) (?fullPrice*(1-?discount) AS ?customerPrice)
+{ ?x ns:price ?p .
+  ?x dc:title ?title . 
+  ?x ns:discount ?discount 
+}
+              </pre>
               <p>Results:</p>
               <div class="result">
                 <table class="resultTable">
@@ -3741,23 +3982,25 @@
           (known as ground or explicit triples), and these also appear in the output RDF graph returned
           by the CONSTRUCT query form.</p>
         <div class="exampleGroup">
-          <pre class="data">@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a    foaf:name   "Alice" .
-            _:a    foaf:mbox   &lt;mailto:alice@example.org&gt; .
+_:a    foaf:name   "Alice" .
+_:a    foaf:mbox   &lt;mailto:alice@example.org&gt; .
           </pre>
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-              PREFIX vcard:   &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt;
-              CONSTRUCT   { &lt;http://example.org/person#Alice&gt; vcard:FN ?name }
-              WHERE       { ?x foaf:name ?name }
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX vcard:   &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt;
+CONSTRUCT   { &lt;http://example.org/person#Alice&gt; vcard:FN ?name }
+WHERE       { ?x foaf:name ?name }
             </pre>
             <p>creates vcard properties from the FOAF information:</p>
             <div class="result">
               <pre class="resultGraph" style="text-align:left;">
-                @prefix vcard: &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt; .
+@prefix vcard: &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt; .
 
-                &lt;http://example.org/person#Alice&gt; vcard:FN "Alice" .
+&lt;http://example.org/person#Alice&gt; vcard:FN "Alice" .
               </pre>
             </div>
           </div>
@@ -3769,39 +4012,41 @@
             then there will be one blank node created for each query solution, but there will be
             different blank nodes for triples generated by different query solutions.</p>
           <div class="exampleGroup">
-            <pre class="data">@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+            <pre class="data">
+@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-              _:a    foaf:givenname   "Alice" .
-              _:a    foaf:family_name "Hacker" .
+_:a    foaf:givenname   "Alice" .
+_:a    foaf:family_name "Hacker" .
 
-              _:b    foaf:firstname   "Bob" .
-              _:b    foaf:surname     "Hacker" .
+_:b    foaf:firstname   "Bob" .
+_:b    foaf:surname     "Hacker" .
             </pre>
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-                PREFIX vcard:   &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt;
+              <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX vcard:   &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt;
 
-                CONSTRUCT { ?x  vcard:N _:v .
-                _:v vcard:givenName ?gname .
-                _:v vcard:familyName ?fname }
-                WHERE
-                {
-                { ?x foaf:firstname ?gname } UNION  { ?x foaf:givenname   ?gname } .
-                { ?x foaf:surname   ?fname } UNION  { ?x foaf:family_name ?fname } .
-                }
+CONSTRUCT {
+     ?x  vcard:N _:v .
+    _:v vcard:givenName ?gname .
+    _:v vcard:familyName ?fname
+} WHERE {
+    { ?x foaf:firstname ?gname } UNION  { ?x foaf:givenname   ?gname } .
+    { ?x foaf:surname   ?fname } UNION  { ?x foaf:family_name ?fname } .
+}
               </pre>
               <p>creates vcard properties corresponding to the FOAF information:</p>
               <div class="result">
-                <pre class="resultGraph" style="text-align:left;">
-                  @prefix vcard: &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt; .
+                <pre class="resultGraph">
+@prefix vcard: &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt; .
 
-                  _:v1 vcard:N         _:x .
-                  _:x vcard:givenName  "Alice" .
-                  _:x vcard:familyName "Hacker" .
+_:v1 vcard:N         _:x .
+_:x vcard:givenName  "Alice" .
+_:x vcard:familyName "Hacker" .
 
-                  _:v2 vcard:N         _:z .
-                  _:z vcard:givenName  "Bob" .
-                  _:z vcard:familyName "Hacker" .
+_:v2 vcard:N         _:z .
+_:z vcard:givenName  "Bob" .
+_:z vcard:familyName "Hacker" .
                 </pre>
               </div>
             </div>
@@ -3820,7 +4065,7 @@
           <div class="exampleGroup">
             <div class="queryGroup">
               <pre class="query">
-                CONSTRUCT { ?s ?p ?o } WHERE { GRAPH &lt;http://example.org/aGraph&gt; { ?s ?p ?o } . }
+CONSTRUCT { ?s ?p ?o } WHERE { GRAPH &lt;http://example.org/aGraph&gt; { ?s ?p ?o } . }
               </pre>
             </div>
           </div>
@@ -3829,17 +4074,18 @@
             the following one can extract one graph based on information about the named graph:</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">PREFIX  dc: &lt;http://purl.org/dc/elements/1.1/&gt;
-                PREFIX app: &lt;http://example.org/ns#&gt;
-                PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+              <pre class="query">
+PREFIX  dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX app: &lt;http://example.org/ns#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
-                CONSTRUCT { ?s ?p ?o } WHERE
-                {
-                GRAPH ?g { ?s ?p ?o } .
-                ?g dc:publisher &lt;http://www.w3.org/&gt; .
-                ?g dc:date ?date .
-                FILTER ( app:customDate(?date) &gt; "2005-02-28T00:00:00Z"^^xsd:dateTime ) .
-                }
+CONSTRUCT { ?s ?p ?o } WHERE
+{
+    GRAPH ?g { ?s ?p ?o } .
+    ?g dc:publisher &lt;http://www.w3.org/&gt; .
+    ?g dc:date ?date .
+    FILTER ( app:customDate(?date) &gt; "2005-02-28T00:00:00Z"^^xsd:dateTime ) .
+}
               </pre>
             </div>
           </div>
@@ -3854,34 +4100,37 @@
             names of the people with the top two sites, rated by hits. The triples in the RDF graph are
             not ordered.</p>
           <div class="exampleGroup">
-            <pre class="data">@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
-              @prefix site: &lt;http://example.org/stats#&gt; .
+            <pre class="data">
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix site: &lt;http://example.org/stats#&gt; .
 
-              _:a foaf:name "Alice" .
-              _:a site:hits 2349 .
+_:a foaf:name "Alice" .
+_:a site:hits 2349 .
 
-              _:b foaf:name "Bob" .
-              _:b site:hits 105 .
+_:b foaf:name "Bob" .
+_:b site:hits 105 .
 
-              _:c foaf:name "Eve" .
-              _:c site:hits 181 .
+_:c foaf:name "Eve" .
+_:c site:hits 181 .
             </pre>
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                PREFIX site: &lt;http://example.org/stats#&gt;
+              <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX site: &lt;http://example.org/stats#&gt;
 
-                CONSTRUCT { [] foaf:name ?name }
-                WHERE
-                { [] foaf:name ?name ;
-                site:hits ?hits .
-                }
-                ORDER BY desc(?hits)
-                LIMIT 2
+CONSTRUCT { [] foaf:name ?name }
+WHERE
+{ [] foaf:name ?name ;
+  site:hits ?hits .
+}
+ORDER BY desc(?hits)
+LIMIT 2
               </pre>
               <div class="result">
-                <pre class="resultGraph">@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
-                  _:x foaf:name "Alice" .
-                  _:y foaf:name "Eve" .
+                <pre class="resultGraph">
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+_:x foaf:name "Alice" .
+_:y foaf:name "Eve" .
                 </pre>
               </div>
             </div>
@@ -3894,14 +4143,16 @@
             <code>FILTER</code>s and no complex graph patterns are allowed in the short form). The
             keyword <code>WHERE</code> is required in the short form.</p>
           <p>The following two queries are the same; the first is a short form of the second.</p>
-          <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-            CONSTRUCT WHERE { ?x foaf:name ?name } 
+          <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+CONSTRUCT WHERE { ?x foaf:name ?name } 
           </pre>
-          <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+          <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
-            CONSTRUCT { ?x foaf:name ?name } 
-            WHERE
-            { ?x foaf:name ?name }
+CONSTRUCT { ?x foaf:name ?name } 
+WHERE
+{ ?x foaf:name ?name }
           </pre>
         </section>
       </section>
@@ -3911,17 +4162,19 @@
           a solution. No information is returned about the possible query solutions, just whether or
           not a solution exists.</p>
         <div class="exampleGroup">
-          <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+          <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-            _:a  foaf:name       "Alice" .
-            _:a  foaf:homepage   &lt;http://work.example.org/alice/&gt; .
+_:a  foaf:name       "Alice" .
+_:a  foaf:homepage   &lt;http://work.example.org/alice/&gt; .
 
-            _:b  foaf:name       "Bob" .
-            _:b  foaf:mbox       &lt;mailto:bob@work.example&gt; .
+_:b  foaf:name       "Bob" .
+_:b  foaf:mbox       &lt;mailto:bob@work.example&gt; .
           </pre>
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-              ASK  { ?x foaf:name  "Alice" }
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+ASK  { ?x foaf:name  "Alice" }
             </pre>
             <div class="result">
               <pre class="resultAsk">true</pre>
@@ -3939,9 +4192,12 @@
           <p>On the same data, the following returns no match because Alice's <code>mbox</code> is
             not mentioned.</p>
           <div class="queryGroup">
-            <pre class="query">PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
-              ASK  { ?x foaf:name  "Alice" ;
-              foaf:mbox  &lt;mailto:alice@work.example&gt; }
+            <pre class="query">
+PREFIX foaf:    &lt;http://xmlns.com/foaf/0.1/&gt;
+ASK  {
+   ?x foaf:name  "Alice" ;
+      foaf:mbox  &lt;mailto:alice@work.example&gt;
+}
             </pre>
             <div class="result">
               <pre class="resultAsk">false</pre>
@@ -3967,7 +4223,8 @@
             clause:</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">DESCRIBE &lt;http://example.org/&gt;
+              <pre class="query">
+DESCRIBE &lt;http://example.org/&gt;
               </pre>
             </div>
           </div>
@@ -3979,9 +4236,10 @@
             by blank node in the dataset:</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
-                DESCRIBE ?x
-                WHERE    { ?x foaf:mbox &lt;mailto:alice@org&gt; }
+              <pre class="query">
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+DESCRIBE ?x
+WHERE    { ?x foaf:mbox &lt;mailto:alice@org&gt; }
               </pre>
             </div>
           </div>
@@ -3991,18 +4249,20 @@
             each is the union of all RDF graph descriptions.</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
-                DESCRIBE ?x
-                WHERE    { ?x foaf:name "Alice" }
+              <pre class="query">
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+DESCRIBE ?x
+WHERE    { ?x foaf:name "Alice" }
               </pre>
             </div>
           </div>
           <p>More than one IRI or variable can be given:</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
-                DESCRIBE ?x ?y &lt;http://example.org/&gt;
-                WHERE    {?x foaf:knows ?y}
+              <pre class="query">
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+DESCRIBE ?x ?y &lt;http://example.org/&gt;
+WHERE    {?x foaf:knows ?y}
               </pre>
             </div>
           </div>
@@ -4016,26 +4276,26 @@
           <p>A simple query such as</p>
           <div class="exampleGroup">
             <div class="queryGroup">
-              <pre class="query">PREFIX ent:  &lt;http://org.example.com/employees#&gt;
-                DESCRIBE ?x WHERE { ?x ent:employeeId "1234" }
+              <pre class="query">
+PREFIX ent:  &lt;http://org.example.com/employees#&gt;
+DESCRIBE ?x WHERE { ?x ent:employeeId "1234" }
               </pre>
               <p>might return a description of the employee and some other potentially useful
                 details:</p>
               <div class="result">
-                <pre class="resultGraph">@prefix foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
-                  @prefix vcard:  &lt;http://www.w3.org/2001/vcard-rdf/3.0&gt; .
-                  @prefix exOrg:  &lt;http://org.example.com/employees#&gt; .
-                  @prefix <code>rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-                    @prefix owl:    &lt;http://www.w3.org/2002/07/owl#&gt;</code>
+                <pre class="resultGraph">
+@prefix foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix vcard:  &lt;http://www.w3.org/2001/vcard-rdf/3.0&gt; .
+@prefix exOrg:  &lt;http://org.example.com/employees#&gt; .
+@prefix rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix owl:    &lt;http://www.w3.org/2002/07/owl#&gt;
 
-                  _:a     exOrg:employeeId    "1234" ;
-                  
-                  <code>foaf:mbox_sha1sum   "bee135d3af1e418104bc42904596fe148e90f033" ;</code>
-                  vcard:N
-                  [ vcard:Family       "Smith" ;
-                  vcard:Given        "John"  ] .
-
-                  <code>foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .</code>
+_:a     exOrg:employeeId    "1234" ;
+        foaf:mbox_sha1sum   "bee135d3af1e418104bc42904596fe148e90f033" ;
+        vcard:N
+          [ vcard:Family       "Smith" ;
+            vcard:Given        "John"  ] .
+foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
                 </pre>
               </div>
             </div>
@@ -4065,28 +4325,32 @@
         <div>
           datatype IRI
         </div>:
-        <pre class="data">@prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
-          @prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
+        <pre class="data">
+@prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
+@prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
 
-          _:a   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
-          _:a   dc:date       "2004-12-31T19:00:00-05:00" .
+_:a   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
+_:a   dc:date       "2004-12-31T19:00:00-05:00" .
 
-          _:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
-          _:b   dc:date       "2004-12-31T19:01:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
+_:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
+_:b   dc:date       "2004-12-31T19:01:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
         <p>The object of the first <code>dc:date</code> triple has no type information. The second
           has the datatype <code>xsd:dateTime</code>.</p>
         <p>SPARQL expressions are constructed according to the grammar and provide access to
           functions (named by IRI) and operator functions (invoked by keywords and symbols in the
           SPARQL grammar). SPARQL operators can be used to compare the values of typed literals:</p>
         <div class="queryGroup">
-          <pre class="query">PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
-            PREFIX dc:     &lt;http://purl.org/dc/elements/1.1/&gt;
-            PREFIX xsd:    &lt;http://www.w3.org/2001/XMLSchema#&gt;
+          <pre class="query">
+PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
+PREFIX dc:     &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX xsd:    &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
-            SELECT ?annot
-            WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
-            ?annot  dc:date      ?date .
-            FILTER ( ?date &gt; "2005-01-01T00:00:00Z"^^xsd:dateTime ) }</pre>
+SELECT ?annot
+WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
+        ?annot  dc:date      ?date .
+        FILTER ( ?date &gt; "2005-01-01T00:00:00Z"^^xsd:dateTime ) 
+}
+          </pre>
         </div>
       </div>
       <p>The SPARQL operators are listed in <a href="#OperatorMapping">section 17.3</a> and are
@@ -4094,7 +4358,7 @@
       <p>In addition, SPARQL provides the ability to invoke arbitrary functions, including a subset
         of the XPath casting functions, listed in <a href="#FunctionMapping">section 17.5</a>. These
         functions are invoked by name (an IRI) within a SPARQL query. For example:</p>
-      <pre class="query untested">
+      <pre class="query">
         ... FILTER ( xsd:dateTime(?date) &lt; xsd:dateTime("2005-01-01T00:00:00Z") ) ...</pre>
       <p>Typographical convention in this section: XPath operators are labeled with the prefix
         <code>op:</code>. XPath operators have no namespace; <code>op:</code> is a labeling
@@ -4979,22 +5243,27 @@
               otherwise. Variables with the value NaN or INF are considered bound.</p>
             <div class="exampleGroup">
               <p>Data:</p>
-              <pre class="data">@prefix foaf:        &lt;http://xmlns.com/foaf/0.1/&gt; .
-                @prefix dc:          &lt;http://purl.org/dc/elements/1.1/&gt; .
-                @prefix xsd:          &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+              <pre class="data">
+@prefix foaf:        &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix dc:          &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix xsd:          &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
-                _:a  foaf:givenName  "Alice".
+_:a  foaf:givenName  "Alice".
 
-                _:b  foaf:givenName  "Bob" .
-                _:b  dc:date         "2005-04-04T04:04:04Z"^^xsd:dateTime .</pre>
+_:b  foaf:givenName  "Bob" .
+_:b  dc:date         "2005-04-04T04:04:04Z"^^xsd:dateTime .
+              </pre>
               <div class="queryGroup">
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
-                  PREFIX xsd:   &lt;http://www.w3.org/2001/XMLSchema#&gt;
-                  SELECT ?givenName
-                  WHERE { ?x foaf:givenName  ?givenName .
-                  OPTIONAL { ?x dc:date ?date } .
-                  FILTER ( bound(?date) ) }
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX xsd:   &lt;http://www.w3.org/2001/XMLSchema#&gt;
+SELECT ?givenName
+WHERE {
+   ?x foaf:givenName  ?givenName .
+   OPTIONAL { ?x dc:date ?date } .
+   FILTER ( bound(?date) )
+}
                 </pre>
                 <p>Query result:</p>
                 <div class="result">
@@ -5026,12 +5295,16 @@
               <div class="queryGroup">
                 <p>This query matches the people with a <code>name</code> but <em>no</em> expressed
                   <code>date</code>:</p>
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
-                  SELECT ?name
-                  WHERE { ?x foaf:givenName  ?name .
-                  OPTIONAL { ?x dc:date ?date } .
-                  FILTER (!bound(?date)) }</pre>
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+SELECT ?name
+WHERE { 
+    ?x foaf:givenName  ?name .
+    OPTIONAL { ?x dc:date ?date } .
+    FILTER (!bound(?date))
+ }
+                </pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -5091,8 +5364,10 @@
           </section>
           <section id="func-coalesce">
             <h5>COALESCE</h5>
-            <pre class="prototype"><span class="return">rdfTerm</span>  <span class=
-                                                                              "operator">COALESCE</span>(<span class="expression">expression, ....</span>)</pre>
+            <pre class="prototype">
+              <span class="return">rdfTerm</span> <span class="operator">COALESCE</span>(<span
+class="expression">expression, ....</span>)
+            </pre>
             <p>The <code>COALESCE</code> function form returns the RDF term value of the first
               expression that evaluates without error. In SPARQL, evaluating an unbound variable raises
               an error.</p>
@@ -5134,19 +5409,20 @@
               dataset and the <a href="#defn_ActiveGraph">active graph</a> at this point in the query
               evaluation. No additional binding of variables occurs. The <code>NOT EXISTS</code> form
               translates into <code>fn:not(EXISTS{...})</code>.</p>
-            <pre class="prototype"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">NOT EXISTS</span> { <span class="pattern">pattern</span> }</pre>
+            <pre class="prototype"> 
+<span class="return">xsd:boolean</span>  <span class="operator">NOT EXISTS</span> { <span class="pattern">pattern</span> }
+            </pre>
             <p>Returns <code>false</code> if <code>pattern</code> matches. Returns true
               otherwise.</p>
             <p><code>NOT EXISTS { pattern }</code> is equivalent to <code>fn:not(EXISTS { pattern
                 })</code>.</p>
-            <pre class="prototype"> <span class=
-                                          "return">xsd:boolean</span>  <code>EXISTS</code> { <span class=
-                                                                                                   "pattern">pattern</span> }</pre>
+            <pre class="prototype"> 
+<span class="return">xsd:boolean</span> EXISTS { <span class="pattern">pattern</span> }
+            </pre>
             <p>Returns <code>true</code> if <code>pattern</code> matches. Returns false
               otherwise.</p>
-            <p>Variables in the <code>pattern</code> that are bound in the current <a data-cite=
-                                                                                      "SPARQL11-QUERY#defn_sparqlSolutionMapping">solution mapping</a> take the value that they
+            <p>Variables in the <code>pattern</code> that are bound in the current 
+              <a data-cite="SPARQL11-QUERY#defn_sparqlSolutionMapping">solution mapping</a> take the value that they
               have from the solution mapping. Variables in the pattern <code>pattern</code> that are
               not bound in the current solution mapping take part in pattern matching.</p>
             <p>To facilitate this, we introduce a function <a href="#defn_exists">Exists</a> that
@@ -5210,24 +5486,27 @@
               </li>
             </ul>
             <div class="exampleGroup">
-              <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+              <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-                _:a  foaf:name       "Alice".
-                _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+_:a  foaf:name       "Alice".
+_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
 
-                _:b  foaf:name       "Ms A.".
-                _:b  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+_:b  foaf:name       "Ms A.".
+_:b  foaf:mbox       &lt;mailto:alice@work.example&gt; .
               </pre>
               <div class="queryGroup">
                 <p>This query finds the people who have multiple <code>foaf:name</code> triples:</p>
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  SELECT ?name1 ?name2
-                  WHERE { ?x foaf:name  ?name1 ;
-                  foaf:mbox  ?mbox1 .
-                  ?y foaf:name  ?name2 ;
-                  foaf:mbox  ?mbox2 .
-                  FILTER (?mbox1 = ?mbox2 &amp;& ?name1 != ?name2)
-                  }</pre>
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name1 ?name2
+WHERE {
+    ?x foaf:name  ?name1 ;
+       foaf:mbox  ?mbox1 .
+    ?y foaf:name  ?name2 ;
+       foaf:mbox  ?mbox2 .
+    FILTER (?mbox1 = ?mbox2 &amp;& ?name1 != ?name2)
+}</pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -5254,21 +5533,24 @@
               equivalent values:</p>
             <div class="exampleGroup">
               <pre class="data">
-                @prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
-                @prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
+@prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
 
-                _:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
-                _:b   dc:date       "2004-12-31T19:00:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
+_:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
+_:b   dc:date       "2004-12-31T19:00:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
               <div class="queryGroup">
-                <pre class="query">PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
-                  PREFIX dc:     &lt;http://purl.org/dc/elements/1.1/&gt;
-                  PREFIX xsd:    &lt;http://www.w3.org/2001/XMLSchema#&gt;
+                <pre class="query">
+PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
+PREFIX dc:     &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX xsd:    &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
-                  SELECT ?annotates
-                  WHERE { ?annot  a:annotates  ?annotates .
-                  ?annot  dc:date      ?date .
-                  FILTER ( ?date = xsd:dateTime("2005-01-01T00:00:00Z") ) 
-                  }</pre>
+SELECT ?annotates
+WHERE {
+    ?annot  a:annotates  ?annotates .
+    ?annot  dc:date      ?date .
+    FILTER ( ?date = xsd:dateTime("2005-01-01T00:00:00Z") ) 
+}
+                </pre>
                 <div class="result">
                   <table class="resultTable">
                     <tbody>
@@ -5290,9 +5572,9 @@
                 (and non-identical lexical form and datatype IRI) returns an error, indicating that it
                 was unable to determine whether or not the values are equivalent. For example, an
                 unextended implementation will produce an error when testing either <span class=
-                                                                                          "queryExcerpt untested"><code>"iiii"^^my:romanNumeral =
+                                                                                          "queryExcerpt"><code>"iiii"^^my:romanNumeral =
                     "iv"^^my:romanNumeral</code></span> or <span class=
-                                                                 "queryExcerpt untested"><code>"iiii"^^my:romanNumeral !=
+                                                                 "queryExcerpt"><code>"iiii"^^my:romanNumeral !=
                     "iv"^^my:romanNumeral</code></span>.</p>
             </div>
           </section>
@@ -5306,23 +5588,28 @@
             <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
               defined in [[[RDF11-CONCEPTS]]] [[RDF11-CONCEPTS]]; returns FALSE otherwise.</p>
             <div class="exampleGroup">
-              <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+              <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-                _:a  foaf:name       "Alice".
-                _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+_:a  foaf:name       "Alice".
+_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
 
-                _:b  foaf:name       "Ms A.".
-                _:b  foaf:mbox       &lt;mailto:alice@work.example&gt; .</pre>
+_:b  foaf:name       "Ms A.".
+_:b  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+              </pre>
               <div class="queryGroup">
                 <p>This query finds the people who have multiple <code>foaf:name</code> triples:</p>
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  SELECT ?name1 ?name2
-                  WHERE { ?x foaf:name  ?name1 ;
-                  foaf:mbox  ?mbox1 .
-                  ?y foaf:name  ?name2 ;
-                  foaf:mbox  ?mbox2 .
-                  FILTER (sameTerm(?mbox1, ?mbox2) &amp;& !sameTerm(?name1, ?name2))
-                  } </pre>
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name1 ?name2
+WHERE {
+    ?x foaf:name  ?name1 ;
+       foaf:mbox  ?mbox1 .
+    ?y foaf:name  ?name2 ;
+       foaf:mbox  ?mbox2 .
+    FILTER (sameTerm(?mbox1, ?mbox2) &amp;& !sameTerm(?name1, ?name2))
+}
+                </pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -5348,34 +5635,40 @@
                                                                          "operator">sameTerm</span> can be used to test for non-equivalent <span class=
                                                                                                                                                  "type typedLiteral">typed literals</span> with unsupported datatypes:</p>
             <div class="exampleGroup">
-              <pre class="data">@prefix :          &lt;http://example.org/WMterms#&gt; .
-                @prefix t:         &lt;http://example.org/types#&gt; .
+              <pre class="data">
+@prefix :          &lt;http://example.org/WMterms#&gt; .
+@prefix t:         &lt;http://example.org/types#&gt; .
 
-                _:c1  :label        "Container 1" .
-                _:c1  :weight       "100"^^t:kilos .
-                _:c1  :displacement  "100"^^t:liters .
+_:c1  :label        "Container 1" .
+_:c1  :weight       "100"^^t:kilos .
+_:c1  :displacement  "100"^^t:liters .
 
-                _:c2  :label        "Container 2" .
-                _:c2  :weight       "100"^^t:kilos .
-                _:c2  :displacement  "85"^^t:liters .
+_:c2  :label        "Container 2" .
+_:c2  :weight       "100"^^t:kilos .
+_:c2  :displacement  "85"^^t:liters .
 
-                _:c3  :label        "Container 3" .
-                _:c3  :weight       "85"^^t:kilos .
-                _:c3  :displacement  "85"^^t:liters .</pre>
+_:c3  :label        "Container 3" .
+_:c3  :weight       "85"^^t:kilos .
+_:c3  :displacement  "85"^^t:liters .
+              </pre>
               <div class="queryGroup">
-                <pre class="query">PREFIX  :      &lt;http://example.org/WMterms#&gt;
-                  PREFIX  t:     &lt;http://example.org/types#&gt;
+                <pre class="query">
+PREFIX  :      &lt;http://example.org/WMterms#&gt;
+PREFIX  t:     &lt;http://example.org/types#&gt;
 
-                  SELECT ?aLabel1 ?bLabel
-                  WHERE { ?a  :label        ?aLabel .
-                  ?a  :weight       ?aWeight .
-                  ?a  :displacement ?aDisp .
+SELECT ?aLabel1 ?bLabel
+WHERE { 
+   ?a  :label        ?aLabel .
+   ?a  :weight       ?aWeight .
+   ?a  :displacement ?aDisp .
 
-                  ?b  :label        ?bLabel .
-                  ?b  :weight       ?bWeight .
-                  ?b  :displacement ?bDisp .
+   ?b  :label        ?bLabel .
+   ?b  :weight       ?bWeight .
+   ?b  :displacement ?bDisp .
 
-                  FILTER ( sameTerm(?aWeight, ?bWeight) &amp;& !sameTerm(?aDisp, ?bDisp)) }</pre>
+   FILTER ( sameTerm(?aWeight, ?bWeight) &amp;& !sameTerm(?aDisp, ?bDisp)) 
+}
+                </pre>
                 <div class="result">
                   <table class="resultTable">
                     <tbody>
@@ -5403,14 +5696,13 @@
           </section>
           <section id="func-in">
             <h5>IN</h5>
-            <pre class="prototype"><span class=
-                                         "return">boolean</span>  <code>rdfTerm</code> <span class=
-                                                                                             "operator">IN</span> (<span class="expression">expression</span>, <span class=
-                                                                                                                                                                     "expression">...</span>)</pre>
+            <pre class="prototype">
+<span class="return">boolean</span>  rdfTerm <span class="operator">IN</span> (<span class="expression">expression</span>, <span class="expression">...</span>)
+            </pre>
             <p>The <code>IN</code> operator tests whether the RDF term on the left-hand side is found
               in the values of list of expressions on the right-hand side. The test is done with "="
-              operator, which tests for the same value, as determined by the <a href=
-                                                                                "#OperatorMapping">operator mapping</a>.</p>
+              operator, which tests for the same value, as determined by the 
+              <a href="#OperatorMapping">operator mapping</a>.</p>
             <p>A list of zero terms on the right-hand side is legal.</p>
             <p>Errors in comparisons cause the <code>IN</code> expression to raise an error if the
               RDF term being tested is not found elsewhere in the list of terms.</p>
@@ -5450,10 +5742,9 @@
           </section>
           <section id="func-not-in">
             <h5>NOT IN</h5>
-            <pre class="prototype"><span class=
-                                         "return">boolean</span>  <code>rdfTerm</code> <span class=
-                                                                                             "operator">NOT IN</span> (<span class="expression">expression</span>, <span class=
-                                                                                                                                                                         "expression">...</span>)</pre>
+            <pre class="prototype">
+<span class="return">boolean</span>  rdfTerm <span class="operator">NOT IN</span> (<span class="expression">expression</span>, <span class="expression">...</span>)
+</pre>
             <p>The <code>NOT IN</code> operator tests whether the RDF term on the left-hand side is
               not found in the values of list of expressions on the right-hand side. The test is done
               with "!=" operator, which tests for not the same value, as determined by the <a href=
@@ -5502,32 +5793,38 @@
           <h4>Functions on RDF Terms</h4>
           <section id="func-isIRI">
             <h5>isIRI</h5>
-            <pre class="prototype"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">isIRI</span> (<span class="type">RDF term</span> <span class=
-                                                                                                                                                     "name">term</span>)
-              <span class="return">xsd:boolean</span>  <span class="operator">isURI</span> (<span class=
-                                                                                                  "type">RDF term</span> <span class="name">term</span>)</pre>
-            <p>Returns <code>true</code> if <code>term</code> is an <span class=
-                                                                          "type IRI">IRI</span>. Returns <code>false</code> otherwise. <span class=
-                                                                                                                                             "operator">isURI</span> is an alternate spelling for the <span class=
-                                                                                                                                                                                                            "operator">isIRI</span> operator.</p>
+            <pre class="prototype">
+<span class="return">xsd:boolean</span>  <span class="operator">isIRI</span> (<span class="type">RDF term</span> <span class="name">term</span>)
+<span class="return">xsd:boolean</span>  <span class="operator">isURI</span> (<span class="type">RDF term</span> <span class="name">term</span>)
+            </pre>
+            <p>Returns <code>true</code> if <code>term</code> is an 
+              <span class="type IRI">IRI</span>. 
+              Returns <code>false</code> otherwise. 
+              <span class="operator">isURI</span> is an alternate spelling for the 
+              <span class="operator">isIRI</span> operator.
+            </p>
             <div class="exampleGroup">
-              <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+              <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-                _:a  foaf:name       "Alice".
-                _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+_:a  foaf:name       "Alice".
+_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
 
-                _:b  foaf:name       "Bob" .
-                _:b  foaf:mbox       "bob@work.example" .
+_:b  foaf:name       "Bob" .
+_:b  foaf:mbox       "bob@work.example" .
               </pre>
               <div class="queryGroup">
                 <p>This query matches the people with a <code>name</code> and an <code>mbox</code>
                   which is an IRI:</p>
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  SELECT ?name ?mbox
-                  WHERE { ?x foaf:name  ?name ;
-                  foaf:mbox  ?mbox .
-                  FILTER isIRI(?mbox) }</pre>
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox
+WHERE {
+    ?x foaf:name  ?name ;
+       foaf:mbox  ?mbox .
+    FILTER isIRI(?mbox) 
+}
+                </pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -5555,30 +5852,33 @@
                 node</span>. Returns <code>false</code> otherwise.</p>
             <div class="exampleGroup">
               <pre class="data">
-                @prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
-                @prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
-                @prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
+@prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-                _:a   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
-                _:a   dc:creator    "Alice B. Toeclips" .
+_:a   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
+_:a   dc:creator    "Alice B. Toeclips" .
 
-                _:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
-                _:b   dc:creator    _:c .
-                _:c   foaf:given    "Bob".
-                _:c   foaf:family   "Smith".</pre>
+_:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
+_:b   dc:creator    _:c .
+_:c   foaf:given    "Bob".
+_:c   foaf:family   "Smith".
+              </pre>
               <div class="queryGroup">
                 <p>This query matches the people with a <code>dc:creator</code> which uses predicates
                   from the FOAF vocabulary to express the name.</p>
-                <pre class="query">PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
-                  PREFIX dc:     &lt;http://purl.org/dc/elements/1.1/&gt;
-                  PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+                <pre class="query">
+PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
+PREFIX dc:     &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
 
-                  SELECT ?given ?family
-                  WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
-                  ?annot  dc:creator   ?c .
-                  OPTIONAL { ?c  foaf:given   ?given ; foaf:family  ?family } .
-                  FILTER isBlank(?c)
-                  }</pre>
+SELECT ?given ?family
+WHERE { 
+    ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
+    ?annot  dc:creator   ?c .
+    OPTIONAL { ?c  foaf:given   ?given ; foaf:family  ?family } .
+    FILTER isBlank(?c)
+}</pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -5607,23 +5907,29 @@
             <p>Returns <code>true</code> if <code>term</code> is a <span class=
                                                                          "type literal">literal</span>. Returns <code>false</code> otherwise.</p>
             <div class="exampleGroup">
-              <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+              <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
                 
-                _:a  foaf:name       "Alice".
-                _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+_:a  foaf:name       "Alice".
+_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
 
-                _:b  foaf:name       "Bob" .
-                _:b  foaf:mbox       "bob@work.example" .</pre>
+_:b  foaf:name       "Bob" .
+_:b  foaf:mbox       "bob@work.example" .
+              </pre>
               <div class="queryGroup">
                 <p>This query is similar to the one in <a href="#func-isIRI">17.4.2.1</a> except that
                   is matches the people with a <code>name</code> and an <code>mbox</code> which is a
                   literal. This could be used to look for erroneous data (<code>foaf:mbox</code> should
                   only have an IRI as its object).</p>
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  SELECT ?name ?mbox
-                  WHERE { ?x foaf:name  ?name ;
-                  foaf:mbox  ?mbox .
-                  FILTER isLiteral(?mbox) }</pre>
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox
+WHERE {
+    ?x foaf:name  ?name ;
+       foaf:mbox  ?mbox .
+    FILTER isLiteral(?mbox)
+}
+                </pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -5694,22 +6000,26 @@
               <code>rsrc</code> (an <span class="type IRI">IRI</span>). This is useful for examining
               parts of an IRI, for instance, the host-name.</p>
             <div class="exampleGroup">
-              <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+              <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-                _:a  foaf:name       "Alice".
-                _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+_:a  foaf:name       "Alice".
+_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
 
-                _:b  foaf:name       "Bob" .
-                _:b  foaf:mbox       &lt;mailto:bob@home.example&gt; .
+_:b  foaf:name       "Bob" .
+_:b  foaf:mbox       &lt;mailto:bob@home.example&gt; .
               </pre>
               <div class="queryGroup">
                 <p>This query selects the set of people who use their <code>work.example</code>
                   address in their foaf profile:</p>
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  SELECT ?name ?mbox
-                  WHERE { ?x foaf:name  ?name ;
-                  foaf:mbox  ?mbox .
-                  FILTER regex(str(?mbox), "@work\\.example$") }
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox
+WHERE {
+    ?x foaf:name  ?name ;
+      foaf:mbox  ?mbox .
+    FILTER regex(str(?mbox), "@work\\.example$")
+}
                 </pre>
                 <p>Query result:</p>
                 <div class="result">
@@ -5740,20 +6050,25 @@
                                                                                     "type langTag">language tag</span>. Note that the RDF data model does not include
               literals with an empty <span class="type langTag">language tag</span>.</p>
             <div class="exampleGroup">
-              <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+              <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-                _:a  foaf:name       "Robert"@en.
-                _:a  foaf:name       "Roberto"@es.
-                _:a  foaf:mbox       &lt;mailto:bob@work.example&gt; .
+_:a  foaf:name       "Robert"@en.
+_:a  foaf:name       "Roberto"@es.
+_:a  foaf:mbox       &lt;mailto:bob@work.example&gt; .
               </pre>
               <div class="queryGroup">
                 <p>This query finds the Spanish <code>foaf:name</code> and
                   <code>foaf:mbox</code>:</p>
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  SELECT ?name ?mbox
-                  WHERE { ?x foaf:name  ?name ;
-                  foaf:mbox  ?mbox .
-                  FILTER ( lang(?name) = "es" ) }</pre>
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name ?mbox
+WHERE {
+    ?x foaf:name  ?name ;
+       foaf:mbox  ?mbox .
+    FILTER ( lang(?name) = "es" )
+}
+                </pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -5787,25 +6102,30 @@
                 <code>rdf:langString</code></li>
             </ul>
             <div class="exampleGroup">
-              <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
-                @prefix eg:         &lt;http://biometrics.example/ns#&gt; .
-                @prefix xsd:        &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+              <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix eg:         &lt;http://biometrics.example/ns#&gt; .
+@prefix xsd:        &lt;http://www.w3.org/2001/XMLSchema#&gt; .
 
-                _:a  foaf:name       "Alice".
-                _:a  eg:shoeSize     "9.5"^^xsd:float .
+_:a  foaf:name       "Alice".
+_:a  eg:shoeSize     "9.5"^^xsd:float .
 
-                _:b  foaf:name       "Bob".
-                _:b  eg:shoeSize     "42"^^xsd:integer .
+_:b  foaf:name       "Bob".
+_:b  eg:shoeSize     "42"^^xsd:integer .
               </pre>
               <div class="queryGroup">
                 <p>This query finds the <code>foaf:name</code> and <code>foaf:shoeSize</code> of
                   everyone with a shoeSize that is an integer:</p>
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  PREFIX xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt;
-                  PREFIX eg:   &lt;http://biometrics.example/ns#&gt;
-                  SELECT ?name ?shoeSize
-                  WHERE { ?x foaf:name  ?name ; eg:shoeSize  ?shoeSize .
-                  FILTER ( datatype(?shoeSize) = xsd:integer ) }</pre>
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX eg:   &lt;http://biometrics.example/ns#&gt;
+SELECT ?name ?shoeSize
+WHERE { 
+    ?x foaf:name  ?name ;
+       eg:shoeSize  ?shoeSize .
+    FILTER ( datatype(?shoeSize) = xsd:integer )
+}</pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -6552,22 +6872,27 @@
               [[[RFC4647]]] [[RFC4647]] section 2.1. A <code>language-range</code> of "*" matches any
               non-empty <code>language-tag</code> string.</p>
             <div class="exampleGroup">
-              <pre class="data">@prefix dc:       &lt;http://purl.org/dc/elements/1.1/&gt; .
+              <pre class="data">
+@prefix dc:       &lt;http://purl.org/dc/elements/1.1/&gt; .
 
-                _:a  dc:title         "That Seventies Show"@en .
-                _:a  dc:title         "Cette Série des Années Soixante-dix"@fr .
-                _:a  dc:title         "Cette Série des Années Septante"@fr-BE .
-                _:b  dc:title         "Il Buono, il Bruto, il Cattivo" .
+_:a  dc:title         "That Seventies Show"@en .
+_:a  dc:title         "Cette Série des Années Soixante-dix"@fr .
+_:a  dc:title         "Cette Série des Années Septante"@fr-BE .
+_:b  dc:title         "Il Buono, il Bruto, il Cattivo" .
               </pre>
               <div class="queryGroup">
                 <p>This query uses <a href="#func-langMatches"><code>langMatches</code></a> and
                   <a href="#func-lang"><code>lang</code></a> to find the French titles for the show
                   known in English as "That Seventies Show":</p>
-                <pre class="query">PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
-                  SELECT ?title
-                  WHERE { ?x dc:title  "That Seventies Show"@en ;
-                  dc:title  ?title .
-                  FILTER langMatches( lang(?title), "FR" ) }</pre>
+                <pre class="query">
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+SELECT ?title
+WHERE {
+    ?x dc:title  "That Seventies Show"@en ;
+       dc:title  ?title .
+    FILTER langMatches( lang(?title), "FR" )
+}
+                </pre>
                 <p>Query result:</p>
                 <div class="result">
                   <table class="resultTable">
@@ -6588,10 +6913,14 @@
               <div class="queryGroup">
                 <p>The idiom <code>langMatches( lang( ?v ), "*" )</code> will not match literals
                   without a language tag as <code>lang( ?v )</code> will return an empty string, so</p>
-                <pre class="query add">PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
-                  SELECT ?title
-                  WHERE { ?x dc:title  ?title .
-                  FILTER langMatches( lang(?title), "*" ) }</pre>
+                <pre class="query add">
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+SELECT ?title
+WHERE {
+    ?x dc:title  ?title .
+    FILTER langMatches( lang(?title), "*" )
+}
+                </pre>
                 <p>will report all of the titles with a language tag:</p>
                 <div class="result add">
                   <table class="resultTable">
@@ -6632,16 +6961,20 @@
               section <a data-cite="XPATH-FUNCTIONS#regex-syntax">7.6.1 Regular Expression Syntax</a>
               [[XPATH-FUNCTIONS]].</p>
             <div class="exampleGroup">
-              <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+              <pre class="data">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
-                _:a  foaf:name       "Alice".
-                _:b  foaf:name       "Bob" .
+_:a  foaf:name       "Alice".
+_:b  foaf:name       "Bob" .
               </pre>
               <div class="queryGroup">
-                <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-                  SELECT ?name
-                  WHERE { ?x foaf:name  ?name
-                  FILTER regex(?name, "^ali", "i") }
+                <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name
+WHERE { 
+    ?x foaf:name  ?name
+    FILTER regex(?name, "^ali", "i")
+}
                 </pre>
                 <p>Query result:</p>
                 <div class="result">
@@ -7396,12 +7729,16 @@
         <div class="exampleGroup">
           <div class="queryGroup">
             <p>This function would be invoked in a FILTER as such:</p>
-            <pre class="query">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-              PREFIX func: &lt;http://example.org/functions#&gt;
-              SELECT ?name ?id
-              WHERE { ?x foaf:name  ?name ;
-              func:empId   ?id .
-              FILTER (func:even(?id)) }</pre>
+            <pre class="query">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX func: &lt;http://example.org/functions#&gt;
+SELECT ?name ?id
+WHERE { 
+    ?x foaf:name  ?name ;
+       func:empId   ?id .
+    FILTER (func:even(?id))
+}
+</pre>
           </div>
         </div>
         <p>For a second example, consider a function <code>aGeo:distance</code> that calculates the
@@ -7415,19 +7752,21 @@
         </pre>
         <div class="exampleGroup">
           <div class="queryGroup">
-            <pre class="query">PREFIX aGeo: &lt;http://example.org/geo#&gt;
+            <pre class="query">
+PREFIX aGeo: &lt;http://example.org/geo#&gt;
 
-              SELECT ?neighbor
-              WHERE { ?a aGeo:placeName "Grenoble" .
-              ?a aGeo:locationX ?axLoc .
-              ?a aGeo:locationY ?ayLoc .
+SELECT ?neighbor
+WHERE {
+    ?a aGeo:placeName "Grenoble" .
+    ?a aGeo:locationX ?axLoc .
+    ?a aGeo:locationY ?ayLoc .
 
-              ?b aGeo:placeName ?neighbor .
-              ?b aGeo:locationX ?bxLoc .
-              ?b aGeo:locationY ?byLoc .
+    ?b aGeo:placeName ?neighbor .
+    ?b aGeo:locationX ?bxLoc .
+    ?b aGeo:locationY ?byLoc .
 
-              FILTER ( aGeo:distance(?axLoc, ?ayLoc, ?bxLoc, ?byLoc) &lt; 10 ) .
-              }
+    FILTER ( aGeo:distance(?axLoc, ?ayLoc, ?bxLoc, ?byLoc) &lt; 10 ) .
+}
             </pre>
           </div>
         </div>
@@ -7550,9 +7889,10 @@
             <p>A <span class="definedTerm">triple pattern</span> is member of the set:<br>
               (RDF-T ∪ V) x (I ∪ V) x (RDF-T ∪ V)</p>
           </div>
-          <p>This definition of Triple Pattern includes literal subjects. <a href=
-                                                                             "http://www.w3.org/2000/03/rdf-tracking/#rdfms-literalsubjects">This has been noted by
-              RDF-core</a>.</p>
+          <p>This definition of Triple Pattern includes literal subjects. 
+            <a href="http://www.w3.org/2000/03/rdf-tracking/#rdfms-literalsubjects">
+              This has been noted by RDF-core</a>.
+          </p>
           <pre>"[The RDF core Working Group] noted that it is aware of no reason why literals should
             not be subjects and a future WG with a less restrictive charter may
             extend the syntaxes to allow literals as the subjects of statements."</pre>
@@ -8018,7 +8358,8 @@
             <p>In this step, we also translate graph patterns within <code>FILTER</code> expressions
               <a href="#func-filter-exists"><code>EXISTS</code> and <code>NOT EXISTS</code></a>.</p>
 
-<pre class="codeBlock">Let FS := empty set
+            <pre class="codeBlock">
+Let FS := empty set
 For each form FILTER(expr) in the group graph pattern:
     In expr, replace NOT EXISTS{P} with fn:not(<a href="#defn_evalExists">exists(translate(P)))</a> 
     In expr, replace EXISTS{P} with <a href="#defn_evalExists">exists(translate(P))</a>
@@ -8571,11 +8912,12 @@ P := Join(P, ToMultiSet(data))
             <p>We have two forms of the abstract syntax to consider:</p>
 
 <pre class="codeBlock">
-SELECT selItem ... { pattern }
-SELECT * { pattern }
+  SELECT selItem ... { pattern }
+  SELECT * { pattern }
 </pre>
 
-<pre class="codeBlock">Let X := algebra from earlier steps
+<pre class="codeBlock">
+Let X := algebra from earlier steps
 Let VS := list of all variables visible in the pattern,
            so restricted by sub-SELECT projected variables and GROUP BY variables.
            Not visible: only in filter, exists/not exists, masked by a subselect, 
@@ -8791,7 +9133,9 @@ The set PV is used later for projection.
             be a variable). Some operators only produce a set of solution mappings.</p>
           <p>Write</p>
           <pre>
-            Var(x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>) = { x<sub>i</sub> | i in 1...n and x<sub>i</sub> is a variable }</pre>
+Var(x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>) = { x<sub>i</sub> | i in 1...n and x<sub>i</sub> is a variable
+}
+          </pre>
           <p>for the variables in <code>x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub></code>.</p>
           <p>Write</p>
           <table style="border-collapse: collapse; border-color: #000000" cellpadding="10" border=
@@ -8822,24 +9166,31 @@ The set PV is used later for projection.
           </div>
           <p>Let Path(X, link(iri), Y) be an predicate inverse property path pattern, using some IRI
             iri.</p>
-          <blockquote>
-            <pre>eval(Path(X, link(iri), Y)) = <a href=
-                                                  "#BasicGraphPattern">evaluation of basic graph pattern</a> {X iri Y}</pre>
-          </blockquote>
+            <pre>
+eval(Path(X, link(iri), Y)) = <a href="#BasicGraphPattern">evaluation of basic graph pattern</a> {X iri Y}
+            </pre>
         </div>
         <p>If both X and Y are variables, this is the same as:</p>
         <pre>
-          eval(Path(X:var, link(iri), Y:var)) = { (X, xn) (Y, yn) | xn and yn are RDF terms and triple (xn iri yn) is in the active graph }</pre>
+eval(Path(X:var, link(iri), Y:var)) = { (X, xn) (Y, yn) | xn and yn are RDF terms and triple (xn iri yn) is in the active graph }</pre>
         <p>If X is a variable and Y an RDF term:</p>
         <pre>
-          eval(Path(X:var, link(iri), Y:term)) = { (X, xn) | xn is an RDF term and triple (xn iri Y) is in the active graph }</pre>
+eval(Path(X:var, link(iri), Y:term)) = { (X, xn) | xn is an RDF term and triple (xn iri Y) is in the active graph
+}
+        </pre>
         <p>If X is an RDF term and Y is a variable:</p>
         <pre>
-          eval(Path(X:term, link(iri), Y:var)) = { (Y, yn) | yn is an RDF term and triple (X iri yn) is in the active graph }</pre>
+eval(Path(X:term, link(iri), Y:var)) = { (Y, yn) | yn is an RDF term and triple (X iri yn) is in the active graph
+}
+        </pre>
         <p>If both X and Y are RDF terms:</p>
         <pre>
-          eval(Path(X:term, link(iri), Y:term)) = { μ<sub>0</sub> } if triple (X iri Y) is in the active graph = { { } } = Ω<sub>0</sub> eval(Path(X:term, link(iri), Y:term)) = { } if triple (X iri
-          Y) is not in the active graph</pre>
+eval(Path(X:term, link(iri), Y:term)) 
+    = { μ<sub>0</sub> } if triple (X iri Y) is in the active graph
+    = { { } } = Ω<sub>0</sub> 
+
+eval(Path(X:term, link(iri), Y:term)) = { } if triple (X iri Y) is not in the active graph
+        </pre>
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
           <code>SELECT * { <i>X P Y</i> }</code> at that point in the query evaluation.</p>
         <div class="defn">
@@ -8848,9 +9199,7 @@ The set PV is used later for projection.
             <b>Evaluation of Inverse Property Path</b>
           </div>
           <p>Let P be a property path expression, then:</p>
-          <blockquote>
-            <pre>eval(Path(X, inv(P), Y)) = eval(Path(Y, P, X))</pre>
-          </blockquote>
+          <pre>eval(Path(X, inv(P), Y)) = eval(Path(Y, P, X))</pre>
         </div>
         <div class="defn">
           <p><b>Definition:</b></p>
@@ -8858,10 +9207,8 @@ The set PV is used later for projection.
             <b>Evaluation of Sequence Property Path</b>
           </div>
           <p>Let P and Q be property path expressions. Let V be a fresh variable.</p>
-          <blockquote>
-            <pre>A = Join( eval(Path(X, P, V)), eval(Path(V, Q, Y)) )</pre>
-            <pre>eval(Path(X, seq(P,Q), Y)) = Project(A, Var(X,Y))</pre>
-          </blockquote>
+          <pre>A = Join( eval(Path(X, P, V)), eval(Path(V, Q, Y)) )</pre>
+          <pre>eval(Path(X, seq(P,Q), Y)) = Project(A, Var(X,Y))</pre>
         </div>
         <p>Informally, this is the same as:</p>
         <pre>SELECT * { X P _:a . _:a Q Y }</pre>
@@ -8873,9 +9220,10 @@ The set PV is used later for projection.
             <b>Evaluation of Alternative Property Path</b>
           </div>
           <p>Let P and Q be property path expressions.</p>
-          <blockquote>
-            <pre>eval(Path(X, alt(P,Q), Y)) = Union(eval(Path(X, P, Y)), eval(Path(X, Q, Y)))</pre>
-          </blockquote>
+          <pre>
+eval(Path(X, alt(P,Q), Y)) = 
+    Union(eval(Path(X, P, Y)), eval(Path(X, Q, Y)))
+          </pre>
         </div>
         <p>Informally, this is the same as:</p>
         <pre>SELECT * { { X P Y } UNION { X Q Y } }</pre>
@@ -8894,14 +9242,20 @@ The set PV is used later for projection.
             <b>Evaluation of ZeroOrOnePath</b>
           </div>
           <pre>
-            eval(Path(X:term, ZeroOrOnePath(P), Y:var)) = { (Y, yn) | yn = X or {(Y, yn)} in eval(Path(X,P,Y)) }</pre>
+eval(Path(X:term, ZeroOrOnePath(P), Y:var)) = 
+    { (Y, yn) | yn = X or {(Y, yn)} in eval(Path(X,P,Y)) }
+</pre>
           <pre>
-            eval(Path(X:var, ZeroOrOnePath(P), Y:term)) = { (X, xn) | xn = Y or {(X, xn)} in eval(Path(X,P,Y)) }</pre>
-          <pre>eval(Path(X:term, ZeroOrOnePath(P), Y:term)) = 
-            { {} } if X = Y or eval(Path(X,P,Y)) is not empty
-            { } othewise</pre>
-          <pre>eval(Path(X:var, ZeroOrOnePath(P), Y:var)) = 
-            { (X, xn) (Y, yn) | either (yn in nodes(G) and xn = yn) or {(X,xn), (Y,yn)} in eval(Path(X,P,Y)) }</pre>
+eval(Path(X:var, ZeroOrOnePath(P), Y:term)) =
+    { (X, xn) | xn = Y or {(X, xn)} in eval(Path(X,P,Y)) }
+          </pre>
+          <pre>
+eval(Path(X:term, ZeroOrOnePath(P), Y:term)) = 
+    { {} } if X = Y or eval(Path(X,P,Y)) is not empty
+    { } othewise</pre>
+          <pre>
+eval(Path(X:var, ZeroOrOnePath(P), Y:var)) = 
+    { (X, xn) (Y, yn) | either (yn in nodes(G) and xn = yn) or {(X,xn), (Y,yn)} in eval(Path(X,P,Y)) }</pre>
         </div>
         <p>We define an auxillary function, ALP, used in the definitions of ZeroOrMorePath and
           OneOrMorePath. Note that the algorithm given here serves to specify the feature. An
@@ -8919,43 +9273,45 @@ The set PV is used later for projection.
           <div id="defn_evalALP_1">
             <b>Function ALP</b>
           </div>
-          <pre>Let eval(x:term, path) be the evaluation of 'path', starting at RDF term x, 
-            and returning a multiset of RDF terms reached 
-            by repeated matches of path.
+          <pre>
+Let eval(x:term, path) be the evaluation of 'path', starting at RDF term x, 
+ and returning a multiset of RDF terms reached 
+ by repeated matches of path.
 
-            ALP(x:term, path) = 
-            Let V = empty multiset
-            ALP(x:term, path, V)
-            return is V
+  ALP(x:term, path) = 
+      Let V = empty multiset
+      ALP(x:term, path, V)
+      return is V
 
-            # V is the set of nodes visited
+  # V is the set of nodes visited
 
-            ALP(x:term, path, V:set of RDF terms) =
-            if ( x in V ) return 
-            add x to V
-            X = eval(x,path) 
-            For n:term in X
-            ALP(n, path, V)
-            End
-          </pre>
+  ALP(x:term, path, V:set of RDF terms) =
+      if ( x in V ) return 
+      add x to V
+      X = eval(x,path) 
+      For n:term in X
+          ALP(n, path, V)
+          End
+</pre>
         </div>
         <div class="defn">
           <p><b>Definition: Evaluation of</b></p>
           <div id="defn_evalZeroOrMorePath">
             <b>ZeroOrMorePath</b>
           </div>
-          <pre>eval(Path(X:term, ZeroOrMorePath(path), vy:var)) =
-            { { (vy, n) } | n in ALP(X, path) }
+          <pre>
+eval(Path(X:term, ZeroOrMorePath(path), vy:var)) =
+    { { (vy, n) } | n in ALP(X, path) }
 
-            eval(Path(vx:var, ZeroOrMorePath(path), vy:var)) =
-            { { (vx, t), (vy, n) } |  t in nodes(G), (vy, n) in eval(Path(t, ZeroOrMorePath(path), vy)) }
+eval(Path(vx:var, ZeroOrMorePath(path), vy:var)) =
+    { { (vx, t), (vy, n) } |  t in nodes(G), (vy, n) in eval(Path(t, ZeroOrMorePath(path), vy)) }
 
-            eval(Path(vx:var, ZeroOrMorePath(path), y:term)) = 
-            eval(Path(y:term, ZeroOrMorePath(inv(path)), vx:var))
+eval(Path(vx:var, ZeroOrMorePath(path), y:term)) = 
+    eval(Path(y:term, ZeroOrMorePath(inv(path)), vx:var))
 
-            eval(Path(x:term, ZeroOrMorePath(path), y:term)) = 
-            { { } } if { (vy:var,y) } in eval(Path(x, ZeroOrMorePath(path) vy)
-            { } otherwise
+eval(Path(x:term, ZeroOrMorePath(path), y:term)) = 
+    { { } } if { (vy:var,y) } in eval(Path(x, ZeroOrMorePath(path) vy)
+    { } otherwise
           </pre>
         </div>
         <div class="defn">
@@ -8964,40 +9320,43 @@ The set PV is used later for projection.
             <b>OneOrMorePath</b>
           </div>
           <p>eval(Path(X, OneOrMorePath(path), Y))</p>
-          <pre># For OneOrMorePath, we take one step of the path then start
-            # recording nodes for results.
+          <pre>
+# For OneOrMorePath, we take one step of the path then start
+# recording nodes for results.
 
-            eval(Path(x:term, OneOrMorePath(path), vy:var)) =
-            Let X = eval(x, path)
-            Let V = the empty multiset
-            For n in X
-            ALP(n, path, V)
-            End
-            result is V
+eval(Path(x:term, OneOrMorePath(path), vy:var)) =
+    Let X = eval(x, path)
+    Let V = the empty multiset
+    For n in X
+        ALP(n, path, V)
+    End
+    result is V
 
-            eval(Path(vx:var, OneOrMorePath(path), vy:var)) =
-            { { (vx, t), (vy, n) } |  t in nodes(G), (vy, n) in eval(Path(t, OneOrMorePath(path), vy)) }
+eval(Path(vx:var, OneOrMorePath(path), vy:var)) =
+     { { (vx, t), (vy, n) } |  t in nodes(G), (vy, n) in eval(Path(t, OneOrMorePath(path), vy)) }
 
-            eval(Path(vx:var, OneOrMorePath(path), y:term)) =
-            eval(Path(y:term, OneOrMorePath(inv(path)), vx))
+eval(Path(vx:var, OneOrMorePath(path), y:term)) =
+    eval(Path(y:term, OneOrMorePath(inv(path)), vx))
 
-            eval(Path(x:term, OneOrMorePath(path), y:term)) =
-            { { } } if { (vy:var, y) } in eval(Path(x, OneOrMorePath(path), vy))
-            { } otherwise
-          </pre>
+eval(Path(x:term, OneOrMorePath(path), y:term)) =
+    { { } } if { (vy:var, y) } in eval(Path(x, OneOrMorePath(path), vy))
+    { } otherwise
+</pre>
         </div>
         <div class="defn">
           <p><b>Definition:</b></p>
           <div id="eval_negatedPropertySet">
             <b>Evaluation of NegatedPropertySet</b>
           </div>
-          <pre class="code">Write μ' as the extension of a solution mapping:
-            μ'(μ,x) = μ(x)   if x is a variable
-            μ'(μ,t) = t   if t is a RDF term
+          <pre class="code">
+Write μ' as the extension of a solution mapping:
+μ'(μ,x) = μ(x)   if x is a variable
+μ'(μ,t) = t      if t is a RDF term
           </pre>
-          <pre class="code">Let x and y be variables or RDF terms, and S a set of IRIs:
+          <pre class="code">
+Let x and y be variables or RDF terms, and S a set of IRIs:
 
-            eval(Path(x, NPS(S), y)) = { μ | ∃ triple(μ'(μ,x), p, μ'(μ,y)) in G, such that the IRI of p ∉ S }
+   eval(Path(x, NPS(S), y)) = { μ | ∃ triple(μ'(μ,x), p, μ'(μ,y)) in G, such that the IRI of p ∉ S }
           </pre>
         </div>
         <section id="sparqlAlgebra">
@@ -9460,12 +9819,14 @@ The set PV is used later for projection.
           <p>We define eval(D(G), algebra expression) as the evaluation of an algebra expression with
             respect to a dataset D having active graph G. The active graph is initially the default
             graph.</p>
-          <pre class="box">D : a dataset
-            D(G) : D a dataset with active graph G (the one patterns match against)
-            D[i] : The graph with IRI i in dataset D
-            P, P1, P2 : graph patterns
-            L : a solution sequence
-            F : an expression</pre>
+          <pre class="box">
+D : a dataset
+D(G) : D a dataset with active graph G (the one patterns match against)
+D[i] : The graph with IRI i in dataset D
+P, P1, P2 : graph patterns
+L : a solution sequence
+F : an expression
+          </pre>
           <div class="defn">
             <b>Definition:</b>
             <div id="defn_evalBasicGraphPattern">
@@ -9527,7 +9888,8 @@ The set PV is used later for projection.
               <b>Evaluation of LeftJoin</b>
             </div>
             <pre class="code">
-              eval(D(G), LeftJoin(P1, P2, F)) = LeftJoin(eval(D(G), P1), eval(D(G), P2), F)</pre>
+eval(D(G), LeftJoin(P1, P2, F)) = LeftJoin(eval(D(G), P1), eval(D(G), P2), F)
+            </pre>
           </div>
           <div class="defn">
             <b>Definition:</b>
@@ -9541,15 +9903,20 @@ The set PV is used later for projection.
             <div id="defn_evalGraph">
               <b>Evaluation of Graph</b>
             </div>
-            <pre class="code">if IRI is a graph name in D
-              eval(D(G), Graph(IRI,P)) = eval(D(D[IRI]), P)</pre>
-            <pre class="code">if IRI is not a graph name in D
-              eval(D(G), Graph(IRI,P)) = the empty multiset</pre>
-            <pre class="code">eval(D(G), Graph(var,P)) =
-              Let R be the empty multiset
-              foreach IRI i in D
-              R := Union(R, Join( eval(D(D[i]), P) , Ω(?var-&gt;i) )
-              the result is R
+            <pre class="code">
+if IRI is a graph name in D
+    eval(D(G), Graph(IRI,P)) = eval(D(D[IRI]), P)
+            </pre>
+            <pre class="code">
+              if IRI is not a graph name in D
+                  eval(D(G), Graph(IRI,P)) = the empty multiset
+            </pre>
+            <pre class="code">
+eval(D(G), Graph(var,P)) =
+    Let R be the empty multiset
+    foreach IRI i in D
+        R := Union(R, Join( eval(D(D[i]), P) , Ω(?var-&gt;i) )
+    the result is R
             </pre>
           </div>
           <p>The evaluation of graph uses the SPARQL algebra union operator. The cardinality of a
@@ -9582,7 +9949,8 @@ The set PV is used later for projection.
               <b>Evaluation of Extend</b>
             </div>
             <pre class="code">
-              eval(D(G), Extend(P, var, expr)) = Extend(eval(D(G), P), var, expr)</pre>
+eval(D(G), Extend(P, var, expr)) = Extend(eval(D(G), P), var, expr)
+            </pre>
           </div>
           <div class="defn">
             <b>Definition:</b>
@@ -9636,7 +10004,8 @@ The set PV is used later for projection.
               <b>Evaluation of Slice</b>
             </div>
             <pre class="code">
-              eval(D(G), Slice(L, start, length)) = Slice(eval(D(G), L), start, length)</pre>
+eval(D(G), Slice(L, start, length)) = Slice(eval(D(G), L), start, length)
+            </pre>
           </div>
         </section>
         <section id="sparqlBGPExtend">
@@ -9666,8 +10035,10 @@ The set PV is used later for projection.
             [[[SPARQL11-ENTAILMENT]]].</p>
           <p>Some entailment regimes can categorize some RDF graphs as inconsistent. For example, the
             RDF graph:</p>
-          <pre class="data">_:x rdf:type xsd:string .
-            _:x rdf:type xsd:decimal .</pre>
+          <pre class="data">
+_:x rdf:type xsd:string .
+_:x rdf:type xsd:decimal .
+          </pre>
           <p>is D-inconsistent when D contains the XSD datatypes. The effect of a query on an
             inconsistent graph is not covered by this specification, but must be specified by the
             particular SPARQL extension.</p>
@@ -9821,10 +10192,10 @@ The set PV is used later for projection.
             <p><code><span class="doc-ref" id="HEX">HEX</span> ::= [0-9] | [A-F] | [a-f]</code></p>
           </blockquote>
           <p>Examples:</p>
-          <pre class="query untested">
-            &lt;ab\u00E9xy&gt;        # Codepoint 00E9 is Latin small e with acute - é
-            \u03B1:a            # Codepoint x03B1 is Greek small alpha - α
-            a\u003Ab            # a:b -- codepoint x3A is colon</pre>
+          <pre class="query">
+&lt;ab\u00E9xy&gt;        # Codepoint 00E9 is Latin small e with acute - é
+\u03B1:a            # Codepoint x03B1 is Greek small alpha - α
+a\u003Ab            # a:b -- codepoint x3A is colon</pre>
           <p>Codepoint escape sequences can appear anywhere in the query string. They are processed
             before parsing based on the grammar rules and so may be replaced by codepoints with
             significance in the grammar, such as "<code>:</code>" marking a prefixed name.</p>
@@ -9947,9 +10318,11 @@ The set PV is used later for projection.
             </tbody>
           </table>
           <p>Examples:</p>
-          <pre class="query untested">"abc\n"
-            "xy\rz"
-            'xy\tz'</pre>
+          <pre class="query">
+"abc\n"
+"xy\rz"
+'xy\tz'
+          </pre>
         </section>
         <section id="sparqlGrammar">
           <h3>Grammar</h3>
@@ -11180,27 +11553,6 @@ The set PV is used later for projection.
           query processing service and returning the query results to the entity that requested
           them.</p>
       </section>
-      <section id="security">
-        <h2>Security Considerations (Informative)</h2>
-        <p>SPARQL queries using FROM, FROM NAMED, or GRAPH may cause the specified URI to be
-          dereferenced. This may cause additional use of network, disk or CPU resources along with
-          associated secondary issues such as denial of service. The security issues of [[[RFC3986]]]
-          [[RFC3986]] Section 7 should be considered. In addition, the contents of <code>file:</code>
-          URIs can in some cases be accessed, processed and returned as results, providing unintended
-          access to local resources.</p>
-        <p>SPARQL requests may cause additional requests to be issued from the SPARQL endpoint, such
-          as FROM NAMED. The endpoint is potentially within an organisations firewall or DMZ, and so
-          such queries may be a source of indirection attacks.</p>
-        <p>The SPARQL language permits extensions, which will have their own security
-          implications.</p>
-        <p>Multiple IRIs may have the same appearance. Characters in different scripts may look
-          similar (a Cyrillic "о" may appear similar to a Latin "o"). A character followed by combining
-          characters may have the same visual representation as another character (LATIN SMALL LETTER E
-          followed by COMBINING ACUTE ACCENT has the same visual representation as LATIN SMALL LETTER E
-          WITH ACUTE). Users of SPARQL must take care to construct queries with IRIs that match the
-          IRIs in the data. Further information about matching of similar characters can be found in
-          [[[?UTR36]]] [[?UTR36]] and [[[RFC3987]]] [[RFC3987]] Section 8.</p>
-      </section>
       <section id="mediaType">
         <h2>Internet Media Type, File Extension and Macintosh File Type</h2>
         <p>The Internet Media Type / MIME Type for the SPARQL Query Language is
@@ -11267,10 +11619,27 @@ The set PV is used later for projection.
     </section>
 
     <section id="security">
-      <h2>Security Considerations</h2>
-      <p>TODO</p>
+      <h2>Security Considerations (Informative)</h2>
+      <p>SPARQL queries using FROM, FROM NAMED, or GRAPH may cause the specified URI to be
+          dereferenced. This may cause additional use of network, disk or CPU resources along with
+          associated secondary issues such as denial of service. The security issues of [[[RFC3986]]]
+          [[RFC3986]] Section 7 should be considered. In addition, the contents of <code>file:</code>
+          URIs can in some cases be accessed, processed and returned as results, providing unintended
+          access to local resources.</p>
+        <p>SPARQL requests may cause additional requests to be issued from the SPARQL endpoint, such
+          as FROM NAMED. The endpoint is potentially within an organisations firewall or DMZ, and so
+          such queries may be a source of indirection attacks.</p>
+        <p>The SPARQL language permits extensions, which will have their own security
+          implications.</p>
+        <p>Multiple IRIs may have the same appearance. Characters in different scripts may look
+          similar (a Cyrillic "о" may appear similar to a Latin "o"). A character followed by combining
+          characters may have the same visual representation as another character (LATIN SMALL LETTER E
+          followed by COMBINING ACUTE ACCENT has the same visual representation as LATIN SMALL LETTER E
+          WITH ACUTE). Users of SPARQL must take care to construct queries with IRIs that match the
+          IRIs in the data. Further information about matching of similar characters can be found in
+          [[[?UTR36]]] [[?UTR36]] and [[[RFC3987]]] [[RFC3987]] Section 8.</p>
     </section>
-
+    
     <section id="internationalization">
       <h2>Internationalization Considerations</h2>
       <p>TODO</p>                
