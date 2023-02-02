@@ -57,7 +57,6 @@
 
       div.constraint,
       div.issue,
-      div.note,
       div.notice     { margin-left: 2em; }
 
       ol.enumar      { list-style-type: decimal; }
@@ -116,193 +115,233 @@
     <!-- BODY -->
     <section id="introduction">
       <h2>Introduction</h2>
-      <p>RDF is a directed, labeled graph data format for representing information in the Web. RDF is
+      <p>
+        RDF is a directed, labeled graph data format for representing information in the Web. RDF is
         often used to represent, among other things, personal information, social networks, metadata
         about digital artifacts, as well as to provide a means of integration over disparate sources of
         information. This specification defines the syntax and semantics of the SPARQL query language
-        for RDF.</p>
-      <p>The SPARQL query language for RDF is designed to meet the use cases and requirements
+        for RDF.
+      </p>
+      <p>
+        The SPARQL query language for RDF is designed to meet the use cases and requirements
         identified by the RDF Data Access Working Group in [[[?UCNR]]] [[?UCNR]] and [[[?UCNR2]]]
-        [[?UCNR2]].</p>
+        [[?UCNR2]].
+      </p>
       <section id="docOutline">
         <h3>Document Outline</h3>
-        <p>Unless otherwise noted in the section heading, all sections and appendices in this
-          document are normative.</p>
-        <p>This section of the document, <a href="#introduction">section 1</a>, introduces the SPARQL
+        <p>
+          Unless otherwise noted in the section heading, all sections and appendices in this
+          document are normative.
+        </p>
+        <p>
+          This section of the document, <a href="#introduction">section 1</a>, introduces the SPARQL
           query language specification. It presents the organization of this specification document and
-          the conventions used throughout the specification.</p>
-        <p><a href="#basicpatterns">Section 2</a> of the specification introduces the SPARQL query
-          language itself via a series of example queries and query results. <a href=
-                                                                                "#termConstraint">Section 3</a> continues the introduction of the SPARQL query language with
+          the conventions used throughout the specification.
+        </p>
+        <p>
+          <a href="#basicpatterns">Section 2</a> of the specification introduces the SPARQL query
+          language itself via a series of example queries and query results. 
+          <a href="#termConstraint">Section 3</a> continues the introduction of the SPARQL query language with
           more examples that demonstrate SPARQL's ability to express constraints on the RDF terms that
-          appear in a query's results.</p>
-        <p><a href="#sparqlSyntax">Section 4</a> presents details of the SPARQL query language's
+          appear in a query's results.
+        </p>
+        <p>
+          <a href="#sparqlSyntax">Section 4</a> presents details of the SPARQL query language's
           syntax. It is a companion to the full grammar of the language and defines how grammatical
           constructs represent IRIs, blank nodes, literals, and variables. Section 4 also defines the
           meaning of several grammatical constructs that serve as syntactic sugar for more verbose
-          expressions.</p>
-        <p><a href="#GraphPattern">Section 5</a> introduces basic graph patterns and group graph
+          expressions.
+        </p>
+        <p>
+          <a href="#GraphPattern">Section 5</a> introduces basic graph patterns and group graph
           patterns, the building blocks from which more complex SPARQL query patterns are constructed.
           Sections 6, 7, and 8 present constructs that combine SPARQL graph patterns into larger graph
           patterns. In particular, <a href="#optionals">Section 6</a> introduces the ability to make
           portions of a query optional; <a href="#alternatives">Section 7</a> introduces the ability to
           express the disjunction of alternative graph patterns; and <a href="#negation">Section 8</a>
-          introduces patterns to test for the absense of information.</p>
-        <p><a href="#propertypaths">Section 9</a> adds property paths to graph pattern matching,
+          introduces patterns to test for the absense of information.
+        </p>
+        <p>
+          <a href="#propertypaths">Section 9</a> adds property paths to graph pattern matching,
           giving a compact representation of queries and also the ability to match arbitrary length
-          paths in the graph.</p>
-        <p><a href="#assignment">Section 10</a> describes the forms of assignment possible in
-          SPARQL.</p>
-        <p><a href="#aggregates">Sections 11</a> introduces the mechanism to group and aggregate
-          results, which can be incorporated as subqueries as described in <a href=
-                                                                              "#subqueries">Section 12</a>.</p>
-        <p><a href="#rdfDataset">Section 13</a> introduces the ability to constrain portions of a
-          query to particular source graphs. Section 13 also presents SPARQL's mechanism for defining
-          the source graphs for a query.</p>
-        <p><a href="#basic-federated-query">Section 14</a> refers to the separate document
-          [[[SPARQL11-FEDERATED-QUERY]]].</p>
-        <p><a href="#solutionModifiers">Section 15</a> defines the constructs that affect the
-          solutions of a query by ordering, slicing, projecting, limiting, and removing duplicates from
-          a sequence of solutions.</p>
-        <p><a href="#QueryForms">Section 16</a> defines the four types of SPARQL queries that produce
-          results in different forms.</p>
-        <p><a href="#expressions">Section 17</a> defines SPARQL's extensible value testing and
-          expression framework. It presents the functions and operators that can be used to constrain
-          the values that appear in a query's results and also calculate new values to be returned by a
-          query.</p>
-        <p><a href="#sparqlDefinition">Section 18</a> is a formal definition of the evaluation of
-          SPARQL graph patterns and solution modifiers.</p>
-        <p><a href="#grammar">Section 19</a> contains the normative definition of the syntax for the
+          paths in the graph.
+        </p>
+        <p>
+          <a href="#assignment">Section 10</a> describes the forms of assignment possible
+          in SPARQL.
+        </p>
+        <p>
+          <a href="#aggregates">Sections 11</a> introduces the mechanism to group and
+          aggregate results, which can be incorporated as subqueries as described
+          in <a href= "#subqueries">Section 12</a>.
+        </p>
+        <p>
+          <a href="#rdfDataset">Section 13</a> introduces the ability to constrain
+          portions of a query to particular source graphs. Section 13 also presents
+          SPARQL's mechanism for defining the source graphs for a query.
+        </p>
+        <p>
+          <a href="#basic-federated-query">Section 14</a> refers to the separate document
+          [[[SPARQL11-FEDERATED-QUERY]]].
+        </p>
+        <p>
+          <a href="#solutionModifiers">Section 15</a> defines the constructs that affect
+          the solutions of a query by ordering, slicing, projecting, limiting, and
+          removing duplicates from a sequence of solutions.
+        </p>
+        <p>
+          <a href="#QueryForms">Section 16</a> defines the four types of SPARQL queries
+          that produce results in different forms.
+        </p>
+        <p>
+          <a href="#expressions">Section 17</a> defines SPARQL's extensible value testing
+          and expression framework. It presents the functions and operators that can be
+          used to constrain the values that appear in a query's results and also calculate
+          new values to be returned by a query.
+        </p>
+        <p>
+          <a href="#sparqlDefinition">Section 18</a> is a formal definition of the
+          evaluation of SPARQL graph patterns and solution modifiers.
+        </p>
+        <p>
+          <a href="#grammar">Section 19</a> contains the normative definition of the syntax for the
           SPARQL query and [[[SPARQL11-UPDATE]]] languages, as given by a grammar expressed in EBNF
-          notation.</p>
+          notation.
+        </p>
       </section>
-      <section id="docConventions">
-        <h3>Document Conventions</h3>
-        <section id="docNamespaces">
-          <h4>Namespaces</h4>
-          <p>In this document, examples assume the following namespace prefix bindings unless
-            otherwise stated:</p>
-          <div style="text-align: center;">
-            <table style="border-collapse: collapse; border-color: #000000" cellpadding="5" border=
-                   "1">
-              <tbody>
-                <tr>
-                  <th>Prefix</th>
-                  <th>IRI</th>
-                </tr>
-                <tr>
-                  <td><code>rdf:</code></td>
-                  <td><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></td>
-                </tr>
-                <tr>
-                  <td><code>rdfs:</code></td>
-                  <td><code>http://www.w3.org/2000/01/rdf-schema#</code></td>
-                </tr>
-                <tr>
-                  <td><code>xsd:</code></td>
-                  <td><code>http://www.w3.org/2001/XMLSchema#</code></td>
-                </tr>
-                <tr>
-                  <td><code>fn:</code></td>
-                  <td><code>http://www.w3.org/2005/xpath-functions#</code></td>
-                </tr>
-                <tr>
-                  <td><code>sfn:</code></td>
-                  <td><code>http://www.w3.org/ns/sparql#</code></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <section id="docDataDesc">
-          <h4>Data Descriptions</h4>
-          <p>This document uses the [[[?TURTLE]]] [[?TURTLE]] data format to show each triple
-            explicitly. Turtle allows IRIs to be abbreviated with prefixes:</p>
-          <pre class="data">@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-            @prefix :     &lt;http://example.org/book/&gt; .
-            :book1  dc:title  "SPARQL Tutorial" .</pre>
-        </section>
-        <section id="docResultDesc">
-          <h4>Result Descriptions</h4>
-          <p>Result sets are illustrated in tabular form.</p>
-          <div class="result">
-            <div id="table39"></div>
-            <table class="resultTable">
-              <tbody>
-                <tr>
-                  <th>x</th>
-                  <th>y</th>
-                  <th>z</th>
-                </tr>
-                <tr>
-                  <td>"Alice"</td>
-                  <td><code>&lt;http://example/a&gt;</code></td>
-                  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>, <a href=
-                                                                                   "#defn_RDFTerm">RDF term</a>). In this result set, there are three variables:
-            <code>x</code>, <code>y</code> and <code>z</code> (shown as column headers). Each solution
-            is shown as one row in the body of the table.&nbsp; Here, there is a single solution, in
-            which variable <code>x</code> is bound to <code>"Alice"</code>, variable <code>y</code> is
-            bound to <code>&lt;http://example/a&gt;</code>, and variable <code>z</code> is not bound to
-            an RDF term. Variables are not required to be bound in a solution.</p>
-        </section>
-        <section id="docTerminology">
-          <h4>Terminology</h4>
-          <p>The SPARQL language includes IRIs, a subset of RDF URI References that omits spaces.
-            Note that all IRIs in SPARQL queries are absolute; they may or may not include a fragment
-            identifier [[RFC3987], section 3.1. IRIs include URIs [[RFC3986]] and URLs. The abbreviated
-            forms (<a href="#QSynIRI">relative IRIs and prefixed names</a>) in the SPARQL syntax are
-            resolved to produce absolute IRIs.</p>
-          <p>The following terms are defined in [[[RDF11-CONCEPTS]]] [[RDF11-CONCEPTS]] and used in
-            SPARQL:</p>
-          <ul>
-            <li>
-              <a>IRI</a> (corresponds to the Concepts and Abstract Syntax term "<code>RDF URI
-                reference</code>")
-            </li>
-            <li>
-              <a>literal</a>
-            </li>
-            <li>
-              <a>lexical form</a>
-            </li>
-            <li>
-              <a class="type plainLiteral" href=
-                 "http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-plain-literal">plain
-                literal</a>
-            </li>
-            <li>
-              <a>language tag</a>
-            </li>
-            <li>
-              <a class="type typedLiteral" href=
-                 "http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-typed-literal">typed
-                literal</a>
-            </li>
-            <li>
-              <a>datatype IRI</a> (corresponds to the Concepts and Abstract Syntax term
-              "<code>datatype URI</code>")
-            </li>
-            <li>
-              <a>blank node</a>
-            </li>
-          </ul>
-          <p>In addition, we define the following terms:</p>
-          <ul>
-            <li>
-              <a class="type" href="#defn_RDFTerm">RDF Term</a>, which includes IRIs, blank nodes and
-              literals
-            </li>
-            <li>
-              <a class="type" href="#defn_SimpleLiteral">Simple Literal</a>, which covers literals
-              without language tag or datatype IRI
-            </li>
-          </ul>
-        </section>
+    </section>
+    
+    <section id="docConventions">
+      <h3>Document Conventions</h3>
+      <section id="docNamespaces">
+        <h4>Namespaces</h4>
+        <p>In this document, examples assume the following namespace prefix bindings unless
+          otherwise stated:</p>
+        <div style="text-align: center;">
+          <table style="border-collapse: collapse; border-color: #000000" cellpadding="5" border=
+                 "1">
+            <tbody>
+              <tr>
+                <th>Prefix</th>
+                <th>IRI</th>
+              </tr>
+              <tr>
+                <td><code>rdf:</code></td>
+                <td><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></td>
+              </tr>
+              <tr>
+                <td><code>rdfs:</code></td>
+                <td><code>http://www.w3.org/2000/01/rdf-schema#</code></td>
+              </tr>
+              <tr>
+                <td><code>xsd:</code></td>
+                <td><code>http://www.w3.org/2001/XMLSchema#</code></td>
+              </tr>
+              <tr>
+                <td><code>fn:</code></td>
+                <td><code>http://www.w3.org/2005/xpath-functions#</code></td>
+              </tr>
+              <tr>
+                <td><code>sfn:</code></td>
+                <td><code>http://www.w3.org/ns/sparql#</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section id="docDataDesc">
+        <h4>Data Descriptions</h4>
+        <p>This document uses the [[[?TURTLE]]] [[?TURTLE]] data format to show each triple
+          explicitly. Turtle allows IRIs to be abbreviated with prefixes:</p>
+        <pre class="data">@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
+          @prefix :     &lt;http://example.org/book/&gt; .
+          :book1  dc:title  "SPARQL Tutorial" .</pre>
+      </section>
+      <section id="docResultDesc">
+        <h4>Result Descriptions</h4>
+        <p>Result sets are illustrated in tabular form.</p>
+        <div class="result">
+          <div id="table39"></div>
+          <table class="resultTable">
+            <tbody>
+              <tr>
+                <th>x</th>
+                <th>y</th>
+                <th>z</th>
+              </tr>
+              <tr>
+                <td>"Alice"</td>
+                <td><code>&lt;http://example/a&gt;</code></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>, <a href=
+                                                                                 "#defn_RDFTerm">RDF term</a>). In this result set, there are three variables:
+          <code>x</code>, <code>y</code> and <code>z</code> (shown as column headers). Each solution
+          is shown as one row in the body of the table.&nbsp; Here, there is a single solution, in
+          which variable <code>x</code> is bound to <code>"Alice"</code>, variable <code>y</code> is
+          bound to <code>&lt;http://example/a&gt;</code>, and variable <code>z</code> is not bound to
+          an RDF term. Variables are not required to be bound in a solution.</p>
+      </section>
+      <section id="docTerminology">
+        <h4>Terminology</h4>
+        <p>The SPARQL language includes IRIs, a subset of RDF URI References that omits spaces.
+          Note that all IRIs in SPARQL queries are absolute; they may or may not include a fragment
+          identifier [[RFC3987], section 3.1. IRIs include URIs [[RFC3986]] and URLs. The abbreviated
+          forms (<a href="#QSynIRI">relative IRIs and prefixed names</a>) in the SPARQL syntax are
+          resolved to produce absolute IRIs.</p>
+        <p>The following terms are defined in [[[RDF11-CONCEPTS]]] [[RDF11-CONCEPTS]] and used in
+          SPARQL:</p>
+
+        <p class="note">
+          IRI : align to RDF Concept2 -- "RDF URI reference" is RDF 1.0 terminology.
+        </p>
+        <p class="note">
+          Plain literal - does not exists in RDF 1.1/1.2.
+        </p>
+        <ul>
+          <li>
+            <a data-cite="RDF12-CONCEPTS#dfn-internationalized-resource-identifier">IRI</a>
+            (corresponds to the Concepts and Abstract Syntax term "<code>RDF URI reference</code>")
+          </li>
+          <li>
+            <a data-cite="RDF12-CONCEPTS#dfn-rdf-literal>literal</a>
+                          </li>
+               <li>
+                 <a data-cite="RDF12-CONCEPTS#dfn-lexical-form>lexical form</a>
+          </li>
+          <li>
+            plain literal
+          </li>
+          <li>
+            <a data-cite="RDF12-CONCEPTS#dfn-language-tag>language tag</a>
+               </li>
+          <li>
+            <a class="type typedLiteral" href=
+               "http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-typed-literal">typed
+              literal</a>
+          </li>
+          <li>
+            <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri>datatype IRI</a>
+            (corresponds to the Concepts and Abstract Syntax term "<code>recognized datatype URI</code>")
+          </li>
+          <li>
+            <a data-cite="RDF12-CONCEPTS#dfn-blank-node>blank node</a>
+          </li>
+        </ul>
+        <p>In addition, we define the following terms:</p>
+        <ul>
+          <li>
+            <a class="type" href="#defn_RDFTerm">RDF Term</a>, which includes IRIs, blank nodes and
+            literals
+          </li>
+          <li>
+            <a class="type" href="#defn_SimpleLiteral">Simple Literal</a>, which covers literals
+            without language tag or datatype IRI
+          </li>
+        </ul>
       </section>
     </section>
     <section id="basicpatterns">
