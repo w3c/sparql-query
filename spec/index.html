@@ -744,7 +744,7 @@
             </table>
           </div>
         </div>
-        <p>The regular expression language is <a data-cite="FUNCOP#regex-syntax">defined by XQuery
+        <p>The regular expression language is <a data-cite="XPATH-FUNCTIONS#regex-syntax">defined by XQuery
             1.0 and XPath 2.0 Functions and Operators</a> and is based on <a data-cite=
                                                                              "XMLSCHEMA-2#regexs">XML Schema Regular Expressions</a>.</p>
       </section>
@@ -4063,7 +4063,7 @@
       <section id="operandDataTypes">
         <h3>Operand Data Types</h3>
         <p>SPARQL functions and operators operate on RDF terms and SPARQL variables. A subset of
-          these functions and operators are taken from the [[[FUNCOP]]] [[FUNCOP]] and have XML Schema
+          these functions and operators are taken from the [[[XPATH-FUNCTIONS]]] [[XPATH-FUNCTIONS]] and have XML Schema
           <a data-cite="XPATH20#dt-typed-value">typed value</a> arguments and return types. RDF
           <code>typed literals</code> passed as arguments to these functions and operators are mapped
           to XML Schema typed values with a <a data-cite="XPATH20#dt-string-value">string value</a> of
@@ -4270,10 +4270,10 @@
           <h4>Effective Boolean Value (EBV)</h4>
           <p>Effective boolean value is used to calculate the arguments to the logical functions
             <a href="#func-logical-and">logical-and</a>, <a href="#func-logical-or">logical-or</a>, and
-            <a data-cite="FUNCOP#func-not">fn:not</a>, as well as evaluate the result of a
+            <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>, as well as evaluate the result of a
             <code>FILTER</code> expression.</p>
           <p>The XQuery <a data-cite="XQUERY#id-ebv">Effective Boolean Value</a> rules rely on the
-            definition of XPath's <a data-cite="FUNCOP#func-boolean">fn:boolean</a>. The following
+            definition of XPath's <a data-cite="XPATH-FUNCTIONS#func-boolean">fn:boolean</a>. The following
             rules reflect the rules for <code>fn:boolean</code> applied to the argument types present
             in SPARQL queries:</p>
           <ul>
@@ -4305,7 +4305,7 @@
                                                                                  "token">&amp;&</span>, <span class="token">*</span>, <span class="token">isIRI</span>) used
           to construct constraints. The following table associates each of these grammatical
           productions with the appropriate operands and an operator function defined by either
-          [[[FUNCOP]]] [[FUNCOP]] or the SPARQL operators specified in <a href="#SparqlOps">section
+          [[[XPATH-FUNCTIONS]]] [[XPATH-FUNCTIONS]] or the SPARQL operators specified in <a href="#SparqlOps">section
             17.4</a>. When selecting the operator definition for a given set of parameters, the
           definition with the most specific parameters applies. For instance, when evaluating
           <code>xsd:integer = xsd:signedInt</code>, the definition for <code>=</code> with two
@@ -4324,7 +4324,7 @@
           <code>fn:not(op:numeric-equal(A, B))</code>. Note that per the XPath definitions,
           <code>fn:not</code> and <code>op:numeric-equal</code> produce an error if their argument is
           an error.</p>
-        <p>The collation for <code>fn:compare</code> is <a data-cite="FUNCOP#collations">defined by
+        <p>The collation for <code>fn:compare</code> is <a data-cite="XPATH-FUNCTIONS#collations">defined by
             XPath</a> and identified by
           <code>http://www.w3.org/2005/xpath-functions/collation/codepoint</code>. This collation
           allows for string comparison based on code point values. Codepoint string equivalence can be
@@ -4353,7 +4353,7 @@
                 xsd:boolean <a href="#ebv-arg">(EBV)</a>
               </td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(A)
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(A)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4364,7 +4364,7 @@
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-unary-plus">op:numeric-unary-plus</a>(A)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-unary-plus">op:numeric-unary-plus</a>(A)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -4375,7 +4375,7 @@
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-unary-minus">op:numeric-unary-minus</a>(A)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-unary-minus">op:numeric-unary-minus</a>(A)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -4439,7 +4439,7 @@
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-equal">op:numeric-equal</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4451,7 +4451,7 @@
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
                                                                                  "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 0)
               </td>
               <td>xsd:boolean</td>
@@ -4464,7 +4464,7 @@
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
                                                                                  "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
                                                                                                                                   "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0)
               </td>
@@ -4478,7 +4478,7 @@
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-boolean-equal">op:boolean-equal</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-boolean-equal">op:boolean-equal</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4490,7 +4490,7 @@
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-dateTime-equal">op:dateTime-equal</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-dateTime-equal">op:dateTime-equal</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4502,7 +4502,7 @@
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
@@ -4515,9 +4515,9 @@
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "FUNCOP#func-compare">fn:compare</a>(A, B), 0))
+                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 0))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4529,9 +4529,9 @@
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "FUNCOP#func-compare">fn:compare</a>(<a href="#func-str" class=
+                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
                                                                                                                                                                   "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0))
               </td>
               <td>xsd:boolean</td>
@@ -4544,7 +4544,7 @@
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-boolean-equal">op:boolean-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
@@ -4557,7 +4557,7 @@
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-dateTime-equal">op:dateTime-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
@@ -4570,7 +4570,7 @@
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-less-than">op:numeric-less-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-less-than">op:numeric-less-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4582,7 +4582,7 @@
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
                                                                                  "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), -1)
               </td>
               <td>xsd:boolean</td>
@@ -4595,7 +4595,7 @@
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
                                                                                  "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
                                                                                                                                   "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1)
               </td>
@@ -4609,7 +4609,7 @@
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-boolean-less-than">op:boolean-less-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-boolean-less-than">op:boolean-less-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4621,7 +4621,7 @@
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-dateTime-less-than">op:dateTime-less-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-dateTime-less-than">op:dateTime-less-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4633,7 +4633,7 @@
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-greater-than">op:numeric-greater-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-greater-than">op:numeric-greater-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4645,7 +4645,7 @@
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
                                                                                  "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 1)
               </td>
               <td>xsd:boolean</td>
@@ -4658,7 +4658,7 @@
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
                                                                                  "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
                                                                                                                                   "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1)
               </td>
@@ -4672,7 +4672,7 @@
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-boolean-greater-than">op:boolean-greater-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-boolean-greater-than">op:boolean-greater-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4684,7 +4684,7 @@
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4710,9 +4710,9 @@
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "FUNCOP#func-compare">fn:compare</a>(A, B), 1))
+                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 1))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4724,9 +4724,9 @@
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "FUNCOP#func-compare">fn:compare</a>(<a href="#func-str" class=
+                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
                                                                                                                                                                   "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1))
               </td>
               <td>xsd:boolean</td>
@@ -4739,7 +4739,7 @@
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-boolean-greater-than">op:boolean-greater-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
@@ -4752,7 +4752,7 @@
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
@@ -4779,9 +4779,9 @@
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "FUNCOP#func-compare">fn:compare</a>(A, B), -1))
+                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), -1))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4793,9 +4793,9 @@
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "FUNCOP#func-compare">fn:compare</a>(<a href="#func-str" class=
+                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
                                                                                                                                                                   "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1))
               </td>
               <td>xsd:boolean</td>
@@ -4808,7 +4808,7 @@
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-boolean-less-than">op:boolean-less-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
@@ -4821,7 +4821,7 @@
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a data-cite=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
                                                              "XPATH-FUNCTIONS#func-dateTime-less-than">op:dateTime-less-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
@@ -4837,7 +4837,7 @@
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-multiply">op:numeric-multiply</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-multiply">op:numeric-multiply</a>(A, B)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -4849,7 +4849,7 @@
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-divide">op:numeric-divide</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-divide">op:numeric-divide</a>(A, B)
               </td>
               <td><span class="type numeric">numeric</span>; but xsd:decimal if both operands are
                 xsd:integer</td>
@@ -4862,7 +4862,7 @@
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-add">op:numeric-add</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-add">op:numeric-add</a>(A, B)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -4874,7 +4874,7 @@
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-numeric-subtract">op:numeric-subtract</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-subtract">op:numeric-subtract</a>(A, B)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -4901,7 +4901,7 @@
               <td><span class="type RDFterm">RDF term</span></td>
               <td><span class="type RDFterm">RDF term</span></td>
               <td class="xpathOp">
-                <a data-cite="FUNCOP#func-not">fn:not</a>(<a href="#func-RDFterm-equal" class=
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a href="#func-RDFterm-equal" class=
                                                              "SPARQLoperator">RDFterm-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
@@ -6587,11 +6587,11 @@
                                                                                                                                                                                                                                                             "name">pattern</span>, <span class="type"><span class=
                                                                                                                                                                                                                                                                                                             "type">simple literal</span></span> <span class="name">flags</span>)
             </pre>
-            <p>Invokes the XPath <a data-cite="FUNCOP#func-matches">fn:matches</a> function to match
+            <p>Invokes the XPath <a data-cite="XPATH-FUNCTIONS#func-matches">fn:matches</a> function to match
               <code>text</code> against a regular expression <code>pattern</code>. The regular
               expression language is defined in XQuery 1.0 and XPath 2.0 Functions and Operators
-              section <a data-cite="FUNCOP#regex-syntax">7.6.1 Regular Expression Syntax</a>
-              [[FUNCOP]].</p>
+              section <a data-cite="XPATH-FUNCTIONS#regex-syntax">7.6.1 Regular Expression Syntax</a>
+              [[XPATH-FUNCTIONS]].</p>
             <div class="exampleGroup">
               <pre class="data">@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
 
@@ -7125,8 +7125,8 @@
       </section>
       <section id="FunctionMapping">
         <h3>XPath Constructor Functions</h3>
-        <p>SPARQL imports a subset of the XPath constructor functions defined in [[[FUNCOP]]]
-          [[FUNCOP]] in section <a data-cite="FUNCOP#casting-from-primitive-to-primitive">17.1 Casting
+        <p>SPARQL imports a subset of the XPath constructor functions defined in [[[XPATH-FUNCTIONS]]]
+          [[XPATH-FUNCTIONS]] in section <a data-cite="XPATH-FUNCTIONS#casting-from-primitive-to-primitive">17.1 Casting
             from primitive types to primitive types</a>. SPARQL constructors include all of the XPath
           constructors for the <a href="#operandDataTypes">SPARQL operand datatypes</a> plus the
           <a href="#operandDataTypes">additional datatypes</a> imposed by the RDF data model. Casting
