@@ -14,7 +14,7 @@
         group:                "rdf-star" ,
         localBiblio:          localBibliography,
         specStatus:           "ED",
-        edDraftURI:           "https://w3c.github.io/sparql12-query/spec/",
+        edDraftURI:           "https://w3c.github.io/sparql-query/spec/",
         testSuiteURI:         "https://w3c.github.io/rdf-tests/",
         shortName:            "sparql12-query",
         copyrightStart:       "2008",
@@ -8017,14 +8017,14 @@
                 graph pattern</a>.</p>
             <p>In this step, we also translate graph patterns within <code>FILTER</code> expressions
               <a href="#func-filter-exists"><code>EXISTS</code> and <code>NOT EXISTS</code></a>.</p>
-            <pre class="codeBlock">Let FS := empty set
 
-              For each form FILTER(expr) in the group graph pattern:
-              In expr, replace NOT EXISTS{P} with fn:not(<a href=
-                                                            "#defn_evalExists">exists(translate(P)))</a> 
-              In expr, replace EXISTS{P} with <a href="#defn_evalExists">exists(translate(P))</a>
-              FS := FS ∪ {expr}
-              End</pre>
+<pre class="codeBlock">Let FS := empty set
+For each form FILTER(expr) in the group graph pattern:
+    In expr, replace NOT EXISTS{P} with fn:not(<a href="#defn_evalExists">exists(translate(P)))</a> 
+    In expr, replace EXISTS{P} with <a href="#defn_evalExists">exists(translate(P))</a>
+    FS := FS ∪ {expr}
+    End
+</pre>
             <p>The set of filter expressions <code>FS</code> is <a href="#sparqlAddFilters">used
                 later</a>.</p>
           </section>
@@ -8192,57 +8192,67 @@
               <p>If the form is <code><a href=
                                          "#rGroupOrUnionGraphPattern">GroupOrUnionGraphPattern</a></code></p>
             </blockquote>
-            <pre class="codeBlock">Let A := undefined
-              
-              For each element G in the GroupOrUnionGraphPattern
-              If A is undefined
-              A := Translate(G)
-              Else
-              A := Union(A, Translate(G))
-              End
 
-              The result is A
+<pre class="codeBlock">Let A := undefined
+          
+For each element G in the GroupOrUnionGraphPattern
+    If A is undefined
+        A := Translate(G)
+    Else
+        A := Union(A, Translate(G))
+    End
+
+The result is A
             </pre>
+
             <blockquote>
               <p>If the form is <code><a href="#rGraphGraphPattern">GraphGraphPattern</a></code></p>
             </blockquote>
-            <pre class="codeBlock">If the form is GRAPH IRI GroupGraphPattern
-              The result is Graph(IRI, Translate(GroupGraphPattern))</pre>
-            <pre class="codeBlock">If the form is GRAPH Var GroupGraphPattern
-              The result is Graph(Var, Translate(GroupGraphPattern))</pre>
+
+            <pre class="codeBlock">
+If the form is GRAPH IRI GroupGraphPattern
+    The result is Graph(IRI, Translate(GroupGraphPattern))
+</pre>
+
+            <pre class="codeBlock">
+If the form is GRAPH Var GroupGraphPattern
+    The result is Graph(Var, Translate(GroupGraphPattern))
+</pre>
+
             <blockquote>
               <p>If the form is <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>:</p>
             </blockquote>
-            <pre class="codeBlock">Let FS := the empty set
-              Let G := the empty pattern, a basic graph pattern which is the empty set.
+<pre class="codeBlock">
+Let FS := the empty set
+Let G := the empty pattern, a basic graph pattern which is the empty set.
 
-              For each element E in the GroupGraphPattern
+For each element E in the GroupGraphPattern
 
-              If E is of the form OPTIONAL{P} 
-              Let A := Translate(P)
-              If A is of the form Filter(F, A2)
-              G := LeftJoin(G, A2, F)
-              Else 
-              G := LeftJoin(G, A, true)
-              End
-              End
+    If E is of the form OPTIONAL{P} 
+        Let A := Translate(P)
+        If A is of the form Filter(F, A2)
+            G := LeftJoin(G, A2, F)
+        Else 
+            G := LeftJoin(G, A, true)
+            End
+        End
 
-              If E is of the form MINUS{P}
-              G := Minus(G, Translate(P))
-              End
+    If E is of the form MINUS{P}
+        G := Minus(G, Translate(P))
+        End
 
-              If E is of the form BIND(expr AS var)
-              G := Extend(G, var, expr)
-              End
+    If E is of the form BIND(expr AS var)
+        G := Extend(G, var, expr)
+        End
 
-              If E is any other form 
-              Let A := Translate(E)
-              G := Join(G, A)
-              End
+    If E is any other form 
+        Let A := Translate(E)
+        G := Join(G, A)
+        End
 
-              End
-              
-              The result is G.
+   End
+   
+The result is G.
             </pre>
             <blockquote>
               <p>If the form is <a href="#rInlineData">InlineData</a></p>
@@ -8264,19 +8274,22 @@
             <h5>Filters of Group</h5>
             <p>After the group has been translated, the filter expressions are added so they wil
               apply to the whole of the rest of the group:</p>
-            <pre class="codeBlock">If FS is not empty
-              Let G := output of preceding step
-              Let X := Conjunction of expressions in FS
-              G := Filter(X, G)
-              End</pre>
+            <pre class="codeBlock">
+If FS is not empty
+    Let G := output of preceding step
+    Let X := Conjunction of expressions in FS
+    G := Filter(X, G)
+End</pre>
           </section>
           <section id="sparqlSimplification">
             <h5>Simplification step</h5>
             <p>Some groups of one graph pattern become <code>join(Z, A)</code>, where Z is the empty
               basic graph pattern (which is the empty set). These can be replaced by A. The empty graph
               pattern Z is the identity for join:</p>
-            <pre class="codeBlock">Replace join(Z, A) by A
-              Replace join(A, Z) by A</pre>
+            <pre class="codeBlock">
+Replace join(Z, A) by A
+Replace join(A, Z) by A
+</pre>
           </section>
         </section>
         <section id="sparqlAlgebraExamples">
@@ -8477,79 +8490,78 @@
               more solutions, with the same overall cardinality. In case of implicit grouping, a fixed
               constant (1) is used to group all solutions into a single group.</p>
             <p>Step: Aggregates</p>
-            <p>The aggregation step is applied as a transformation on the query level, replacing
-              aggregate expressions in the query level with Aggregation() algebraic expressions.</p>
-            <p>The transformation for query levels that use any aggregates is given below:</p>
-            <pre class="codeBlock">Let A := the empty sequence
-              Let Q := the query level being evaluated
-              Let P := the algebra translation of the GroupGraphPattern of the query level
-              Let E := [], a list of pairs of the form (variable, expression)
+            <p>
+              The aggregation step is applied as a transformation on the query level, replacing
+              aggregate expressions in the query level with Aggregation() algebraic
+              expressions.
+            </p>
+            <p>
+              The transformation for query levels that use any aggregates is given
+              below:
+            </p>
 
-              If Q contains GROUP BY exprlist
-              Let G := Group(exprlist, P)
-              Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
-              Let G := Group((1), P)
-              Else
-              skip the rest of the aggregate step
-              End
+<pre class="codeBlock">Let A := the empty sequence
+Let Q := the query level being evaluated
+Let P := the algebra translation of the GroupGraphPattern of the query level
+Let E := [], a list of pairs of the form (variable, expression)
 
-              Global i := 1   # Initially 1 for each query processed
+If Q contains GROUP BY exprlist
+   Let G := Group(exprlist, P)
+Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
+   Let G := Group((1), P)
+Else
+   skip the rest of the aggregate step
+   End
 
-              For each (X AS Var) in SELECT, each HAVING(X), and each ORDER BY X in Q
-              For each unaggregated variable V in X
-              Replace V with Sample(V)
-              End
-              For each aggregate R(args ; scalarvals) now in X
-              # note scalarvals may be omitted, then it's equivalent to the empty set
-              A<span><sub>i</sub></span> := Aggregation(args, R, scalarvals, G)
-              Replace R(...) with agg<span><sub>i</sub></span> in Q
-              i := i + 1
-              End
-              End
+Global i := 1   # Initially 1 for each query processed
 
-              For each variable V appearing outside of an aggregate
-              A<span><sub>i</sub></span> := Aggregation(V, Sample, {}, G)
-              E := E append (V, agg<span><sub>i</sub></span>)
-              i := i + 1
-              End
+For each (X AS Var) in SELECT, each HAVING(X), and each ORDER BY X in Q
+  For each unaggregated variable V in X
+      Replace V with Sample(V)
+      End
+  For each aggregate R(args ; scalarvals) now in X
+      # note scalarvals may be omitted, then it's equivalent to the empty set
+      A<span><sub>i</sub></span> := Aggregation(args, R, scalarvals, G)
+      Replace R(...) with agg<span><sub>i</sub></span> in Q
+      i := i + 1
+      End
+  End
 
-              A := A<span><sub>i</sub></span>, ..., A<span><sub>i-1</sub></span>
-              P := AggregateJoin(A)
-            </pre>
-            <p>Note: agg<sub>i</sub> is a temporary variable. E is then used in 18.2.4.4 for the
-              processing of select expressions.</p>
-            <p>Example:</p>
-            <pre class="query">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-              SELECT (SUM(?val) AS ?sum) (COUNT(?a) AS ?count)
-              WHERE {
-              ?a rdf:value ?val .
-              } GROUP BY ?a</pre>
-            <p>The SUM expression becomes agg<sub>1</sub>, and the COUNT expression becomes
-              agg<sub>2</sub>.</p>
-            <pre class="code">Let G := Group((?a), BGP(?a rdf:value ?val))
-              <span>A<sub>1</sub></span> = Aggregation((?val), Sum, {}, G)
-              <span>A<sub>2</sub></span> = Aggregation((?a), Count, {}, G)
-              A := (<span>A<sub>1</sub>, A<sub>2</sub></span>)
-              Let P := AggregateJoin(A)</pre>
+For each variable V appearing outside of an aggregate
+   A<span><sub>i</sub></span> := Aggregation(V, Sample, {}, G)
+   E := E append (V, agg<span><sub>i</sub></span>)
+   i := i + 1
+   End
+
+A := A<span><sub>i</sub></span>, ..., A<span><sub>i-1</sub></span>
+P := AggregateJoin(A)
+</pre>
           </section>
           <section id="sparqlHavingClause">
             <h5>HAVING</h5>
             <p>The HAVING expression is evaluated using the same rules as FILTER(). Note that, due to
               the logic position in which the HAVING clause is evaluated, expressions projected by the
               SELECT clause are not visible to the HAVING clause.</p>
-            <pre class="codeBlock">Let Q := the query level being evaluated
-              Let P := the algebra translation of the query level so far
+            <pre class="codeBlock">
+Let Q := the query level being evaluated
+Let P := the algebra translation of the query level so far
 
-              For each HAVING(E) in Q
-              P := Filter(E, P)
-              End</pre>
+For each HAVING(E) in Q
+    P := Filter(E, P)
+    End
+</pre>
+
           </section>
           <section id="sparqlAlgebraFinalValues">
             <h5>VALUES</h5>
             <p>If the query has a trailing VALUES clause:</p>
-            <pre class="codeBlock">Let P := the algebra translation of the query level so far
-              P := Join(P, ToMultiSet(data))
-              where <i>data</i> is a solution sequence formed from the VALUES clause</pre>
+
+<pre class="codeBlock">
+Let P := the algebra translation of the query level so far
+P := Join(P, ToMultiSet(data))
+  where <i>data</i> is a solution sequence formed from the VALUES clause
+</pre>
+
             <p>The translatation of the data is the same as for <a href="#data-block">inline
                 data</a>.</p>
           </section>
@@ -8557,40 +8569,44 @@
             <h5>SELECT Expressions</h5>
             <p>Step: Select expressions</p>
             <p>We have two forms of the abstract syntax to consider:</p>
-            <pre class="codeBlock">SELECT selItem ... { pattern }
-              SELECT * { pattern }</pre>
-            <pre class="codeBlock">Let X := algebra from earlier steps
-              Let VS := list of all variables visible in the pattern,
-              so restricted by sub-SELECT projected variables and GROUP BY variables.
-              Not visible: only in filter, exists/not exists, masked by a subselect, 
-              non-projected GROUP variables, only in the right hand side of MINUS
 
-              Let PV := {}, a set of variable names
-              Note, E is a list of pairs of the form (variable, expression), defined in <a href=
-                                                                                           "#convertGroupAggSelectExpressions">section 18.2.4</a>
-              
-              If "SELECT *"
-              PV := VS
+<pre class="codeBlock">
+SELECT selItem ... { pattern }
+SELECT * { pattern }
+</pre>
 
-              If  "SELECT <code>selItem ...</code>:"  
-              For each selItem:
-              If selItem is a variable
-              PV := PV ∪ { variable }
-              End
-              If selItem is (expr AS variable)
-              variable must not appear in VS nor in PV; if it does then generate a syntax error and stop
-              PV := PV ∪ { variable }
-              E := E append (variable, expr) 
-              End
-              End
+<pre class="codeBlock">Let X := algebra from earlier steps
+Let VS := list of all variables visible in the pattern,
+           so restricted by sub-SELECT projected variables and GROUP BY variables.
+           Not visible: only in filter, exists/not exists, masked by a subselect, 
+                        non-projected GROUP variables, only in the right hand side of MINUS
 
-              For each pair (var, expr) in E
-              X := Extend(X, var, expr)
-              End
-              
-              Result is X  
-              The set PV is used later for projection.
+Let PV := {}, a set of variable names
+Note, E is a list of pairs of the form (variable, expression), defined in <a href="#convertGroupAggSelectExpressions">section 18.2.4</a>
+  
+If "SELECT *"
+    PV := VS
+
+If  "SELECT <code>selItem ...</code>:"  
+    For each selItem:
+        If selItem is a variable
+            PV := PV ∪ { variable }
+        End
+        If selItem is (expr AS variable)
+            variable must not appear in VS nor in PV; if it does then generate a syntax error and stop
+            PV := PV ∪ { variable }
+            E := E append (variable, expr) 
+        End
+    End
+
+For each pair (var, expr) in E
+    X := Extend(X, var, expr)
+    End
+  
+Result is X  
+The set PV is used later for projection.
             </pre>
+
             <p>The syntax error arises for use of a variable as the named target of AS (e.g. ... AS
               ?x) when the variable is used inside the WHERE clause of the SELECT or if already used as
               the traget of AS in this SELECT expression.</p>
