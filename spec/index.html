@@ -110,7 +110,7 @@
       </p>
     </section>
 
-    <section id="related" data-include="./common/sparql-related.html"></section>
+    <section id="related" data-include="common/sparql-related.html"></section>
 
     <!-- BODY -->
     <section id="introduction">
@@ -123,9 +123,9 @@
         for RDF.
       </p>
       <p>
-        The SPARQL query language for RDF is designed to meet the use cases and requirements
-        identified by the RDF Data Access Working Group in [[[?UCNR]]] [[?UCNR]] and [[[?UCNR2]]]
-        [[?UCNR2]].
+        The SPARQL query language for RDF is designed to meet the use cases and
+        requirements identified by the RDF Data Access Working Group in [[rdf-dawg-uc]]
+        and SPARQL 1.1 Working Group in [[sparql-features]].
       </p>
       <section id="docOutline">
         <h3>Document Outline</h3>
@@ -251,7 +251,7 @@
       </section>
       <section id="docDataDesc">
         <h4>Data Descriptions</h4>
-        <p>This document uses the [[[?TURTLE]]] [[?TURTLE]] data format to show each triple
+        <p>This document uses the [[[TURTLE]]] [[TURTLE]] data format to show each triple
           explicitly. Turtle allows IRIs to be abbreviated with prefixes:</p>
         <pre class="data">
 PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
@@ -295,7 +295,7 @@ PREFIX :     &lt;http://example.org/book/&gt;
           identifier [[RFC3987], section 3.1. IRIs include URIs [[RFC3986]] and URLs. The abbreviated
           forms (<a href="#QSynIRI">relative IRIs and prefixed names</a>) in the SPARQL syntax are
           resolved to produce absolute IRIs.</p>
-        <p>The following terms are defined in [[[RDF11-CONCEPTS]]] [[RDF11-CONCEPTS]] and used in
+        <p>The following terms are defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]] and used in
           SPARQL:</p>
 
         <p class="note">
@@ -565,8 +565,8 @@ _:b foaf:box   &lt;mailto:peter@example.org&gt; .
         <h3>Blank Node Labels in Query Results</h3>
         <p>Query results can contain blank nodes. Blank nodes in the example result sets in this
           document are written in the form "_:" followed by a blank node label.</p>
-        <p>Blank node labels are scoped to a result set (see "[[[?RDF-SPARQL-XMLRES]]]" and
-          "[[[?SPARQL11-RESULTS-JSON]]]") or, for the <code>CONSTRUCT</code> query form, the result
+        <p>Blank node labels are scoped to a result set (see "[[[RDF-SPARQL-XMLRES]]]" and
+          "[[[SPARQL11-RESULTS-JSON]]]") or, for the <code>CONSTRUCT</code> query form, the result
           graph. Use of the same label within a result set indicates the same blank node.</p>
         <div class="exampleGroup">
           Data:
@@ -886,7 +886,7 @@ WHERE   {
             '&lt;' and '&gt;' delimiters do not form part of the IRI reference. Relative IRIs match the
             <code>irelative-ref</code> reference in section 2.2 ABNF for IRI References and IRIs in
             [[RFC3987]] and are resolved to IRIs as described below.</p>
-          <p>The set of RDF terms defined in [[[RDF11-CONCEPTS]]] includes RDF URI references while
+          <p>The set of RDF terms defined in [[[RDF12-CONCEPTS]]] includes RDF URI references while
             SPARQL terms include IRIs. RDF URI references containing "<code>&lt;</code>",
             "<code>&gt;</code>", '<code>"</code>' (double quote), space, "<code>{</code>",
             "<code>}</code>", "<code>|</code>", "<code>\</code>", "<code>^</code>", and
@@ -975,7 +975,7 @@ book:book1</pre>
         </section>
         <section id="QSynBlankNodes">
           <h4>Syntax for Blank Nodes</h4>
-          <p><a>Blank nodes</a> in graph patterns act as variables, not as references to specific
+          <p><a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank nodes</a> in graph patterns act as variables, not as references to specific
             blank nodes in the data being queried.</p>
           <p>Blank nodes are indicated by either the label form, such as "<code>_:abc</code>", or the
             abbreviated form "<code>[]</code>". A blank node that is used in only one place in the
@@ -1095,7 +1095,7 @@ foaf:mbox  ?mbox .
         </section>
         <section id="collections">
           <h4>RDF Collections</h4>
-          <p><a data-cite="RDF11-MT#collections">RDF collections</a> can be written in triple
+          <p><a data-cite="RDF12-SEMANTICS#collections">RDF collections</a> can be written in triple
             patterns using the syntax "(element1 element2 ...)". The form "<code>()</code>" is an
             alternative for the IRI 
             <code><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil">http://www.w3.org/1999/02/22-rdf-syntax-ns#nil</a></code>.
@@ -2908,8 +2908,8 @@ _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
           graphs. The triples in the named graphs are not visible in the default graph in this
           example.</p>
         <p id="ex_2"><b>Example 2:</b></p>
-        <p>RDF data can be combined by the <a data-cite="RDF11-MT#graphdefs">RDF merge</a>
-          [[RDF11-MT]] of graphs. One possible arrangement of graphs in an RDF Dataset is to have the
+        <p>RDF data can be combined by the <a data-cite="RDF12-SEMANTICS#graphdefs">RDF merge</a>
+          [[RDF12-SEMANTICS]] of graphs. One possible arrangement of graphs in an RDF Dataset is to have the
           default graph be the RDF merge of some or all of the information in the named graphs.</p>
         <p>In this next example, the named graphs contain the same triples as before. The RDF dataset
           includes an RDF merge of the named graphs in the default graph, re-labeling blank nodes to
@@ -3003,7 +3003,7 @@ WHERE   { ?x foaf:name ?name }
           </div>
           <p>If a query provides more than one <code>FROM</code> clause, providing more than one IRI
             to indicate the default graph, then the default graph is the 
-            <a data-cite="RDF11-MT#graphdefs">RDF merge</a> of the graphs obtained from representations of the
+            <a data-cite="RDF12-SEMANTICS#graphdefs">RDF merge</a> of the graphs obtained from representations of the
             resources identified by the given IRIs.</p>
         </section>
         <section id="namedGraphs">
@@ -3039,7 +3039,7 @@ FROM NAMED &lt;http://example.org/bob&gt;
             graph, but the relationship between an IRI and a graph in an RDF dataset is indirect. The
             IRI identifies a resource, and the resource is represented by a graph (or, more precisely:
             by a document that serializes a graph). For 
-            <a data-cite="?WEBARCH#intro">further details</a> see [[?WEBARCH]].
+            <a data-cite="?WEBARCH#intro">further details</a> see [[WEBARCH]].
           </p>
         </section>
         <section id="specDataset">
@@ -3749,8 +3749,8 @@ LIMIT 20
           <dd>Returns an RDF graph that describes the resources found.</dd>
         </dl>
       </blockquote>
-      <p>Formats such as [[[?SPARQL11-RESULTS-JSON]]], [[[?RDF-SPARQL-XMLRES]]] or
-        [[[?SPARQL11-RESULTS-CSV-TSV]]] can be used to serialize the result set from a
+      <p>Formats such as [[[SPARQL11-RESULTS-JSON]]], [[[RDF-SPARQL-XMLRES]]] or
+        [[[SPARQL11-RESULTS-CSV-TSV]]] can be used to serialize the result set from a
         <code>SELECT</code> query or the boolean result of an <code>ASK</code> query.</p>
       <section id="select">
         <h3>SELECT</h3>
@@ -3813,7 +3813,7 @@ WHERE
               </div>
               <p>Result sets can be accessed by a local API but also can be serialized into either
                 JSON, XML, CSV or TSV.</p>
-              <p>[[[?SPARQL11-RESULTS-JSON]]]:</p>
+              <p>[[[SPARQL11-RESULTS-JSON]]]:</p>
               <div class="result">
                 <pre class="resultSet">
 {
@@ -3836,7 +3836,7 @@ WHERE
 }
                 </pre>
               </div>
-              <p>[[[?RDF-SPARQL-XMLRES]]]:</p>
+              <p>[[[RDF-SPARQL-XMLRES]]]:</p>
               <div class="result">
                 <pre class="resultSet">
 &lt;?xml version="1.0"?&gt;
@@ -4179,7 +4179,7 @@ ASK  { ?x foaf:name  "Alice" }
             <div class="result">
               <pre class="resultAsk">true</pre>
             </div>
-            <p>The [[[?RDF-SPARQL-XMLRES]]] form of this result set gives:</p>
+            <p>The [[[RDF-SPARQL-XMLRES]]] form of this result set gives:</p>
             <div class="result">
               <pre class="resultSet">&lt;?xml version="1.0"?&gt;
                 &lt;sparql xmlns="http://www.w3.org/2005/sparql-results#"&gt;
@@ -4302,7 +4302,7 @@ foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
           </div>
           <p>which includes the blank node closure for the <a href="http://www.w3.org/TR/vcard-rdf"
                                                               class="inform">vcard</a> vocabulary vcard:N. Other possible mechanisms for deciding what
-            information to return include Concise Bounded Descriptions [[?CBD]].</p>
+            information to return include Concise Bounded Descriptions [[CBD]].</p>
           <p>For a vocabulary such as FOAF, where the resources are typically blank nodes, returning
             sufficient information to identify a node such as the InverseFunctionalProperty
             <code>foaf:mbox_sha1sum</code> as well as information like name and other details recorded
@@ -5461,7 +5461,7 @@ class="expression">expression, ....</span>)
                                                                                                                                                 "operator">=</span> <span class="type">RDF term</span> <span class=
                                                                                                                                                                                                              "name">term2</span></pre>
             <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
-              defined in [[[RDF11-CONCEPTS]]] [[RDF11-CONCEPTS]]; produces a type error if the
+              defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; produces a type error if the
               arguments are both literal but are not the same RDF term <sup><a href=
                                                                                "#func-RDFterm-equal-foot1" class="footnote">*</a></sup>; returns FALSE otherwise.
               <code>term1</code> and <code>term2</code> are the same if any of the following is
@@ -5470,19 +5470,19 @@ class="expression">expression, ....</span>)
               <li>
                 <span class="name">term1</span> and <span class="name">term2</span> are equivalent
                 <span class="IRI type">IRIs</span> as defined in <a data-cite=
-                                                                    "RDF11-CONCEPTS#section-Graph-URIref">6.4 RDF URI References</a> of
-                [[RDF11-CONCEPTS]].
+                                                                    "RDF12-CONCEPTS#section-Graph-URIref">6.4 RDF URI References</a> of
+                [[RDF12-CONCEPTS]].
               </li>
               <li>
                 <span class="name">term1</span> and <span class="name">term2</span> are equivalent
                 <span class="literal type">literals</span> as defined in <a data-cite=
-                                                                            "RDF11-CONCEPTS#section-Literal-Equality">6.5.1 Literal Equality</a> of
-                [[RDF11-CONCEPTS]].
+                                                                            "RDF12-CONCEPTS#section-Literal-Equality">6.5.1 Literal Equality</a> of
+                [[RDF12-CONCEPTS]].
               </li>
               <li>
                 <span class="name">term1</span> and <span class="name">term2</span> are the same
                 <span class="bnode type">blank node</span> as described in <a data-cite=
-                                                                              "RDF11-CONCEPTS#section-blank-nodes">6.6 Blank Nodes</a> of [[RDF11-CONCEPTS]].
+                                                                              "RDF12-CONCEPTS#section-blank-nodes">6.6 Blank Nodes</a> of [[RDF12-CONCEPTS]].
               </li>
             </ul>
             <div class="exampleGroup">
@@ -5586,7 +5586,7 @@ WHERE {
                                                                                                                                                                                                                      "type"><span class="type RDFterm">RDF term</span></span> <span class=
                                                                                                                                                                                                                                                                                     "name">term2</span>)</pre>
             <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
-              defined in [[[RDF11-CONCEPTS]]] [[RDF11-CONCEPTS]]; returns FALSE otherwise.</p>
+              defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
             <div class="exampleGroup">
               <pre class="data">
 @prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
@@ -7796,14 +7796,14 @@ WHERE {
               <b>RDF Term</b>
             </div>
             <p>Let I be the set of all IRIs.<br>
-              Let RDF-L be the set of all <a data-lt="literal">RDF Literals</a><br>
-              Let RDF-B be the set of all <a>blank nodes</a> in RDF graphs</p>
+              Let RDF-L be the set of all <a data-cite="RDF12-CONCEPTS#literal">RDF Literals</a><br>
+              Let RDF-B be the set of all <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank nodes</a> in RDF graphs</p>
             <p>The set of <span class="definedTerm">RDF Terms</span>, RDF-T, is I ∪ RDF-L ∪
               RDF-B.</p>
           </div>
           <p>This definition of <span class="definedTerm">RDF Term</span> collects together several
-            basic notions from the <a data-cite="RDF11-CONCEPTS#section-data-model">RDF data model</a>,
-            but <a data-cite="RDF11-CONCEPTS#section-Graph-URIref">updated</a> to refer to IRIs rather
+            basic notions from the <a data-cite="RDF12-CONCEPTS#section-data-model">RDF data model</a>,
+            but <a data-cite="RDF12-CONCEPTS#section-Graph-URIref">updated</a> to refer to IRIs rather
             than RDF URI references.</p>
         </section>
         <section id="simple_literal">
@@ -7813,8 +7813,9 @@ WHERE {
             <div id="defn_SimpleLiteral">
               <b>Simple Literal</b>
             </div>
-            <p>The set of <b>Simple Literals</b> is the set of all <a data-lt="literal">RDF
-                Literals</a> with no language tag or datatype IRI.</p>
+            <p>The set of <b>Simple Literals</b> is the set of all 
+              <a data-cite="RDF12-CONCEPTS#dfn-rdf-literal">RDF Literals</a>
+              with no language tag or datatype IRI.</p>
           </div>
         </section>
         <section id="sparqlDataset">
@@ -7855,7 +7856,7 @@ WHERE {
             <p>Write N1 for { &lt;u1<sub>j</sub>&gt; j = 1 to n }<br>
               Write N2 for { &lt;u2<sub>j</sub>&gt; j = 1 to m }<br></p>
             <ul>
-              <li>G is the <a data-cite="RDF11-MT#defmerge">merge</a> of G1 and G2
+              <li>G is the <a data-cite="RDF12-SEMANTICS#defmerge">merge</a> of G1 and G2
               </li>
               <li>(&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) where &lt;u<sub>i</sub>&gt; is in N1 but not
                 in N2</li>
@@ -7863,7 +7864,7 @@ WHERE {
                 in N1</li>
               <li>(&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) where &lt;u<sub>i</sub>&gt; is equal to
                 &lt;u<sub>j</sub>&gt; in N1 and equal to &lt;u<sub>k</sub>&gt; in N2 and G<sub>i</sub>
-                is the <a data-cite="RDF11-MT#defmerge">merge</a> of G1<sub>j</sub> and G2<sub>k</sub>
+                is the <a data-cite="RDF12-SEMANTICS#defmerge">merge</a> of G1<sub>j</sub> and G2<sub>k</sub>
               </li>
             </ul>
           </div>
@@ -9025,8 +9026,9 @@ The set PV is used later for projection.
       </section>
       <section id="BasicGraphPattern">
         <h3>Basic Graph Patterns</h3>
-        <p>When matching graph patterns, the possible solutions form a <i><a data-cite=
-                                                                             "?Multiset#">multiset</a></i> [[?Multiset]], also known as a <i>bag</i>. A multiset is an
+        <p>When matching graph patterns, the possible solutions form a 
+          <a href="https://en.wikipedia.org/w/index.php?title=Multiset">multiset</a>, 
+          also known as a <i>bag</i>. A multiset is an
           unordered collection of elements in which each element may appear more than once. It is
           described by a set of elements and a cardinality function giving the number of occurrences of
           each element from the set in the multiset.</p>
@@ -9058,7 +9060,7 @@ The set PV is used later for projection.
           <p>A basic graph pattern is matched against the active graph for that part of the query.
             Basic graph patterns can be instantiated by replacing both variables and blank nodes by
             terms, giving two notions of instance. Blank nodes are replaced using an <a data-cite=
-                                                                                        "RDF11-MT#definst">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
+                                                                                        "RDF12-SEMANTICS#definst">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
             variables are replaced by a solution mapping from query variables to RDF terms.</p>
           <div class="defn">
             <b>Definition:</b>
@@ -9087,8 +9089,8 @@ The set PV is used later for projection.
           <h4>Treatment of Blank Nodes</h4>
           <p>This definition allows the solution mapping to bind a variable in a basic graph pattern,
             BGP, to a blank node in G. Since SPARQL treats blank node identifiers in a results format
-            document ([[[?RDF-SPARQL-XMLRES]]], [[[?SPARQL11-RESULTS-JSON]]] and
-            [[[?SPARQL11-RESULTS-CSV-TSV]]]) as scoped to the document, they cannot be understood as
+            document ([[[RDF-SPARQL-XMLRES]]], [[[SPARQL11-RESULTS-JSON]]] and
+            [[[SPARQL11-RESULTS-CSV-TSV]]]) as scoped to the document, they cannot be understood as
             identifying nodes in the active graph of the dataset. If DS is the dataset of a query,
             pattern solutions are therefore understood to be not from the active graph of DS itself,
             but from an RDF graph, called the <i>scoping graph,</i> which is graph-equivalent to the
@@ -9104,7 +9106,7 @@ The set PV is used later for projection.
             the basic graph pattern to a subset of the active graph.</p>
           <p>This is optimized for ease of computation rather than redundancy elimination. It allows
             query results to contain redundancies even when the active graph of the dataset is
-            <a data-cite="RDF11-MT#deflean">lean</a>, and it allows logically equivalent datasets to
+            <a data-cite="RDF12-SEMANTICS#deflean">lean</a>, and it allows logically equivalent datasets to
             yield different query results.</p>
         </section>
       </section>
@@ -10122,7 +10124,7 @@ _:x rdf:type xsd:decimal .
             <p>SG union μ<sub>1</sub>(BGP<sub>1</sub>) union ... union
               μ<sub>n</sub>(BGP<sub>n</sub>)</p>
             <p>has an instance which is a subgraph of SG, so is simply entailed by SG by the
-              <a data-cite="RDF11-MT#interplemmaprf">RDF interpolation lemma</a> [[RDF11-MT]].</p>
+              <a data-cite="RDF12-SEMANTICS#interplemmaprf">RDF interpolation lemma</a> [[RDF12-SEMANTICS]].</p>
           </section>
         </section>
       </section>
@@ -10148,7 +10150,7 @@ _:x rdf:type xsd:decimal .
           </div>start at the <a href="#rUpdateUnit">UpdateUnit</a> production.
           <p>For compatibility with future versions of Unicode, the characters in this string may
             include Unicode codepoints that are unassigned as of the date of this publication (see
-            [[[?UAX31]]] [[?UAX31]] section 4 Pattern Syntax). For productions with excluded character
+            [[[UAX31]]] [[UAX31]] section 4 Pattern Syntax). For productions with excluded character
             classes (for example <code>[^&lt;&gt;'{}|^`]</code>), the characters are excluded from the
             range <code>#x0 - #x10FFFF</code>.</p>
         </section>
@@ -10326,8 +10328,10 @@ a\u003Ab            # a:b -- codepoint x3A is colon</pre>
         </section>
         <section id="sparqlGrammar">
           <h3>Grammar</h3>
-          <p>The EBNF notation used in the grammar is defined in Extensible Markup Language (XML) 1.1 [<a href="#XML11">XML11</a>] section 6 <a class="norm" href=
-                                                                                                                                                "http://www.w3.org/TR/2004/REC-xml11-20040204/#sec-notation">Notation</a>.</p>
+          <p>The EBNF notation used in the grammar is defined in 
+            Extensible Markup Language (XML) 1.1 
+            [[xml11]] 
+            section 6 <a data-cite="xml11#sec-notation">Notation</a>.</p>
           <p>Notes:</p>
           <ol>
             <li>Keywords are matched in a case-insensitive manner with the exception of the keyword '<code>a</code>' which, in line with Turtle and N3, is used in place of the IRI <code>rdf:type</code>
@@ -11545,10 +11549,10 @@ a\u003Ab            # a:b -- codepoint x3A is colon</pre>
                                                                                             "#defn_SPARQLQueryString">SPARQL Query strings</a>, and section <a href="#QueryForms">16
             Query Forms</a> for conformance of query results. See section <a href="#mediaType">22.
             Internet Media Type</a> for conformance to the application/sparql-query media type.</p>
-        <p>This specification is intended for use in conjunction with the [[[?SPARQL11-PROTOCOL]]]
-          [[?SPARQL11-PROTOCOL]], the [[[?RDF-SPARQL-XMLRES]]] [[?RDF-SPARQL-XMLRES]], the
-          [[[SPARQL11-RESULTS-JSON]]] [[SPARQL11-RESULTS-JSON]] and the [[[?SPARQL11-RESULTS-CSV-TSV]]]
-          [[?SPARQL11-RESULTS-CSV-TSV]]. See those specifications for their conformance criteria.</p>
+        <p>This specification is intended for use in conjunction with the [[[SPARQL11-PROTOCOL]]]
+          [[SPARQL11-PROTOCOL]], the [[[RDF-SPARQL-XMLRES]]] [[RDF-SPARQL-XMLRES]], the
+          [[[SPARQL11-RESULTS-JSON]]] [[SPARQL11-RESULTS-JSON]] and the [[[SPARQL11-RESULTS-CSV-TSV]]]
+          [[SPARQL11-RESULTS-CSV-TSV]]. See those specifications for their conformance criteria.</p>
         <p>Note that the SPARQL protocol describes a means for conveying SPARQL queries to an SPARQL
           query processing service and returning the query results to the entity that requested
           them.</p>
@@ -11637,7 +11641,7 @@ a\u003Ab            # a:b -- codepoint x3A is colon</pre>
           followed by COMBINING ACUTE ACCENT has the same visual representation as LATIN SMALL LETTER E
           WITH ACUTE). Users of SPARQL must take care to construct queries with IRIs that match the
           IRIs in the data. Further information about matching of similar characters can be found in
-          [[[?UTR36]]] [[?UTR36]] and [[[RFC3987]]] [[RFC3987]] Section 8.</p>
+          [[[UTR36]]] [[UTR36]] and [[[RFC3987]]] [[RFC3987]] Section 8.</p>
     </section>
     
     <section id="internationalization">
