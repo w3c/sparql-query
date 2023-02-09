@@ -9920,7 +9920,7 @@ if IRI is a graph name in D
 eval(D(G), Graph(var,P)) =
     Let R be the empty multiset
     foreach IRI i in D
-        R := Union(R, Join( eval(D(D[i]), P) , Ω(?var-&gt;i) )
+        R := Union(R, Join( eval(D(D[i]), P) , Ω(?var-&gt;i) ) )
     the result is R
             </pre>
           </div>
