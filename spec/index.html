@@ -49,7 +49,7 @@
       };
     </script>
 
-    <style type="text/css">
+    <style>
       @import url("local.css");
 
       /* ReSpec */
@@ -220,8 +220,7 @@
           <p>In this document, examples assume the following namespace prefix bindings unless
             otherwise stated:</p>
           <div style="text-align: center;">
-            <table style="border-collapse: collapse; border-color: #000000" cellpadding="5" border=
-                   "1">
+            <table style="border-collapse: collapse; border-color: #000000; border-spacing: 5px; border-width: 1px">
               <tbody>
                 <tr>
                   <th>Prefix</th>
@@ -2013,7 +2012,7 @@ SELECT * WHERE {
         <p>In the description below, <i><code>iri</code></i> is either <a href="#QSynIRI">an IRI written
             in full or abbreviated by a prefixed name</a>, or the keyword <code>a</code>. <i><code>elt</code></i>
           is a path element, which may itself be composed of path constructs.</p>
-        <table cellspacing="0" border="1">
+        <table style="border-spacing: 0; border-width: 1px">
           <tbody>
             <tr>
               <th>Syntax Form</th>
@@ -7535,7 +7534,8 @@ WHERE {
             <span class="rdfDM">IRI</span> = <span class="type IRI">IRI</span><br>
             <span class="rdfDM">ltrl</span> = <code>simple literal</code></p>
         </blockquote>
-        <table title="Casting table" class="casting" cellpadding="1" border="1">
+        <table title="Casting table" class="casting" 
+               style="border-spacing: 1px; border-width:1px">
           <colgroup>
             <col style="width: 13%">
             <col style="width: 11%">
@@ -8211,7 +8211,7 @@ WHERE {
             outside of those forms.</p>
           <p>Let <b>P</b>, <b>P1</b>, <b>P2</b> be graph patterns and <b>E</b>,
             <b>E1</b>,...<b>En</b> be expressions. A variable <code>v</code> is in-scope if:</p>
-          <table style="border-collapse: collapse; border-color: #000000" cellpadding="5" border="1">
+          <table style="border-collapse: collapse; border-color: #000000; border-spacing:5px; border-width: 1px">
             <tbody>
               <tr>
                 <th>Syntax Form</th>
@@ -8398,8 +8398,7 @@ For each form FILTER(expr) in the group graph pattern:
               <li>ZeroOrOnePath</li>
               <li>NPS (for NegatedPropertySet)</li>
             </ul>
-            <table style="border-collapse: collapse; border-color: #000000" cellpadding="5" border=
-                   "1">
+            <table style="border-collapse: collapse; border-color: #000000; border-spacing: 5px; border-width: 1px">
               <tbody>
                 <tr>
                   <th>Syntax Form (path)</th>
@@ -8470,8 +8469,7 @@ For each form FILTER(expr) in the group graph pattern:
               <li>The final translation simply wraps any remaining property path expression to use a
                 common form <code>Path(...)</code>.</li>
             </ul>
-            <table style="border-collapse: collapse; border-color: #000000" cellpadding="5" border=
-                   "1">
+            <table style="border-collapse: collapse; border-color: #000000; border-spacing: 5px; border-width: 1px">
               <tbody>
                 <tr>
                   <th>Algebra (path)</th>
@@ -9143,8 +9141,7 @@ Var(x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>) = { x<sub>i</sub> | i in 1
           </pre>
           <p>for the variables in <code>x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub></code>.</p>
           <p>Write</p>
-          <table style="border-collapse: collapse; border-color: #000000" cellpadding="10" border=
-                 "1">
+          <table style="border-collapse: collapse; border-color: #000000; border-spacing: 10px ; border-width: 1px">
             <tbody>
               <tr>
                 <td><code>x:term</code></td>
@@ -10168,6 +10165,7 @@ _:x rdf:type xsd:decimal .
         <table title="Codepoint escapes">
           <colgroup>
             <col style="width: 40%">
+            <col>
           </colgroup>
           <tbody>
             <tr>
@@ -10283,6 +10281,7 @@ _:x rdf:type xsd:decimal .
         <table title="String escapes">
           <colgroup>
             <col style="width: 40%">
+            <col>
           </colgroup>
           <tbody>
             <tr>
