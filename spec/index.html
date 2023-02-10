@@ -9361,459 +9361,459 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
    eval(Path(x, NPS(S), y)) = { μ | ∃ triple(μ'(μ,x), p, μ'(μ,y)) in G, such that the IRI of p ∉ S }
           </pre>
         </div>
-        <section id="sparqlAlgebra">
-          <h3>SPARQL Algebra</h3>
-          <p>For each remaining symbol in a SPARQL abstract query, we define an operator for
-            evaluation. The SPARQL algebra operators of the same name are used to evaluate SPARQL
-            abstract query nodes as described in the section "<a href="#sparqlAlgebraEval">Evaluation
-              Semantics</a>". Evaluation of basic graph patterns and property path patterns has been
-            described above.</p>
+      </section>
+      <section id="sparqlAlgebra">
+        <h3>SPARQL Algebra</h3>
+        <p>For each remaining symbol in a SPARQL abstract query, we define an operator for
+          evaluation. The SPARQL algebra operators of the same name are used to evaluate SPARQL
+          abstract query nodes as described in the section "<a href="#sparqlAlgebraEval">Evaluation
+            Semantics</a>". Evaluation of basic graph patterns and property path patterns has been
+          described above.</p>
+        <div class="defn">
+          <p><b>Definition:</b></p>
+          <div id="defn_algFilter">
+            <b>Filter</b>
+          </div>
+          <p>Let Ω be a multiset of solution mappings and expr be an expression. We define:</p>
+          <p>Filter(expr, Ω, D(G)) = { μ | μ in Ω and expr(μ) is an expression that has an
+            effective boolean value of true }</p>
+          <p>card[Filter(expr, Ω, D(G))](μ) = card[Ω](μ)</p>
+          <blockquote>
+            Note that evaluating an <code>exists(pattern)</code> expression uses the dataset and
+            active graph, D(G). See the <a href="#defn_evalFilter">evaluation of filter</a>.
+          </blockquote>
+        </div>
+        <div class="defn">
+          <p><b>Definition:</b></p>
+          <div id="defn_algJoin">
+            <b>Join</b>
+          </div>
+          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
+          <p>Join(Ω<sub>1</sub>, Ω<sub>2</sub>) = { merge(μ<sub>1</sub>, μ<sub>2</sub>) |
+            μ<sub>1</sub> in Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub>, and μ<sub>1</sub> and
+            μ<sub>2</sub> are compatible }</p>
+          <p>card[Join(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) =<br>
+            &nbsp;&nbsp;&nbsp; for each merge(μ<sub>1</sub>, μ<sub>2</sub>), μ<sub>1</sub> in
+            Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub> such that μ = merge(μ<sub>1</sub>,
+            μ<sub>2</sub>),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum over (μ<sub>1</sub>, μ<sub>2</sub>),
+            card[Ω<sub>1</sub>](μ<sub>1</sub>)*card[Ω<sub>2</sub>](μ<sub>2</sub>)</p>
+        </div>
+        <p>It is possible that a solution mapping μ in a Join can arise in different solution
+          mappings, μ<sub>1</sub> and μ<sub>2</sub> in the multisets being joined. The cardinality
+          of&nbsp; μ is the sum of the cardinalities from all possibilities.</p>
+        <div class="defn">
+          <p><b>Definition:</b></p>
+          <div id="defn_algDiff">
+            <b>Diff</b>
+          </div>
+          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
+            expression. We define:</p>
+          <p>Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = { μ | μ in Ω<sub>1</sub> such that ∀ μ′ in
+            Ω<sub>2</sub>, either μ and μ′ are not compatible or μ and μ' are compatible and
+            expr(merge(μ, μ')) has an effective boolean value of false }</p>
+          <p>card[Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)](μ) = card[Ω<sub>1</sub>](μ)</p>
+        </div>
+        <p>Diff is used internally for the definition of LeftJoin.</p>
+        <div class="defn">
+          <p><b>Definition:</b></p>
+          <div id="defn_algLeftJoin">
+            <b>LeftJoin</b>
+          </div>
+          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
+            expression. We define:</p>
+          <p>LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = Filter(expr, Join(Ω<sub>1</sub>,
+            Ω<sub>2</sub>)) ∪ Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)</p>
+          <p>card[LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)](μ) = card[Filter(expr,
+            Join(Ω<sub>1</sub>, Ω<sub>2</sub>))](μ) + card[Diff(Ω<sub>1</sub>, Ω<sub>2</sub>,
+            expr)](μ)</p>
+        </div>
+        <p>Written in full that is:</p>
+        <p>LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) =<br>
+          &nbsp;&nbsp;&nbsp; { merge(μ<sub>1,</sub> μ<sub>2</sub>) | μ<sub>1</sub> in Ω<sub>1</sub>
+          and μ<sub>2</sub> in Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are compatible and
+          expr(merge(μ<sub>1</sub>, μ<sub>2</sub>)) is true }<br>
+          ∪<br>
+          &nbsp;&nbsp;&nbsp; { μ<sub>1</sub> | μ<sub>1</sub> in Ω<sub>1</sub>, ∀ μ<sub>2</sub> in
+          Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are not compatible, or Ω<sub>2</sub> is
+          empty }<br>
+          ∪<br>
+          &nbsp;&nbsp;&nbsp; { μ<sub>1</sub> | μ<sub>1</sub> in Ω<sub>1</sub>, ∃ μ<sub>2</sub> in
+          Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are compatible and expr(merge(μ<sub>1</sub>,
+          μ<sub>2</sub>)) is false. }</p>
+        <p>As these are distinct, the cardinality of LeftJoin is cardinality of these individual
+          components of the definition.</p>
+        <div class="defn">
+          <p><b>Definition:</b></p>
+          <div id="defn_algUnion">
+            <b>Union</b>
+          </div>
+          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
+          <p>Union(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> or μ in Ω<sub>2</sub>
+            }</p>
+          <p>card[Union(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) = card[Ω<sub>1</sub>](μ) +
+            card[Ω<sub>2</sub>](μ)</p>
+        </div>
+        <div class="defn">
+          <p><b>Definition:</b></p>
+          <div id="defn_algMinus">
+            <b>Minus</b>
+          </div>
+          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
+          <p>Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> . ∀ μ' in
+            Ω<sub>2</sub>, either μ and μ' are not compatible or dom(μ) and dom(μ') are disjoint
+            }</p>
+          <p>card[Minus(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) = card[Ω<sub>1</sub>](μ)</p>
+        </div>
+        <p>The additional restriction on dom(μ) and dom(μ') is added because otherwise if there is
+          a solution mapping in Ω<sub>2</sub> that has no variables in common with the solution
+          mappings of Ω<sub>1</sub>, then Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) would be empty,
+          regardless of the rest of Ω<sub>2</sub>. The empty solution mapping is compatible with
+          every other solution mapping so <code>P MINUS {}</code> would otherwise be empty for any
+          pattern <code>P</code>.</p>
+        <div class="defn">
+          <b>Definition:</b>
+          <div id="defn_extend">
+            <b>Extend</b>
+          </div>
+          <p>Let μ be a solution mapping, Ω a multiset of solution mappings, <i>var</i> a variable
+            and <i>expr</i> be an <a href="#expressions">expression</a>, then we define:</p>
+          <p>Extend(μ, var, expr) = μ ∪ { (var,value) | var not in dom(μ) and value = expr(μ) }</p>
+          <p>Extend(μ, var, expr) = μ if var not in dom(μ) and expr(μ) is an error</p>
+          <p>Extend is undefined when var in dom(μ).</p>
+          <p>Extend(Ω, var, expr) = { Extend(μ, var, expr) | μ in Ω }</p>
+        </div>
+        <p>Write [ x | C ] for a sequence of elements where C is a condition on x.</p>
+        <p>Write card[L](x) to be the cardinality of x in L.</p>
+        <div class="defn">
+          <b>Definition:</b>
+          <div id="defn_algToList">
+            <b>ToList</b>
+          </div>
+          <p>Let Ω be a multiset of solution mappings. We define:</p>
+          <p>ToList(Ω) = a sequence of mappings μ in Ω in any order, with card[Ω](μ) occurrences of
+            μ</p>
+          <p>card[ToList(Ω)](μ) = card[Ω](μ)</p>
+        </div>
+        <div class="defn">
+          <b>Definition:</b>
+          <div id="defn_algOrdered">
+            <b>OrderBy</b>
+          </div>
+          <p>Let Ψ be a sequence of solution mappings. We define:</p>
+          <div id="defn_algOrderBy">
+            OrderBy
+          </div>(Ψ, condition) = [ μ | μ in Ψ and the sequence satisfies the ordering condition]
+          <p>card[OrderBy(Ψ, condition)](μ) = card[Ψ](μ)</p>
+        </div>
+        <div class="defn">
+          <b>Definition:</b>
+          <div id="defn_algProjection">
+            <b>Project</b>
+          </div>
+          <p>Let Ψ be a sequence of solution mappings and PV a set of variables.</p>
+          <p>For mapping μ, write Proj(μ, PV) to be the restriction of μ to variables in PV.</p>
+          <p>Project(Ψ, PV) = [ Proj(Ψ[μ], PV) | μ in Ψ ]</p>
+          <p>card[Project(Ψ, PV)](μ) = card[Ψ](μ)</p>
+          <p>The order of Project(Ψ, PV) must preserve any ordering given by OrderBy.</p>
+        </div>
+        <div class="defn">
+          <b>Definition:</b>
+          <div id="defn_algDistinct">
+            <b>Distinct</b>
+          </div>
+          <p>Let Ψ be a sequence of solution mappings. We define:</p>
+          <p>Distinct(Ψ) = [ μ | μ in Ψ ]</p>
+          <p>card[Distinct(Ψ)](μ) = 1</p>
+          <p>The order of Distinct(Ψ) must preserve any ordering given by OrderBy.</p>
+        </div>
+        <div class="defn">
+          <b>Definition:</b>
+          <div id="defn_algReduced">
+            <b>Reduced</b>
+          </div>
+          <p>Let Ψ be a sequence of solution mappings. We define:</p>
+          <p>Reduced(Ψ) = [ μ | μ in Ψ ]</p>
+          <p>card[Reduced(Ψ)](μ) is between 1 and card[Ψ](μ)</p>
+          <p>The order of Reduced(Ψ) must preserve any ordering given by OrderBy.</p>
+        </div>
+        <p>The Reduced solution sequence modifier does not guarantee a defined cardinality.</p>
+        <div class="defn">
+          <b>Definition:</b>
+          <div id="defn_algSlice">
+            <b>Slice</b>
+          </div>
+          <p>Let Ψ be a sequence of solution mappings. We define:</p>
+          <div id="defn_algOrderBy2">
+            Slice
+          </div>(Ψ, start, length)[i] = Ψ[start+i] for i = 0 to (length-1)
+        </div>
+        <div class="defn">
+          <b>Definition:</b>
+          <div id="defn_algToMultiSet">
+            <b>ToMultiSet</b>
+          </div>
+          <p>Let Ψ be a solution sequence. We define:</p>
+          <p>ToMultiSet(Ψ) = { μ | μ in Ψ }</p>
+          <p>card[ToMultiSet(Ψ)](μ) = card[Ψ](μ)</p>
+        </div>
+        <p>ListEval is a function which is used to evaluate a list of expressions against a
+          solution and return a list of the resulting values.</p>
+        <div class="defn">
+          <div id="defn_algToMultiset">
+            <b>Definition: ToMultiset</b>
+          </div>
+          <p>ToMultiset turns a sequence into a multiset with the same elements and cardinality as
+            the sequence. The order of the sequence has no effect on the resulting multiset, and
+            duplicates are preserved.</p>
+        </div>
+        <div class="defn">
+          <p><b>Definition:</b></p>
+          <div id="defn_exists">
+            <b>Exists</b>
+          </div>
+          <p>exists(pattern) is a function that returns true if the pattern <a href=
+                                                                               "#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
+            solution mapping and active graph at the time of evaluation; otherwise it returns
+            false.</p>
+        </div>
+        <section id="aggregateAlgebra">
+          <h4>Aggregate Algebra</h4>
+          <p>Group is a function which groups a solution sequence into multiple solutions, based on
+            some attribute of the solutions.</p>
           <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_algFilter">
-              <b>Filter</b>
+            <div id="defn_algGroup">
+              <b>Definition: Group</b>
             </div>
-            <p>Let Ω be a multiset of solution mappings and expr be an expression. We define:</p>
-            <p>Filter(expr, Ω, D(G)) = { μ | μ in Ω and expr(μ) is an expression that has an
-              effective boolean value of true }</p>
-            <p>card[Filter(expr, Ω, D(G))](μ) = card[Ω](μ)</p>
-            <blockquote>
-              Note that evaluating an <code>exists(pattern)</code> expression uses the dataset and
-              active graph, D(G). See the <a href="#defn_evalFilter">evaluation of filter</a>.
-            </blockquote>
+            <p>Group evaluates a list of expressions against a solution sequence, producing a set
+              of partial functions from keys to solution sequences.</p>
+            <p>Group(exprlist, Ω) = { ListEval(exprlist, μ) → { μ' | μ' in Ω, ListEval(exprlist, μ)
+              = ListEval(exprlist, μ') } | μ in Ω }</p>
           </div>
           <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_algJoin">
-              <b>Join</b>
-            </div>
-            <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
-            <p>Join(Ω<sub>1</sub>, Ω<sub>2</sub>) = { merge(μ<sub>1</sub>, μ<sub>2</sub>) |
-              μ<sub>1</sub> in Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub>, and μ<sub>1</sub> and
-              μ<sub>2</sub> are compatible }</p>
-            <p>card[Join(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) =<br>
-              &nbsp;&nbsp;&nbsp; for each merge(μ<sub>1</sub>, μ<sub>2</sub>), μ<sub>1</sub> in
-              Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub> such that μ = merge(μ<sub>1</sub>,
-              μ<sub>2</sub>),<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum over (μ<sub>1</sub>, μ<sub>2</sub>),
-              card[Ω<sub>1</sub>](μ<sub>1</sub>)*card[Ω<sub>2</sub>](μ<sub>2</sub>)</p>
-          </div>
-          <p>It is possible that a solution mapping μ in a Join can arise in different solution
-            mappings, μ<sub>1</sub> and μ<sub>2</sub> in the multisets being joined. The cardinality
-            of&nbsp; μ is the sum of the cardinalities from all possibilities.</p>
-          <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_algDiff">
-              <b>Diff</b>
-            </div>
-            <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
-              expression. We define:</p>
-            <p>Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = { μ | μ in Ω<sub>1</sub> such that ∀ μ′ in
-              Ω<sub>2</sub>, either μ and μ′ are not compatible or μ and μ' are compatible and
-              expr(merge(μ, μ')) has an effective boolean value of false }</p>
-            <p>card[Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)](μ) = card[Ω<sub>1</sub>](μ)</p>
-          </div>
-          <p>Diff is used internally for the definition of LeftJoin.</p>
-          <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_algLeftJoin">
-              <b>LeftJoin</b>
-            </div>
-            <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
-              expression. We define:</p>
-            <p>LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = Filter(expr, Join(Ω<sub>1</sub>,
-              Ω<sub>2</sub>)) ∪ Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)</p>
-            <p>card[LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)](μ) = card[Filter(expr,
-              Join(Ω<sub>1</sub>, Ω<sub>2</sub>))](μ) + card[Diff(Ω<sub>1</sub>, Ω<sub>2</sub>,
-              expr)](μ)</p>
-          </div>
-          <p>Written in full that is:</p>
-          <p>LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) =<br>
-            &nbsp;&nbsp;&nbsp; { merge(μ<sub>1,</sub> μ<sub>2</sub>) | μ<sub>1</sub> in Ω<sub>1</sub>
-            and μ<sub>2</sub> in Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are compatible and
-            expr(merge(μ<sub>1</sub>, μ<sub>2</sub>)) is true }<br>
-            ∪<br>
-            &nbsp;&nbsp;&nbsp; { μ<sub>1</sub> | μ<sub>1</sub> in Ω<sub>1</sub>, ∀ μ<sub>2</sub> in
-            Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are not compatible, or Ω<sub>2</sub> is
-            empty }<br>
-            ∪<br>
-            &nbsp;&nbsp;&nbsp; { μ<sub>1</sub> | μ<sub>1</sub> in Ω<sub>1</sub>, ∃ μ<sub>2</sub> in
-            Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are compatible and expr(merge(μ<sub>1</sub>,
-            μ<sub>2</sub>)) is false. }</p>
-          <p>As these are distinct, the cardinality of LeftJoin is cardinality of these individual
-            components of the definition.</p>
-          <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_algUnion">
-              <b>Union</b>
-            </div>
-            <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
-            <p>Union(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> or μ in Ω<sub>2</sub>
-              }</p>
-            <p>card[Union(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) = card[Ω<sub>1</sub>](μ) +
-              card[Ω<sub>2</sub>](μ)</p>
-          </div>
-          <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_algMinus">
-              <b>Minus</b>
-            </div>
-            <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
-            <p>Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> . ∀ μ' in
-              Ω<sub>2</sub>, either μ and μ' are not compatible or dom(μ) and dom(μ') are disjoint
-              }</p>
-            <p>card[Minus(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) = card[Ω<sub>1</sub>](μ)</p>
-          </div>
-          <p>The additional restriction on dom(μ) and dom(μ') is added because otherwise if there is
-            a solution mapping in Ω<sub>2</sub> that has no variables in common with the solution
-            mappings of Ω<sub>1</sub>, then Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) would be empty,
-            regardless of the rest of Ω<sub>2</sub>. The empty solution mapping is compatible with
-            every other solution mapping so <code>P MINUS {}</code> would otherwise be empty for any
-            pattern <code>P</code>.</p>
-          <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_extend">
-              <b>Extend</b>
-            </div>
-            <p>Let μ be a solution mapping, Ω a multiset of solution mappings, <i>var</i> a variable
-              and <i>expr</i> be an <a href="#expressions">expression</a>, then we define:</p>
-            <p>Extend(μ, var, expr) = μ ∪ { (var,value) | var not in dom(μ) and value = expr(μ) }</p>
-            <p>Extend(μ, var, expr) = μ if var not in dom(μ) and expr(μ) is an error</p>
-            <p>Extend is undefined when var in dom(μ).</p>
-            <p>Extend(Ω, var, expr) = { Extend(μ, var, expr) | μ in Ω }</p>
-          </div>
-          <p>Write [ x | C ] for a sequence of elements where C is a condition on x.</p>
-          <p>Write card[L](x) to be the cardinality of x in L.</p>
-          <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_algToList">
-              <b>ToList</b>
-            </div>
-            <p>Let Ω be a multiset of solution mappings. We define:</p>
-            <p>ToList(Ω) = a sequence of mappings μ in Ω in any order, with card[Ω](μ) occurrences of
-              μ</p>
-            <p>card[ToList(Ω)](μ) = card[Ω](μ)</p>
-          </div>
-          <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_algOrdered">
-              <b>OrderBy</b>
-            </div>
-            <p>Let Ψ be a sequence of solution mappings. We define:</p>
-            <div id="defn_algOrderBy">
-              OrderBy
-            </div>(Ψ, condition) = [ μ | μ in Ψ and the sequence satisfies the ordering condition]
-            <p>card[OrderBy(Ψ, condition)](μ) = card[Ψ](μ)</p>
-          </div>
-          <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_algProjection">
-              <b>Project</b>
-            </div>
-            <p>Let Ψ be a sequence of solution mappings and PV a set of variables.</p>
-            <p>For mapping μ, write Proj(μ, PV) to be the restriction of μ to variables in PV.</p>
-            <p>Project(Ψ, PV) = [ Proj(Ψ[μ], PV) | μ in Ψ ]</p>
-            <p>card[Project(Ψ, PV)](μ) = card[Ψ](μ)</p>
-            <p>The order of Project(Ψ, PV) must preserve any ordering given by OrderBy.</p>
-          </div>
-          <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_algDistinct">
-              <b>Distinct</b>
-            </div>
-            <p>Let Ψ be a sequence of solution mappings. We define:</p>
-            <p>Distinct(Ψ) = [ μ | μ in Ψ ]</p>
-            <p>card[Distinct(Ψ)](μ) = 1</p>
-            <p>The order of Distinct(Ψ) must preserve any ordering given by OrderBy.</p>
-          </div>
-          <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_algReduced">
-              <b>Reduced</b>
-            </div>
-            <p>Let Ψ be a sequence of solution mappings. We define:</p>
-            <p>Reduced(Ψ) = [ μ | μ in Ψ ]</p>
-            <p>card[Reduced(Ψ)](μ) is between 1 and card[Ψ](μ)</p>
-            <p>The order of Reduced(Ψ) must preserve any ordering given by OrderBy.</p>
-          </div>
-          <p>The Reduced solution sequence modifier does not guarantee a defined cardinality.</p>
-          <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_algSlice">
-              <b>Slice</b>
-            </div>
-            <p>Let Ψ be a sequence of solution mappings. We define:</p>
-            <div id="defn_algOrderBy2">
-              Slice
-            </div>(Ψ, start, length)[i] = Ψ[start+i] for i = 0 to (length-1)
-          </div>
-          <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_algToMultiSet">
-              <b>ToMultiSet</b>
-            </div>
-            <p>Let Ψ be a solution sequence. We define:</p>
-            <p>ToMultiSet(Ψ) = { μ | μ in Ψ }</p>
-            <p>card[ToMultiSet(Ψ)](μ) = card[Ψ](μ)</p>
-          </div>
-          <p>ListEval is a function which is used to evaluate a list of expressions against a
-            solution and return a list of the resulting values.</p>
-          <div class="defn">
-            <div id="defn_algToMultiset">
-              <b>Definition: ToMultiset</b>
-            </div>
-            <p>ToMultiset turns a sequence into a multiset with the same elements and cardinality as
-              the sequence. The order of the sequence has no effect on the resulting multiset, and
-              duplicates are preserved.</p>
-          </div>
-          <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_exists">
-              <b>Exists</b>
-            </div>
-            <p>exists(pattern) is a function that returns true if the pattern <a href=
-                                                                                 "#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
-              solution mapping and active graph at the time of evaluation; otherwise it returns
-              false.</p>
-          </div>
-          <section id="aggregateAlgebra">
-            <h4>Aggregate Algebra</h4>
-            <p>Group is a function which groups a solution sequence into multiple solutions, based on
-              some attribute of the solutions.</p>
-            <div class="defn">
-              <div id="defn_algGroup">
-                <b>Definition: Group</b>
-              </div>
-              <p>Group evaluates a list of expressions against a solution sequence, producing a set
-                of partial functions from keys to solution sequences.</p>
-              <p>Group(exprlist, Ω) = { ListEval(exprlist, μ) → { μ' | μ' in Ω, ListEval(exprlist, μ)
-                = ListEval(exprlist, μ') } | μ in Ω }</p>
-            </div>
-            <div class="defn">
-              <p><b>Definition: ListEval</b></p>
-              <p>ListEval((expr<sub>1</sub>, ..., expr<sub>n</sub>), μ) returns a list
-                (e<sub>1</sub>, ..., e<sub>n</sub>), where e<sub>i</sub> = expr<sub>i</sub>(μ) or
-                error.</p>
-              <p>ListEval retains errors resulting from the evaluation of the list elements.</p>
-            </div>
-            <p>Note that, although the result of a ListEval can be an error, and errors may be used
-              to group, solutions containing error values are removed at projection time.</p>
-            <p>ListEval((unbound), μ) = (error), as the evaluation of an unbound expression is an
+            <p><b>Definition: ListEval</b></p>
+            <p>ListEval((expr<sub>1</sub>, ..., expr<sub>n</sub>), μ) returns a list
+              (e<sub>1</sub>, ..., e<sub>n</sub>), where e<sub>i</sub> = expr<sub>i</sub>(μ) or
               error.</p>
-            <p>Aggregation, a function which calculates a scalar value as an output of the aggregate
-              expression. It is used in the SELECT clause, the HAVING evaluation process, and in ORDER
-              BY (where required). Aggregation calculates aggregated values over groups of solutions,
-              using set functions.</p>
-            <div class="defn">
-              <div id="defn_algAggregation">
-                <b>Definition: Aggregation</b>
-              </div>
-              <p>Let <i>exprlist</i> be a list of expressions or *, <i>func</i> a set function,
-                <i>scalarvals</i> a set of partial functions (possibly empty) passed from the aggregate
-                in the query, and let { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-                key<sub>m</sub>→Ω<sub>m</sub> } be a multiset of partial functions from keys to
-                solution sequences as produced by the grouping step.</p>
-              <p>Aggregation applies the set function func to the given multiset and produces a
-                single value for each key and partition of solutions for that key.</p>
-              <p>Aggregation(exprlist, func, scalarvals, { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-                key<sub>m</sub>→Ω<sub>m</sub> } )<br>
-                &nbsp;&nbsp;&nbsp;= { (key, F(Ω)) | key → Ω in { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-                key<sub>m</sub>→Ω<sub>m</sub> } }</p>
-              <p>where<br>
-                &nbsp;&nbsp;M(Ω) = { ListEval(exprlist, μ) | μ in Ω }<br>
-                &nbsp;&nbsp;F(Ω) = func(M(Ω), scalarvals), for non-DISTINCT<br>
-                &nbsp;&nbsp;F(Ω) = func(Distinct(M(Ω)), scalarvals), for DISTINCT</p>
-              <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
-                <code>*</code> the value of F will be the cardinality of the group solution sequence,
-                <code>card[Ω]</code>, or <code>card[Distinct(Ω)]</code> if the <code>DISTINCT</code>
-                keyword is present.</p>
+            <p>ListEval retains errors resulting from the evaluation of the list elements.</p>
+          </div>
+          <p>Note that, although the result of a ListEval can be an error, and errors may be used
+            to group, solutions containing error values are removed at projection time.</p>
+          <p>ListEval((unbound), μ) = (error), as the evaluation of an unbound expression is an
+            error.</p>
+          <p>Aggregation, a function which calculates a scalar value as an output of the aggregate
+            expression. It is used in the SELECT clause, the HAVING evaluation process, and in ORDER
+            BY (where required). Aggregation calculates aggregated values over groups of solutions,
+            using set functions.</p>
+          <div class="defn">
+            <div id="defn_algAggregation">
+              <b>Definition: Aggregation</b>
             </div>
-            <p><i>scalarvals</i> are used to pass values to the underlying set function, bypassing
-              the mechanics of the grouping. For example, the aggregate expression
-              <code>GROUP_CONCAT(?x ; separator="|")</code> has a scalarvals argument of { "separator"
-              → "|" }.</p>
-            <p>All aggregates may have the <code>DISTINCT</code> keyword as the first token in their
-              argument list. If this keyword is present then first argument to func is Distinct(M).</p>
-            <p>Example</p>
-            <p>Given a solution multiset (Ω) with the following values:</p>
-            <table>
-              <tbody>
-                <tr>
-                  <td>solution</td>
-                  <td>?x</td>
-                  <td>?y</td>
-                  <td>?z</td>
-                </tr>
-                <tr>
-                  <td>μ<sub>1</sub></td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                </tr>
-                <tr>
-                  <td>μ<sub>2</sub></td>
-                  <td>1</td>
-                  <td>3</td>
-                  <td>4</td>
-                </tr>
-                <tr>
-                  <td>μ<sub>3</sub></td>
-                  <td>2</td>
-                  <td>5</td>
-                  <td>6</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>And the query expression SELECT (ex:agg(?y, ?z) AS ?agg) WHERE { ?x ?y ?z } GROUP BY
-              ?x.</p>
-            <p>We produce G = Group((?x), Ω) = { ( (1), { μ<sub>1</sub>, μ<sub>2</sub> } ), ( (2), {
-              μ<sub>3</sub> } ) }</p>
-            <p>And so Aggregation((?y, ?z), ex:agg, {}, G) =<br>
-              { ((1), eg:agg({(2, 3), (3, 4)}, {})), ((2), eg:agg({(5, 6)}, {})) }.</p>
+            <p>Let <i>exprlist</i> be a list of expressions or *, <i>func</i> a set function,
+              <i>scalarvals</i> a set of partial functions (possibly empty) passed from the aggregate
+              in the query, and let { key<sub>1</sub>→Ω<sub>1</sub>, ...,
+              key<sub>m</sub>→Ω<sub>m</sub> } be a multiset of partial functions from keys to
+              solution sequences as produced by the grouping step.</p>
+            <p>Aggregation applies the set function func to the given multiset and produces a
+              single value for each key and partition of solutions for that key.</p>
+            <p>Aggregation(exprlist, func, scalarvals, { key<sub>1</sub>→Ω<sub>1</sub>, ...,
+              key<sub>m</sub>→Ω<sub>m</sub> } )<br>
+              &nbsp;&nbsp;&nbsp;= { (key, F(Ω)) | key → Ω in { key<sub>1</sub>→Ω<sub>1</sub>, ...,
+              key<sub>m</sub>→Ω<sub>m</sub> } }</p>
+            <p>where<br>
+              &nbsp;&nbsp;M(Ω) = { ListEval(exprlist, μ) | μ in Ω }<br>
+              &nbsp;&nbsp;F(Ω) = func(M(Ω), scalarvals), for non-DISTINCT<br>
+              &nbsp;&nbsp;F(Ω) = func(Distinct(M(Ω)), scalarvals), for DISTINCT</p>
+            <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
+              <code>*</code> the value of F will be the cardinality of the group solution sequence,
+              <code>card[Ω]</code>, or <code>card[Distinct(Ω)]</code> if the <code>DISTINCT</code>
+              keyword is present.</p>
+          </div>
+          <p><i>scalarvals</i> are used to pass values to the underlying set function, bypassing
+            the mechanics of the grouping. For example, the aggregate expression
+            <code>GROUP_CONCAT(?x ; separator="|")</code> has a scalarvals argument of { "separator"
+            → "|" }.</p>
+          <p>All aggregates may have the <code>DISTINCT</code> keyword as the first token in their
+            argument list. If this keyword is present then first argument to func is Distinct(M).</p>
+          <p>Example</p>
+          <p>Given a solution multiset (Ω) with the following values:</p>
+          <table>
+            <tbody>
+              <tr>
+                <td>solution</td>
+                <td>?x</td>
+                <td>?y</td>
+                <td>?z</td>
+              </tr>
+              <tr>
+                <td>μ<sub>1</sub></td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>μ<sub>2</sub></td>
+                <td>1</td>
+                <td>3</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>μ<sub>3</sub></td>
+                <td>2</td>
+                <td>5</td>
+                <td>6</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>And the query expression SELECT (ex:agg(?y, ?z) AS ?agg) WHERE { ?x ?y ?z } GROUP BY
+            ?x.</p>
+          <p>We produce G = Group((?x), Ω) = { ( (1), { μ<sub>1</sub>, μ<sub>2</sub> } ), ( (2), {
+            μ<sub>3</sub> } ) }</p>
+          <p>And so Aggregation((?y, ?z), ex:agg, {}, G) =<br>
+            { ((1), eg:agg({(2, 3), (3, 4)}, {})), ((2), eg:agg({(5, 6)}, {})) }.</p>
+          <div class="defn">
+            <p><b>Definition: AggregateJoin</b></p>
+            <p>Let S<sub>1</sub>, ..., S<sub>n</sub> be a list of sets, where each set
+              S<sub>i</sub> contains key to (aggregated) value maps as produced by Aggregate.</p>
+            <p>Let K = { key | key in dom(S<sub>j</sub>) for some 1 &lt;= j &lt;= n } be the set of
+              keys, then<br>
+              AggregateJoin(S<sub>1</sub>, ..., S<sub>n</sub>) = { agg<sub>1</sub>→val<sub>1</sub>,
+              ..., agg<sub>n</sub>→val<sub>n</sub> | key in K and key→val<sub>i</sub> in
+              S<sub>i</sub> for each 1 &lt;= i &lt;= n }</p>
+          </div>
+          <p>Flatten is a function which is used to collapse multisets of lists into a multiset, so
+            for example { (1, 2), (3, 4) } becomes { 1, 2, 3, 4 }.</p>
+          <div class="defn">
+            <p><b>Definition: Flatten</b></p>
+            <p>The Flatten(M) function takes a multiset of lists, M {(L<sub>1</sub>, L<sub>2</sub>,
+              ...), ...}, and returns the multiset { x | L in M and x in L }.</p>
+          </div>
+          <section id="setFunctions">
+            <h5>Set Functions</h5>
+            <p>The set functions which underlie SPARQL aggregates all have a common signature:
+              SetFunc(M), or SetFunc(M, scalarvals) where M is a multiset of lists, and scalarvals is
+              one or more scalar values that are passed to the set function indirectly via the ( ...
+              ; key=value ) syntax for aggregates in the SPARQL grammar. The only use of this that is
+              supported by the built-in aggregates in SPARQL Query 1.1 is <code>GROUP_CONCAT</code>,
+              as in <code>GROUP_CONCAT(?x ; separator=", ")</code>.</p>
+            <p>Note that the name "Set Function" is somewhat historical — the arguments to set
+              functions are in fact multisets. The name is retained due to the commonality with SQL
+              Set Functions, which also operate over multisets.</p>
+            <p>The set functions defined in this document are Count, Sum, Min, Max, Avg,
+              GroupConcat, and Sample — corresponding to the aggregates <code>COUNT</code>,
+              <code>SUM</code>, <code>MIN</code>, <code>MAX</code>, <code>AVG</code>,
+              <code>GROUP_CONCAT</code>, and <code>SAMPLE</code>. Definitions may be found in the
+              following sections. Systems may choose to expand this set using local extensions, using
+              the same notation as for functions and casts. Note that, unless the ; separator is used
+              this requires the parser to know whether some IRI refers to a function, cast, or
+              aggregate before it can determine if there are any errors in a query where aggregates
+              are used.</p>
+          </section>
+          <section id="defn_aggCount">
+            <h5>Count</h5>
+            <p>Count is a SPARQL set function which counts the number of times a given expression
+              has a bound, and non-error value within the aggregate group.</p>
             <div class="defn">
-              <p><b>Definition: AggregateJoin</b></p>
-              <p>Let S<sub>1</sub>, ..., S<sub>n</sub> be a list of sets, where each set
-                S<sub>i</sub> contains key to (aggregated) value maps as produced by Aggregate.</p>
-              <p>Let K = { key | key in dom(S<sub>j</sub>) for some 1 &lt;= j &lt;= n } be the set of
-                keys, then<br>
-                AggregateJoin(S<sub>1</sub>, ..., S<sub>n</sub>) = { agg<sub>1</sub>→val<sub>1</sub>,
-                ..., agg<sub>n</sub>→val<sub>n</sub> | key in K and key→val<sub>i</sub> in
-                S<sub>i</sub> for each 1 &lt;= i &lt;= n }</p>
+              <p><b>Definition: Count</b></p>xsd:integer Count(multiset M)
+              <p>N = Flatten(M)</p>
+              <p>remove error elements from N</p>
+              <p>Count(M) = card[N]</p>
             </div>
-            <p>Flatten is a function which is used to collapse multisets of lists into a multiset, so
-              for example { (1, 2), (3, 4) } becomes { 1, 2, 3, 4 }.</p>
+          </section>
+          <section id="defn_aggSum">
+            <h5>Sum</h5>
+            <p>Sum is a SPARQL set function that will return the numeric value obtained by summing
+              the values within the aggregate group. Type promotion happens as per the op:numeric-add
+              function, applied transitively, (see definition below) so the value of SUM(?x), in an
+              aggregate group where ?x has values 1 (integer), 2.0e0 (float), and 3.0 (decimal) will
+              be 6.0 (float).</p>
             <div class="defn">
-              <p><b>Definition: Flatten</b></p>
-              <p>The Flatten(M) function takes a multiset of lists, M {(L<sub>1</sub>, L<sub>2</sub>,
-                ...), ...}, and returns the multiset { x | L in M and x in L }.</p>
+              <p><b>Definition: Sum</b></p>numeric Sum(multiset M)
+              <p>The Sum set function is used by the <code>SUM</code> aggregate in the syntax.</p>
+              <p>Sum(M) = Sum(ToList(Flatten(M))).</p>
+              <p>Sum(S) = op:numeric-add(S<sub>1</sub>, Sum(S<sub>2..n</sub>)) when card[S] &gt;
+                1<br>
+                Sum(S) = op:numeric-add(S<sub>1</sub>, 0) when card[S] = 1<br>
+                Sum(S) = "0"^^xsd:integer when card[S] = 0</p>
+              <p>In this way, Sum({1, 2, 3}) = op:numeric-add(1, op:numeric-add(2,
+                op:numeric-add(3, 0))).</p>
             </div>
-            <section id="setFunctions">
-              <h5>Set Functions</h5>
-              <p>The set functions which underlie SPARQL aggregates all have a common signature:
-                SetFunc(M), or SetFunc(M, scalarvals) where M is a multiset of lists, and scalarvals is
-                one or more scalar values that are passed to the set function indirectly via the ( ...
-                ; key=value ) syntax for aggregates in the SPARQL grammar. The only use of this that is
-                supported by the built-in aggregates in SPARQL Query 1.1 is <code>GROUP_CONCAT</code>,
-                as in <code>GROUP_CONCAT(?x ; separator=", ")</code>.</p>
-              <p>Note that the name "Set Function" is somewhat historical — the arguments to set
-                functions are in fact multisets. The name is retained due to the commonality with SQL
-                Set Functions, which also operate over multisets.</p>
-              <p>The set functions defined in this document are Count, Sum, Min, Max, Avg,
-                GroupConcat, and Sample — corresponding to the aggregates <code>COUNT</code>,
-                <code>SUM</code>, <code>MIN</code>, <code>MAX</code>, <code>AVG</code>,
-                <code>GROUP_CONCAT</code>, and <code>SAMPLE</code>. Definitions may be found in the
-                following sections. Systems may choose to expand this set using local extensions, using
-                the same notation as for functions and casts. Note that, unless the ; separator is used
-                this requires the parser to know whether some IRI refers to a function, cast, or
-                aggregate before it can determine if there are any errors in a query where aggregates
-                are used.</p>
-            </section>
-            <section id="defn_aggCount">
-              <h5>Count</h5>
-              <p>Count is a SPARQL set function which counts the number of times a given expression
-                has a bound, and non-error value within the aggregate group.</p>
-              <div class="defn">
-                <p><b>Definition: Count</b></p>xsd:integer Count(multiset M)
-                <p>N = Flatten(M)</p>
-                <p>remove error elements from N</p>
-                <p>Count(M) = card[N]</p>
-              </div>
-            </section>
-            <section id="defn_aggSum">
-              <h5>Sum</h5>
-              <p>Sum is a SPARQL set function that will return the numeric value obtained by summing
-                the values within the aggregate group. Type promotion happens as per the op:numeric-add
-                function, applied transitively, (see definition below) so the value of SUM(?x), in an
-                aggregate group where ?x has values 1 (integer), 2.0e0 (float), and 3.0 (decimal) will
-                be 6.0 (float).</p>
-              <div class="defn">
-                <p><b>Definition: Sum</b></p>numeric Sum(multiset M)
-                <p>The Sum set function is used by the <code>SUM</code> aggregate in the syntax.</p>
-                <p>Sum(M) = Sum(ToList(Flatten(M))).</p>
-                <p>Sum(S) = op:numeric-add(S<sub>1</sub>, Sum(S<sub>2..n</sub>)) when card[S] &gt;
-                  1<br>
-                  Sum(S) = op:numeric-add(S<sub>1</sub>, 0) when card[S] = 1<br>
-                  Sum(S) = "0"^^xsd:integer when card[S] = 0</p>
-                <p>In this way, Sum({1, 2, 3}) = op:numeric-add(1, op:numeric-add(2,
-                  op:numeric-add(3, 0))).</p>
-              </div>
-            </section>
-            <section id="defn_aggAvg">
-              <h5>Avg</h5>
-              <div id="defn_algAvg"></div>The Avg set function calculates the
-              average value for an expression over a group. It is defined in terms of Sum and Count.
-              <div class="defn">
-                <p><b>Definition: Avg</b></p>numeric Avg(multiset M)
-                <p>Avg(M) = "0"^^xsd:integer, where Count(M) = 0</p>
-                <p>Avg(M) = Sum(M) / Count(M), where Count(M) &gt; 0</p>
-              </div>
-              <p>For example, Avg({1, 2, 3}) = Sum({1, 2, 3})/Count({1, 2, 3}) = 6/3 = 2.</p>
-            </section>
-            <section id="defn_aggMin">
-              <h5>Min</h5>
-              <p>Min is a SPARQL set functions that returns the minimum value from a group
-                respectively.</p>
-              <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
-                arbitrarily typed expressions.</p>
-              <div class="defn">
-                <p><b>Definition: Min</b></p>term Min(multiset M)
-                <p>Min(M) = Min(ToList(Flatten(M)))</p>
-                <p>Min({}) = error.</p>
-                <p>The flattened multiset of values passed as an argument is converted to a sequence
-                  S, this sequence is ordered as per the <code>ORDER BY ASC</code> clause.</p>
-                <p>Min(S) = S<sub>0</sub></p>
-              </div>
-            </section>
-            <section id="defn_aggMax">
-              <h5>Max</h5>
-              <p>Max is a SPARQL set function that return the maximum value from a group
-                respectively.</p>
-              <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
-                arbitrarily typed expressions.</p>
-              <div class="defn">
-                <p><b>Definition: Max</b></p>term Max(multiset M)
-                <p>Max(M) = Max(ToList(Flatten(M)))</p>
-                <p>Max({}) = error.</p>
-                <p>The multiset of values passed as an argument is converted to a sequence S, this
-                  sequence is ordered as per the <code>ORDER BY DESC</code> clause.</p>
-                <p>Max(S) = S<sub>0</sub></p>
-              </div>
-            </section>
-            <section id="defn_aggGroupConcat">
-              <h5>GroupConcat</h5>
-              <p>GroupConcat is a set function which performs a string concatenation across the
-                values of an expression with a group. The order of the strings is not specified. The
-                separator character used in the concatenation may be given with the scalar argument
-                SEPARATOR.</p>
-              <div class="defn">
-                <p><b>Definition: GroupConcat</b></p>literal GroupConcat(multiset M)
-                <p>If the "separator" scalar argument is absent from GROUP_CONCAT then it is taken to
-                  be the "space" character, unicode codepoint U+0020.</p>
-                <p>The multiset of values, M passed as an argument is converted to a sequence S.</p>
-                <p>GroupConcat(M, scalarvals) = GroupConcat(Flatten(M), scalarvals("separator"))</p>
-                <p>GroupConcat(S, sep) = "", where <span style=
-                                                         "font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 0</p>
-                <p>GroupConcat(S, sep) = CONCAT("", S<sub>0</sub>), where <span style=
-                                                                                "font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 1</p>
-                <p>GroupConcat(S, sep) = CONCAT(S<sub>0</sub>, sep, GroupConcat(S<sub>1..n-1</sub>,
-                  sep)), where <span style="font-size: 140%">|</span>S<span style=
-                                                                            "font-size: 140%">|</span> &gt; 1</p>
-              </div>
-              <p>For example, GroupConcat({"a", "b", "c"}, {"separator" → "."}) = "a.b.c".</p>
-            </section>
-            <section id="defn_aggSample">
-              <h5>Sample</h5>
-              <p>Sample is a set function which returns an arbitrary value from the multiset passed
-                to it.</p>
-              <div class="defn">
-                <p><b>Definition: Sample</b></p>RDFTerm Sample(multiset M)
-                <p>Sample(M) = v, where v in Flatten(M)</p>
-                <p>Sample({}) = error</p>
-              </div>
-              <p>For example, given Sample({"a", "b", "c"}), "a", "b", and "c" are all valid return
-                values. Note that Sample() is not required to be deterministic for a given input, the
-                only restriction is that the output value must be present in the input multiset.</p>
-            </section>
+          </section>
+          <section id="defn_aggAvg">
+            <h5>Avg</h5>
+            <div id="defn_algAvg"></div>The Avg set function calculates the
+            average value for an expression over a group. It is defined in terms of Sum and Count.
+            <div class="defn">
+              <p><b>Definition: Avg</b></p>numeric Avg(multiset M)
+              <p>Avg(M) = "0"^^xsd:integer, where Count(M) = 0</p>
+              <p>Avg(M) = Sum(M) / Count(M), where Count(M) &gt; 0</p>
+            </div>
+            <p>For example, Avg({1, 2, 3}) = Sum({1, 2, 3})/Count({1, 2, 3}) = 6/3 = 2.</p>
+          </section>
+          <section id="defn_aggMin">
+            <h5>Min</h5>
+            <p>Min is a SPARQL set functions that returns the minimum value from a group
+              respectively.</p>
+            <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
+              arbitrarily typed expressions.</p>
+            <div class="defn">
+              <p><b>Definition: Min</b></p>term Min(multiset M)
+              <p>Min(M) = Min(ToList(Flatten(M)))</p>
+              <p>Min({}) = error.</p>
+              <p>The flattened multiset of values passed as an argument is converted to a sequence
+                S, this sequence is ordered as per the <code>ORDER BY ASC</code> clause.</p>
+              <p>Min(S) = S<sub>0</sub></p>
+            </div>
+          </section>
+          <section id="defn_aggMax">
+            <h5>Max</h5>
+            <p>Max is a SPARQL set function that return the maximum value from a group
+              respectively.</p>
+            <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
+              arbitrarily typed expressions.</p>
+            <div class="defn">
+              <p><b>Definition: Max</b></p>term Max(multiset M)
+              <p>Max(M) = Max(ToList(Flatten(M)))</p>
+              <p>Max({}) = error.</p>
+              <p>The multiset of values passed as an argument is converted to a sequence S, this
+                sequence is ordered as per the <code>ORDER BY DESC</code> clause.</p>
+              <p>Max(S) = S<sub>0</sub></p>
+            </div>
+          </section>
+          <section id="defn_aggGroupConcat">
+            <h5>GroupConcat</h5>
+            <p>GroupConcat is a set function which performs a string concatenation across the
+              values of an expression with a group. The order of the strings is not specified. The
+              separator character used in the concatenation may be given with the scalar argument
+              SEPARATOR.</p>
+            <div class="defn">
+              <p><b>Definition: GroupConcat</b></p>literal GroupConcat(multiset M)
+              <p>If the "separator" scalar argument is absent from GROUP_CONCAT then it is taken to
+                be the "space" character, unicode codepoint U+0020.</p>
+              <p>The multiset of values, M passed as an argument is converted to a sequence S.</p>
+              <p>GroupConcat(M, scalarvals) = GroupConcat(Flatten(M), scalarvals("separator"))</p>
+              <p>GroupConcat(S, sep) = "", where <span style=
+                                                       "font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 0</p>
+              <p>GroupConcat(S, sep) = CONCAT("", S<sub>0</sub>), where <span style=
+                                                                              "font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 1</p>
+              <p>GroupConcat(S, sep) = CONCAT(S<sub>0</sub>, sep, GroupConcat(S<sub>1..n-1</sub>,
+                sep)), where <span style="font-size: 140%">|</span>S<span style=
+                                                                          "font-size: 140%">|</span> &gt; 1</p>
+            </div>
+            <p>For example, GroupConcat({"a", "b", "c"}, {"separator" → "."}) = "a.b.c".</p>
+          </section>
+          <section id="defn_aggSample">
+            <h5>Sample</h5>
+            <p>Sample is a set function which returns an arbitrary value from the multiset passed
+              to it.</p>
+            <div class="defn">
+              <p><b>Definition: Sample</b></p>RDFTerm Sample(multiset M)
+              <p>Sample(M) = v, where v in Flatten(M)</p>
+              <p>Sample({}) = error</p>
+            </div>
+            <p>For example, given Sample({"a", "b", "c"}), "a", "b", and "c" are all valid return
+              values. Note that Sample() is not required to be deterministic for a given input, the
+              only restriction is that the output value must be present in the input multiset.</p>
           </section>
         </section>
         <section id="sparqlAlgebraEval">
