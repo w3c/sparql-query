@@ -5709,10 +5709,10 @@ WHERE {
             <p>Errors in comparisons cause the <code>IN</code> expression to raise an error if the
               RDF term being tested is not found elsewhere in the list of terms.</p>
             <p>The <code>IN</code> operator is equivalent to the SPARQL expression:</p>
-            <pre>(rdfterm = expression1) || (rdfterm = expression2) || ...</pre>
+            <pre>(rdfTerm = expression1) || (rdfTerm = expression2) || ...</pre>
             <p>
               If <code>IN</code> is used with an expression to produce the
-              <code>rdfterm</code> then that expression is evaluated only once, 
+              <code>rdfTerm</code> then that expression is evaluated only once, 
               before evaluating the <code>IN</code> expression.
             </p>
             <p>Examples:</p>
@@ -5761,10 +5761,10 @@ WHERE {
               the RDF term being tested is not found to be elsewhere in the list of
               terms.</p>
             <p>The <code>NOT IN</code> operator is equivalent to the SPARQL expression:</p>
-            <pre>(rdfterm != expression1) &amp;& (rdfterm != expression2) &amp;& ...</pre>
+            <pre>(rdfTerm != expression1) &amp;& (rdfTerm != expression2) &amp;& ...</pre>
             <p>
               If <code>NOT IN</code> is used with an expression to produce the
-              <code>rdfterm</code>, then that expression is evaluated only once, 
+              <code>rdfTerm</code>, then that expression is evaluated only once, 
               before evaluating the <code>NOT IN</code> expression.
             </p>
             <p><code>NOT IN (...)</code> is equivalent to <code>!(IN (...))</code>.</p>
