@@ -5220,8 +5220,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <h4>Operator Extensibility</h4>
           <p>SPARQL language extensions may provide additional associations between operators and
             operator functions; this amounts to adding rows to the table above. No additional operator
-            may yield a result that replaces any result other than a type error in the semantics
-            defined above. The consequence of this rule is that SPARQL <code>FILTER</code>s will
+            may yield a result that replaces any result other than a type error.
+            The consequence of this rule is that SPARQL <code>FILTER</code>s will
             produce <em>at least</em> the same intermediate bindings after applying a
             <code>FILTER</code> as an unextended implementation.</p>
           <p>Additional mappings of the '&lt;' operator are expected to control the relative ordering
