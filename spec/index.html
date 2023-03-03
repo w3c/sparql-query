@@ -5462,29 +5462,33 @@ class="expression">expression, ....</span>)
                                                                                    "type">RDF term</span> <span class="name">term1</span> <span class=
                                                                                                                                                 "operator">=</span> <span class="type">RDF term</span> <span class=
                                                                                                                                                                                                              "name">term2</span></pre>
-            <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
-              defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; produces a type error if the
-              arguments are both literal but are not the same RDF term <sup><a href=
-                                                                               "#func-RDFterm-equal-foot1" class="footnote">*</a></sup>; returns FALSE otherwise.
-              <code>term1</code> and <code>term2</code> are the same if any of the following is
+            <p>Returns TRUE if <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms as defined below;
+              produces a type error if the arguments are both literals with the same datatype that is unsupported by the implementation but are not the same RDF term <sup><a href="#func-RDFterm-equal-foot1" class="footnote">*</a></sup>;
+              returns FALSE otherwise.</p>
+            <p>
+              <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms if any of the following is
               true:</p>
             <ul>
               <li>
-                <span class="name">term1</span> and <span class="name">term2</span> are equivalent
+                <span class="name">term1</span> and <span class="name">term2</span> are equal
                 <span class="IRI type">IRIs</span> as defined in <a data-cite=
-                                                                    "RDF12-CONCEPTS#section-Graph-URIref">6.4 RDF URI References</a> of
+                                                                    "RDF12-CONCEPTS#dfn-iri-equality">IRI quality</a> of
                 [[RDF12-CONCEPTS]].
               </li>
               <li>
-                <span class="name">term1</span> and <span class="name">term2</span> are equivalent
+                <span class="name">term1</span> and <span class="name">term2</span> are equal
                 <span class="literal type">literals</span> as defined in <a data-cite=
-                                                                            "RDF12-CONCEPTS#section-Literal-Equality">6.5.1 Literal Equality</a> of
+                                                                            "RDF12-CONCEPTS#dfn-term-equal">Literal term equality</a> of
                 [[RDF12-CONCEPTS]].
+              </li>
+              <li>
+                <span class="name">term1</span> and <span class="name">term2</span> are
+                <span class="literal type">literals</span> with equivalent values according to their datatypes.
               </li>
               <li>
                 <span class="name">term1</span> and <span class="name">term2</span> are the same
                 <span class="bnode type">blank node</span> as described in <a data-cite=
-                                                                              "RDF12-CONCEPTS#section-blank-nodes">6.6 Blank Nodes</a> of [[RDF12-CONCEPTS]].
+                                                                              "RDF12-CONCEPTS#section-blank-nodes">Blank Nodes</a> of [[RDF12-CONCEPTS]].
               </li>
             </ul>
             <div class="exampleGroup">
@@ -5532,7 +5536,7 @@ WHERE {
             </div>
             <p>In this query for documents that were annotated at a specific date and time (New
               Year's Day 2005, measures in timezone +00:00), the RDF terms are not the same, but have
-              equivalent values:</p>
+              equivalent values according to their datatype:</p>
             <div class="exampleGroup">
               <pre class="data">
 @prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
