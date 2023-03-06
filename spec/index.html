@@ -5463,7 +5463,10 @@ class="expression">expression, ....</span>)
                                                                                                                                                 "operator">=</span> <span class="type">RDF term</span> <span class=
                                                                                                                                                                                                              "name">term2</span></pre>
             <p>Returns TRUE if <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms as defined below;
-              produces a type error if the arguments are both literals with the same datatype that is unsupported by the implementation but are not the same RDF term <sup><a href="#func-RDFterm-equal-foot1" class="footnote">*</a></sup>;
+              produces a type error if <code>term1</code> and <code>term2</code> are both literals that have the
+              same <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>, this datatype IRI is <em>not</em> in the
+              set of <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>, and
+              the two literals are <em>not</em> the same RDF term <sup><a href="#func-RDFterm-equal-foot1" class="footnote">*</a></sup>;
               returns FALSE otherwise.</p>
             <p>
               <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms if any of the following is
