@@ -5462,12 +5462,14 @@ class="expression">expression, ....</span>)
                                                                                    "type">RDF term</span> <span class="name">term1</span> <span class=
                                                                                                                                                 "operator">=</span> <span class="type">RDF term</span> <span class=
                                                                                                                                                                                                              "name">term2</span></pre>
-            <p>Returns TRUE if <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms as defined below;
-              produces a type error if <code>term1</code> and <code>term2</code> are both literals that have the
+            <p>The behavior of this operator is defined as follows:</p>
+            <ul>
+                <li>Returns TRUE if <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms, as defined below.</li>
+                <li>Produces a type error if <code>term1</code> and <code>term2</code> are both literals that have the
               same <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>, this datatype IRI is <em>not</em> in the
-              set of <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>, and
-              the two literals are <em>not</em> the same RDF term;
-              returns FALSE otherwise.</p>
+              set of <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>.</li>
+                <li>Returns FALSE otherwise.</li>
+            </ul>
             <p id="func-RDFterm-equal-note1" class="note">
               An extended implementation may have support for additional datatypes. An
               implementation processing a query that tests for equivalence on non-recognized datatypes
