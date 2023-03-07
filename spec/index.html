@@ -5466,8 +5466,18 @@ class="expression">expression, ....</span>)
               produces a type error if <code>term1</code> and <code>term2</code> are both literals that have the
               same <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>, this datatype IRI is <em>not</em> in the
               set of <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>, and
-              the two literals are <em>not</em> the same RDF term <sup><a href="#func-RDFterm-equal-foot1" class="footnote">*</a></sup>;
+              the two literals are <em>not</em> the same RDF term;
               returns FALSE otherwise.</p>
+            <p id="func-RDFterm-equal-note1" class="note">
+              An extended implementation may have support for additional datatypes. An
+              implementation processing a query that tests for equivalence on non-recognized datatypes
+              (and non-identical lexical form and datatype IRI) returns an error, indicating that it
+              was unable to determine whether or not the values are equivalent. For example, an
+              unextended implementation will produce an error when testing either <span class=
+                                                                                        "queryExcerpt"><code>"iiii"^^my:romanNumeral =
+                  "iv"^^my:romanNumeral</code></span> or <span class=
+                                                               "queryExcerpt"><code>"iiii"^^my:romanNumeral !=
+                  "iv"^^my:romanNumeral</code></span>.</p>
             <p>
               <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms if any of the following is
               true:</p>
@@ -5578,18 +5588,6 @@ WHERE {
                   </table>
                 </div>
               </div>
-            </div>
-            <div id="func-RDFterm-equal-foot1" class="footnote">
-              <p><sup>*</sup> Invoking RDFterm-equal on two typed literals tests for equivalent
-                values. An extended implementation may have support for additional datatypes. An
-                implementation processing a query that tests for equivalence on unsupported datatypes
-                (and non-identical lexical form and datatype IRI) returns an error, indicating that it
-                was unable to determine whether or not the values are equivalent. For example, an
-                unextended implementation will produce an error when testing either <span class=
-                                                                                          "queryExcerpt"><code>"iiii"^^my:romanNumeral =
-                    "iv"^^my:romanNumeral</code></span> or <span class=
-                                                                 "queryExcerpt"><code>"iiii"^^my:romanNumeral !=
-                    "iv"^^my:romanNumeral</code></span>.</p>
             </div>
           </section>
           <section id="func-sameTerm">
