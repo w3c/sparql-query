@@ -5470,16 +5470,6 @@ class="expression">expression, ....</span>)
               set of <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>.</li>
                 <li>Returns FALSE otherwise.</li>
             </ul>
-            <p id="func-RDFterm-equal-note1" class="note">
-              An extended implementation may have support for additional datatypes. An
-              implementation processing a query that tests for equivalence on non-recognized datatypes
-              (and non-identical lexical form and datatype IRI) returns an error, indicating that it
-              was unable to determine whether or not the values are equivalent. For example, an
-              unextended implementation will produce an error when testing either <span class=
-                                                                                        "queryExcerpt"><code>"iiii"^^my:romanNumeral =
-                  "iv"^^my:romanNumeral</code></span> or <span class=
-                                                               "queryExcerpt"><code>"iiii"^^my:romanNumeral !=
-                  "iv"^^my:romanNumeral</code></span>.</p>
             <p>
               <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms if any of the following is
               true:</p>
@@ -5511,6 +5501,16 @@ class="expression">expression, ....</span>)
                 <span class="bnode type">blank node</span>.
               </li>
             </ul>
+            <p id="func-RDFterm-equal-note1" class="note">
+              An extended implementation may have support for additional datatypes. An
+              implementation processing a query that tests for equivalence on non-recognized datatypes
+              (and non-identical lexical form and datatype IRI) returns an error, indicating that it
+              was unable to determine whether or not the values are equivalent. For example, an
+              unextended implementation will produce an error when testing either <span class=
+                                                                                        "queryExcerpt"><code>"iiii"^^my:romanNumeral =
+                  "iv"^^my:romanNumeral</code></span> or <span class=
+                                                               "queryExcerpt"><code>"iiii"^^my:romanNumeral !=
+                  "iv"^^my:romanNumeral</code></span>.</p>
             <div class="exampleGroup">
               <pre class="data">
 @prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
