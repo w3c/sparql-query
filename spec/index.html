@@ -5465,9 +5465,10 @@ class="expression">expression, ....</span>)
             <p>This function is defined as follows:</p>
             <ul>
                 <li>Returns TRUE if <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms, as defined below.</li>
-                <li>Produces a type error if <code>term1</code> and <code>term2</code> are both literals that have the
+                <li>Produces a type error if <code>term1</code> and <code>term2</code> are both literals such that these two literals have the
               same <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>, this datatype IRI is <em>not</em> in the
-              set of <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>.</li>
+              set of <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>, and the
+              <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical forms</a> of the two literals are different from one another.</li>
                 <li>Returns FALSE otherwise.</li>
             </ul>
             <p>
