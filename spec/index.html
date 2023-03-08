@@ -5502,10 +5502,10 @@ class="expression">expression, ....</span>)
               </li>
             </ul>
             <p id="func-RDFterm-equal-note1" class="note">
-              An extended implementation may have support for additional datatypes. An
-              implementation processing a query that tests for equivalence on non-recognized datatypes
+              An extended implementation may support additional datatypes for literals. An
+              implementation processing a query that tests for equivalence of literals with non-recognized datatypes
               (and non-identical lexical form and datatype IRI) returns an error, indicating that it
-              was unable to determine whether or not the values are equivalent. For example, an
+              is unable to determine whether or not the values of the compared literals are equivalent. For example, an
               unextended implementation will produce an error when testing either <span class=
                                                                                         "queryExcerpt"><code>"iiii"^^my:romanNumeral =
                   "iv"^^my:romanNumeral</code></span> or <span class=
