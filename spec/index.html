@@ -9450,21 +9450,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             Join(Ω<sub>1</sub>, Ω<sub>2</sub>))](μ) + card[Diff(Ω<sub>1</sub>, Ω<sub>2</sub>,
             expr)](μ)</p>
         </div>
-        <p>Written in full that is:</p>
-        <p>LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) =<br>
-          &nbsp;&nbsp;&nbsp; { merge(μ<sub>1,</sub> μ<sub>2</sub>) | μ<sub>1</sub> in Ω<sub>1</sub>
-          and μ<sub>2</sub> in Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are compatible and
-          expr(merge(μ<sub>1</sub>, μ<sub>2</sub>)) is true }<br>
-          ∪<br>
-          &nbsp;&nbsp;&nbsp; { μ<sub>1</sub> | μ<sub>1</sub> in Ω<sub>1</sub>, ∀ μ<sub>2</sub> in
-          Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are not compatible, or Ω<sub>2</sub> is
-          empty }<br>
-          ∪<br>
-          &nbsp;&nbsp;&nbsp; { μ<sub>1</sub> | μ<sub>1</sub> in Ω<sub>1</sub>, ∃ μ<sub>2</sub> in
-          Ω<sub>2</sub>, μ<sub>1</sub> and μ<sub>2</sub> are compatible and expr(merge(μ<sub>1</sub>,
-          μ<sub>2</sub>)) is false. }</p>
-        <p>As these are distinct, the cardinality of LeftJoin is cardinality of these individual
-          components of the definition.</p>
+
         <div class="defn">
           <p><b>Definition:</b></p>
           <div id="defn_algUnion">
