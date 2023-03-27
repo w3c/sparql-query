@@ -9600,18 +9600,20 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               aggregate before it can determine if there are any errors in a query where aggregates
               are used.</p>
           </section>
-          <section id="defn_aggCount">
+
+          <section id="aggCount">
             <h5>Count</h5>
             <p>Count is a SPARQL set function which counts the number of times a given expression
               has a bound, and non-error value within the aggregate group.</p>
             <div class="defn">
-              <p><b>Definition: Count</b></p>xsd:integer Count(multiset M)
+              <p><b>Definition: <span id="defn_aggCount">Count</span></b></p>
+              <pre class="code">xsd:integer Count(multiset M)</pre>
               <p>N = Flatten(M)</p>
               <p>remove error elements from N</p>
               <p>Count(M) = card[N]</p>
             </div>
           </section>
-          <section id="defn_aggSum">
+          <section id="aggSum">
             <h5>Sum</h5>
             <p>Sum is a SPARQL set function that will return the numeric value obtained by summing
               the values within the aggregate group. Type promotion happens as per the op:numeric-add
@@ -9619,8 +9621,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               aggregate group where ?x has values 1 (integer), 2.0e0 (float), and 3.0 (decimal) will
               be 6.0 (float).</p>
             <div class="defn">
-              <p><b>Definition: Sum</b></p>numeric Sum(multiset M)
-              <p>The Sum set function is used by the <code>SUM</code> aggregate in the syntax.</p>
+              <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
+              <pre class="code">numeric Sum(multiset M)</pre>
               <p>Sum(M) = Sum(ToList(Flatten(M))).</p>
               <p>Sum(S) = op:numeric-add(S<sub>1</sub>, Sum(S<sub>2..n</sub>)) when card[S] &gt;
                 1<br>
@@ -9630,25 +9632,27 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 op:numeric-add(3, 0))).</p>
             </div>
           </section>
-          <section id="defn_aggAvg">
+          <section id="aggAvg">
             <h5>Avg</h5>
             <div id="defn_algAvg"></div>The Avg set function calculates the
             average value for an expression over a group. It is defined in terms of Sum and Count.
             <div class="defn">
-              <p><b>Definition: Avg</b></p>numeric Avg(multiset M)
+              <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
+              <pre class="code">numeric Avg(multiset M)</pre>
               <p>Avg(M) = "0"^^xsd:integer, where Count(M) = 0</p>
               <p>Avg(M) = Sum(M) / Count(M), where Count(M) &gt; 0</p>
             </div>
             <p>For example, Avg({1, 2, 3}) = Sum({1, 2, 3})/Count({1, 2, 3}) = 6/3 = 2.</p>
           </section>
-          <section id="defn_aggMin">
+          <section id="aggMin">
             <h5>Min</h5>
             <p>Min is a SPARQL set functions that returns the minimum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
             <div class="defn">
-              <p><b>Definition: Min</b></p>term Min(multiset M)
+              <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
+              <pre class="code">term Min(multiset M)</pre>
               <p>Min(M) = Min(ToList(Flatten(M)))</p>
               <p>Min({}) = error.</p>
               <p>The flattened multiset of values passed as an argument is converted to a sequence
@@ -9656,14 +9660,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>Min(S) = S<sub>0</sub></p>
             </div>
           </section>
-          <section id="defn_aggMax">
+          <section id="aggMax">
             <h5>Max</h5>
             <p>Max is a SPARQL set function that return the maximum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
             <div class="defn">
-              <p><b>Definition: Max</b></p>term Max(multiset M)
+              <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
+              <pre class="code">term Max(multiset M)</pre>
               <p>Max(M) = Max(ToList(Flatten(M)))</p>
               <p>Max({}) = error.</p>
               <p>The multiset of values passed as an argument is converted to a sequence S, this
@@ -9671,14 +9676,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>Max(S) = S<sub>0</sub></p>
             </div>
           </section>
-          <section id="defn_aggGroupConcat">
+          <section id="aggGroupConcat">
             <h5>GroupConcat</h5>
             <p>GroupConcat is a set function which performs a string concatenation across the
               values of an expression with a group. The order of the strings is not specified. The
               separator character used in the concatenation may be given with the scalar argument
               SEPARATOR.</p>
             <div class="defn">
-              <p><b>Definition: GroupConcat</b></p>literal GroupConcat(multiset M)
+              <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
+              <pre class="code">literal GroupConcat(multiset M)</pre>
               <p>If the "separator" scalar argument is absent from GROUP_CONCAT then it is taken to
                 be the "space" character, unicode codepoint U+0020.</p>
               <p>The multiset of values, M passed as an argument is converted to a sequence S.</p>
@@ -9693,12 +9699,13 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             </div>
             <p>For example, GroupConcat({"a", "b", "c"}, {"separator" → "."}) = "a.b.c".</p>
           </section>
-          <section id="defn_aggSample">
+          <section id="aggSample">
             <h5>Sample</h5>
             <p>Sample is a set function which returns an arbitrary value from the multiset passed
               to it.</p>
             <div class="defn">
-              <p><b>Definition: Sample</b></p>RDFTerm Sample(multiset M)
+              <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
+              <pre class="code">RDFTerm Sample(multiset M)</pre>
               <p>Sample(M) = v, where v in Flatten(M)</p>
               <p>Sample({}) = error</p>
             </div>
