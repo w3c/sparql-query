@@ -9434,9 +9434,11 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             expression. We define:</p>
           <p>Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = { μ | μ in Ω<sub>1</sub> such that ∀ μ′ in
             Ω<sub>2</sub>, either μ and μ′ are not compatible or μ and μ' are compatible and
-            expr(merge(μ, μ')) has an effective boolean value of false }</p>
+            expr(merge(μ, μ')) does not have an effective boolean value of true }</p>
           <p>card[Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)](μ) = card[Ω<sub>1</sub>](μ)</p>
         </div>
+        <p>The evaluation of expr(merge(μ, μ')) does not have an effective boolean
+          value of true if it evaluates to false or if it raises an error.</p>
         <p>Diff is used internally for the definition of LeftJoin.</p>
         <div class="defn">
           <p><b>Definition:</b></p>
