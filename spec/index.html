@@ -9723,7 +9723,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <section id="defn_aggCount">
             <h5>Count</h5>
             <p>Count is a SPARQL set function which counts the number of times a given expression
-              has a bound, and non-error value within the aggregate group.</p>
+              has a bound, non-error value within the aggregate group.</p>
             <div class="defn">
               <p><b>Definition: Count</b></p>xsd:integer Count(multiset M)
               <p>N = Flatten(M)</p>
@@ -9733,7 +9733,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </section>
           <section id="defn_aggSum">
             <h5>Sum</h5>
-            <p>Sum is a SPARQL set function that will return the numeric value obtained by summing
+            <p>Sum is a SPARQL set function that returns the numeric value obtained by summing
               the values within the aggregate group. Type promotion happens as per the op:numeric-add
               function, applied transitively, (see definition below) so the value of SUM(?x), in an
               aggregate group where ?x has values 1 (integer), 2.0e0 (float), and 3.0 (decimal) will
@@ -9763,7 +9763,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </section>
           <section id="defn_aggMin">
             <h5>Min</h5>
-            <p>Min is a SPARQL set functions that returns the minimum value from a group
+            <p>Min is a SPARQL set function that returns the minimum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
@@ -9778,7 +9778,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </section>
           <section id="defn_aggMax">
             <h5>Max</h5>
-            <p>Max is a SPARQL set function that return the maximum value from a group
+            <p>Max is a SPARQL set function that returns the maximum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
