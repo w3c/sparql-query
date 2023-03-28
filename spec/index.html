@@ -8800,16 +8800,25 @@ Replace join(A, Z) by A
               &nbsp;&nbsp; BGP(?s :p1 ?v2) )
             </div>
           </div>
-          <p>Example: Pattern involving BIND:</p>
+          <p>Example: Pattern involving BIND, with a 
+            <a href="#sparqlSimplification">simplification</a> step:</p>
           <div class="algExample">
             <div class="algExample1">
               { ?s :p ?v . {} BIND (2*?v AS ?v2) }
             </div>
             <div class="algExample2">
-              Join(<br>
-              &nbsp;&nbsp; BGP(?s :p ?v), ?v2, 2*?v) ,<br>
-              &nbsp;&nbsp; Extend({}, ?v2, 2*?v)<br>
+              Extend(<br>
+              &nbsp;&nbsp; Join( <br>
+              &nbsp;&nbsp;&nbsp;&nbsp; Join( {}, BGP(?s :p ?v)),<br>
+              &nbsp;&nbsp;&nbsp;&nbsp; {}),<br>
+              &nbsp;&nbsp; ?v2, 2*?v<br>
               )
+            </div>
+            <div class="algExample2">
+              Extend(<br>
+              &nbsp;&nbsp; BGP(?s :p ?v) ,<br>
+              &nbsp;&nbsp; ?v2, 2*?v<br>
+            )
             </div>
           </div>
           <p>Example: Pattern involving MINUS:</p>
@@ -8820,7 +8829,8 @@ Replace join(A, Z) by A
             <div class="algExample2">
               Minus(<br>
               &nbsp;&nbsp; BGP(?s :p ?v)<br>
-              &nbsp;&nbsp; BGP(?s :p1 ?v2))
+              &nbsp;&nbsp; BGP(?s :p1 ?v2)<br>
+              )
             </div>
           </div>
           <p>Example: Pattern involving a subquery:</p>
