@@ -7816,10 +7816,7 @@ WHERE {
           <p>SPARQL is defined in terms of IRIs [[RFC3987]]. IRIs are a subset of RDF URI References
             that omits the use of spaces.</p>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_RDFTerm">
-              <b>RDF Term</b>
-            </div>
+            <p><b>Definition: <span id="defn_RDFTerm">RDF Term</span></b></p>
             <p>Let I be the set of all IRIs.<br>
               Let RDF-L be the set of all <a data-cite="RDF12-CONCEPTS#literal">RDF Literals</a><br>
               Let RDF-B be the set of all <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank nodes</a> in RDF graphs</p>
@@ -7834,10 +7831,7 @@ WHERE {
         <section id="simple_literal">
           <h4>Simple Literal</h4>
           <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_SimpleLiteral">
-              <b>Simple Literal</b>
-            </div>
+            <p><b>Definition: <span id="defn_SimpleLiteral">Simple Literal</span></b></p>
             <p>The set of <b>Simple Literals</b> is the set of all 
               <a data-cite="RDF12-CONCEPTS#dfn-rdf-literal">RDF Literals</a>
               with no language tag or datatype IRI.</p>
@@ -7846,10 +7840,7 @@ WHERE {
         <section id="sparqlDataset">
           <h4>RDF Dataset</h4>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_RDFDataset">
-              <b>RDF Dataset</b>
-            </div>
+            <p><b>Definition: <span id="defn_RDFDataset">RDF Dataset</span></b></p>
             <p>An RDF dataset is a set:<br>
               { G, (&lt;u<sub>1</sub>&gt;, G<sub>1</sub>), (&lt;u<sub>2</sub>&gt;, G<sub>2</sub>), . .
               . (&lt;u<sub>n</sub>&gt;, G<sub>n</sub>) }<br>
@@ -7859,10 +7850,7 @@ WHERE {
               graphs.</p>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_ActiveGraph">
-              <b>Active Graph</b>
-            </div>
+            <p><b>Definition: <span id="defn_ActiveGraph">Active Graph</span></b></p>
             <p>The <b>active graph</b> is the graph from the dataset used for basic graph pattern
               matching.</p>
           </div>
@@ -7897,10 +7885,7 @@ WHERE {
         <section id="sparqlQueryVariables">
           <h4>Query Variables</h4>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_QueryVariable">
-              <b>Query Variable</b>
-            </div>
+            <p><b>Definition: <span id="defn_QueryVariable">Query Variable</span></b></p>
             <p>A <span class="definedTerm">query variable</span> is a member of the set V where V is
               infinite and disjoint from RDF-T.</p>
           </div>
@@ -7908,10 +7893,7 @@ WHERE {
         <section id="sparqlTriplePatterns">
           <h4>Triple Patterns</h4>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_TriplePattern">
-              <b>Triple Pattern</b>
-            </div>
+            <p><b>Definition: <span id="defn_TriplePattern">Triple Pattern</span></b></p>
             <p>A <span class="definedTerm">triple pattern</span> is member of the set:<br>
               (RDF-T ∪ V) x (I ∪ V) x (RDF-T ∪ V)</p>
           </div>
@@ -7928,10 +7910,7 @@ WHERE {
         <section id="sparqlBasicGraphPatterns">
           <h4>Basic Graph Patterns</h4>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_BasicGraphPattern">
-              <b>Basic Graph Pattern</b>
-            </div>
+            <p><b>Definition: <span id="defn_BasicGraphPattern">Basic Graph Pattern</span></b></p>
             <p>A <span class="definedTerm">Basic Graph Pattern</span> is a set of <a href=
                                                                                      "#defn_TriplePattern">Triple Patterns</a>.</p>
           </div>
@@ -7940,10 +7919,7 @@ WHERE {
         <section id="sparqlPropertyPaths">
           <h4>Property Path Patterns</h4>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_PropertyPath">
-              <b>Property Path</b>
-            </div>
+            <p><b>Definition: <span id="defn_PropertyPath">Property Path</span></b></p>
             <p>A Property Path is a sequence of triples, t<sub>i</sub> in sequence ST, with n =
               length(ST)-1, such that, for i=0 to n, the object of t<sub>i</sub> is the same term as
               the subject of t<sub>i+1</sub>.</p>
@@ -7953,20 +7929,14 @@ WHERE {
           </div>
           <p>A property path does not span multiple graphs in a dataset.</p>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_PropertyPathExpr">
-              <b>Property Path Expression</b>
-            </div>
+            <p><b>Definition: <span id="defn_PropertyPathExpr">Property Path Expression</span></b></p>
             <p>
               A property path expression is an expression using the property path forms described
               above.
             </p>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_PropertyPathPattern">
-              <b>Property Path Pattern</b>
-            </div>
+            <p><b>Definition: <span id="defn_PropertyPathPattern">Property Path Pattern</span></b></p>
             <p>Let PP be the set of all property path expressions. A property path pattern is a
               member of the set:<br>
               (RDF-T ∪ V) x PP x (RDF-T ∪ V)</p>
@@ -7979,18 +7949,12 @@ WHERE {
           <p>A solution mapping is a mapping from a set of variables to a set of RDF terms. We use
             the term 'solution' where it is clear.</p>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_sparqlSolutionMapping">
-              <b>Solution Mapping</b>
-            </div>
+            <p><b>Definition: <span id="defn_sparqlSolutionMapping">Solution Mapping</span></b></p>
             <p>A <b>solution mapping</b>, μ, is a partial function μ : V -&gt; RDF-T.</p>
             <p>The domain of μ, dom(μ), is the subset of V where μ is defined.</p>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_sparqlSolutionSequence">
-              <b>Solution Sequence</b>
-            </div>
+            <p><b>Definition: <span id="defn_sparqlSolutionSequence">Solution Sequence</span></b></p>
             <p>A <b>solution sequence</b> is a list of solutions, possibly unordered.</p>
           </div>
           <p>Write expr(μ) for the value of the expression expr, using the terms for variables given
@@ -7999,10 +7963,7 @@ WHERE {
         <section id="sparqlSolMod">
           <h4>Solution Sequence Modifiers</h4>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_SolutionModifier">
-              <b>Solution Sequence Modifier</b>
-            </div>
+            <p><b>Definition: <span id="defn_SolutionModifier">Solution Sequence Modifier</span></b></p>
             <p>A <span class="definedTerm">solution sequence modifier</span> is one of:</p>
             <ul>
               <li>
@@ -8032,10 +7993,7 @@ WHERE {
         <section id="idp2427544">
           <h4>SPARQL Query</h4>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_SPARQLQuery">
-              <b>SPARQL Query</b>
-            </div>
+            <p><b>Definition: <span id="defn_SPARQLQuery">SPARQL Query</span></b></p>
             <p>A <span class="definedTerm">SPARQL Abstract Query</span> is a tuple (E, DS, QF)
               where:</p>
             <ul>
@@ -8048,10 +8006,7 @@ WHERE {
             </ul>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_QueryUnit">
-              <b>Query Level</b>
-            </div>
+            <p><b>Definition: <span id="defn_QueryUnit">Query Level</span></b></p>
             <p>A query level is a graph pattern, a set of group and aggregation, and a set of
               solution modifiers.</p>
           </div>
@@ -9074,10 +9029,7 @@ The set PV is used later for projection.
         <p>Write Ω(x) for the multiset consisting of exactly μ(?x-&gt;t), that is, { { (x, t) } }
           with cardinality 1.</p>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_algCompatibleMapping">
-            <b>Compatible Mappings</b>
-          </div>
+          <p><b>Definition: <span id="defn_algCompatibleMapping">Compatible Mappings</span></b></p>
           <p>Two solution mappings μ<sub>1</sub> and μ<sub>2</sub> are compatible if, for every
             variable v in dom(μ<sub>1</sub>) and in dom(μ<sub>2</sub>), μ<sub>1</sub>(v) =
             μ<sub>2</sub>(v).</p>
@@ -9097,10 +9049,7 @@ The set PV is used later for projection.
                                                                                         "RDF12-SEMANTICS#definst">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
             variables are replaced by a solution mapping from query variables to RDF terms.</p>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_PatternInstanceMapping">
-              <b>Pattern Instance Mapping</b>
-            </div>
+            <p><b>Definition: <span id="defn_PatternInstanceMapping">Pattern Instance Mapping</span></b></p>
             <p>A <b>Pattern Instance Mapping</b>, P, is the combination of an RDF instance mapping,
               σ, and solution mapping, μ. P(x) = μ(σ(x))</p>
           </div>
@@ -9195,10 +9144,7 @@ Var(x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>) = { x<sub>i</sub> | i in 1
           at that point in the overall query evaluation. We omit explicitly including the active graph
           in each definition for clarity.</p>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_evalPP_predicate">
-            <b>Evaluation of Predicate Property Path</b>
-          </div>
+          <p><b>Definition: <span id="defn_evalPP_predicate">Evaluation of Predicate Property Path</span></b></p>
           <p>Let Path(X, link(iri), Y) be an predicate inverse property path pattern, using some IRI
             iri.</p>
             <pre>
@@ -9229,18 +9175,12 @@ eval(Path(X:term, link(iri), Y:term)) = { } if triple (X iri Y) is not in the ac
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
           <code>SELECT * { <i>X P Y</i> }</code> at that point in the query evaluation.</p>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_evalPP_inverse">
-            <b>Evaluation of Inverse Property Path</b>
-          </div>
+          <p><b>Definition: <span id="defn_evalPP_inverse">Evaluation of Inverse Property Path</span></b></p>
           <p>Let P be a property path expression, then:</p>
           <pre>eval(Path(X, inv(P), Y)) = eval(Path(Y, P, X))</pre>
         </div>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_evalPP_sequence">
-            <b>Evaluation of Sequence Property Path</b>
-          </div>
+          <p><b>Definition: <span id="defn_evalPP_sequence">Evaluation of Sequence Property Path</span></b></p>
           <p>Let P and Q be property path expressions. Let V be a fresh variable.</p>
           <pre>A = Join( eval(Path(X, P, V)), eval(Path(V, Q, Y)) )</pre>
           <pre>eval(Path(X, seq(P,Q), Y)) = Project(A, Var(X,Y))</pre>
@@ -9250,10 +9190,7 @@ eval(Path(X:term, link(iri), Y:term)) = { } if triple (X iri Y) is not in the ac
         <p>using the fact that a blank node <code>_:a</code> acts like a variable (under simple
           entailment) except it does not appear in the results from <code>SELECT *</code>.</p>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_evalPP_alternative">
-            <b>Evaluation of Alternative Property Path</b>
-          </div>
+          <p><b>Definition: <span id="defn_evalPP_alternative">Evaluation of Alternative Property Path</span></b></p>
           <p>Let P and Q be property path expressions.</p>
           <pre>
 eval(Path(X, alt(P,Q), Y)) = 
@@ -9263,19 +9200,13 @@ eval(Path(X, alt(P,Q), Y)) =
         <p>Informally, this is the same as:</p>
         <pre>SELECT * { { X P Y } UNION { X Q Y } }</pre>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_nodeSet">
-            <b>Node set of a graph</b>
-          </div>
+          <p><b>Definition: <span id="defn_nodeSet">Node set of a graph</span></b></p>
           <p>The node set of a graph G, nodes(G), is:</p>
           <p>nodes(G) = { n | n is an RDF term that is used as a subject or object of a triple of
             G}</p>
         </div>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_evalPP_ZeroOrOnePath">
-            <b>Evaluation of ZeroOrOnePath</b>
-          </div>
+          <p><b>Definition: <span id="defn_evalPP_ZeroOrOnePath">Evaluation of ZeroOrOnePath</span></b></p>
           <pre>
 eval(Path(X:term, ZeroOrOnePath(P), Y:var)) = 
     { (Y, yn) | yn = X or {(Y, yn)} in eval(Path(X,P,Y)) }
@@ -9304,10 +9235,7 @@ eval(Path(X:var, ZeroOrOnePath(P), Y:var)) =
           a node has been visited for the path under consideration, it is not a candidate for another
           step.</p>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_evalALP_1">
-            <b>Function ALP</b>
-          </div>
+          <p><b>Definition: <span id="defn_evalALP_1">Function ALP</span></b></p>
           <pre>
 Let eval(x:term, path) be the evaluation of 'path', starting at RDF term x, 
  and returning a multiset of RDF terms reached 
@@ -9379,10 +9307,7 @@ eval(Path(x:term, OneOrMorePath(path), y:term)) =
 </pre>
         </div>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="eval_negatedPropertySet">
-            <b>Evaluation of NegatedPropertySet</b>
-          </div>
+          <p><b>Definition: <span id="eval_negatedPropertySet">Evaluation of NegatedPropertySet</span></b></p>
           <pre class="code">
 Write μ' as the extension of a solution mapping:
 μ'(μ,x) = μ(x)   if x is a variable
@@ -9403,10 +9328,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             Semantics</a>". Evaluation of basic graph patterns and property path patterns has been
           described above.</p>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_algFilter">
-            <b>Filter</b>
-          </div>
+          <p><b>Definition: <span id="defn_algFilter">Filter</span></b></p>
           <p>Let Ω be a multiset of solution mappings and expr be an expression. We define:</p>
           <p>Filter(expr, Ω, D(G)) = { μ | μ in Ω and expr(μ) is an expression that has an
             effective boolean value of true }</p>
@@ -9417,10 +9339,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </blockquote>
         </div>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_algJoin">
-            <b>Join</b>
-          </div>
+          <p><b>Definition: <span id="defn_algJoin">Join</span></b></p>
           <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
           <p>Join(Ω<sub>1</sub>, Ω<sub>2</sub>) = { merge(μ<sub>1</sub>, μ<sub>2</sub>) |
             μ<sub>1</sub> in Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub>, and μ<sub>1</sub> and
@@ -9436,10 +9355,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           mappings, μ<sub>1</sub> and μ<sub>2</sub> in the multisets being joined. The cardinality
           of&nbsp; μ is the sum of the cardinalities from all possibilities.</p>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_algDiff">
-            <b>Diff</b>
-          </div>
+          <p><b>Definition: <span id="defn_algDiff">Diff</span></b></p>
           <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
             expression. We define:</p>
           <p>Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = { μ | μ in Ω<sub>1</sub> such that ∀ μ′ in
@@ -9451,10 +9367,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           value of true if it evaluates to false or if it raises an error.</p>
         <p>Diff is used internally for the definition of LeftJoin.</p>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_algLeftJoin">
-            <b>LeftJoin</b>
-          </div>
+          <p><b>Definition: <span id="defn_algLeftJoin">LeftJoin</span></b></p>
           <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
             expression. We define:</p>
           <p>LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = Filter(expr, Join(Ω<sub>1</sub>,
@@ -9465,10 +9378,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </div>
 
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_algUnion">
-            <b>Union</b>
-          </div>
+          <p><b>Definition: <span id="defn_algUnion">Union</span></b></p>
           <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
           <p>Union(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> or μ in Ω<sub>2</sub>
             }</p>
@@ -9476,10 +9386,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             card[Ω<sub>2</sub>](μ)</p>
         </div>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_algMinus">
-            <b>Minus</b>
-          </div>
+          <p><b>Definition: <span id="defn_algMinus">Minus</span></b></p>
           <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
           <p>Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> . ∀ μ' in
             Ω<sub>2</sub>, either μ and μ' are not compatible or dom(μ) and dom(μ') are disjoint
@@ -9493,10 +9400,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           every other solution mapping so <code>P MINUS {}</code> would otherwise be empty for any
           pattern <code>P</code>.</p>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_extend">
-            <b>Extend</b>
-          </div>
+          <p><b>Definition: <span id="defn_extend">Extend</span></b></p>
           <p>Let μ be a solution mapping, Ω a multiset of solution mappings, <i>var</i> a variable
             and <i>expr</i> be an <a href="#expressions">expression</a>, then we define:</p>
           <p>Extend(μ, var, expr) = μ ∪ { (var,value) | var not in dom(μ) and value = expr(μ) }</p>
@@ -9507,20 +9411,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         <p>Write [ x | C ] for a sequence of elements where C is a condition on x.</p>
         <p>Write card[L](x) to be the cardinality of x in L.</p>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_algToList">
-            <b>ToList</b>
-          </div>
+          <p><b>Definition: <span id="defn_algToList">ToList</span></b></p>
           <p>Let Ω be a multiset of solution mappings. We define:</p>
           <p>ToList(Ω) = a sequence of mappings μ in Ω in any order, with card[Ω](μ) occurrences of
             μ</p>
           <p>card[ToList(Ω)](μ) = card[Ω](μ)</p>
         </div>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_algOrdered">
-            <b>OrderBy</b>
-          </div>
+          <p><b>Definition: <span id="defn_algOrdered">OrderBy</span></b></p>
           <p>Let Ψ be a sequence of solution mappings. We define:</p>
           <div id="defn_algOrderBy">
             OrderBy
@@ -9528,10 +9426,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>card[OrderBy(Ψ, condition)](μ) = card[Ψ](μ)</p>
         </div>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_algProjection">
-            <b>Project</b>
-          </div>
+          <p><b>Definition: <span id="defn_algProjection">Project</span></b></p>
           <p>Let Ψ be a sequence of solution mappings and PV a set of variables.</p>
           <p>For mapping μ, write Proj(μ, PV) to be the restriction of μ to variables in PV.</p>
           <p>Project(Ψ, PV) = [ Proj(Ψ[μ], PV) | μ in Ψ ]</p>
@@ -9539,20 +9434,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>The order of Project(Ψ, PV) must preserve any ordering given by OrderBy.</p>
         </div>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_algDistinct">
-            <b>Distinct</b>
-          </div>
+          <p><b>Definition: <span id="defn_algDistinct">Distinct</span></b></p>
           <p>Let Ψ be a sequence of solution mappings. We define:</p>
           <p>Distinct(Ψ) = [ μ | μ in Ψ ]</p>
           <p>card[Distinct(Ψ)](μ) = 1</p>
           <p>The order of Distinct(Ψ) must preserve any ordering given by OrderBy.</p>
         </div>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_algReduced">
-            <b>Reduced</b>
-          </div>
+          <p><b>Definition: <span id="defn_algReduced">Reduced</span></b></p>
           <p>Let Ψ be a sequence of solution mappings. We define:</p>
           <p>Reduced(Ψ) = [ μ | μ in Ψ ]</p>
           <p>card[Reduced(Ψ)](μ) is between 1 and card[Ψ](μ)</p>
@@ -9560,20 +9449,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </div>
         <p>The Reduced solution sequence modifier does not guarantee a defined cardinality.</p>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_algSlice">
-            <b>Slice</b>
-          </div>
+          <p><b>Definition: <span id="defn_algSlice">Slice</span></b></p>
           <p>Let Ψ be a sequence of solution mappings. We define:</p>
           <div id="defn_algOrderBy2">
             Slice
           </div>(Ψ, start, length)[i] = Ψ[start+i] for i = 0 to (length-1)
         </div>
         <div class="defn">
-          <b>Definition:</b>
-          <div id="defn_algToMultiSet">
-            <b>ToMultiSet</b>
-          </div>
+          <p><b>Definition: <span id="defn_algToMultiSet">ToMultiSet</span></b></p>
           <p>Let Ψ be a solution sequence. We define:</p>
           <p>ToMultiSet(Ψ) = { μ | μ in Ψ }</p>
           <p>card[ToMultiSet(Ψ)](μ) = card[Ψ](μ)</p>
@@ -9589,10 +9472,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             duplicates are preserved.</p>
         </div>
         <div class="defn">
-          <p><b>Definition:</b></p>
-          <div id="defn_exists">
-            <b>Exists</b>
-          </div>
+          <p><b>Definition: <span id="defn_exists">Exists</span></b></p>
           <p>exists(pattern) is a function that returns true if the pattern <a href=
                                                                                "#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
             solution mapping and active graph at the time of evaluation; otherwise it returns
@@ -9730,18 +9610,20 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               aggregate before it can determine if there are any errors in a query where aggregates
               are used.</p>
           </section>
-          <section id="defn_aggCount">
+
+          <section id="aggCount">
             <h5>Count</h5>
             <p>Count is a SPARQL set function which counts the number of times a given expression
               has a bound, non-error value within the aggregate group.</p>
             <div class="defn">
-              <p><b>Definition: Count</b></p>xsd:integer Count(multiset M)
+              <p><b>Definition: <span id="defn_aggCount">Count</span></b></p>
+              <pre class="code">xsd:integer Count(multiset M)</pre>
               <p>N = Flatten(M)</p>
               <p>remove error elements from N</p>
               <p>Count(M) = card[N]</p>
             </div>
           </section>
-          <section id="defn_aggSum">
+          <section id="aggSum">
             <h5>Sum</h5>
             <p>Sum is a SPARQL set function that returns the numeric value obtained by summing
               the values within the aggregate group. Type promotion happens as per the op:numeric-add
@@ -9749,8 +9631,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               aggregate group where ?x has values 1 (integer), 2.0e0 (float), and 3.0 (decimal) will
               be 6.0 (float).</p>
             <div class="defn">
-              <p><b>Definition: Sum</b></p>numeric Sum(multiset M)
-              <p>The Sum set function is used by the <code>SUM</code> aggregate in the syntax.</p>
+              <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
+              <pre class="code">numeric Sum(multiset M)</pre>
               <p>Sum(M) = Sum(ToList(Flatten(M))).</p>
               <p>Sum(S) = op:numeric-add(S<sub>1</sub>, Sum(S<sub>2..n</sub>)) when card[S] &gt;
                 1<br>
@@ -9760,25 +9642,27 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 op:numeric-add(3, 0))).</p>
             </div>
           </section>
-          <section id="defn_aggAvg">
+          <section id="aggAvg">
             <h5>Avg</h5>
             <div id="defn_algAvg"></div>The Avg set function calculates the
             average value for an expression over a group. It is defined in terms of Sum and Count.
             <div class="defn">
-              <p><b>Definition: Avg</b></p>numeric Avg(multiset M)
+              <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
+              <pre class="code">numeric Avg(multiset M)</pre>
               <p>Avg(M) = "0"^^xsd:integer, where Count(M) = 0</p>
               <p>Avg(M) = Sum(M) / Count(M), where Count(M) &gt; 0</p>
             </div>
             <p>For example, Avg({1, 2, 3}) = Sum({1, 2, 3})/Count({1, 2, 3}) = 6/3 = 2.</p>
           </section>
-          <section id="defn_aggMin">
+          <section id="aggMin">
             <h5>Min</h5>
             <p>Min is a SPARQL set function that returns the minimum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
             <div class="defn">
-              <p><b>Definition: Min</b></p>term Min(multiset M)
+              <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
+              <pre class="code">term Min(multiset M)</pre>
               <p>Min(M) = Min(ToList(Flatten(M)))</p>
               <p>Min({}) = error.</p>
               <p>The flattened multiset of values passed as an argument is converted to a sequence
@@ -9786,14 +9670,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>Min(S) = S<sub>0</sub></p>
             </div>
           </section>
-          <section id="defn_aggMax">
+          <section id="aggMax">
             <h5>Max</h5>
             <p>Max is a SPARQL set function that returns the maximum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
             <div class="defn">
-              <p><b>Definition: Max</b></p>term Max(multiset M)
+              <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
+              <pre class="code">term Max(multiset M)</pre>
               <p>Max(M) = Max(ToList(Flatten(M)))</p>
               <p>Max({}) = error.</p>
               <p>The multiset of values passed as an argument is converted to a sequence S, this
@@ -9801,14 +9686,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>Max(S) = S<sub>0</sub></p>
             </div>
           </section>
-          <section id="defn_aggGroupConcat">
+          <section id="aggGroupConcat">
             <h5>GroupConcat</h5>
             <p>GroupConcat is a set function which performs a string concatenation across the
               values of an expression with a group. The order of the strings is not specified. The
               separator character used in the concatenation may be given with the scalar argument
               SEPARATOR.</p>
             <div class="defn">
-              <p><b>Definition: GroupConcat</b></p>literal GroupConcat(multiset M)
+              <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
+              <pre class="code">literal GroupConcat(multiset M)</pre>
               <p>If the "separator" scalar argument is absent from GROUP_CONCAT then it is taken to
                 be the "space" character, unicode codepoint U+0020.</p>
               <p>The multiset of values, M passed as an argument is converted to a sequence S.</p>
@@ -9823,12 +9709,13 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             </div>
             <p>For example, GroupConcat({"a", "b", "c"}, {"separator" → "."}) = "a.b.c".</p>
           </section>
-          <section id="defn_aggSample">
+          <section id="aggSample">
             <h5>Sample</h5>
             <p>Sample is a set function which returns an arbitrary value from the multiset passed
               to it.</p>
             <div class="defn">
-              <p><b>Definition: Sample</b></p>RDFTerm Sample(multiset M)
+              <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
+              <pre class="code">RDFTerm Sample(multiset M)</pre>
               <p>Sample(M) = v, where v in Flatten(M)</p>
               <p>Sample({}) = error</p>
             </div>
@@ -9851,36 +9738,24 @@ L : a solution sequence
 F : an expression
           </pre>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalBasicGraphPattern">
-              <b>Evaluation of a Basic Graph Pattern</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalBasicGraphPattern">Evaluation of a Basic Graph Pattern</span></b></p>
             <pre class="code">eval(D(G), BGP) = multiset of solution mappings</pre>
             <p>See section <a href="#BasicGraphPattern">Basic Graph Patterns</a></p>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalPropertyPathPattern">
-              <b>Evaluation of a Property Path Pattern</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalPropertyPathPattern">Evaluation of a Property Path Pattern</span></b></p>
             <pre class="code">eval(D(G), Path(X, path, Y)) = multiset of solution mappings</pre>
             <p>See section <a href="#defn_PropertyPathExpr">Property Path Expresions</a></p>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalFilter">
-              <b>Evaluation of Filter</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
             <pre class="code">eval(D(G), Filter(F, P)) = Filter(F, eval(D(G),P), D(G))</pre>
           </div>
           <p>'substitute' is a filter function in support of the evaluation of <a href=
                                                                                   "#func-filter-exists"><code>EXISTS</code> and <code>NOT EXISTS</code></a> forms which were
             translated to <code>exists</code>.</p>
           <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_substitute">
-              <b>Substitute</b>
-            </div>
+            <p><b>Definition: <span id="defn_substitute">Substitute</span></b></p>
             <p>Let μ be a solution mapping.</p>
             <blockquote>
               <p>substitute(<i>pattern</i>, μ) = the pattern formed by replacing every occurrence of
@@ -9888,10 +9763,7 @@ F : an expression
             </blockquote>
           </div>
           <div class="defn">
-            <p><b>Definition:</b></p>
-            <div id="defn_evalExists">
-              <b>Evaluation of Exists</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalExists">Evaluation of Exists</span></b></p>
             <p>Let μ be the current solution mapping for a filter and P a graph pattern:</p>
             <blockquote>
               The value exists(P), given D(G) is true if and only if eval(D(G), substitute(P, μ)) is
@@ -9899,33 +9771,21 @@ F : an expression
             </blockquote>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalJoin">
-              <b>Evaluation of Join</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalJoin">Evaluation of Join</span></b></p>
             <pre class="code">eval(D(G), Join(P1, P2)) = Join(eval(D(G), P1), eval(D(G), P2))</pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalLeftJoin">
-              <b>Evaluation of LeftJoin</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalLeftJoin">Evaluation of LeftJoin</span></b></p>
             <pre class="code">
 eval(D(G), LeftJoin(P1, P2, F)) = LeftJoin(eval(D(G), P1), eval(D(G), P2), F)
             </pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalUnion">
-              <b>Evaluation of Union</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalUnion">Evaluation of Union</span></b></p>
             <pre class="code">eval(D(G), Union(P1,P2)) = Union(eval(D(G), P1), eval(D(G), P2))</pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalGraph">
-              <b>Evaluation of Graph</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalGraph">Evaluation of Graph</span></b></p>
             <pre class="code">
 if IRI is a graph name in D
     eval(D(G), Graph(IRI,P)) = eval(D(D[IRI]), P)
@@ -9967,65 +9827,41 @@ eval(D(G), Graph(var,P)) =
           </div>
           <p>Note that if eval(D(G), A<sub>i</sub>) is an error, it is ignored.</p>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalExtend">
-              <b>Evaluation of Extend</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalExtend">Evaluation of Extend</span></b></p>
             <pre class="code">
 eval(D(G), Extend(P, var, expr)) = Extend(eval(D(G), P), var, expr)
             </pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalList">
-              <b>Evaluation of ToList</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalList">Evaluation of ToList</span></b></p>
             <pre class="code">eval(D(G), ToList(P)) = ToList(eval(D(G), P))</pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalDistinct">
-              <b>Evaluation of Distinct</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalDistinct">Evaluation of Distinct</span></b></p>
             <pre class="code">eval(D(G), Distinct(L)) = Distinct(eval(D(G), L))
             </pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalReduced">
-              <b>Evaluation of Reduced</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalReduced">Evaluation of Reduced</span></b></p>
             <pre class="code">eval(D(G), Reduced(L)) = Reduced(eval(D(G), L))
             </pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalProject">
-              <b>Evaluation of Project</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalProject">Evaluation of Project</span></b></p>
             <pre class="code">eval(D(G), Project(L, vars)) = Project(eval(D(G), L), vars)
             </pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalOrderBy">
-              <b>Evaluation of OrderBy</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalOrderBy">Evaluation of OrderBy</span></b></p>
             <pre class="code">eval(D(G), OrderBy(L, condition)) = OrderBy(eval(D(G), L), condition)
             </pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalToMultiSet">
-              <b>Evaluation of ToMultiSet</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalToMultiSet">Evaluation of ToMultiSet</span></b></p>
             <pre class="code">eval(D(G), ToMultiSet(L)) = ToMultiSet(eval(D), M))</pre>
           </div>
           <div class="defn">
-            <b>Definition:</b>
-            <div id="defn_evalSlice">
-              <b>Evaluation of Slice</b>
-            </div>
+            <p><b>Definition: <span id="defn_evalSlice">Evaluation of Slice</span></b></p>
             <pre class="code">
 eval(D(G), Slice(L, start, length)) = Slice(eval(D(G), L), start, length)
             </pre>
