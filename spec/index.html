@@ -385,8 +385,8 @@ span.cancast:hover { background-color: #ffa;
       </p>
       <p>
         The SPARQL query language for RDF is designed to meet the use cases and
-        requirements identified by the RDF Data Access Working Group in [[rdf-dawg-uc]]
-        and SPARQL 1.1 Working Group in [[sparql-features]].
+        requirements identified by the RDF Data Access Working Group in [[rdf-dawg-uc]],
+        the SPARQL 1.1 Working Group in [[sparql-features]], and the RDF-star Working Group.
       </p>
       <section id="docOutline">
         <h3>Document Outline</h3>
@@ -895,7 +895,7 @@ WHERE  { ?x foaf:name ?name }
       </section>
       <section id="CreatingValuesWithExpressions">
         <h3>Creating Values with Expressions</h3>
-        <p>SPARQL 1.1 allows to create values from complex expressions. The queries below show how to
+        <p>SPARQL 1.2 allows to create values from complex expressions. The queries below show how to
           the <a href="#func-concat">CONCAT</a> function can be used to concatenate first names and
           last names from foaf data, then assign the value using an 
           <a href="#selectExpressions">expression in the <code>SELECT</code> clause</a> and also assign the
@@ -6428,7 +6428,7 @@ WHERE {
                 literals with a language tag. Therefore, an unextended implementation would raise an
                 error when <code>DATATYPE</code> was called with a literal with a language tag.
                 <a href="#operatorExtensibility">Operator extensibility</a> allows implementations to
-                return a result rather than raise an error. SPARQL 1.1 defines the result of
+                return a result rather than raise an error. SPARQL 1.2 defines the result of
                 <code>DATATYPE</code> applied to a literal with a language tag to be
                 <code>rdf:langString</code>.</p>
             </div>
@@ -11726,8 +11726,8 @@ _:x rdf:type xsd:decimal .
           <dt>Restrictions on usage:</dt>
           <dd>None</dd>
           <dt>Author/Change controller:</dt>
-          <dd>The SPARQL 1.1 specification is a work product of the World Wide Web Consortium's
-            SPARQL Working Group. The W3C has change control over these specifications.</dd>
+          <dd>The SPARQL 1.2 specification is a work product of the World Wide Web Consortium's
+            RDF-star Working Group. The W3C has change control over these specifications.</dd>
         </dl>
       </div>
     </section>
