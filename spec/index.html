@@ -581,8 +581,8 @@ span.cancast:hover { background-color: #ffa;
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
             </li>
             <li>
-              <a class="type typedLiteral" href=
-                 "http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-typed-literal">typed
+              <a class="type typedLiteral" data-cite=
+                 "RDF12-CONCEPTS#dfn-typed-literal">typed
                 literal</a>
             </li>
             <li>
@@ -977,8 +977,8 @@ _:y foaf:name "Bob" .
 </pre>
             </div>
           </div>
-          <p>which can be serialized in <a href=
-                                           "http://www.w3.org/TR/rdf-syntax-grammar/">RDF/XML</a> as:</p>
+          <p>which can be serialized in <a data-cite=
+                                           "RDF12-XML#">RDF/XML</a> as:</p>
           <div class="result">
             <pre class="resultGraph" style="text-align: left;">
 &lt;rdf:RDF
@@ -1164,7 +1164,7 @@ WHERE   {
               characters allowed in IRIs via backslash
               character escapes (e.g. <code>ns:id\=123</code>). <a href="#rPN_LOCAL">SPARQL local
                 names</a> have more syntactic restrictions than 
-              <a href="http://www.w3.org/TR/curie/">CURIE</a>s.</p>
+              <a data-cite="CURIE#">CURIE</a>s.</p>
           </section>
           <section id="relIRIs">
             <h5>Relative IRIs</h5>
@@ -4560,7 +4560,7 @@ foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
               </div>
             </div>
           </div>
-          <p>which includes the blank node closure for the <a href="http://www.w3.org/TR/vcard-rdf"
+          <p>which includes the blank node closure for the <a data-cite="vcard-rdf#"
                                                               class="inform">vcard</a> vocabulary vcard:N. Other possible mechanisms for deciding what
             information to return include Concise Bounded Descriptions [[CBD]].</p>
           <p>For a vocabulary such as FOAF, where the resources are typically blank nodes, returning
@@ -7070,8 +7070,8 @@ WHERE {
             <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite=
                                                                                     "XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a simple
               literal with the lexical form obtained from the lexical form of its input after
-              translating reserved characters according to the <a href=
-                                                                  "http://www.w3.org/TR/xpath-functions/#func-encode-for-uri">fn:encode-for-uri</a>
+              translating reserved characters according to the <a data-cite=
+                                                                  "XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a>
               function.</p>
             <div class="result">
               <table>
@@ -7320,8 +7320,8 @@ WHERE {
             <p>Returns the absolute value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
             <p>This function is the same as <a data-cite=
-                                               "XPATH-FUNCTIONS#func-abs">fn:numeric-abs</a> for terms with a datatype from <a href=
-                                                                                                                               "http://www.w3.org/TR/xpath-datamodel/">XDM</a>.</p>
+                                               "XPATH-FUNCTIONS#func-abs">fn:numeric-abs</a> for terms with a datatype from <a data-cite=
+                                                                                                                               "XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7346,8 +7346,8 @@ WHERE {
               are two such numbers, then the one that is closest to positive infinity is returned. An
               error is raised if <code>arg</code> is not a numeric value.</p>
             <p>This function is the same as <a data-cite=
-                                               "XPATH-FUNCTIONS#func-round">fn:numeric-round</a> for terms with a datatype from <a href=
-                                                                                                                                   "http://www.w3.org/TR/xpath-datamodel/">XDM</a>.</p>
+                                               "XPATH-FUNCTIONS#func-round">fn:numeric-round</a> for terms with a datatype from <a data-cite=
+                                                                                                                                   "XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7377,7 +7377,7 @@ WHERE {
               <code>arg</code> is not a numeric value.</p>
             <p>This function is the same as <a data-cite=
                                                "XPATH-FUNCTIONS#func-ceiling">fn:numeric-ceil</a> for terms with a datatype from
-              <a href="http://www.w3.org/TR/xpath-datamodel/">XDM</a>.</p>
+              <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7402,8 +7402,8 @@ WHERE {
               is not greater than the value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
             <p>This function is the same as <a data-cite=
-                                               "XPATH-FUNCTIONS#func-floor">fn:numeric-floor</a> for terms with a datatype from <a href=
-                                                                                                                                   "http://www.w3.org/TR/xpath-datamodel/">XDM</a>.</p>
+                                               "XPATH-FUNCTIONS#func-floor">fn:numeric-floor</a> for terms with a datatype from <a data-cite=
+                                                                                                                                   "XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
