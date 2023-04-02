@@ -4578,7 +4578,7 @@ foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
         solutions that, when substituted into the expression, either result in an effective boolean
         value of <code>false</code> or produce an error. Effective boolean values are defined in
         section <a href="#ebv">17.2.2 <em>Effective Boolean Value</em></a> and errors are defined in
-        [[[XQUERY]]] [[XQUERY]] section <a data-cite="XQUERY#dt-type-error">2.3.1, <em>Kinds of
+        [[[XQUERY-31]]] [[XQUERY-31]] section <a data-cite="XQUERY-31#dt-type-error">2.3.1, <em>Kinds of
             Errors</em></a>. These errors have no effect outside of <code>FILTER</code> evaluation.</p>
       <div class="exampleGroup">
         <p>RDF literals may have a</p>
@@ -4705,8 +4705,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       <section id="evaluation">
         <h3>Filter Evaluation</h3>
         <p>SPARQL provides a subset of the functions and operators defined by XQuery <a data-cite=
-                                                                                        "XQUERY#mapping">Operator Mapping</a>. XQuery 1.0 section <a data-cite=
-                                                                                                                                                     "XQUERY#id-expression-processing">2.2.3 Expression Processing</a> describes the invocation of
+                                                                                        "XQUERY-31#mapping">Operator Mapping</a>. XQuery 1.0 section <a data-cite=
+                                                                                                                                                     "XQUERY-31#id-expression-processing">2.2.3 Expression Processing</a> describes the invocation of
           XPath functions. The following rules accommodate the differences in the data and execution
           models between XQuery and SPARQL:</p>
         <ul>
@@ -4714,7 +4714,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             the semantics of XPath functions, assume that each argument is a sequence of a single
             node.</li>
           <li>Functions invoked with an argument of the wrong type will produce a <a data-cite=
-                                                                                     "XQUERY#dt-type-error">type error</a>. Effective boolean value arguments (labeled
+                                                                                     "XQUERY-31#dt-type-error">type error</a>. Effective boolean value arguments (labeled
             "xsd:boolean (EBV)" in the operator mapping table below), are coerced to
             <code>xsd:boolean</code> using the <a href="#ebv">EBV rules</a> in section 17.2.2.
           </li>
@@ -4833,7 +4833,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <a href="#func-logical-and">logical-and</a>, <a href="#func-logical-or">logical-or</a>, and
             <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>, as well as evaluate the result of a
             <code>FILTER</code> expression.</p>
-          <p>The XQuery <a data-cite="XQUERY#id-ebv">Effective Boolean Value</a> rules rely on the
+          <p>The XQuery <a data-cite="XQUERY-31#id-ebv">Effective Boolean Value</a> rules rely on the
             definition of XPath's <a data-cite="XPATH-FUNCTIONS#func-boolean">fn:boolean</a>. The following
             rules reflect the rules for <code>fn:boolean</code> applied to the argument types present
             in SPARQL queries:</p>
