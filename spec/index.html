@@ -3168,7 +3168,7 @@ _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
           graphs. The triples in the named graphs are not visible in the default graph in this
           example.</p>
         <p id="ex_2"><b>Example 2:</b></p>
-        <p>RDF data can be combined by the <a data-cite="RDF12-SEMANTICS#graphdefs">RDF merge</a>
+        <p>RDF data can be combined by the <a data-cite="RDF12-SEMANTICS#dfn-merge">RDF merge</a>
           [[RDF12-SEMANTICS]] of graphs. One possible arrangement of graphs in an RDF Dataset is to have the
           default graph be the RDF merge of some or all of the information in the named graphs.</p>
         <p>In this next example, the named graphs contain the same triples as before. The RDF dataset
@@ -3263,7 +3263,7 @@ WHERE   { ?x foaf:name ?name }
           </div>
           <p>If a query provides more than one <code>FROM</code> clause, providing more than one IRI
             to indicate the default graph, then the default graph is the 
-            <a data-cite="RDF12-SEMANTICS#graphdefs">RDF merge</a> of the graphs obtained from representations of the
+            <a data-cite="RDF12-SEMANTICS#dfn-merge">RDF merge</a> of the graphs obtained from representations of the
             resources identified by the given IRIs.</p>
         </section>
         <section id="namedGraphs">
@@ -8125,7 +8125,7 @@ WHERE {
             <p>Write N1 for { &lt;u1<sub>j</sub>&gt; j = 1 to n }<br>
               Write N2 for { &lt;u2<sub>j</sub>&gt; j = 1 to m }<br></p>
             <ul>
-              <li>G is the <a data-cite="RDF12-SEMANTICS#defmerge">merge</a> of G1 and G2
+              <li>G is the <a data-cite="RDF12-SEMANTICS#dfn-merge">merge</a> of G1 and G2
               </li>
               <li>(&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) where &lt;u<sub>i</sub>&gt; is in N1 but not
                 in N2</li>
@@ -8133,7 +8133,7 @@ WHERE {
                 in N1</li>
               <li>(&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) where &lt;u<sub>i</sub>&gt; is equal to
                 &lt;u<sub>j</sub>&gt; in N1 and equal to &lt;u<sub>k</sub>&gt; in N2 and G<sub>i</sub>
-                is the <a data-cite="RDF12-SEMANTICS#defmerge">merge</a> of G1<sub>j</sub> and G2<sub>k</sub>
+                is the <a data-cite="RDF12-SEMANTICS#dfn-merge">merge</a> of G1<sub>j</sub> and G2<sub>k</sub>
               </li>
             </ul>
           </div>
@@ -9302,7 +9302,7 @@ The set PV is used later for projection.
           <p>A basic graph pattern is matched against the active graph for that part of the query.
             Basic graph patterns can be instantiated by replacing both variables and blank nodes by
             terms, giving two notions of instance. Blank nodes are replaced using an <a data-cite=
-                                                                                        "RDF12-SEMANTICS#definst">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
+                                                                                        "RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
             variables are replaced by a solution mapping from query variables to RDF terms.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_PatternInstanceMapping">Pattern Instance Mapping</span></b></p>
@@ -9345,7 +9345,7 @@ The set PV is used later for projection.
             the basic graph pattern to a subset of the active graph.</p>
           <p>This is optimized for ease of computation rather than redundancy elimination. It allows
             query results to contain redundancies even when the active graph of the dataset is
-            <a data-cite="RDF12-SEMANTICS#deflean">lean</a>, and it allows logically equivalent datasets to
+            <a data-cite="RDF12-SEMANTICS#def-lean">lean</a>, and it allows logically equivalent datasets to
             yield different query results.</p>
         </section>
       </section>
@@ -10237,7 +10237,7 @@ _:x rdf:type xsd:decimal .
             <p>SG union μ<sub>1</sub>(BGP<sub>1</sub>) union ... union
               μ<sub>n</sub>(BGP<sub>n</sub>)</p>
             <p>has an instance which is a subgraph of SG, so is simply entailed by SG by the
-              <a data-cite="RDF12-SEMANTICS#interplemmaprf">RDF interpolation lemma</a> [[RDF12-SEMANTICS]].</p>
+              <a data-cite="RDF12-SEMANTICS#dfn-interpolation">RDF interpolation lemma</a> [[RDF12-SEMANTICS]].</p>
           </section>
         </section>
       </section>
