@@ -216,10 +216,8 @@ div.algExample1 { padding:0.5em ; background-color: #F0F0FF ; }
 div.algExample2 { padding:0.5em ; margin-top: 0.5em ; background-color: #F0FFF0 ; }
 
 /* Grammar Mark-up */
-.operator	{ color: #3f3f5f;
-                  text-transform: uppercase; }
-.function	{ color: #3f3f5f;
-                }
+.operator	{ color: #3f3f5f; }
+.function	{ color: #3f3f5f; }
 
 /* Tuned to cope with different browsers behaviours */
 div.grammarTable table	{ border-style: solid ;
@@ -5492,7 +5490,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         <section id="func-forms">
           <h4>Functional Forms</h4>
           <section id="func-bound">
-            <h5>bound</h5>
+            <h5>BOUND</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class=
                                                                                   "operator">BOUND</span> (<span class="type">variable</span> <span class=
                                                                                                                                                     "name">var</span>)</pre>
@@ -6123,9 +6121,9 @@ WHERE {
             </div>
           </section>
           <section id="func-isBlank">
-            <h5>isBlank</h5>
+            <h5>isBLANK</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">isBlank</span> (<span class="type"><span class=
+                                                                                   "operator">isBLANK</span> (<span class="type"><span class=
                                                                                                                                        "type">RDF term</span></span> <span class="name">term</span>)</pre>
             <p>Returns <code>true</code> if <code>term</code> is a <span class="type bNode">blank
                 node</span>. Returns <code>false</code> otherwise.</p>
@@ -6156,7 +6154,7 @@ WHERE {
     ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
     ?annot  dc:creator   ?c .
     OPTIONAL { ?c  foaf:given   ?given ; foaf:family  ?family } .
-    FILTER isBlank(?c)
+    FILTER isBLANK(?c)
 }</pre>
                 <p>Query result:</p>
                 <div class="result">
@@ -6179,9 +6177,9 @@ WHERE {
               only one (<code>_:c</code>) was a blank node.</p>
           </section>
           <section id="func-isLiteral">
-            <h5>isLiteral</h5>
+            <h5>isLITERAL</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">isLiteral</span> (<span class="type"><span class=
+                                                                                   "operator">isLITERAL</span> (<span class="type"><span class=
                                                                                                                                          "type">RDF term</span></span> <span class="name">term</span>)</pre>
             <p>Returns <code>true</code> if <code>term</code> is a <span class=
                                                                          "type literal">literal</span>. Returns <code>false</code> otherwise.</p>
@@ -6228,9 +6226,9 @@ WHERE {
             </div>
           </section>
           <section id="func-isNumeric">
-            <h5>isNumeric</h5>
+            <h5>isNUMERIC</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">isNumeric</span> (<span class="type"><span class=
+                                                                                   "operator">isNUMERIC</span> (<span class="type"><span class=
                                                                                                                                          "type">RDF term</span></span> <span class="name">term</span>)</pre>
             <p>Returns <code>true</code> if <code>term</code> is a numeric value. Returns
               <code>false</code> otherwise. <code>term</code> is numeric if it has an appropriate
@@ -6242,23 +6240,23 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>isNumeric(12)</code></td>
+                    <td><code>isNUMERIC(12)</code></td>
                     <td>true</td>
                   </tr>
                   <tr>
-                    <td><code>isNumeric("12")</code></td>
+                    <td><code>isNUMERIC("12")</code></td>
                     <td>false</td>
                   </tr>
                   <tr>
-                    <td><code>isNumeric("12"^^xsd:nonNegativeInteger)</code></td>
+                    <td><code>isNUMERIC("12"^^xsd:nonNegativeInteger)</code></td>
                     <td>true</td>
                   </tr>
                   <tr>
-                    <td><code>isNumeric("1200"^^xsd:byte)</code></td>
+                    <td><code>isNUMERIC("1200"^^xsd:byte)</code></td>
                     <td>false</td>
                   </tr>
                   <tr>
-                    <td><code>isNumeric(&lt;http://example/&gt;)</code></td>
+                    <td><code>isNUMERIC(&lt;http://example/&gt;)</code></td>
                     <td>false</td>
                   </tr>
                 </tbody>
@@ -6266,13 +6264,10 @@ WHERE {
             </div>
           </section>
           <section id="func-str">
-            <h5>str</h5>
-            <pre class="prototype nohighlight"> <span class="return"><span class=
-                                                               "type">simple literal</span></span>  <span class="operator">STR</span> (<span class=
-                                                                                                                                             "type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
-              <span class="return"><span class="type">simple literal</span></span>  <span class=
-                                                                                          "operator">STR</span> (<span class="type"><span class="type IRI">IRI</span></span> <span class=
-                                                                                                                                                                                   "name">rsrc</span>)
+            <h5>STR</h5>
+            <pre class="prototype nohighlight">
+<span class="return"><span class="type">simple literal</span></span>  <span class="operator">STR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
+<span class="return"><span class="type">simple literal</span></span>  <span class="operator">STR</span> (<span class="type"><span class="type IRI">IRI</span></span> <span class="name">rsrc</span>)
             </pre>
             <p>Returns the <span class="type lexicalForm">lexical form</span> of <code>ltrl</code> (a
               <span class="type literal">literal</span>); returns the codepoint representation of
@@ -6319,7 +6314,7 @@ WHERE {
             </div>
           </section>
           <section id="func-lang">
-            <h5>lang</h5>
+            <h5>LANG</h5>
             <pre class="prototype nohighlight"> <span class="return"><span class=
                                                                "type">simple literal</span></span>  <span class="operator">LANG</span> (<span class=
                                                                                                                                               "type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
@@ -6367,7 +6362,7 @@ WHERE {
             </div>
           </section>
           <section id="func-datatype">
-            <h5>datatype</h5>
+            <h5>DATATYPE</h5>
             <pre class="prototype nohighlight"> <span class="return"><span class=
                                                                "type IRI">iri</span></span>  <span class="operator">DATATYPE</span> (<span class=
                                                                                                                                            "type"><span class="type">literal</span></span> <span class="name">literal</span>)
@@ -7138,7 +7133,7 @@ WHERE {
             </div>
           </section>
           <section id="func-langMatches">
-            <h5>langMatches</h5>
+            <h5>langMATCHES</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
                                                                                    "operator">langMatches</span> (<span class="type"><span class=
                                                                                                                                            "type">simple literal</span></span> <span class="name">language-tag</span>, <span class=
@@ -7312,7 +7307,7 @@ WHERE {
         <section id="func-numerics">
           <h4>Functions on Numerics</h4>
           <section id="func-abs">
-            <h5>abs</h5>
+            <h5>ABS</h5>
             <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class=
                                                                                "operator">ABS</span> (<span class="type"><span class=
                                                                                                                                "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
@@ -7325,11 +7320,11 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>abs(1)</code></td>
+                    <td><code>ABS(1)</code></td>
                     <td><code>1</code></td>
                   </tr>
                   <tr>
-                    <td><code>abs(-1.5)</code></td>
+                    <td><code>ABS(-1.5)</code></td>
                     <td><code>1.5</code></td>
                   </tr>
                 </tbody>
@@ -7337,10 +7332,10 @@ WHERE {
             </div>
           </section>
           <section id="func-round">
-            <h5>round</h5>
+            <h5>ROUND</h5>
             <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class=
-                                                                               "operator">ROUND</span> (<span class="type"><span class=
-                                                                                                                                 "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
+                                                                                           "operator">ROUND</span> (<span class="type"><span class=
+                                                                                                                                             "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
             <p>Returns the number with no fractional part that is closest to the argument. If there
               are two such numbers, then the one that is closest to positive infinity is returned. An
               error is raised if <code>arg</code> is not a numeric value.</p>
@@ -7351,15 +7346,15 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>round(2.4999)</code></td>
+                    <td><code>ROUND(2.4999)</code></td>
                     <td><code>2.0</code></td>
                   </tr>
                   <tr>
-                    <td><code>round(2.5)</code></td>
+                    <td><code>ROUND(2.5)</code></td>
                     <td><code>3.0</code></td>
                   </tr>
                   <tr>
-                    <td><code>round(-2.5)</code></td>
+                    <td><code>ROUND(-2.5)</code></td>
                     <td><code>-2.0</code></td>
                   </tr>
                 </tbody>
@@ -7367,10 +7362,10 @@ WHERE {
             </div>
           </section>
           <section id="func-ceil">
-            <h5>ceil</h5>
+            <h5>CEIL</h5>
             <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class=
-                                                                               "operator">CEIL</span> (<span class="type"><span class=
-                                                                                                                                "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
+                                                                                           "operator">CEIL</span> (<span class="type"><span class=
+                                                                                                                                            "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
             <p>Returns the smallest (closest to negative infinity) number with no fractional part
               that is not less than the value of <code>arg</code>. An error is raised if
               <code>arg</code> is not a numeric value.</p>
@@ -7381,11 +7376,11 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>ceil(10.5)</code></td>
+                    <td><code>CEIL(10.5)</code></td>
                     <td><code>11.0</code></td>
                   </tr>
                   <tr>
-                    <td><code>ceil(-10.5)</code></td>
+                    <td><code>CEIL(-10.5)</code></td>
                     <td><code>-10.0</code></td>
                   </tr>
                 </tbody>
@@ -7393,10 +7388,10 @@ WHERE {
             </div>
           </section>
           <section id="func-floor">
-            <h5>floor</h5>
+            <h5>FLOOR</h5>
             <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class=
-                                                                               "operator">FLOOR</span> (<span class="type"><span class=
-                                                                                                                                 "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
+                                                                                           "operator">FLOOR</span> (<span class="type"><span class=
+                                                                                                                                             "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
             <p>Returns the largest (closest to positive infinity) number with no fractional part that
               is not greater than the value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
@@ -7407,11 +7402,11 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>floor(10.5)</code></td>
+                    <td><code>FLOOR(10.5)</code></td>
                     <td><code>10.0</code></td>
                   </tr>
                   <tr>
-                    <td><code>floor(-10.5)</code></td>
+                    <td><code>FLOOR(-10.5)</code></td>
                     <td><code>-11.0</code></td>
                   </tr>
                 </tbody>
@@ -7421,7 +7416,7 @@ WHERE {
           <section id="idp2130040">
             <h5>RAND</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:double</span>  <span class=
-                                                                                  "operator">RAND</span> ( )</pre>
+                                                                                              "operator">RAND</span> ( )</pre>
             <p>Returns a pseudo-random number between 0 (inclusive) and 1.0e0 (exclusive). Different
               numbers can be produced every time this function is invoked. Numbers should be produced
               with approximately equal probability.</p>
@@ -7440,9 +7435,9 @@ WHERE {
         <section id="func-date-time">
           <h4>Functions on Dates and Times</h4>
           <section id="func-now">
-            <h5>now</h5>
+            <h5>NOW</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:dateTime</span>  <span class=
-                                                                                    "operator">NOW</span> ()</pre>
+                                                                                                "operator">NOW</span> ()</pre>
             <p>Returns an XSD dateTime value for the current query execution. All calls to this
               function in any one query execution must return the same value. The exact moment returned
               is not specified.</p>
@@ -7450,7 +7445,7 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>now()</code></td>
+                    <td><code>NOW()</code></td>
                     <td><code>"2011-01-10T14:45:13.815-05:00"^^xsd:dateTime</code></td>
                   </tr>
                 </tbody>
@@ -7458,10 +7453,10 @@ WHERE {
             </div>
           </section>
           <section id="func-year">
-            <h5>year</h5>
+            <h5>YEAR</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                   "operator">YEAR</span> (<span class="type"><span class=
-                                                                                                                                    "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+                                                                                               "operator">YEAR</span> (<span class="type"><span class=
+                                                                                                                                                "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the year part of <code>arg</code> as an integer.</p>
             <p>This function corresponds to <a data-cite=
                                                "XPATH-FUNCTIONS#func-year-from-dateTime">fn:year-from-dateTime</a>.</p>
@@ -7469,7 +7464,7 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>year("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
+                    <td><code>YEAR("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
                     <td><code>2011</code></td>
                   </tr>
                 </tbody>
@@ -7477,10 +7472,10 @@ WHERE {
             </div>
           </section>
           <section id="func-month">
-            <h5>month</h5>
+            <h5>MONTH</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                   "operator">MONTH</span> (<span class="type"><span class=
-                                                                                                                                     "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+                                                                                               "operator">MONTH</span> (<span class="type"><span class=
+                                                                                                                                                 "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the month part of <code>arg</code> as an integer.</p>
             <p>This function corresponds to <a data-cite=
                                                "XPATH-FUNCTIONS#func-month-from-dateTime">fn:month-from-dateTime</a>.</p>
@@ -7488,7 +7483,7 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>month("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
+                    <td><code>MONTH("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
                     <td><code>1</code></td>
                   </tr>
                 </tbody>
@@ -7496,10 +7491,10 @@ WHERE {
             </div>
           </section>
           <section id="func-day">
-            <h5>day</h5>
+            <h5>DAY</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                   "operator">DAY</span> (<span class="type"><span class=
-                                                                                                                                   "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+                                                                                               "operator">DAY</span> (<span class="type"><span class=
+                                                                                                                                               "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the day part of <code>arg</code> as an integer.</p>
             <p>This function corresponds to <a data-cite=
                                                "XPATH-FUNCTIONS#func-day-from-dateTime">fn:day-from-dateTime</a>.</p>
@@ -7515,10 +7510,10 @@ WHERE {
             </div>
           </section>
           <section id="func-hours">
-            <h5>hours</h5>
+            <h5>HOURS</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                   "operator">HOURS</span> (<span class="type"><span class=
-                                                                                                                                     "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+                                                                                               "operator">HOURS</span> (<span class="type"><span class=
+                                                                                                                                                 "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the hours part of <code>arg</code> as an integer. The value is as given in the
               lexical form of the XSD dateTime.</p>
             <p>This function corresponds to <a data-cite=
@@ -7527,7 +7522,7 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>hours("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
+                    <td><code>HOURS("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
                     <td><code>14</code></td>
                   </tr>
                 </tbody>
@@ -7535,10 +7530,10 @@ WHERE {
             </div>
           </section>
           <section id="func-minutes">
-            <h5>minutes</h5>
+            <h5>MINUTES</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                   "operator">MINUTES</span> (<span class="type"><span class=
-                                                                                                                                       "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+                                                                                               "operator">MINUTES</span> (<span class="type"><span class=
+                                                                                                                                                   "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the minutes part of the lexical form of <code>arg</code>. The value is as
               given in the lexical form of the XSD dateTime.</p>
             <p>This function corresponds to <a data-cite=
@@ -7547,7 +7542,7 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>minutes("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
+                    <td><code>MINUTES("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
                     <td><code>45</code></td>
                   </tr>
                 </tbody>
@@ -7555,18 +7550,18 @@ WHERE {
             </div>
           </section>
           <section id="func-seconds">
-            <h5>seconds</h5>
+            <h5>SECONDS</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:decimal</span>  <span class=
-                                                                                   "operator">SECONDS</span> (<span class="type"><span class=
-                                                                                                                                       "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
-            <p>Returns the seconds part of the lexical form of <code>arg</code>.</p>
-            <p>This function corresponds to <a data-cite=
-                                               "XPATH-FUNCTIONS#func-seconds-from-dateTime">fn:seconds-from-dateTime</a>.</p>
-            <div class="result">
-              <table>
-                <tbody>
-                  <tr>
-                    <td><code>seconds("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
+                                                                                               "operator">SECONDS</span> (<span class="type"><span class=
+                                                                                                                                                   "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+              <p>Returns the seconds part of the lexical form of <code>arg</code>.</p>
+              <p>This function corresponds to <a data-cite=
+                                                 "XPATH-FUNCTIONS#func-seconds-from-dateTime">fn:seconds-from-dateTime</a>.</p>
+              <div class="result">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><code>SECONDS("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
                     <td><code>13.815</code></td>
                   </tr>
                 </tbody>
@@ -7574,7 +7569,7 @@ WHERE {
             </div>
           </section>
           <section id="func-timezone">
-            <h5>timezone</h5>
+            <h5>TIMEZONE</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:dayTimeDuration</span>  <span class=
                                                                                            "operator">TIMEZONE</span> (<span class="type"><span class=
                                                                                                                                                 "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
@@ -7587,15 +7582,15 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>timezone("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
+                    <td><code>TIMEZONE("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
                     <td><code>"-PT5H"^^xsd:dayTimeDuration</code></td>
                   </tr>
                   <tr>
-                    <td><code>timezone("2011-01-10T14:45:13.815Z"^^xsd:dateTime)</code></td>
+                    <td><code>TIMEZONE("2011-01-10T14:45:13.815Z"^^xsd:dateTime)</code></td>
                     <td><code>"PT0S"^^xsd:dayTimeDuration</code></td>
                   </tr>
                   <tr>
-                    <td><code>timezone("2011-01-10T14:45:13.815"^^xsd:dateTime)</code></td>
+                    <td><code>TIMEZONE("2011-01-10T14:45:13.815"^^xsd:dateTime)</code></td>
                     <td>error</td>
                   </tr>
                 </tbody>
@@ -7603,7 +7598,7 @@ WHERE {
             </div>
           </section>
           <section id="func-tz">
-            <h5>tz</h5>
+            <h5>TZ</h5>
             <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
                                                                                       "operator">TZ</span> (<span class="type"><span class=
                                                                                                                                      "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
@@ -7613,15 +7608,15 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td><code>tz("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
+                    <td><code>TZ("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)</code></td>
                     <td><code>"-05:00"</code></td>
                   </tr>
                   <tr>
-                    <td><code>tz("2011-01-10T14:45:13.815Z"^^xsd:dateTime)</code></td>
+                    <td><code>TZ("2011-01-10T14:45:13.815Z"^^xsd:dateTime)</code></td>
                     <td><code>"Z"</code></td>
                   </tr>
                   <tr>
-                    <td><code>tz("2011-01-10T14:45:13.815"^^xsd:dateTime)</code></td>
+                    <td><code>TZ("2011-01-10T14:45:13.815"^^xsd:dateTime)</code></td>
                     <td><code>""</code></td>
                   </tr>
                 </tbody>
