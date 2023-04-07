@@ -565,11 +565,11 @@ span.cancast:hover { background-color: #ffa;
           </p>
           <ul>
             <li>
-              <a data-cite="RDF12-CONCEPTS#dfn-internationalized-resource-identifier">IRI</a>
+              <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
               (corresponds to the Concepts and Abstract Syntax term "<code>RDF URI reference</code>")
             </li>
             <li>
-              <a data-cite="RDF12-CONCEPTS#dfn-rdf-literal">literal</a>
+              <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>
             </li>
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
@@ -5741,7 +5741,7 @@ class="expression">expression, ....</span>)
                 <span class="name">term1</span> is a <span class="literal type">literal</span> and
                 <span class="name">term2</span> is a <span class="literal type">literal</span> such that
                 these two <span class="literal type">literals</span> are equal as per the notion of <a data-cite=
-                                                                            "RDF12-CONCEPTS#dfn-term-equal">Literal term equality</a> of
+                                                                            "RDF12-CONCEPTS#dfn-literal-term-equality">Literal term equality</a> of
                 [[RDF12-CONCEPTS]].
               </li>
               <li>
@@ -8074,14 +8074,14 @@ WHERE {
           <div class="defn">
             <p><b>Definition: <span id="defn_RDFTerm">RDF Term</span></b></p>
             <p>Let I be the set of all IRIs.<br>
-              Let RDF-L be the set of all <a data-cite="RDF12-CONCEPTS#literal">RDF Literals</a><br>
+              Let RDF-L be the set of all <a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a><br>
               Let RDF-B be the set of all <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank nodes</a> in RDF graphs</p>
             <p>The set of <span class="definedTerm">RDF Terms</span>, RDF-T, is I ∪ RDF-L ∪
               RDF-B.</p>
           </div>
           <p>This definition of <span class="definedTerm">RDF Term</span> collects together several
-            basic notions from the <a data-cite="RDF12-CONCEPTS#section-data-model">RDF data model</a>,
-            but <a data-cite="RDF12-CONCEPTS#section-Graph-URIref">updated</a> to refer to IRIs rather
+            basic notions from the <a data-cite="RDF12-CONCEPTS#data-model">RDF data model</a>,
+            but <a data-cite="RDF12-CONCEPTS#section-IRIs">updated</a> to refer to IRIs rather
             than RDF URI references.</p>
         </section>
         <section id="simple_literal">
@@ -8089,7 +8089,7 @@ WHERE {
           <div class="defn">
             <p><b>Definition: <span id="defn_SimpleLiteral">Simple Literal</span></b></p>
             <p>The set of <b>Simple Literals</b> is the set of all 
-              <a data-cite="RDF12-CONCEPTS#dfn-rdf-literal">RDF Literals</a>
+              <a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a>
               with no language tag or datatype IRI.</p>
           </div>
         </section>
@@ -9345,7 +9345,7 @@ The set PV is used later for projection.
             the basic graph pattern to a subset of the active graph.</p>
           <p>This is optimized for ease of computation rather than redundancy elimination. It allows
             query results to contain redundancies even when the active graph of the dataset is
-            <a data-cite="RDF12-SEMANTICS#def-lean">lean</a>, and it allows logically equivalent datasets to
+            <a data-cite="RDF12-SEMANTICS#dfn-lean">lean</a>, and it allows logically equivalent datasets to
             yield different query results.</p>
         </section>
       </section>
