@@ -255,7 +255,7 @@ DIV.toc UL UL UL UL, DIV.toc OL OL OL OL {margin-left: 0}
 LI.tocline1	{ font-weight: bold}
 LI.tocline2	{ font-weight: normal}
 LI.tocline4	{ font-style: italic}
-/* The border in the following rule crashes NN4 on fonts.html :-(
+
 DIV.subtoc	{ padding: 1em; border: solid black thin; margin: 1em 0;
                   background: #ddd} */
 DIV.toc, UL.index, DT { text-align: left; }
@@ -8029,7 +8029,7 @@ WHERE {
         <section id="idp2427544">
           <h4>SPARQL Query</h4>
           <div class="defn">
-            <p><b>Definition: <span id="defn_SPARQLQuery">SPARQL Query</span></b></p>
+            <p><b>Definition: <dfn data-lt="SPARQLQuery">SPARQL Query</dfn></b></p>
             <p>A <span class="definedTerm">SPARQL Abstract Query</span> is a tuple (E, DS, QF)
               where:</p>
             <ul>
@@ -8949,7 +8949,7 @@ Let VS := list of all variables visible in the pattern,
                         non-projected GROUP variables, only in the right hand side of MINUS
 
 Let PV := {}, a set of variable names
-Note, E is a list of pairs of the form (variable, expression), defined in<a href="#convertGroupAggSelectExpressions">section 18.2.4</a>
+Note, E is a list of pairs of the form (variable, expression), defined in <a href="#convertGroupAggSelectExpressions">section 18.2.4</a>.
   
 If "SELECT *"
     PV := VS
@@ -10026,20 +10026,17 @@ _:x rdf:type xsd:decimal .
       <p>The SPARQL grammar covers both SPARQL Query and [[[SPARQL11-UPDATE]]].</p>
       <section id="queryString">
         <h3>SPARQL Request String</h3>
-        <p>A</p>
-        <div id="defn_SPARQLRequestString">
-          SPARQL Request String
-        </div>is a SPARQL Query String or SPARQL Update String and it is a Unicode character string
-        (c.f. section 6.1 String concepts of [[CHARMOD]]) in the language defined by the following
-        grammar.
-        <p>A</p>
-        <div id="defn_SPARQLQueryString">
-          SPARQL Query String
-        </div>start at the <a href="#rQueryUnit">QueryUnit</a> production.
-        <p>A</p>
-        <div id="defn_SPARQLUpdateString">
-          SPARQL Update String
-        </div>start at the <a href="#rUpdateUnit">UpdateUnit</a> production.
+        <p>
+          A <dfn data-lt="SPARQLRequestString">SPARQL Request String</dfn> is
+          a <a>SPARQL Query String</a> or <a>SPARQL Update String</a> and is a Unicode character string
+          (c.f. section 6.1 String concepts of [[CHARMOD]]) in the language defined by the following
+          grammar.</p>
+        <p>
+          A <dfn data-lt="SPARQLQueryString">SPARQL Query String</dfn> starts
+          at the <a href="#rQueryUnit">QueryUnit</a> production.</p>
+        <p>
+          A <dfn data-lt="SPARQLUpdateString">SPARQL Update String</dfn> starts
+          at the <a href="#rUpdateUnit">UpdateUnit</a> production.</p>
         <p>For compatibility with future versions of Unicode, the characters in this string may
           include Unicode codepoints that are unassigned as of the date of this publication (see
           [[[UAX31]]] [[UAX31]] section 4 Pattern Syntax). For productions with excluded character
@@ -10145,8 +10142,8 @@ _:x rdf:type xsd:decimal .
           <li>a <code><a href="#rDeleteClause">DeleteClause</a></code></li>
         </ul>
         <p>in a <a data-cite="SPARQL11-UPDATE#terminology">SPARQL Update request</a>.</p>
-        <p>Blank node labels are scoped to the <a href="#defn_SPARQLRequestString">SPARQL Request
-            String</a> in which they occur. Different uses of the same blank node label in a request
+        <p>Blank node labels are scoped to the <a>SPARQL Request String</a> in which they occur.
+          Different uses of the same blank node label in a request
           string refer to the same blank node. Fresh blank nodes are generated for each request;
           blank nodes can not be referenced by label across requests.</p>
         <p>The same blank node label can not be used in:</p>
@@ -10242,7 +10239,7 @@ _:x rdf:type xsd:decimal .
             produce an addition or subtraction of the unsigned number as appropriate.</li>
           <li>The tokens <code><a href="#rInsertData">INSERT DATA</a></code>, 
             <code><a href="#rDeleteData">DELETE DATA</a></code> and 
-            <code><a href="#rDeleteWhere">DELETE WHERE</</code> allow any amount of white space between the words.
+            <code><a href="#rDeleteWhere">DELETE WHERE</a></code> allow any amount of white space between the words.
             The single space version is used in the grammar for clarity.</li>
           <li>The <code><a href="#rQuadData">QuadData</a></code> and 
             <code><a href="#rQuadPattern">QuadPattern</a></code> 
@@ -10253,7 +10250,7 @@ _:x rdf:type xsd:decimal .
             must not allow variables in the quad patterns.</li>
           <li>Blank node syntax is not allowed in <code><a href="#rDeleteWhere">DELETE WHERE</a></code>,
             the <code><a href="#rDeleteClause">DeleteClause</a></code> for 
-            <code><a href="#rDeleteClause>DELETE</a></code>,
+            <code>DELETE</code>,
             nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.</li>
           <li>Rules for limiting the use of blank node labels are given in <a href="#grammarBNodes">section 19.6</a>.</li>
           <li>The number of variables in the variable list of <code>VALUES</code> block 
@@ -11422,7 +11419,7 @@ _:x rdf:type xsd:decimal .
     <section id="conformance">
       <h2>Conformance</h2>
       <p>See Section <a href="#grammar">19 SPARQL Grammar</a> regarding conformance of 
-        <a href="#defn_SPARQLQueryString">SPARQL Query strings</a>, and section 
+        <a>SPARQL Query strings</a>, and section 
         <a href="#QueryForms">16 Query Forms</a> for conformance of query results. 
         See section <a href="#mediaType">22. Internet Media Type</a> for conformance 
         to the application/sparql-query media type.</p>
