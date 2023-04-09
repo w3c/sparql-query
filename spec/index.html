@@ -537,7 +537,8 @@ span.cancast:hover { background-color: #ffa;
               </tbody>
             </table>
           </div>
-          <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>, <a href="#defn_RDFTerm">RDF term</a>). In this result set, there are three variables:
+          <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>,
+            <a href="#defn_RDFTerm">RDF term</a>). In this result set, there are three variables:
             <code>x</code>, <code>y</code> and <code>z</code> (shown as column headers). Each solution
             is shown as one row in the body of the table.&nbsp; Here, there is a single solution, in
             which variable <code>x</code> is bound to <code>"Alice"</code>, variable <code>y</code> is
@@ -1073,7 +1074,8 @@ WHERE   {
           </div>
         </div>
         <p>The regular expression language is <a data-cite="XPATH-FUNCTIONS#regex-syntax">defined by XQuery
-            1.0 and XPath 2.0 Functions and Operators</a> and is based on <a data-cite="XMLSCHEMA-2#regexs">XML Schema Regular Expressions</a>.</p>
+            and XPath Functions and Operators</a> and is based on
+          <a data-cite="XMLSCHEMA-2#regexs">XML Schema Regular Expressions</a>.</p>
       </section>
       <section id="restrictNumber">
         <h3>Restricting Numeric Values</h3>
@@ -1115,7 +1117,8 @@ WHERE   {
       <section id="otherTermConstraints">
         <h3>Other Term Constraints</h3>
         <p>In addition to <span class="type numeric">numeric</span> types, SPARQL supports types
-          <code>xsd:string</code>, <code>xsd:boolean</code> and <code>xsd:dateTime</code> (see <a href="#operandDataTypes">Operand Data Types</a>). Section <a href="#OperatorMapping">Operator
+          <code>xsd:string</code>, <code>xsd:boolean</code> and <code>xsd:dateTime</code>
+          (see <a href="#operandDataTypes">Operand Data Types</a>). Section <a href="#OperatorMapping">Operator
             Mapping</a> describes the operators and section <a href="#SparqlOps">Function Definitions</a>
           the functions that can be that can be applied to RDF terms.</p>
       </section>
@@ -1213,7 +1216,11 @@ book:book1</pre>
             <li><code>true</code>, which is the same as <code>"true"^^xsd:boolean</code></li>
             <li><code>false</code>, which is the same as <code>"false"^^xsd:boolean</code></li>
           </ul>
-          <p>Tokens matching the productions <a href="#rINTEGER">INTEGER</a>, <a href="#rDECIMAL">DECIMAL</a>, <a href="#rDOUBLE">DOUBLE</a> and <a href="#rBooleanLiteral">BooleanLiteral</a> are equivalent to a typed literal with the lexical
+          <p>Tokens matching the productions 
+            <a href="#rINTEGER">INTEGER</a>,
+            <a href="#rDECIMAL">DECIMAL</a>, 
+            <a href="#rDOUBLE">DOUBLE</a> and 
+            <a href="#rBooleanLiteral">BooleanLiteral</a> are equivalent to a typed literal with the lexical
             value of the token and the corresponding datatype (<code>xsd:integer</code>,
             <code>xsd:decimal</code>, <code>xsd:double</code>, <code>xsd:boolean</code>).</p>
         </section>
@@ -1226,7 +1233,8 @@ book:book1</pre>
         </section>
         <section id="QSynBlankNodes">
           <h4>Syntax for Blank Nodes</h4>
-          <p><a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank nodes</a> in graph patterns act as variables, not as references to specific
+          <p><a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank nodes</a>
+            in graph patterns act as variables, not as references to specific
             blank nodes in the data being queried.</p>
           <p>Blank nodes are indicated by either the label form, such as "<code>_:abc</code>", or the
             abbreviated form "<code>[]</code>". A blank node that is used in only one place in the
@@ -1268,7 +1276,8 @@ _:b57 :q "w" .
 :x  :q _:b57 .
 _:b57 :p "v" .
           </pre>
-          <p>Abbreviated blank node syntax can be combined with other abbreviations for <a href="#predObjLists">common subjects</a> and <a href="#objLists">common predicates</a>.</p>
+          <p>Abbreviated blank node syntax can be combined with other abbreviations
+            for <a href="#predObjLists">common subjects</a> and <a href="#objLists">common predicates</a>.</p>
           <pre class="query nohighlight">
 [ foaf:name  ?name ;
   foaf:mbox  &lt;mailto:alice@example.org&gt; ]
@@ -1464,7 +1473,8 @@ _:b0  :p        "v" .
         <section id="bgpExtend">
           <h4>Extending Basic Graph Pattern Matching</h4>
           <p>SPARQL evaluates basic graph patterns using subgraph matching, which is defined for
-            simple entailment. SPARQL can be extended to other forms of entailment given <a href="#sparqlBGPExtend">certain conditions</a> as described below. The document
+            simple entailment. SPARQL can be extended to other forms of entailment given
+            <a href="#sparqlBGPExtend">certain conditions</a> as described below. The document
             [[[SPARQL11-ENTAILMENT]]] describes several specific entailment regimes.</p>
         </section>
       </section>
@@ -1930,7 +1940,8 @@ WHERE {
       <section id="neg-pattern">
         <h3>Filtering Using Graph Patterns</h3>
         <p>Filtering of query solutions is done within a <code>FILTER</code> expression using
-          <code>NOT EXISTS</code> and <code>EXISTS</code>. Note that the filter scope rules <a href="#scopeFilters">apply to the whole group in which the filter appears</a>.</p>
+          <code>NOT EXISTS</code> and <code>EXISTS</code>. Note that the filter scope rules
+          <a href="#scopeFilters">apply to the whole group in which the filter appears</a>.</p>
         <section id="neg-notexists">
           <h4>Testing For the Absence of a Pattern</h4>
           <p>The <code>NOT EXISTS</code> filter expression tests whether a graph pattern does not
@@ -2173,8 +2184,10 @@ SELECT *
         </section>
         <section id="idp899488">
           <h4>Example: Inner FILTERs</h4>
-          <p>Differences also arise because in a filter, variables from the group are <a href="#scopeFilters">in scope</a>. In this example, the <code>FILTER</code> inside the <code>NOT
-              EXISTS</code> has access to the value of ?n for the solution being considered.</p>
+          <p>Differences also arise because in a filter, variables from the group
+            are <a href="#scopeFilters">in scope</a>. 
+            In this example, the <code>FILTER</code> inside the 
+            <code>NOT EXISTS</code> has access to the value of ?n for the solution being considered.</p>
           <pre class="data nohighlight">
 @prefix : &lt;http://example.com/&gt; .
 :a :p 1 .
@@ -2454,9 +2467,7 @@ SELECT ?x ?name {
       <section id="propertypath-syntaxforms">
         <h3>Property Paths and Equivalent Patterns</h3>
         <p>SPARQL property paths treat the RDF triples as a directed, possibly cyclic, graph with
-          named edges. Some property paths are equivalent to a 
-          <a href="#sparqlTranslatePathExpressions">translation</a> into triple patterns and SPARQL UNION graph
-          patterns. Evaluation of a property path expression can lead to duplicates because any
+          named edges. Evaluation of a property path expression can lead to duplicates because any
           variables introduced in the equivalent pattern are not part of the results and are not
           already used elsewhere. They are hidden by implicit projection of the results to just the
           variables given in the query.</p>
@@ -2590,11 +2601,13 @@ SELECT ?person
         the value of the expression, which is an RDF term. The variable can then be used in the query
         and also can be returned in results.</p>
       <p>Three syntax forms allow this: the <a href="#assignment"><code>BIND</code> keyword</a>,
-        <a href="#selectExpressions">expressions in the <code>SELECT</code> clause</a> and <a href="#groupby">expressions in the <code>GROUP BY</code> clause</a>. The assignment form is
+        <a href="#selectExpressions">expressions in the <code>SELECT</code> clause</a> and
+        <a href="#groupby">expressions in the <code>GROUP BY</code> clause</a>. The assignment form is
         <code>(<i>expression</i> AS ?var)</code>.</p>
       <p>If the evaluation of the expression produces an error, the variable remains unbound for that
         solution but the query evaluation continues.</p>
-      <p>Data can also be directly included in a query using <a href="#inline-data"><code>VALUES</code></a> for inline data.</p>
+      <p>Data can also be directly included in a query using
+        <a href="#inline-data"><code>VALUES</code></a> for inline data.</p>
       <section id="bind">
         <h3>BIND: Assigning to Variables</h3>
         <p>The <code>BIND</code> form allows a value to be assigned to a variable from a basic graph
@@ -2882,8 +2895,8 @@ HAVING (SUM(?lprice) &gt; 10)
           <code>ORDER BY</code> but the <code>GROUP BY</code> term is not used, then this is taken to
           be a single implicit group, to which all solutions belong.</p>
         <p>Within <code>GROUP BY</code> clauses the binding keyword, <code>AS</code>, may be used,
-          such as <code>GROUP BY (?x + ?y AS ?z)</code>. This is equivalent to <code>{ ... BIND (?x +
-            ?y AS ?z) } GROUP BY ?z</code>.</p>
+          such as <code>GROUP BY (?x + ?y AS ?z)</code>. This is equivalent to 
+          <code>{ ... BIND (?x + ?y AS ?z) } GROUP BY ?z</code>.</p>
         <p>For example, given a solution sequence S, ( {?x→2, ?y→3}, {?x→2, ?y→5}, {?x→6, ?y→7} ), we
           might wish to group the solutions according to the value of ?x, and calculate the average of
           the values of ?y for each group.</p>
@@ -2998,7 +3011,8 @@ GROUP BY ?g</pre>
         sub-expression within the query.</p>
       <p>Due to the bottom-up nature of SPARQL query evaluation, the subqueries are evaluated
         logically first, and the results are projected up to the outer query.</p>
-      <p>Note that only variables projected out of the subquery will be visible, or <a href="#variableScope">in scope</a>, to the outer query.</p>
+      <p>Note that only variables projected out of the subquery will be visible, or
+        <a href="#variableScope">in scope</a>, to the outer query.</p>
       <h3 id="subquery-example">Example</h3>
       <p>Data:</p>
       <div class="exampleGroup">
@@ -3613,7 +3627,8 @@ WHERE {
     </section>
     <section id="solutionModifiers">
       <h2>Solution Sequences and Modifiers</h2>
-      <p>Query patterns generate an unordered collection of solutions, each <a href="#defn_sparqlSolutionMapping">solution</a> being a partial function from variables to RDF
+      <p>Query patterns generate an unordered collection of solutions, each 
+        <a href="#defn_sparqlSolutionMapping">solution</a> being a partial function from variables to RDF
         terms. These solutions are then treated as a sequence (a solution sequence), initially in no
         specific order; any sequence modifiers are then applied to create another sequence. Finally,
         this latter sequence is used to generate one of the results of a <a href="#QueryForms">SPARQL
@@ -4542,8 +4557,9 @@ foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
               </div>
             </div>
           </div>
-          <p>which includes the blank node closure for the <a data-cite="vcard-rdf#"
-                                                              class="inform">vcard</a> vocabulary vcard:N. Other possible mechanisms for deciding what
+          <p>which includes the blank node closure for the 
+            <a data-cite="vcard-rdf#" class="inform">vCard vocabulary</a> <code>vcard:N</code>.
+            Other possible mechanisms for deciding what
             information to return include Concise Bounded Descriptions [[CBD]].</p>
           <p>For a vocabulary such as FOAF, where the resources are typically blank nodes, returning
             sufficient information to identify a node such as the InverseFunctionalProperty
@@ -4612,7 +4628,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <a data-cite="XPATH20#dt-typed-value">typed value</a> arguments and return types. RDF
           <code>typed literals</code> passed as arguments to these functions and operators are mapped
           to XML Schema typed values with a <a data-cite="XPATH20#dt-string-value">string value</a> of
-          the <code>lexical form</code> and an <a href="http://www.w3.org/TR/xmlschema-2/#dt-atomic">atomic datatype</a> corresponding to the
+          the <code>lexical form</code> and an 
+          <a href="http://www.w3.org/TR/xmlschema-2/#dt-atomic">atomic datatype</a> corresponding to the
           <span class="type datatypeIRI">datatype IRI</span>. The returned typed values are mapped back
           to RDF <code>typed literals</code> the same way.</p>
         <p>SPARQL has additional operators which operate on specific subsets of RDF terms. When
@@ -4684,14 +4701,18 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       </section>
       <section id="evaluation">
         <h3>Filter Evaluation</h3>
-        <p>SPARQL provides a subset of the functions and operators defined by XQuery <a data-cite="XQUERY-31#mapping">Operator Mapping</a>. XQuery 1.0 section <a data-cite="XQUERY-31#id-expression-processing">2.2.3 Expression Processing</a> describes the invocation of
+        <p>SPARQL provides a subset of the functions and operators defined by 
+          XQuery <a data-cite="XQUERY-31#mapping">Operator Mapping</a>. 
+          The XQuery section <a data-cite="XQUERY-31#id-expression-processing">Expression Processing</a>
+          describes the invocation of
           XPath functions. The following rules accommodate the differences in the data and execution
           models between XQuery and SPARQL:</p>
         <ul>
           <li>Unlike XPath/XQuery, SPARQL functions do not process node sequences. When interpreting
             the semantics of XPath functions, assume that each argument is a sequence of a single
             node.</li>
-          <li>Functions invoked with an argument of the wrong type will produce a <a data-cite="XQUERY-31#dt-type-error">type error</a>. Effective boolean value arguments (labeled
+          <li>Functions invoked with an argument of the wrong type will produce a 
+            <a data-cite="XQUERY-31#dt-type-error">type error</a>. Effective boolean value arguments (labeled
             "xsd:boolean (EBV)" in the operator mapping table below), are coerced to
             <code>xsd:boolean</code> using the <a href="#ebv">EBV rules</a> in section 17.2.2.
           </li>
@@ -4814,15 +4835,19 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             rules reflect the rules for <code>fn:boolean</code> applied to the argument types present
             in SPARQL queries:</p>
           <ul>
-            <li>The EBV of any literal whose type is <code>xsd:boolean</code> or <span class="type">numeric</span> is false if the lexical form is not valid for that datatype (e.g.
-              "abc"^^xsd:integer).</li>
+            <li>The EBV of any literal whose type is <code>xsd:boolean</code> or 
+              <span class="type">numeric</span> is false if the lexical form is not valid for that
+              datatype (e.g. "abc"^^xsd:integer).</li>
             <li>If the argument is a <span class="type typedLiteral">typed literal</span> with a
               <span class="type datatype">datatype</span> of <code>xsd:boolean</code>, and it has a
               valid lexical form, the EBV is the value of that argument.</li>
             <li>If the argument is a <span class="type plainLiteral">plain literal</span> or a
-              <span class="type typedLiteral">typed literal</span> with a <span class="type datatype">datatype</span> of <code>xsd:string</code>, the EBV is false if the
+              <span class="type typedLiteral">typed literal</span> with a 
+              <span class="type datatype">datatype</span> of <code>xsd:string</code>, the EBV is false if the
               operand value has zero length; otherwise the EBV is true.</li>
-            <li>If the argument is a <span class="type numeric">numeric</span> type or a <span class="type typedLiteral">typed literal</span> with a datatype derived from a <span class="type numeric">numeric</span> type, and it has a valid lexical form, the EBV is false if
+            <li>If the argument is a <span class="type numeric">numeric</span> type or a 
+              <span class="type typedLiteral">typed literal</span> with a datatype derived from a 
+              <span class="type numeric">numeric</span> type, and it has a valid lexical form, the EBV is false if
               the operand value is NaN or is numerically equal to zero; otherwise the EBV is true.</li>
             <li>All other arguments, including unbound arguments, produce a type error.</li>
           </ul>
@@ -4834,14 +4859,17 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       </section>
       <section id="OperatorMapping">
         <h3>Operator Mapping</h3>
-        <p>The SPARQL grammar identifies a set of operators (for instance, <span class="token">&amp;&</span>, <span class="token">*</span>, <span class="token">isIRI</span>) used
+        <p>The SPARQL grammar identifies a set of operators 
+          (for instance, <code><span class="token">&amp;&amp;</span></code>, 
+          <code><span class="token">*</span></code>, <code><span class="token">isIRI</span></code>) used
           to construct constraints. The following table associates each of these grammatical
           productions with the appropriate operands and an operator function defined by either
           [[[XPATH-FUNCTIONS]]] [[XPATH-FUNCTIONS]] or the SPARQL operators specified in <a href="#SparqlOps">section
             17.4</a>. When selecting the operator definition for a given set of parameters, the
           definition with the most specific parameters applies. For instance, when evaluating
           <code>xsd:integer = xsd:signedInt</code>, the definition for <code>=</code> with two
-          <code>numeric</code> parameters applies, rather than the one with two <span class="type RDFterm">RDF terms</span>. The table is arranged so that the upper-most viable
+          <code>numeric</code> parameters applies, rather than the one with two
+          <span class="type RDFterm">RDF terms</span>. The table is arranged so that the upper-most viable
           candidate is the most specific. Operators invoked without appropriate operands result in a
           type error.</p>
         <p>SPARQL follows XPath's scheme for numeric type promotions and subtype substitution for
@@ -5587,9 +5615,11 @@ class="expression">expression, ....</span>)
             <pre class="prototype nohighlight">
               <span class="return">xsd:boolean</span> <span class="operator" style="text-transform: none;">logical-or</span> (<span class="type">xsd:boolean</span> <span class="name">left</span>, <span class="type">xsd:boolean</span> <span class="name">right</span>)
             </pre>
-            <p>This function cannot be used directly in expressions. The purpose of this function is to define the semantics of the "<code>||</code>" operator.</p>
-            <p>The function returns a logical <code>OR</code> of <code>left</code> and <code>right</code>. Note
-              that <span class="SPARQLoperator">logical-or</span> operates on the <a href="#ebv">effective boolean value</a> of its arguments.</p>
+            <p>This function cannot be used directly in expressions. 
+              The purpose of this function is to define the semantics of the "<code>||</code>" operator.</p>
+            <p>The function returns a logical <code>OR</code> of <code>left</code> and <code>right</code>. 
+              Note that <span class="SPARQLoperator">logical-or</span> operates on the 
+              <a href="#ebv">effective boolean value</a> of its arguments.</p>
             <p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for the
               <code>||</code> operator's treatment of errors.</p>
           </section>
@@ -5599,8 +5629,9 @@ class="expression">expression, ....</span>)
               <span class="return">xsd:boolean</span> <span class="operator" style="text-transform: none;">logical-and</span> (<span class="type">xsd:boolean</span> <span class="name">left</span>, <span class="type">xsd:boolean</span> <span class="name">right</span>)
             </pre>
             <p>This function cannot be used directly in expressions. The purpose of this function is to define the semantics of the "<code>&amp;&amp;</code>" operator.</p>
-            <p>The function returns a logical <code>AND</code> of <code>left</code> and <code>right</code>. Note
-              that <span class="SPARQLoperator">logical-and</span> operates on the <a href="#ebv">effective boolean value</a> of its arguments.</p>
+            <p>The function returns a logical <code>AND</code> of <code>left</code> and <code>right</code>.
+              Note that <span class="SPARQLoperator">logical-and</span> operates on the 
+              <a href="#ebv">effective boolean value</a> of its arguments.</p>
             <p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for the
               <code>&amp;&</code> operator's treatment of errors.</p>
           </section>
@@ -6196,7 +6227,9 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return"><span class="type">simple literal</span></span>  <span class="operator">LANG</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
             </pre>
             <p>Returns the <span class="type langTag">language tag</span> of <code>ltrl</code>, if it
-              has one. It returns <code>""</code> if <code>ltrl</code> has no <span class="type langTag">language tag</span>. Note that the RDF data model does not include
+              has one. It returns <code>""</code> if 
+              <code>ltrl</code> has no <span class="type langTag">language tag</span>. 
+              Note that the RDF data model does not include
               literals with an empty <span class="type langTag">language tag</span>.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
@@ -6349,7 +6382,8 @@ WHERE {
               calls to this constructor for other query solutions. If the no argument form is used,
               every call results in a distinct blank node. If the form with a simple literal is used,
               every call results in distinct blank nodes for different simple literals, and the same
-              blank node for calls with the same simple literal within expressions for one <a href="#defn_sparqlSolutionMapping">solution mapping</a>.</p>
+              blank node for calls with the same simple literal within expressions for one
+              <a href="#defn_sparqlSolutionMapping">solution mapping</a>.</p>
             <p>This functionality is compatible with the <a href="#templatesWithBNodes">treatment of
                 blank nodes in SPARQL CONSTRUCT templates</a>.</p>
           </section>
@@ -6430,7 +6464,9 @@ WHERE {
             <h5>Strings in SPARQL Functions</h5>
             <section id="func-string">
               <h6>String arguments</h6>
-              <p>Certain functions (e.g. <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>) take a <code>string
+              <p>Certain functions (e.g. <a href="#func-regex">REGEX</a>, 
+                <a href="#func-strlen">STRLEN</a>, 
+                <a href="#func-contains">CONTAINS</a>) take a <code>string
                   literal</code> as an argument and accept a simple literal, a plain literal with
                 language tag, or a literal with datatype xsd:string. They then act on the lexcial form
                 of the literal.</p>
@@ -6439,7 +6475,11 @@ WHERE {
             </section>
             <section id="func-arg-compatibility">
               <h6>Argument Compatibility Rules</h6>
-              <p>The functions <a href="#func-strstarts">STRSTARTS</a>, <a href="#func-strends">STRENDS</a>, <a href="#func-contains">CONTAINS</a>, <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a> take two
+              <p>The functions <a href="#func-strstarts">STRSTARTS</a>, 
+                <a href="#func-strends">STRENDS</a>,
+                <a href="#func-contains">CONTAINS</a>, 
+                <a href="#func-strbefore">STRBEFORE</a> and 
+                <a href="#func-strafter">STRAFTER</a> take two
                 arguments. These arguments must be compatible otherwise invocation of one of these
                 functions raises an error.</p>
               <p>Compatibility of two arguments is defined as:</p>
@@ -6520,7 +6560,8 @@ WHERE {
               <h6>String Literal Return Type</h6>
               <p>Functions that return a string literal do so with the string literal of the same
                 kind as the first argument (simple literal, plain literal with same language tag,
-                xsd:string). This includes <a href="#func-substr">SUBSTR</a>, <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.</p>
+                xsd:string). This includes <a href="#func-substr">SUBSTR</a>, 
+                <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.</p>
               <p>The function <a href="#func-concat">CONCAT</a> returns a string literal based on the
                 details of all its arguments.</p>
             </section>
@@ -6528,7 +6569,9 @@ WHERE {
           <section id="func-strlen">
             <h5>STRLEN</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:integer</span>  <span class="operator">STRLEN</span>(<span class="type">string literal</span> str)</pre>
-            <p>The <code>strlen</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-string-length">fn:string-length</a> function and returns an
+            <p>The <code>strlen</code> function corresponds to the XPath
+              <a data-cite="XPATH-FUNCTIONS#func-string-length">fn:string-length</a>
+              function and returns an
               <code>xsd:integer</code> equal to the length in characters of the lexical form of the
               literal.</p>
             <div class="result">
@@ -6554,7 +6597,9 @@ WHERE {
             <h5>SUBSTR</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc)</pre>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc, <span class="type">xsd:integer</span> length)</pre>
-            <p>The <code>substr</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-substring">fn:substring</a> function and returns a literal of the
+            <p>The <code>substr</code> function corresponds to the XPath
+              <a data-cite="XPATH-FUNCTIONS#func-substring">fn:substring</a>
+              function and returns a literal of the
               same kind (simple literal, literal with language tag, <code>xsd:string</code> typed
               literal) as the <code>source</code> input parameter but with a lexical form formed from
               the substring of the lexcial form of the source.</p>
@@ -6595,7 +6640,9 @@ WHERE {
           <section id="func-ucase">
             <h5>UCASE</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">UCASE</span>(<span class="type">string literal</span> str)</pre>
-            <p>The <code>UCASE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-upper-case">fn:upper-case</a> function. It returns a string literal
+            <p>The <code>UCASE</code> function corresponds to the XPath 
+              <a data-cite="XPATH-FUNCTIONS#func-upper-case">fn:upper-case</a>
+              function. It returns a string literal
               whose lexical form is the upper case of the lexcial form of the argument.</p>
             <div class="result">
               <table>
@@ -6619,8 +6666,9 @@ WHERE {
           <section id="func-lcase">
             <h5>LCASE</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">LCASE</span>(<span class="type">string literal</span> str)</pre>
-            <p>The <code>LCASE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-lower-case">fn:lower-case</a> function. It returns a string literal
-              whose lexical form is the lower case of the lexcial form of the argument.</p>
+            <p>The <code>LCASE</code> function corresponds to the XPath 
+              <a data-cite="XPATH-FUNCTIONS#func-lower-case">fn:lower-case</a> function.
+              It returns a string literal whose lexical form is the lower case of the lexcial form of the argument.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7107,7 +7155,9 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class="operator">ABS</span> (<span class="type"><span class="type numeric">numeric</span></span> <span class="name">term</span>)</pre>
             <p>Returns the absolute value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
-            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS#func-abs">fn:numeric-abs</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
+            <p>This function is the same as 
+              <a data-cite="XPATH-FUNCTIONS#func-abs">fn:numeric-abs</a>
+              for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7155,8 +7205,9 @@ WHERE {
             <p>Returns the smallest (closest to negative infinity) number with no fractional part
               that is not less than the value of <code>arg</code>. An error is raised if
               <code>arg</code> is not a numeric value.</p>
-            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS#func-ceiling">fn:numeric-ceil</a> for terms with a datatype from
-              <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
+            <p>This function is the same as 
+              <a data-cite="XPATH-FUNCTIONS#func-ceiling">fn:numeric-ceil</a>
+              for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7178,7 +7229,9 @@ WHERE {
             <p>Returns the largest (closest to positive infinity) number with no fractional part that
               is not greater than the value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
-            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS#func-floor">fn:numeric-floor</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
+            <p>This function is the same as
+              <a data-cite="XPATH-FUNCTIONS#func-floor">fn:numeric-floor</a>
+              for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7332,10 +7385,11 @@ WHERE {
           <section id="func-timezone">
             <h5>TIMEZONE</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:dayTimeDuration</span>  <span class="operator">TIMEZONE</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
-            <p>Returns the timezone part of <code>arg</code> as an xsd:dayTimeDuration. Raises an
-              error if there is no timezone.</p>
-            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-timezone-from-dateTime">fn:timezone-from-dateTime</a> except for
-              the treatment of literals with no timezone.</p>
+            <p>Returns the timezone part of <code>arg</code> as an xsd:dayTimeDuration.
+              Raises an error if there is no timezone.</p>
+            <p>This function corresponds to 
+              <a data-cite="XPATH-FUNCTIONS#func-timezone-from-dateTime">fn:timezone-from-dateTime</a>
+              except for the treatment of literals with no timezone.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7526,7 +7580,9 @@ WHERE {
             literal to the target datatype.
           </li>
         </ul>
-        <p>The table below summarizes the casting operations that are always allowed (<span class="castY">Y</span>), never allowed (<span class="castN">N</span>) and dependent on the lexical
+        <p>The table below summarizes the casting operations that are always allowed 
+          (<span class="castY">Y</span>), never allowed (<span class="castN">N</span>)
+          and dependent on the lexical
           value (<span class="castM">M</span>). For example, a casting operation from an
           <code>xsd:string</code> (the first row) to an <code>xsd:float</code> (the second column) is
           dependent on the lexical value (<span class="castM">M</span>).</p>
@@ -7891,7 +7947,8 @@ WHERE {
           <h4>Basic Graph Patterns</h4>
           <div class="defn">
             <p><b>Definition: <span id="defn_BasicGraphPattern">Basic Graph Pattern</span></b></p>
-            <p>A <span class="definedTerm">Basic Graph Pattern</span> is a set of <a href="#defn_TriplePattern">Triple Patterns</a>.</p>
+            <p>A <span class="definedTerm">Basic Graph Pattern</span> is a set of
+              <a href="#defn_TriplePattern">Triple Patterns</a>.</p>
           </div>
           <p>The empty graph pattern is a basic graph pattern which is the empty set.</p>
         </section>
@@ -8303,7 +8360,8 @@ WHERE {
             preferred reading.</p>
           <section id="sparqlExpandForms">
             <h5>Expand Syntax Forms</h5>
-            <p>Expand abbreviations for IRIs and triple patterns given in <a href="#sparqlSyntax">section 4</a>.</p>
+            <p>Expand abbreviations for IRIs and triple patterns given in 
+              <a href="#sparqlSyntax">section 4</a>.</p>
           </section>
           <section id="sparqlCollectFilters">
             <h5>Collect <code>FILTER</code> Elements</h5>
@@ -8333,7 +8391,8 @@ For each form FILTER(expr) in the group graph pattern:
               expression recursively.</p>
             <p>The <a href="#sparqlTranslatePathPatterns">next step after this one</a> translates
               certain forms to triple patterns, and these are converted later to basic graph patterns
-              by adjacency (without intervening group pattern delimiters <code>{</code> and <code>})</code> or
+              by adjacency (without intervening group pattern delimiters 
+              <code>{</code> and <code>})</code> or
               other syntax forms. Overall, SPARQL syntax property paths of just an IRI become triple
               patterns and these are aggregated into basic graph patterns.</p>
             <p>Notes:</p>
@@ -8791,7 +8850,8 @@ Replace join(A, Z) by A
             <h5>Grouping and Aggregation</h5>
             <p>Step: GROUP BY</p>
             <p>If the <code>GROUP BY</code> keyword is used, or there is implicit grouping due to the
-              use of aggregates in the projection, then grouping is performed by the <a href="#defn_algGroup">Group</a> function. It divides the solution set into groups of one or
+              use of aggregates in the projection, then grouping is performed by the 
+              <a href="#defn_algGroup">Group</a> function. It divides the solution set into groups of one or
               more solutions, with the same overall cardinality. In case of implicit grouping, a fixed
               constant (1) is used to group all solutions into a single group.</p>
             <p>Step: Aggregates</p>
@@ -8844,8 +8904,9 @@ P := AggregateJoin(A)
           </section>
           <section id="sparqlHavingClause">
             <h5>HAVING</h5>
-            <p>The HAVING expression is evaluated using the same rules as FILTER(). Note that, due to
-              the logic position in which the HAVING clause is evaluated, expressions projected by the
+            <p>The HAVING expression is evaluated using the same rules as FILTER().
+              Note that, due to the logic position in which the HAVING clause is
+              evaluated, expressions projected by the
               SELECT clause are not visible to the HAVING clause.</p>
             <pre class="code nohighlightBlock">
 Let Q := the query level being evaluated
@@ -8888,7 +8949,7 @@ Let VS := list of all variables visible in the pattern,
                         non-projected GROUP variables, only in the right hand side of MINUS
 
 Let PV := {}, a set of variable names
-Note, E is a list of pairs of the form (variable, expression), defined in <a href="#convertGroupAggSelectExpressions">section 18.2.4</a>
+Note, E is a list of pairs of the form (variable, expression), defined in<a href="#convertGroupAggSelectExpressions">section 18.2.4</a>
   
 If "SELECT *"
     PV := VS
@@ -8945,7 +9006,8 @@ The set PV is used later for projection.
           </section>
           <section id="sparqlProjection">
             <h5>Projection</h5>
-            <p>The set of projection variables, <code>PV</code>, was calculated in the <a href="#sparqlSelectExpressions">processing of SELECT expressions</a>.</p>
+            <p>The set of projection variables, <code>PV</code>, was calculated in the
+              <a href="#sparqlSelectExpressions">processing of SELECT expressions</a>.</p>
             <blockquote>
               <p>M := Project(M, PV)</p>
             </blockquote>
@@ -9018,7 +9080,8 @@ The set PV is used later for projection.
           <h4>SPARQL Basic Graph Pattern Matching</h4>
           <p>A basic graph pattern is matched against the active graph for that part of the query.
             Basic graph patterns can be instantiated by replacing both variables and blank nodes by
-            terms, giving two notions of instance. Blank nodes are replaced using an <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
+            terms, giving two notions of instance. Blank nodes are replaced using an
+            <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
             variables are replaced by a solution mapping from query variables to RDF terms.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_PatternInstanceMapping">Pattern Instance Mapping</span></b></p>
@@ -9069,7 +9132,8 @@ The set PV is used later for projection.
         <h3>Property Path Patterns</h3>
         <p>This section defines the evaluation of <a href="#defn_PropertyPathPattern">property path
             patterns</a>. A property path pattern is a subject endpoint (an RDF term or a variable), a
-          property path express and an object endpoint. The <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a> converts some
+          property path express and an object endpoint. The 
+          <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a> converts some
           forms to other SPARQL expressions, such as converting property paths of length one to triple
           patterns, which in turn are combined into basic graph patterns. This leaves property path
           operators ZeroOrOnePath, ZeroOrMorePath, OneOrMorePath and NegatedPropertySets and also path
@@ -9444,7 +9508,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_exists">Exists</span></b></p>
-          <p>exists(pattern) is a function that returns true if the pattern <a href="#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
+          <p>exists(pattern) is a function that returns true if the pattern
+            <a href="#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
             solution mapping and active graph at the time of evaluation; otherwise it returns
             false.</p>
         </div>
@@ -9671,11 +9736,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>GroupConcat(M, scalarvals) = GroupConcat(Flatten(M), scalarvals("separator"))</p>
               <p>GroupConcat(S, sep) = "", where <span style=
                                                        "font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 0</p>
-              <p>GroupConcat(S, sep) = CONCAT("", S<sub>0</sub>), where <span style=
-                                                                              "font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 1</p>
+              <p>GroupConcat(S, sep) = CONCAT("", S<sub>0</sub>), where 
+                <span style="font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 1</p>
               <p>GroupConcat(S, sep) = CONCAT(S<sub>0</sub>, sep, GroupConcat(S<sub>1..n-1</sub>,
-                sep)), where <span style="font-size: 140%">|</span>S<span style=
-                                                                          "font-size: 140%">|</span> &gt; 1</p>
+                sep)), where <span style="font-size: 140%">|</span>S<span style="font-size: 140%">|</span> &gt; 1</p>
             </div>
             <p>For example, GroupConcat({"a", "b", "c"}, {"separator" → "."}) = "a.b.c".</p>
           </section>
@@ -9721,8 +9785,9 @@ F : an expression
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
             <pre class="code nohighlight">eval(D(G), Filter(F, P)) = Filter(F, eval(D(G),P), D(G))</pre>
           </div>
-          <p>'substitute' is a filter function in support of the evaluation of <a href="#func-filter-exists"><code>EXISTS</code> and <code>NOT EXISTS</code></a> forms which were
-            translated to <code>exists</code>.</p>
+          <p>'substitute' is a filter function in support of the evaluation of 
+            <a href="#func-filter-exists"><code>EXISTS</code>
+              and <code>NOT EXISTS</code></a> forms which were translated to <code>exists</code>.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_substitute">Substitute</span></b></p>
             <p>Let μ be a solution mapping.</p>
@@ -10067,8 +10132,9 @@ _:x rdf:type xsd:decimal .
           <code>&lt;abc##def&gt;</code> must not.</p>
         <p>Base IRIs declared with the <span class="token">BASE</span> keyword must be absolute
           IRIs. A prefix declared with the <span class="token">PREFIX</span> keyword may not be
-          re-declared in the same query. See section 4.1.1, <a href="#QSynIRI">Syntax of IRI
-            Terms</a>, for a description of <span class="token">BASE</span> and <span class="token">PREFIX</span>.</p>
+          re-declared in the same query. See section 4.1.1, 
+          <a href="#QSynIRI">Syntax of IRI Terms</a>, for a description of <span class="token">BASE</span> and
+          <span class="token">PREFIX</span>.</p>
       </section>
       <section id="grammarBNodes">
         <h3>Blank Nodes and Blank Node Labels</h3>
@@ -10091,13 +10157,17 @@ _:x rdf:type xsd:decimal .
           <li>two <code><a href="#rInsertData">INSERT DATA</a></code> operations within a single
             SPARQL Update request</li>
         </ul>
-        <p>Note that the same blank node label can occur in different <a href="#rQuadPattern">QuadPattern</a> clauses in a [[[SPARQL11-UPDATE]]] request.</p>
+        <p>Note that the same blank node label can occur in different
+          <a href="#rQuadPattern">QuadPattern</a> clauses in a [[[SPARQL11-UPDATE]]] request.</p>
       </section>
       <section id="grammarEscapes">
         <h3>Escape sequences in strings</h3>
         <p>In addition to the <a href="#codepointEscape">codepoint escape sequences</a>, the
-          following escape sequences any <code><a href="#rString">string</a></code> production (e.g.
-          <code><a href="#rSTRING_LITERAL1">STRING_LITERAL1</a></code>, <code><a href="#rSTRING_LITERAL2">STRING_LITERAL2</a></code>, <code><a href="#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a></code>, <code><a href="#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a></code>):</p>
+          following escape sequences apply to any <code><a href="#rString">string</a></code> production (e.g.
+          <code><a href="#rSTRING_LITERAL1">STRING_LITERAL1</a></code>,
+          <code><a href="#rSTRING_LITERAL2">STRING_LITERAL2</a></code>,
+          <code><a href="#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a></code>,
+          <code><a href="#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a></code>):</p>
         <table title="String escapes">
           <colgroup>
             <col style="width: 40%">
@@ -10157,29 +10227,50 @@ _:x rdf:type xsd:decimal .
           section 6 <a data-cite="xml11#sec-notation">Notation</a>.</p>
         <p>Notes:</p>
         <ol>
-          <li>Keywords are matched in a case-insensitive manner with the exception of the keyword '<code>a</code>' which, in line with Turtle and N3, is used in place of the IRI <code>rdf:type</code>
+          <li>Keywords are matched in a case-insensitive manner with the exception of
+            the keyword '<code>a</code>'  which, in line with Turtle and N3, is used
+            in place of the IRI <code>rdf:type</code>
             (in full, <code><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a></code>).</li>
           <li>Escape sequences are case sensitive.</li>
           <li>When tokenizing the input and choosing grammar rules, the longest match is chosen.</li>
           <li>The SPARQL grammar is LL(1) when the rules with uppercased names are used as terminals.</li>
-          <li>There are two entry points into the grammar: <code>QueryUnit</code> for SPARQL queries, and <code>UpdateUnit</code> for SPARQL Update requests.</li>
-          <li>In signed numbers, no white space is allowed between the sign and the number. The <code><a href="#rAdditiveExpression">AdditiveExpression</a></code> grammar rule allows for this by
-            covering the two cases of an expression followed by a signed number. These produce an addition or subtraction of the unsigned number as appropriate.</li>
-          <li>The tokens <code>INSERT DATA</code>, DELETE DATA<code>,</code> DELETE WHERE allow any amount of white space between the words. The single space version is used in the grammar for
-            clarity.</li>
-          <li>The <code><a href="#rQuadData">QuadData</a></code> and <code><a href="#rQuadPattern">QuadPattern</a></code> rules both use rule <code><a href="#rQuads">Quads</a></code>. The rule
-            <code><a href="#rQuadData">QuadData</a></code>, used in <a href="#rInsertData"><code>INSERT DATA</code></a> and <a href="#rDeleteData"><code>DELETE DATA</code></a>, must not allow variables
-            in the quad patterns.</li>
-          <li>Blank node syntax is not allowed in <code><a href="#rDeleteWhere">DELETE WHERE</a></code>, the <code><a href="#rDeleteClause">DeleteClause</a></code> for <code>DELETE</code>, nor in
-            <a href="#rDeleteData"><code>DELETE DATA</code></a>.</li>
+          <li>There are two entry points into the grammar: <code>QueryUnit</code> for SPARQL queries,
+            and <code>UpdateUnit</code> for SPARQL Update requests.</li>
+          <li>In signed numbers, no white space is allowed between the sign and the number.
+            The <code><a href="#rAdditiveExpression">AdditiveExpression</a></code> grammar rule allows for this by
+            covering the two cases of an expression followed by a signed number. These 
+            produce an addition or subtraction of the unsigned number as appropriate.</li>
+          <li>The tokens <code><a href="#rInsertData">INSERT DATA</a></code>, 
+            <code><a href="#rDeleteData">DELETE DATA</a></code> and 
+            <code><a href="#rDeleteWhere">DELETE WHERE</</code> allow any amount of white space between the words.
+            The single space version is used in the grammar for clarity.</li>
+          <li>The <code><a href="#rQuadData">QuadData</a></code> and 
+            <code><a href="#rQuadPattern">QuadPattern</a></code> 
+            rules both use rule <code><a href="#rQuads">Quads</a></code>. The rule
+            <code><a href="#rQuadData">QuadData</a></code>, used in 
+            <a href="#rInsertData"><code>INSERTDATA</code></a> and 
+            <a href="#rDeleteData"><code>DELETE DATA</code></a>, 
+            must not allow variables in the quad patterns.</li>
+          <li>Blank node syntax is not allowed in <code><a href="#rDeleteWhere">DELETE WHERE</a></code>,
+            the <code><a href="#rDeleteClause">DeleteClause</a></code> for 
+            <code><a href="#rDeleteClause>DELETE</a></code>,
+            nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.</li>
           <li>Rules for limiting the use of blank node labels are given in <a href="#grammarBNodes">section 19.6</a>.</li>
-          <li>The number of variables in the variable list of <code>VALUES</code> block must be the same as the number of each list of associated values in the <code>DataBlock</code>.</li>
-          <li>Variables introduced by <code>AS</code> in a <code>SELECT</code> clause must not already be <a href="#variableScope">in-scope</a>.</li>
-          <li>The variable assigned in a <code>BIND</code> clause must not be already in-use within the immediately preceding <code><a href="#rTriplesBlock">TriplesBlock</a></code> within a
+          <li>The number of variables in the variable list of <code>VALUES</code> block 
+            must be the same as the number of each list of associated values in the <code>DataBlock</code>.</li>
+          <li>Variables introduced by <code>AS</code> in a <code>SELECT</code> clause
+            must not already be <a href="#variableScope">in-scope</a>.</li>
+          <li>The variable assigned in a <code>BIND</code> clause must not be already 
+            in-use within the immediately preceding <code><a href="#rTriplesBlock">TriplesBlock</a></code> within a
             <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>.</li>
-          <li>Aggregate functions can be one of the <a href="#rAggregate">built-in keywords for aggregates</a> or a custom aggregate, which is syntactically a <a href="#rFunctionCall">function
-              call</a>. Aggregate functions may only be used in <a href="#rSelectClause">SELECT</a>, <a href="#rHavingClause">HAVING</a> and <a href="#rOrderClause">ORDER BY</a> clauses.</li>
-          <li>Only custom aggregate functions use the <code>DISTINCT</code> keyword in a <a href="#rFunctionCall">function call</a>.</li>
+          <li>Aggregate functions can be one of the 
+            <a href="#rAggregate">built-in keywords for aggregates</a> 
+            or a custom aggregate, which is syntactically a <a href="#rFunctionCall">function
+              call</a>. Aggregate functions may only be used in 
+            <a href="#rSelectClause">SELECT</a>, <a href="#rHavingClause">HAVING</a>
+            and <a href="#rOrderClause">ORDER BY</a> clauses.</li>
+          <li>Only custom aggregate functions use the <code>DISTINCT</code> keyword
+            in a <a href="#rFunctionCall">function call</a>.</li>
         </ol>
         <div class="grammarTable">
           <table>
@@ -11333,7 +11424,8 @@ _:x rdf:type xsd:decimal .
       <p>See Section <a href="#grammar">19 SPARQL Grammar</a> regarding conformance of 
         <a href="#defn_SPARQLQueryString">SPARQL Query strings</a>, and section 
         <a href="#QueryForms">16 Query Forms</a> for conformance of query results. 
-        See section <a href="#mediaType">22. Internet Media Type</a> for conformance to the application/sparql-query media type.</p>
+        See section <a href="#mediaType">22. Internet Media Type</a> for conformance 
+        to the application/sparql-query media type.</p>
       <p>This specification is intended for use in conjunction with the [[[SPARQL11-PROTOCOL]]]
         [[SPARQL11-PROTOCOL]], the [[[RDF-SPARQL-XMLRES]]] [[RDF-SPARQL-XMLRES]], the
         [[[SPARQL11-RESULTS-JSON]]] [[SPARQL11-RESULTS-JSON]] and the [[[SPARQL11-RESULTS-CSV-TSV]]]
