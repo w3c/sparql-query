@@ -432,7 +432,7 @@ span.cancast:hover { background-color: #ffa;
         <p>
           <a href="#aggregates">Sections 11</a> introduces the mechanism to group and
           aggregate results, which can be incorporated as subqueries as described
-          in <a href= "#subqueries">Section 12</a>.
+          in <a href="#subqueries">Section 12</a>.
         </p>
         <p>
           <a href="#rdfDataset">Section 13</a> introduces the ability to constrain
@@ -537,8 +537,7 @@ span.cancast:hover { background-color: #ffa;
               </tbody>
             </table>
           </div>
-          <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>, <a href=
-                                                                                   "#defn_RDFTerm">RDF term</a>). In this result set, there are three variables:
+          <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>, <a href="#defn_RDFTerm">RDF term</a>). In this result set, there are three variables:
             <code>x</code>, <code>y</code> and <code>z</code> (shown as column headers). Each solution
             is shown as one row in the body of the table.&nbsp; Here, there is a single solution, in
             which variable <code>x</code> is bound to <code>"Alice"</code>, variable <code>y</code> is
@@ -579,8 +578,7 @@ span.cancast:hover { background-color: #ffa;
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
             </li>
             <li>
-              <a class="type typedLiteral" data-cite=
-                 "RDF12-CONCEPTS#dfn-typed-literal">typed
+              <a class="type typedLiteral" data-cite="RDF12-CONCEPTS#dfn-typed-literal">typed
                 literal</a>
             </li>
             <li>
@@ -1075,8 +1073,7 @@ WHERE   {
           </div>
         </div>
         <p>The regular expression language is <a data-cite="XPATH-FUNCTIONS#regex-syntax">defined by XQuery
-            1.0 and XPath 2.0 Functions and Operators</a> and is based on <a data-cite=
-                                                                             "XMLSCHEMA-2#regexs">XML Schema Regular Expressions</a>.</p>
+            1.0 and XPath 2.0 Functions and Operators</a> and is based on <a data-cite="XMLSCHEMA-2#regexs">XML Schema Regular Expressions</a>.</p>
       </section>
       <section id="restrictNumber">
         <h3>Restricting Numeric Values</h3>
@@ -1118,8 +1115,7 @@ WHERE   {
       <section id="otherTermConstraints">
         <h3>Other Term Constraints</h3>
         <p>In addition to <span class="type numeric">numeric</span> types, SPARQL supports types
-          <code>xsd:string</code>, <code>xsd:boolean</code> and <code>xsd:dateTime</code> (see <a href=
-                                                                                                  "#operandDataTypes">Operand Data Types</a>). Section <a href="#OperatorMapping">Operator
+          <code>xsd:string</code>, <code>xsd:boolean</code> and <code>xsd:dateTime</code> (see <a href="#operandDataTypes">Operand Data Types</a>). Section <a href="#OperatorMapping">Operator
             Mapping</a> describes the operators and section <a href="#SparqlOps">Function Definitions</a>
           the functions that can be that can be applied to RDF terms.</p>
       </section>
@@ -1217,9 +1213,7 @@ book:book1</pre>
             <li><code>true</code>, which is the same as <code>"true"^^xsd:boolean</code></li>
             <li><code>false</code>, which is the same as <code>"false"^^xsd:boolean</code></li>
           </ul>
-          <p>Tokens matching the productions <a href="#rINTEGER">INTEGER</a>, <a href=
-                                                                                 "#rDECIMAL">DECIMAL</a>, <a href="#rDOUBLE">DOUBLE</a> and <a href=
-                                                                                                                                               "#rBooleanLiteral">BooleanLiteral</a> are equivalent to a typed literal with the lexical
+          <p>Tokens matching the productions <a href="#rINTEGER">INTEGER</a>, <a href="#rDECIMAL">DECIMAL</a>, <a href="#rDOUBLE">DOUBLE</a> and <a href="#rBooleanLiteral">BooleanLiteral</a> are equivalent to a typed literal with the lexical
             value of the token and the corresponding datatype (<code>xsd:integer</code>,
             <code>xsd:decimal</code>, <code>xsd:double</code>, <code>xsd:boolean</code>).</p>
         </section>
@@ -1274,8 +1268,7 @@ _:b57 :q "w" .
 :x  :q _:b57 .
 _:b57 :p "v" .
           </pre>
-          <p>Abbreviated blank node syntax can be combined with other abbreviations for <a href=
-                                                                                           "#predObjLists">common subjects</a> and <a href="#objLists">common predicates</a>.</p>
+          <p>Abbreviated blank node syntax can be combined with other abbreviations for <a href="#predObjLists">common subjects</a> and <a href="#objLists">common predicates</a>.</p>
           <pre class="query nohighlight">
 [ foaf:name  ?name ;
   foaf:mbox  &lt;mailto:alice@example.org&gt; ]
@@ -1450,8 +1443,7 @@ _:b0  :p        "v" .
                 <td><code>[17]&nbsp;&nbsp;</code></td>
                 <td><code><a href="#rWhereClause">WhereClause</a></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'WHERE'</span>? <a href=
-                                                                 "#rGroupGraphPattern">GroupGraphPattern</a></code></td>
+                <td><code><span class="token">'WHERE'</span>? <a href="#rGroupGraphPattern">GroupGraphPattern</a></code></td>
               </tr>
             </tbody>
           </table>
@@ -1472,8 +1464,7 @@ _:b0  :p        "v" .
         <section id="bgpExtend">
           <h4>Extending Basic Graph Pattern Matching</h4>
           <p>SPARQL evaluates basic graph patterns using subgraph matching, which is defined for
-            simple entailment. SPARQL can be extended to other forms of entailment given <a href=
-                                                                                            "#sparqlBGPExtend">certain conditions</a> as described below. The document
+            simple entailment. SPARQL can be extended to other forms of entailment given <a href="#sparqlBGPExtend">certain conditions</a> as described below. The document
             [[[SPARQL11-ENTAILMENT]]] describes several specific entailment regimes.</p>
         </section>
       </section>
@@ -1939,8 +1930,7 @@ WHERE {
       <section id="neg-pattern">
         <h3>Filtering Using Graph Patterns</h3>
         <p>Filtering of query solutions is done within a <code>FILTER</code> expression using
-          <code>NOT EXISTS</code> and <code>EXISTS</code>. Note that the filter scope rules <a href=
-                                                                                               "#scopeFilters">apply to the whole group in which the filter appears</a>.</p>
+          <code>NOT EXISTS</code> and <code>EXISTS</code>. Note that the filter scope rules <a href="#scopeFilters">apply to the whole group in which the filter appears</a>.</p>
         <section id="neg-notexists">
           <h4>Testing For the Absence of a Pattern</h4>
           <p>The <code>NOT EXISTS</code> filter expression tests whether a graph pattern does not
@@ -2183,8 +2173,7 @@ SELECT *
         </section>
         <section id="idp899488">
           <h4>Example: Inner FILTERs</h4>
-          <p>Differences also arise because in a filter, variables from the group are <a href=
-                                                                                         "#scopeFilters">in scope</a>. In this example, the <code>FILTER</code> inside the <code>NOT
+          <p>Differences also arise because in a filter, variables from the group are <a href="#scopeFilters">in scope</a>. In this example, the <code>FILTER</code> inside the <code>NOT
               EXISTS</code> has access to the value of ?n for the solution being considered.</p>
           <pre class="data nohighlight">
 @prefix : &lt;http://example.com/&gt; .
@@ -2601,13 +2590,11 @@ SELECT ?person
         the value of the expression, which is an RDF term. The variable can then be used in the query
         and also can be returned in results.</p>
       <p>Three syntax forms allow this: the <a href="#assignment"><code>BIND</code> keyword</a>,
-        <a href="#selectExpressions">expressions in the <code>SELECT</code> clause</a> and <a href=
-                                                                                              "#groupby">expressions in the <code>GROUP BY</code> clause</a>. The assignment form is
+        <a href="#selectExpressions">expressions in the <code>SELECT</code> clause</a> and <a href="#groupby">expressions in the <code>GROUP BY</code> clause</a>. The assignment form is
         <code>(<i>expression</i> AS ?var)</code>.</p>
       <p>If the evaluation of the expression produces an error, the variable remains unbound for that
         solution but the query evaluation continues.</p>
-      <p>Data can also be directly included in a query using <a href=
-                                                                "#inline-data"><code>VALUES</code></a> for inline data.</p>
+      <p>Data can also be directly included in a query using <a href="#inline-data"><code>VALUES</code></a> for inline data.</p>
       <section id="bind">
         <h3>BIND: Assigning to Variables</h3>
         <p>The <code>BIND</code> form allows a value to be assigned to a variable from a basic graph
@@ -3011,8 +2998,7 @@ GROUP BY ?g</pre>
         sub-expression within the query.</p>
       <p>Due to the bottom-up nature of SPARQL query evaluation, the subqueries are evaluated
         logically first, and the results are projected up to the outer query.</p>
-      <p>Note that only variables projected out of the subquery will be visible, or <a href=
-                                                                                       "#variableScope">in scope</a>, to the outer query.</p>
+      <p>Note that only variables projected out of the subquery will be visible, or <a href="#variableScope">in scope</a>, to the outer query.</p>
       <h3 id="subquery-example">Example</h3>
       <p>Data:</p>
       <div class="exampleGroup">
@@ -3627,8 +3613,7 @@ WHERE {
     </section>
     <section id="solutionModifiers">
       <h2>Solution Sequences and Modifiers</h2>
-      <p>Query patterns generate an unordered collection of solutions, each <a href=
-                                                                               "#defn_sparqlSolutionMapping">solution</a> being a partial function from variables to RDF
+      <p>Query patterns generate an unordered collection of solutions, each <a href="#defn_sparqlSolutionMapping">solution</a> being a partial function from variables to RDF
         terms. These solutions are then treated as a sequence (a solution sequence), initially in no
         specific order; any sequence modifiers are then applied to create another sequence. Finally,
         this latter sequence is used to generate one of the results of a <a href="#QueryForms">SPARQL
@@ -4627,8 +4612,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <a data-cite="XPATH20#dt-typed-value">typed value</a> arguments and return types. RDF
           <code>typed literals</code> passed as arguments to these functions and operators are mapped
           to XML Schema typed values with a <a data-cite="XPATH20#dt-string-value">string value</a> of
-          the <code>lexical form</code> and an <a href=
-                                                  "http://www.w3.org/TR/xmlschema-2/#dt-atomic">atomic datatype</a> corresponding to the
+          the <code>lexical form</code> and an <a href="http://www.w3.org/TR/xmlschema-2/#dt-atomic">atomic datatype</a> corresponding to the
           <span class="type datatypeIRI">datatype IRI</span>. The returned typed values are mapped back
           to RDF <code>typed literals</code> the same way.</p>
         <p>SPARQL has additional operators which operate on specific subsets of RDF terms. When
@@ -4656,8 +4640,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <li><span class="type variable">variable</span> denotes a SPARQL variable.</li>
         </ul>
         <p>The following types are derived from <span class="type numeric">numeric</span> types and
-          are valid arguments to functions and operators taking <span class=
-                                                                      "type numeric">numeric</span> arguments:</p>
+          are valid arguments to functions and operators taking <span class="type numeric">numeric</span> arguments:</p>
         <ul>
           <li>
             <a data-cite="XMLSCHEMA-2#dt-nonPositiveInteger"><code>xsd:nonPositiveInteger</code></a>
@@ -4701,17 +4684,14 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       </section>
       <section id="evaluation">
         <h3>Filter Evaluation</h3>
-        <p>SPARQL provides a subset of the functions and operators defined by XQuery <a data-cite=
-                                                                                        "XQUERY-31#mapping">Operator Mapping</a>. XQuery 1.0 section <a data-cite=
-                                                                                                                                                     "XQUERY-31#id-expression-processing">2.2.3 Expression Processing</a> describes the invocation of
+        <p>SPARQL provides a subset of the functions and operators defined by XQuery <a data-cite="XQUERY-31#mapping">Operator Mapping</a>. XQuery 1.0 section <a data-cite="XQUERY-31#id-expression-processing">2.2.3 Expression Processing</a> describes the invocation of
           XPath functions. The following rules accommodate the differences in the data and execution
           models between XQuery and SPARQL:</p>
         <ul>
           <li>Unlike XPath/XQuery, SPARQL functions do not process node sequences. When interpreting
             the semantics of XPath functions, assume that each argument is a sequence of a single
             node.</li>
-          <li>Functions invoked with an argument of the wrong type will produce a <a data-cite=
-                                                                                     "XQUERY-31#dt-type-error">type error</a>. Effective boolean value arguments (labeled
+          <li>Functions invoked with an argument of the wrong type will produce a <a data-cite="XQUERY-31#dt-type-error">type error</a>. Effective boolean value arguments (labeled
             "xsd:boolean (EBV)" in the operator mapping table below), are coerced to
             <code>xsd:boolean</code> using the <a href="#ebv">EBV rules</a> in section 17.2.2.
           </li>
@@ -4731,8 +4711,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             branch will return an error if the other branch is TRUE and FALSE if the other branch is
             FALSE.
           </li>
-          <li>A <a href="#func-logical-or">logical-or</a> or <a href=
-                                                                "#func-logical-and">logical-and</a> that encounters errors on both branches will produce
+          <li>A <a href="#func-logical-or">logical-or</a> or <a href="#func-logical-and">logical-and</a> that encounters errors on both branches will produce
             <em>either</em> of the errors.
           </li>
         </ul>
@@ -4835,19 +4814,15 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             rules reflect the rules for <code>fn:boolean</code> applied to the argument types present
             in SPARQL queries:</p>
           <ul>
-            <li>The EBV of any literal whose type is <code>xsd:boolean</code> or <span class=
-                                                                                       "type">numeric</span> is false if the lexical form is not valid for that datatype (e.g.
+            <li>The EBV of any literal whose type is <code>xsd:boolean</code> or <span class="type">numeric</span> is false if the lexical form is not valid for that datatype (e.g.
               "abc"^^xsd:integer).</li>
             <li>If the argument is a <span class="type typedLiteral">typed literal</span> with a
               <span class="type datatype">datatype</span> of <code>xsd:boolean</code>, and it has a
               valid lexical form, the EBV is the value of that argument.</li>
             <li>If the argument is a <span class="type plainLiteral">plain literal</span> or a
-              <span class="type typedLiteral">typed literal</span> with a <span class=
-                                                                                "type datatype">datatype</span> of <code>xsd:string</code>, the EBV is false if the
+              <span class="type typedLiteral">typed literal</span> with a <span class="type datatype">datatype</span> of <code>xsd:string</code>, the EBV is false if the
               operand value has zero length; otherwise the EBV is true.</li>
-            <li>If the argument is a <span class="type numeric">numeric</span> type or a <span class=
-                                                                                               "type typedLiteral">typed literal</span> with a datatype derived from a <span class=
-                                                                                                                                                                             "type numeric">numeric</span> type, and it has a valid lexical form, the EBV is false if
+            <li>If the argument is a <span class="type numeric">numeric</span> type or a <span class="type typedLiteral">typed literal</span> with a datatype derived from a <span class="type numeric">numeric</span> type, and it has a valid lexical form, the EBV is false if
               the operand value is NaN or is numerically equal to zero; otherwise the EBV is true.</li>
             <li>All other arguments, including unbound arguments, produce a type error.</li>
           </ul>
@@ -4859,16 +4834,14 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       </section>
       <section id="OperatorMapping">
         <h3>Operator Mapping</h3>
-        <p>The SPARQL grammar identifies a set of operators (for instance, <span class=
-                                                                                 "token">&amp;&</span>, <span class="token">*</span>, <span class="token">isIRI</span>) used
+        <p>The SPARQL grammar identifies a set of operators (for instance, <span class="token">&amp;&</span>, <span class="token">*</span>, <span class="token">isIRI</span>) used
           to construct constraints. The following table associates each of these grammatical
           productions with the appropriate operands and an operator function defined by either
           [[[XPATH-FUNCTIONS]]] [[XPATH-FUNCTIONS]] or the SPARQL operators specified in <a href="#SparqlOps">section
             17.4</a>. When selecting the operator definition for a given set of parameters, the
           definition with the most specific parameters applies. For instance, when evaluating
           <code>xsd:integer = xsd:signedInt</code>, the definition for <code>=</code> with two
-          <code>numeric</code> parameters applies, rather than the one with two <span class=
-                                                                                      "type RDFterm">RDF terms</span>. The table is arranged so that the upper-most viable
+          <code>numeric</code> parameters applies, rather than the one with two <span class="type RDFterm">RDF terms</span>. The table is arranged so that the upper-most viable
           candidate is the most specific. Operators invoked without appropriate operands result in a
           type error.</p>
         <p>SPARQL follows XPath's scheme for numeric type promotions and subtype substitution for
@@ -4956,8 +4929,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th>
-                <a href="#rConditionalOrExpression" title="ConditionalOrExpression">A <span class=
-                                                                                            "FAOTtoken">||</span> B</a>
+                <a href="#rConditionalOrExpression" title="ConditionalOrExpression">A <span class="FAOTtoken">||</span> B</a>
               </th>
               <td>
                 xsd:boolean <a href="#ebv-arg">(EBV)</a>
@@ -4972,8 +4944,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th>
-                <a href="#rConditionalAndExpression" title="ConditionalAndExpression">A <span class=
-                                                                                              "FAOTtoken">&amp;&</span> B</a>
+                <a href="#rConditionalAndExpression" title="ConditionalAndExpression">A <span class="FAOTtoken">&amp;&</span> B</a>
               </th>
               <td>
                 xsd:boolean <a href="#ebv-arg">(EBV)</a>
@@ -4991,8 +4962,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
@@ -5003,35 +4973,29 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
               </th>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                 "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 0)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 0)
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
               </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                 "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
-                                                                                                                                  "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0)
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
               </th>
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
@@ -5042,8 +5006,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
               </th>
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
@@ -5054,76 +5017,62 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">!=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">!=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a>
               </th>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 0))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 0))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">!=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a>
               </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
-                                                                                                                                                                  "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">!=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a>
               </th>
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-boolean-equal">op:boolean-equal</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-boolean-equal">op:boolean-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">!=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a>
               </th>
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-dateTime-equal">op:dateTime-equal</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-dateTime-equal">op:dateTime-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr id="op_lt">
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
@@ -5134,35 +5083,29 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;</span> B</a>
               </th>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                 "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), -1)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), -1)
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;</span> B</a>
               </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                 "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
-                                                                                                                                  "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1)
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;</span> B</a>
               </th>
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
@@ -5173,8 +5116,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;</span> B</a>
               </th>
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
@@ -5185,8 +5127,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
@@ -5197,35 +5138,29 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;</span> B</a>
               </th>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                 "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 1)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 1)
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;</span> B</a>
               </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                 "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
-                                                                                                                                  "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1)
+                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1)
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;</span> B</a>
               </th>
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
@@ -5236,8 +5171,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;</span> B</a>
               </th>
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
@@ -5248,139 +5182,113 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;=</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite=
-                                                                                    "XPATH-FUNCTIONS#func-numeric-less-than">op:numeric-less-than</a>(A, B),
+                <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-less-than">op:numeric-less-than</a>(A, B),
                 <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;=</span> B</a>
               </th>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 1))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 1))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;=</span> B</a>
               </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
-                                                                                                                                                                  "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;=</span> B</a>
               </th>
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-boolean-greater-than">op:boolean-greater-than</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-boolean-greater-than">op:boolean-greater-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&lt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;=</span> B</a>
               </th>
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;=</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite=
-                                                                                    "XPATH-FUNCTIONS#func-numeric-greater-than">op:numeric-greater-than</a>(A, B),
+                <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-greater-than">op:numeric-greater-than</a>(A, B),
                 <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;=</span> B</a>
               </th>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td><span class="type simpleLiteral">simple literal</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), -1))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), -1))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;=</span> B</a>
               </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite=
-                                                                                                                          "XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class=
-                                                                                                                                                                  "FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;=</span> B</a>
               </th>
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-boolean-less-than">op:boolean-less-than</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-boolean-less-than">op:boolean-less-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">&gt;=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;=</span> B</a>
               </th>
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite=
-                                                             "XPATH-FUNCTIONS#func-dateTime-less-than">op:dateTime-less-than</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-dateTime-less-than">op:dateTime-less-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5389,8 +5297,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rMultiplicativeExpression" title="MultiplicativeExpression">A <span class=
-                                                                                              "FAOTtoken">*</span> B</a>
+                <a href="#rMultiplicativeExpression" title="MultiplicativeExpression">A <span class="FAOTtoken">*</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
@@ -5401,8 +5308,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rMultiplicativeExpression" title="MultiplicativeExpression">A <span class=
-                                                                                              "FAOTtoken">/</span> B</a>
+                <a href="#rMultiplicativeExpression" title="MultiplicativeExpression">A <span class="FAOTtoken">/</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
@@ -5414,8 +5320,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rAdditiveExpression" title="AdditiveExpression">A <span class=
-                                                                                  "FAOTtoken">+</span> B</a>
+                <a href="#rAdditiveExpression" title="AdditiveExpression">A <span class="FAOTtoken">+</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
@@ -5426,8 +5331,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th scope="row">
-                <a href="#rAdditiveExpression" title="AdditiveExpression">A <span class=
-                                                                                  "FAOTtoken">-</span> B</a>
+                <a href="#rAdditiveExpression" title="AdditiveExpression">A <span class="FAOTtoken">-</span> B</a>
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
@@ -5441,8 +5345,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th>
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
               </th>
               <td><span class="type RDFterm">RDF term</span></td>
               <td><span class="type RDFterm">RDF term</span></td>
@@ -5453,14 +5356,12 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             </tr>
             <tr>
               <th>
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class=
-                                                                                      "FAOTtoken">!=</span> B</a>
+                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a>
               </th>
               <td><span class="type RDFterm">RDF term</span></td>
               <td><span class="type RDFterm">RDF term</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a href="#func-RDFterm-equal" class=
-                                                             "SPARQLoperator">RDFterm-equal</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a href="#func-RDFterm-equal" class="SPARQLoperator">RDFterm-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5491,9 +5392,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <h4>Functional Forms</h4>
           <section id="func-bound">
             <h5>BOUND</h5>
-            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class=
-                                                                                  "operator">BOUND</span> (<span class="type">variable</span> <span class=
-                                                                                                                                                    "name">var</span>)</pre>
+            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">BOUND</span> (<span class="type">variable</span> <span class="name">var</span>)</pre>
             <p>Returns <code>true</code> if <code>var</code> is bound to a value. Returns false
               otherwise. Variables with the value NaN or INF are considered bound.</p>
             <div class="exampleGroup">
@@ -5580,9 +5479,7 @@ WHERE {
           </section>
           <section id="func-if">
             <h5>IF</h5>
-            <pre class="prototype nohighlight"><span class="return">rdfTerm</span>  <span class=
-                                                                              "operator">IF</span> (<span class="expression">expression1</span>, <span class=
-                                                                                                                                                       "expression">expression2</span>, <span class="expression">expression3</span>)</pre>
+            <pre class="prototype nohighlight"><span class="return">rdfTerm</span>  <span class="operator">IF</span> (<span class="expression">expression1</span>, <span class="expression">expression2</span>, <span class="expression">expression3</span>)</pre>
             <p>The <code>IF</code> function form evaluates the first argument, interprets it as a
               <a href="#ebv">effective boolean value</a>, then returns the value of
               <code>expression2</code> if the EBV is true, otherwise it returns the value of
@@ -5692,8 +5589,7 @@ class="expression">expression, ....</span>)
             </pre>
             <p>This function cannot be used directly in expressions. The purpose of this function is to define the semantics of the "<code>||</code>" operator.</p>
             <p>The function returns a logical <code>OR</code> of <code>left</code> and <code>right</code>. Note
-              that <span class="SPARQLoperator">logical-or</span> operates on the <a href=
-                                                                                     "#ebv">effective boolean value</a> of its arguments.</p>
+              that <span class="SPARQLoperator">logical-or</span> operates on the <a href="#ebv">effective boolean value</a> of its arguments.</p>
             <p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for the
               <code>||</code> operator's treatment of errors.</p>
           </section>
@@ -5704,8 +5600,7 @@ class="expression">expression, ....</span>)
             </pre>
             <p>This function cannot be used directly in expressions. The purpose of this function is to define the semantics of the "<code>&amp;&amp;</code>" operator.</p>
             <p>The function returns a logical <code>AND</code> of <code>left</code> and <code>right</code>. Note
-              that <span class="SPARQLoperator">logical-and</span> operates on the <a href=
-                                                                                      "#ebv">effective boolean value</a> of its arguments.</p>
+              that <span class="SPARQLoperator">logical-and</span> operates on the <a href="#ebv">effective boolean value</a> of its arguments.</p>
             <p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for the
               <code>&amp;&</code> operator's treatment of errors.</p>
           </section>
@@ -5730,15 +5625,13 @@ class="expression">expression, ....</span>)
             <ul>
               <li>
                 <span class="name">term1</span> is an <span class="IRI type">IRI</span> and <span class="name">term2</span> is an <span class="IRI type">IRI</span>
-                such that these two <span class="IRI type">IRIs</span> are equal as per the notion of <a data-cite=
-                                                                    "RDF12-CONCEPTS#dfn-iri-equality">IRI equality</a> of
+                such that these two <span class="IRI type">IRIs</span> are equal as per the notion of <a data-cite="RDF12-CONCEPTS#dfn-iri-equality">IRI equality</a> of
                 [[RDF12-CONCEPTS]].
               </li>
               <li>
                 <span class="name">term1</span> is a <span class="literal type">literal</span> and
                 <span class="name">term2</span> is a <span class="literal type">literal</span> such that
-                these two <span class="literal type">literals</span> are equal as per the notion of <a data-cite=
-                                                                            "RDF12-CONCEPTS#dfn-literal-term-equality">Literal term equality</a> of
+                these two <span class="literal type">literals</span> are equal as per the notion of <a data-cite="RDF12-CONCEPTS#dfn-literal-term-equality">Literal term equality</a> of
                 [[RDF12-CONCEPTS]].
               </li>
               <li>
@@ -5759,10 +5652,8 @@ class="expression">expression, ....</span>)
               implementation processing a query that tests for equivalence of literals with non-recognized datatypes
               (and non-identical lexical form and datatype IRI) returns an error, indicating that it
               is unable to determine whether or not the values of the compared literals are equivalent. For example, an
-              unextended implementation will produce an error when testing either <span class=
-                                                                                        "queryExcerpt"><code>"iiii"^^my:romanNumeral =
-                  "iv"^^my:romanNumeral</code></span> or <span class=
-                                                               "queryExcerpt"><code>"iiii"^^my:romanNumeral !=
+              unextended implementation will produce an error when testing either <span class="queryExcerpt"><code>"iiii"^^my:romanNumeral =
+                  "iv"^^my:romanNumeral</code></span> or <span class="queryExcerpt"><code>"iiii"^^my:romanNumeral !=
                   "iv"^^my:romanNumeral</code></span>.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
@@ -5847,11 +5738,7 @@ WHERE {
           </section>
           <section id="func-sameTerm">
             <h5>sameTerm</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">sameTerm</span> (<span class="type"><span class=
-                                                                                                                                        "type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class=
-                                                                                                                                                                                                                     "type"><span class="type RDFterm">RDF term</span></span> <span class=
-                                                                                                                                                                                                                                                                                    "name">term2</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">sameTerm</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)</pre>
             <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
               defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
             <div class="exampleGroup">
@@ -5898,9 +5785,7 @@ WHERE {
                 </div>
               </div>
             </div>
-            <p>Unlike <span class="operator">RDFterm-equal</span>, <span class=
-                                                                         "operator">sameTerm</span> can be used to test for non-equivalent <span class=
-                                                                                                                                                 "type typedLiteral">typed literals</span> with unsupported datatypes:</p>
+            <p>Unlike <span class="operator">RDFterm-equal</span>, <span class="operator">sameTerm</span> can be used to test for non-equivalent <span class="type typedLiteral">typed literals</span> with unsupported datatypes:</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 @prefix :          &lt;http://example.org/WMterms#&gt; .
@@ -6122,9 +6007,7 @@ WHERE {
           </section>
           <section id="func-isBlank">
             <h5>isBLANK</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">isBLANK</span> (<span class="type"><span class=
-                                                                                                                                       "type">RDF term</span></span> <span class="name">term</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">isBLANK</span> (<span class="type"><span class="type">RDF term</span></span> <span class="name">term</span>)</pre>
             <p>Returns <code>true</code> if <code>term</code> is a <span class="type bNode">blank
                 node</span>. Returns <code>false</code> otherwise.</p>
             <div class="exampleGroup">
@@ -6178,11 +6061,8 @@ WHERE {
           </section>
           <section id="func-isLiteral">
             <h5>isLITERAL</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">isLITERAL</span> (<span class="type"><span class=
-                                                                                                                                         "type">RDF term</span></span> <span class="name">term</span>)</pre>
-            <p>Returns <code>true</code> if <code>term</code> is a <span class=
-                                                                         "type literal">literal</span>. Returns <code>false</code> otherwise.</p>
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">isLITERAL</span> (<span class="type"><span class="type">RDF term</span></span> <span class="name">term</span>)</pre>
+            <p>Returns <code>true</code> if <code>term</code> is a <span class="type literal">literal</span>. Returns <code>false</code> otherwise.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 @prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
@@ -6227,9 +6107,7 @@ WHERE {
           </section>
           <section id="func-isNumeric">
             <h5>isNUMERIC</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">isNUMERIC</span> (<span class="type"><span class=
-                                                                                                                                         "type">RDF term</span></span> <span class="name">term</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">isNUMERIC</span> (<span class="type"><span class="type">RDF term</span></span> <span class="name">term</span>)</pre>
             <p>Returns <code>true</code> if <code>term</code> is a numeric value. Returns
               <code>false</code> otherwise. <code>term</code> is numeric if it has an appropriate
               datatype (see the section <a href="#operandDataTypes">Operand Data Types</a>) and has a
@@ -6315,13 +6193,10 @@ WHERE {
           </section>
           <section id="func-lang">
             <h5>LANG</h5>
-            <pre class="prototype nohighlight"> <span class="return"><span class=
-                                                               "type">simple literal</span></span>  <span class="operator">LANG</span> (<span class=
-                                                                                                                                              "type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
+            <pre class="prototype nohighlight"> <span class="return"><span class="type">simple literal</span></span>  <span class="operator">LANG</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
             </pre>
             <p>Returns the <span class="type langTag">language tag</span> of <code>ltrl</code>, if it
-              has one. It returns <code>""</code> if <code>ltrl</code> has no <span class=
-                                                                                    "type langTag">language tag</span>. Note that the RDF data model does not include
+              has one. It returns <code>""</code> if <code>ltrl</code> has no <span class="type langTag">language tag</span>. Note that the RDF data model does not include
               literals with an empty <span class="type langTag">language tag</span>.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
@@ -6363,9 +6238,7 @@ WHERE {
           </section>
           <section id="func-datatype">
             <h5>DATATYPE</h5>
-            <pre class="prototype nohighlight"> <span class="return"><span class=
-                                                               "type IRI">iri</span></span>  <span class="operator">DATATYPE</span> (<span class=
-                                                                                                                                           "type"><span class="type">literal</span></span> <span class="name">literal</span>)
+            <pre class="prototype nohighlight"> <span class="return"><span class="type IRI">iri</span></span>  <span class="operator">DATATYPE</span> (<span class="type"><span class="type">literal</span></span> <span class="name">literal</span>)
             </pre>
             <p>Returns the <span class="type datatypeIRI">datatype IRI</span> of a
               <code>literal</code>.</p>
@@ -6435,21 +6308,16 @@ WHERE {
           </section>
           <section id="func-iri">
             <h5>IRI</h5>
-            <pre class="prototype nohighlight"> <span class="return">iri</span>  <span class=
-                                                                           "operator">IRI</span>(<code>simple literal</code>)
-              <span class="return">iri</span>  <span class="operator">IRI</span>(<span class=
-                                                                                       "type">xsd:string</span>)
+            <pre class="prototype nohighlight"> <span class="return">iri</span>  <span class="operator">IRI</span>(<code>simple literal</code>)
+              <span class="return">iri</span>  <span class="operator">IRI</span>(<span class="type">xsd:string</span>)
               <span class="return">iri</span>  <span class="operator">IRI</span>(<span class="type">iri</span>)
               <span class="return">iri</span>  <span class="operator">URI</span>(<code>simple literal</code>)
-              <span class="return">iri</span>  <span class="operator">URI</span>(<span class=
-                                                                                       "type">xsd:string</span>)
-              <span class="return">iri</span>  <span class="operator">URI</span>(<span class=
-                                                                                       "type">iri</span>)</pre>
+              <span class="return">iri</span>  <span class="operator">URI</span>(<span class="type">xsd:string</span>)
+              <span class="return">iri</span>  <span class="operator">URI</span>(<span class="type">iri</span>)</pre>
             <p>The <code>IRI</code> function constructs an IRI by resolving the string argument (see
               [[RFC3986]] and [[RFC3987]] or any later RFC that superceeds RFC 3986 or RFC 3987). The
               IRI is resolved against the base IRI of the query and must result in an absolute IRI.</p>
-            <p>The <code>URI</code> function is a synonym for <a href=
-                                                                 "#func-iri"><code>IRI</code></a>.</p>
+            <p>The <code>URI</code> function is a synonym for <a href="#func-iri"><code>IRI</code></a>.</p>
             <p>If the function is passed an IRI, it returns the IRI unchanged.</p>
             <p>Passing any RDF term other than a simple literal, xsd:string or an IRI is an
               error.</p>
@@ -6473,27 +6341,21 @@ WHERE {
           </section>
           <section id="func-bnode">
             <h5>BNODE</h5>
-            <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class=
-                                                                                 "operator">BNODE</span>()</pre>
-            <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class=
-                                                                                 "operator">BNODE</span>(<span class="type">simple literal</span>)</pre>
-            <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class=
-                                                                                 "operator">BNODE</span>(<span class="type">xsd:string</span>)</pre>
+            <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class="operator">BNODE</span>()</pre>
+            <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class="operator">BNODE</span>(<span class="type">simple literal</span>)</pre>
+            <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class="operator">BNODE</span>(<span class="type">xsd:string</span>)</pre>
             <p>The <code>BNODE</code> function constructs a blank node that is distinct from all
               blank nodes in the dataset being queried and distinct from all blank nodes created by
               calls to this constructor for other query solutions. If the no argument form is used,
               every call results in a distinct blank node. If the form with a simple literal is used,
               every call results in distinct blank nodes for different simple literals, and the same
-              blank node for calls with the same simple literal within expressions for one <a href=
-                                                                                              "#defn_sparqlSolutionMapping">solution mapping</a>.</p>
+              blank node for calls with the same simple literal within expressions for one <a href="#defn_sparqlSolutionMapping">solution mapping</a>.</p>
             <p>This functionality is compatible with the <a href="#templatesWithBNodes">treatment of
                 blank nodes in SPARQL CONSTRUCT templates</a>.</p>
           </section>
           <section id="func-strdt">
             <h5>STRDT</h5>
-            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class=
-                                                                              "operator">STRDT</span>(<span class="type">simple literal</span> lexicalForm, <span class=
-                                                                                                                                                                  "type">IRI</span> datatypeIRI)</pre>
+            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRDT</span>(<span class="type">simple literal</span> lexicalForm, <span class="type">IRI</span> datatypeIRI)</pre>
             <p>The <code>STRDT</code> function constructs a literal with lexical form and type as
               specified by the arguments.</p>
             <div class="result">
@@ -6513,10 +6375,7 @@ WHERE {
           </section>
           <section id="func-strlang">
             <h5>STRLANG</h5>
-            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class=
-                                                                              "operator">STRLANG</span>(<span class=
-                                                                                                              "type">simple literal</span> lexicalForm, <span class=
-                                                                                                                                                              "type">simple literal</span> langTag)</pre>
+            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRLANG</span>(<span class="type">simple literal</span> lexicalForm, <span class="type">simple literal</span> langTag)</pre>
             <p>The <code>STRLANG</code> function constructs a literal with lexical form and language
               tag as specified by the arguments.</p>
             <div class="result">
@@ -6532,8 +6391,7 @@ WHERE {
           </section>
           <section id="func-uuid">
             <h5>UUID</h5>
-            <pre class="prototype nohighlight"><span class="return">iri</span>  <span class=
-                                                                          "operator">UUID</span>()</pre>
+            <pre class="prototype nohighlight"><span class="return">iri</span>  <span class="operator">UUID</span>()</pre>
             <p>Return a fresh IRI from the [[[RFC4122]]]. Each call of <code>UUID()</code> returns a
               different UUID. It must not be the "nil" UUID (all zeroes). The variant and version of
               the UUID is implementation dependent.</p>
@@ -6550,8 +6408,7 @@ WHERE {
           </section>
           <section id="func-struuid">
             <h5>STRUUID</h5>
-            <pre class="prototype nohighlight"><span class="return">simple literal</span>  <span class=
-                                                                                     "operator">STRUUID</span>()</pre>
+            <pre class="prototype nohighlight"><span class="return">simple literal</span>  <span class="operator">STRUUID</span>()</pre>
             <p>Return a string that is the scheme specific part of UUID. That is, as a simple
               literal, the result of generating a UUID, converting to a simple literal and removing the
               initial <code>urn:uuid:</code>.</p>
@@ -6573,8 +6430,7 @@ WHERE {
             <h5>Strings in SPARQL Functions</h5>
             <section id="func-string">
               <h6>String arguments</h6>
-              <p>Certain functions (e.g. <a href="#func-regex">REGEX</a>, <a href=
-                                                                             "#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>) take a <code>string
+              <p>Certain functions (e.g. <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>) take a <code>string
                   literal</code> as an argument and accept a simple literal, a plain literal with
                 language tag, or a literal with datatype xsd:string. They then act on the lexcial form
                 of the literal.</p>
@@ -6583,9 +6439,7 @@ WHERE {
             </section>
             <section id="func-arg-compatibility">
               <h6>Argument Compatibility Rules</h6>
-              <p>The functions <a href="#func-strstarts">STRSTARTS</a>, <a href=
-                                                                           "#func-strends">STRENDS</a>, <a href="#func-contains">CONTAINS</a>, <a href=
-                                                                                                                                                  "#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a> take two
+              <p>The functions <a href="#func-strstarts">STRSTARTS</a>, <a href="#func-strends">STRENDS</a>, <a href="#func-contains">CONTAINS</a>, <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a> take two
                 arguments. These arguments must be compatible otherwise invocation of one of these
                 functions raises an error.</p>
               <p>Compatibility of two arguments is defined as:</p>
@@ -6666,18 +6520,15 @@ WHERE {
               <h6>String Literal Return Type</h6>
               <p>Functions that return a string literal do so with the string literal of the same
                 kind as the first argument (simple literal, plain literal with same language tag,
-                xsd:string). This includes <a href="#func-substr">SUBSTR</a>, <a href=
-                                                                                 "#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.</p>
+                xsd:string). This includes <a href="#func-substr">SUBSTR</a>, <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.</p>
               <p>The function <a href="#func-concat">CONCAT</a> returns a string literal based on the
                 details of all its arguments.</p>
             </section>
           </section>
           <section id="func-strlen">
             <h5>STRLEN</h5>
-            <pre class="prototype nohighlight"><span class="return">xsd:integer</span>  <span class=
-                                                                                  "operator">STRLEN</span>(<span class="type">string literal</span> str)</pre>
-            <p>The <code>strlen</code> function corresponds to the XPath <a data-cite=
-                                                                            "XPATH-FUNCTIONS#func-string-length">fn:string-length</a> function and returns an
+            <pre class="prototype nohighlight"><span class="return">xsd:integer</span>  <span class="operator">STRLEN</span>(<span class="type">string literal</span> str)</pre>
+            <p>The <code>strlen</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-string-length">fn:string-length</a> function and returns an
               <code>xsd:integer</code> equal to the length in characters of the lexical form of the
               literal.</p>
             <div class="result">
@@ -6701,15 +6552,9 @@ WHERE {
           </section>
           <section id="func-substr">
             <h5>SUBSTR</h5>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class=
-                                                                                     "operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class=
-                                                                                                                                                                     "type">xsd:integer</span> startingLoc)</pre>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class=
-                                                                                     "operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class=
-                                                                                                                                                                     "type">xsd:integer</span> startingLoc, <span class=
-                                                                                                                                                                                                                  "type">xsd:integer</span> length)</pre>
-            <p>The <code>substr</code> function corresponds to the XPath <a data-cite=
-                                                                            "XPATH-FUNCTIONS#func-substring">fn:substring</a> function and returns a literal of the
+            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc)</pre>
+            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc, <span class="type">xsd:integer</span> length)</pre>
+            <p>The <code>substr</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-substring">fn:substring</a> function and returns a literal of the
               same kind (simple literal, literal with language tag, <code>xsd:string</code> typed
               literal) as the <code>source</code> input parameter but with a lexical form formed from
               the substring of the lexcial form of the source.</p>
@@ -6749,10 +6594,8 @@ WHERE {
           </section>
           <section id="func-ucase">
             <h5>UCASE</h5>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class=
-                                                                                     "operator">UCASE</span>(<span class="type">string literal</span> str)</pre>
-            <p>The <code>UCASE</code> function corresponds to the XPath <a data-cite=
-                                                                           "XPATH-FUNCTIONS#func-upper-case">fn:upper-case</a> function. It returns a string literal
+            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">UCASE</span>(<span class="type">string literal</span> str)</pre>
+            <p>The <code>UCASE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-upper-case">fn:upper-case</a> function. It returns a string literal
               whose lexical form is the upper case of the lexcial form of the argument.</p>
             <div class="result">
               <table>
@@ -6775,10 +6618,8 @@ WHERE {
           </section>
           <section id="func-lcase">
             <h5>LCASE</h5>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class=
-                                                                                     "operator">LCASE</span>(<span class="type">string literal</span> str)</pre>
-            <p>The <code>LCASE</code> function corresponds to the XPath <a data-cite=
-                                                                           "XPATH-FUNCTIONS#func-lower-case">fn:lower-case</a> function. It returns a string literal
+            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">LCASE</span>(<span class="type">string literal</span> str)</pre>
+            <p>The <code>LCASE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-lower-case">fn:lower-case</a> function. It returns a string literal
               whose lexical form is the lower case of the lexcial form of the argument.</p>
             <div class="result">
               <table>
@@ -6801,11 +6642,8 @@ WHERE {
           </section>
           <section id="func-strstarts">
             <h5>STRSTARTS</h5>
-            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class=
-                                                                                  "operator">STRSTARTS</span>(<span class="type">string literal</span> arg1, <span class=
-                                                                                                                                                                   "type">string literal</span> arg2)</pre>
-            <p>The <code>STRSTARTS</code> function corresponds to the XPath <a data-cite=
-                                                                               "XPATH-FUNCTIONS#func-starts-with">fn:starts-with</a> function. The arguments must be
+            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">STRSTARTS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
+            <p>The <code>STRSTARTS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-starts-with">fn:starts-with</a> function. The arguments must be
               <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
               raised.</p>
             <p>For such input pairs, the function returns true if the lexical form of
@@ -6848,11 +6686,8 @@ WHERE {
           </section>
           <section id="func-strends">
             <h5>STRENDS</h5>
-            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class=
-                                                                                  "operator">STRENDS</span>(<span class="type">string literal</span> arg1, <span class=
-                                                                                                                                                                 "type">string literal</span> arg2)</pre>
-            <p>The <code>STRENDS</code> function corresponds to the XPath <a data-cite=
-                                                                             "XPATH-FUNCTIONS#func-ends-with">fn:ends-with</a> function. The arguments must be
+            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">STRENDS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
+            <p>The <code>STRENDS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-ends-with">fn:ends-with</a> function. The arguments must be
               <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
               raised.</p>
             <p>For such input pairs, the function returns true if the lexical form of
@@ -6895,12 +6730,8 @@ WHERE {
           </section>
           <section id="func-contains">
             <h5>CONTAINS</h5>
-            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class=
-                                                                                  "operator">CONTAINS</span>(<span class="type">string literal</span> arg1, <span class=
-                                                                                                                                                                  "type">string literal</span> arg2)</pre>
-            <p>The <code>CONTAINS</code> function corresponds to the XPath <a data-cite=
-                                                                              "XPATH-FUNCTIONS#func-contains">fn:contains</a>. The arguments must be <a href=
-                                                                                                                                                        "#func-arg-compatibility">argument compatible</a> otherwise an error is raised.</p>
+            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">CONTAINS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
+            <p>The <code>CONTAINS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-contains">fn:contains</a>. The arguments must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is raised.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -6938,11 +6769,8 @@ WHERE {
           </section>
           <section id="func-strbefore">
             <h5>STRBEFORE</h5>
-            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class=
-                                                                              "operator">STRBEFORE</span>(<span class="type">string literal</span> arg1, <span class=
-                                                                                                                                                               "type">string literal</span> arg2)</pre>
-            <p>The <code>STRBEFORE</code> function corresponds to the XPath <a data-cite=
-                                                                               "XPATH-FUNCTIONS#func-substring-before">fn:substring-before</a> function. The arguments
+            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRBEFORE</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
+            <p>The <code>STRBEFORE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-substring-before">fn:substring-before</a> function. The arguments
               must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
               raised.</p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
@@ -6998,11 +6826,8 @@ WHERE {
           </section>
           <section id="func-strafter">
             <h5>STRAFTER</h5>
-            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class=
-                                                                              "operator">STRAFTER</span>(<span class="type">string literal</span> arg1, <span class=
-                                                                                                                                                              "type">string literal</span> arg2)</pre>
-            <p>The <code>STRAFTER</code> function corresponds to the XPath <a data-cite=
-                                                                              "XPATH-FUNCTIONS#func-substring-after">fn:substring-after</a> function. The arguments
+            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRAFTER</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
+            <p>The <code>STRAFTER</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-substring-after">fn:substring-after</a> function. The arguments
               must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
               raised.</p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
@@ -7059,13 +6884,10 @@ WHERE {
           </section>
           <section id="func-encode">
             <h5>ENCODE_FOR_URI</h5>
-            <pre class="prototype nohighlight"><span class="return">simple literal</span>  <span class=
-                                                                                     "operator">ENCODE_FOR_URI</span>(<span class="type">string literal</span> ltrl)</pre>
-            <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite=
-                                                                                    "XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a simple
+            <pre class="prototype nohighlight"><span class="return">simple literal</span>  <span class="operator">ENCODE_FOR_URI</span>(<span class="type">string literal</span> ltrl)</pre>
+            <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a simple
               literal with the lexical form obtained from the lexical form of its input after
-              translating reserved characters according to the <a data-cite=
-                                                                  "XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a>
+              translating reserved characters according to the <a data-cite="XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a>
               function.</p>
             <div class="result">
               <table>
@@ -7088,12 +6910,8 @@ WHERE {
           </section>
           <section id="func-concat">
             <h5>CONCAT</h5>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class=
-                                                                                     "operator">CONCAT</span>(<span class=
-                                                                                                                    "type">string literal</span> <span>ltrl<sub>1</sub></span> ... <span class=
-                                                                                                                                                                                         "type">string literal</span> <span>ltrl<sub>n</sub></span>)</pre>
-            <p>The <code>CONCAT</code> function corresponds to the XPath <a data-cite=
-                                                                            "XPATH-FUNCTIONS#func-concat">fn:concat</a> function. The function accepts string
+            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">CONCAT</span>(<span class="type">string literal</span> <span>ltrl<sub>1</sub></span> ... <span class="type">string literal</span> <span>ltrl<sub>n</sub></span>)</pre>
+            <p>The <code>CONCAT</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-concat">fn:concat</a> function. The function accepts string
               literals as arguments.</p>
             <p>The lexical form of the returned literal is obtained by concatenating the lexical
               forms of its inputs. If all input literals are typed literals of type
@@ -7134,11 +6952,7 @@ WHERE {
           </section>
           <section id="func-langMatches">
             <h5>langMATCHES</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">langMatches</span> (<span class="type"><span class=
-                                                                                                                                           "type">simple literal</span></span> <span class="name">language-tag</span>, <span class=
-                                                                                                                                                                                                                             "type"><span class="type">simple literal</span></span> <span class=
-                                                                                                                                                                                                                                                                                          "name">language-range</span>)
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">langMatches</span> (<span class="type"><span class="type">simple literal</span></span> <span class="name">language-tag</span>, <span class="type"><span class="type">simple literal</span></span> <span class="name">language-range</span>)
             </pre>
             <p>Returns <code>true</code> if <code>language-tag</code> (first argument) matches
               <code>language-range</code> (second argument) per the basic filtering scheme defined in
@@ -7219,15 +7033,8 @@ WHERE {
           </section>
           <section id="func-regex">
             <h5>REGEX</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class=
-                                                                                   "operator">REGEX</span> (<span class="type"><span class=
-                                                                                                                                     "type">string literal</span></span> <span class="name">text</span>, <span class=
-                                                                                                                                                                                                               "type"><span class="type">simple literal</span></span> <span class="name">pattern</span>)
-              <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class=
-                                                                                                  "type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class=
-                                                                                                                                                                                               "type"><span class="type">simple literal</span></span> <span class=
-                                                                                                                                                                                                                                                            "name">pattern</span>, <span class="type"><span class=
-                                                                                                                                                                                                                                                                                                            "type">simple literal</span></span> <span class="name">flags</span>)
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">simple literal</span></span> <span class="name">pattern</span>)
+              <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">simple literal</span></span> <span class="name">pattern</span>, <span class="type"><span class="type">simple literal</span></span> <span class="name">flags</span>)
             </pre>
             <p>Invokes the XPath <a data-cite="XPATH-FUNCTIONS#func-matches">fn:matches</a> function to match
               <code>text</code> against a regular expression <code>pattern</code>. The regular
@@ -7268,22 +7075,11 @@ WHERE {
           </section>
           <section id="func-replace">
             <h5>REPLACE</h5>
-            <pre class="prototype nohighlight"> <span class="return"><span class=
-                                                               "type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class=
-                                                                                                                                                 "type"><span class="type">string literal</span></span> arg, <span class=
-                                                                                                                                                                                                                   "type"><span class="type">simple literal</span></span> pattern, <span class=
-                                                                                                                                                                                                                                                                                         "type"><span class="type">simple literal</span></span> replacement )
-              <span class="return"><span class="type">string literal</span></span>  <span class=
-                                                                                          "operator">REPLACE</span> (<span class="type"><span class=
-                                                                                                                                              "type">string literal</span></span> arg, <span class="type"><span class=
-                                                                                                                                                                                                                "type">simple literal</span></span> pattern, <span class="type"><span class=
-                                                                                                                                                                                                                                                                                      "type">simple literal</span></span> replacement,  <span class="type"><span class=
-                                                                                                                                                                                                                                                                                                                                                                 "type">simple literal</span></span> flags)</pre>
-            <p>The <code>REPLACE</code> function corresponds to the XPath <a data-cite=
-                                                                             "XPATH-FUNCTIONS#func-replace">fn:replace</a> function. It replaces each non-overlapping
+            <pre class="prototype nohighlight"> <span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">simple literal</span></span> pattern, <span class="type"><span class="type">simple literal</span></span> replacement )
+              <span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">simple literal</span></span> pattern, <span class="type"><span class="type">simple literal</span></span> replacement,  <span class="type"><span class="type">simple literal</span></span> flags)</pre>
+            <p>The <code>REPLACE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-replace">fn:replace</a> function. It replaces each non-overlapping
               occurrence of the regular expression <code>pattern</code> with the replacement string.
-              Regular expession matching may involve modifier flags. See <a href=
-                                                                            "#func-regex">REGEX</a>.</p>
+              Regular expession matching may involve modifier flags. See <a href="#func-regex">REGEX</a>.</p>
             <div class="result">
               <table class="resultTable">
                 <tbody>
@@ -7308,14 +7104,10 @@ WHERE {
           <h4>Functions on Numerics</h4>
           <section id="func-abs">
             <h5>ABS</h5>
-            <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class=
-                                                                               "operator">ABS</span> (<span class="type"><span class=
-                                                                                                                               "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class="operator">ABS</span> (<span class="type"><span class="type numeric">numeric</span></span> <span class="name">term</span>)</pre>
             <p>Returns the absolute value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
-            <p>This function is the same as <a data-cite=
-                                               "XPATH-FUNCTIONS#func-abs">fn:numeric-abs</a> for terms with a datatype from <a data-cite=
-                                                                                                                               "XPATH-DATAMODEL#">XDM</a>.</p>
+            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS#func-abs">fn:numeric-abs</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7333,15 +7125,11 @@ WHERE {
           </section>
           <section id="func-round">
             <h5>ROUND</h5>
-            <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class=
-                                                                                           "operator">ROUND</span> (<span class="type"><span class=
-                                                                                                                                             "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class="operator">ROUND</span> (<span class="type"><span class="type numeric">numeric</span></span> <span class="name">term</span>)</pre>
             <p>Returns the number with no fractional part that is closest to the argument. If there
               are two such numbers, then the one that is closest to positive infinity is returned. An
               error is raised if <code>arg</code> is not a numeric value.</p>
-            <p>This function is the same as <a data-cite=
-                                               "XPATH-FUNCTIONS#func-round">fn:numeric-round</a> for terms with a datatype from <a data-cite=
-                                                                                                                                   "XPATH-DATAMODEL#">XDM</a>.</p>
+            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS#func-round">fn:numeric-round</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7363,14 +7151,11 @@ WHERE {
           </section>
           <section id="func-ceil">
             <h5>CEIL</h5>
-            <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class=
-                                                                                           "operator">CEIL</span> (<span class="type"><span class=
-                                                                                                                                            "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class="operator">CEIL</span> (<span class="type"><span class="type numeric">numeric</span></span> <span class="name">term</span>)</pre>
             <p>Returns the smallest (closest to negative infinity) number with no fractional part
               that is not less than the value of <code>arg</code>. An error is raised if
               <code>arg</code> is not a numeric value.</p>
-            <p>This function is the same as <a data-cite=
-                                               "XPATH-FUNCTIONS#func-ceiling">fn:numeric-ceil</a> for terms with a datatype from
+            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS#func-ceiling">fn:numeric-ceil</a> for terms with a datatype from
               <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
@@ -7389,15 +7174,11 @@ WHERE {
           </section>
           <section id="func-floor">
             <h5>FLOOR</h5>
-            <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class=
-                                                                                           "operator">FLOOR</span> (<span class="type"><span class=
-                                                                                                                                             "type numeric">numeric</span></span> <span class="name">term</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">numeric</span>  <span class="operator">FLOOR</span> (<span class="type"><span class="type numeric">numeric</span></span> <span class="name">term</span>)</pre>
             <p>Returns the largest (closest to positive infinity) number with no fractional part that
               is not greater than the value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
-            <p>This function is the same as <a data-cite=
-                                               "XPATH-FUNCTIONS#func-floor">fn:numeric-floor</a> for terms with a datatype from <a data-cite=
-                                                                                                                                   "XPATH-DATAMODEL#">XDM</a>.</p>
+            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS#func-floor">fn:numeric-floor</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7415,8 +7196,7 @@ WHERE {
           </section>
           <section id="idp2130040">
             <h5>RAND</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:double</span>  <span class=
-                                                                                              "operator">RAND</span> ( )</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:double</span>  <span class="operator">RAND</span> ( )</pre>
             <p>Returns a pseudo-random number between 0 (inclusive) and 1.0e0 (exclusive). Different
               numbers can be produced every time this function is invoked. Numbers should be produced
               with approximately equal probability.</p>
@@ -7436,8 +7216,7 @@ WHERE {
           <h4>Functions on Dates and Times</h4>
           <section id="func-now">
             <h5>NOW</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:dateTime</span>  <span class=
-                                                                                                "operator">NOW</span> ()</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:dateTime</span>  <span class="operator">NOW</span> ()</pre>
             <p>Returns an XSD dateTime value for the current query execution. All calls to this
               function in any one query execution must return the same value. The exact moment returned
               is not specified.</p>
@@ -7454,12 +7233,9 @@ WHERE {
           </section>
           <section id="func-year">
             <h5>YEAR</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                               "operator">YEAR</span> (<span class="type"><span class=
-                                                                                                                                                "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">YEAR</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the year part of <code>arg</code> as an integer.</p>
-            <p>This function corresponds to <a data-cite=
-                                               "XPATH-FUNCTIONS#func-year-from-dateTime">fn:year-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-year-from-dateTime">fn:year-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7473,12 +7249,9 @@ WHERE {
           </section>
           <section id="func-month">
             <h5>MONTH</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                               "operator">MONTH</span> (<span class="type"><span class=
-                                                                                                                                                 "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">MONTH</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the month part of <code>arg</code> as an integer.</p>
-            <p>This function corresponds to <a data-cite=
-                                               "XPATH-FUNCTIONS#func-month-from-dateTime">fn:month-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-month-from-dateTime">fn:month-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7492,12 +7265,9 @@ WHERE {
           </section>
           <section id="func-day">
             <h5>DAY</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                               "operator">DAY</span> (<span class="type"><span class=
-                                                                                                                                               "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">DAY</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the day part of <code>arg</code> as an integer.</p>
-            <p>This function corresponds to <a data-cite=
-                                               "XPATH-FUNCTIONS#func-day-from-dateTime">fn:day-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-day-from-dateTime">fn:day-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7511,13 +7281,10 @@ WHERE {
           </section>
           <section id="func-hours">
             <h5>HOURS</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                               "operator">HOURS</span> (<span class="type"><span class=
-                                                                                                                                                 "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">HOURS</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the hours part of <code>arg</code> as an integer. The value is as given in the
               lexical form of the XSD dateTime.</p>
-            <p>This function corresponds to <a data-cite=
-                                               "XPATH-FUNCTIONS#func-hours-from-dateTime">fn:hours-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-hours-from-dateTime">fn:hours-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7531,13 +7298,10 @@ WHERE {
           </section>
           <section id="func-minutes">
             <h5>MINUTES</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class=
-                                                                                               "operator">MINUTES</span> (<span class="type"><span class=
-                                                                                                                                                   "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">MINUTES</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the minutes part of the lexical form of <code>arg</code>. The value is as
               given in the lexical form of the XSD dateTime.</p>
-            <p>This function corresponds to <a data-cite=
-                                               "XPATH-FUNCTIONS#func-minutes-from-dateTime">fn:minutes-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-minutes-from-dateTime">fn:minutes-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7551,12 +7315,9 @@ WHERE {
           </section>
           <section id="func-seconds">
             <h5>SECONDS</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:decimal</span>  <span class=
-                                                                                               "operator">SECONDS</span> (<span class="type"><span class=
-                                                                                                                                                   "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:decimal</span>  <span class="operator">SECONDS</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
               <p>Returns the seconds part of the lexical form of <code>arg</code>.</p>
-              <p>This function corresponds to <a data-cite=
-                                                 "XPATH-FUNCTIONS#func-seconds-from-dateTime">fn:seconds-from-dateTime</a>.</p>
+              <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-seconds-from-dateTime">fn:seconds-from-dateTime</a>.</p>
               <div class="result">
                 <table>
                   <tbody>
@@ -7570,13 +7331,10 @@ WHERE {
           </section>
           <section id="func-timezone">
             <h5>TIMEZONE</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:dayTimeDuration</span>  <span class=
-                                                                                           "operator">TIMEZONE</span> (<span class="type"><span class=
-                                                                                                                                                "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">xsd:dayTimeDuration</span>  <span class="operator">TIMEZONE</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the timezone part of <code>arg</code> as an xsd:dayTimeDuration. Raises an
               error if there is no timezone.</p>
-            <p>This function corresponds to <a data-cite=
-                                               "XPATH-FUNCTIONS#func-timezone-from-dateTime">fn:timezone-from-dateTime</a> except for
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-timezone-from-dateTime">fn:timezone-from-dateTime</a> except for
               the treatment of literals with no timezone.</p>
             <div class="result">
               <table>
@@ -7599,9 +7357,7 @@ WHERE {
           </section>
           <section id="func-tz">
             <h5>TZ</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">TZ</span> (<span class="type"><span class=
-                                                                                                                                     "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">TZ</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the timezone part of <code>arg</code> as a simple literal. Returns the empty
               string if there is no timezone.</p>
             <div class="result">
@@ -7628,12 +7384,8 @@ WHERE {
           <h4>Hash Functions</h4>
           <section id="func-md5">
             <h5>MD5</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">MD5</span> (<span class="type"><span class=
-                                                                                                                                      "type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">MD5</span> (<span class="type"><span class=
-                                                                                                                                      "type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">MD5</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">MD5</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
             <p>Returns the MD5 checksum, as a hex digit string, calculated on the UTF-8
               representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
@@ -7655,12 +7407,8 @@ WHERE {
           </section>
           <section id="func-sha1">
             <h5>SHA1</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">SHA1</span> (<span class="type"><span class=
-                                                                                                                                       "type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">SHA1</span> (<span class="type"><span class=
-                                                                                                                                       "type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA1</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA1</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
             <p>Returns the SHA1 checksum, as a hex digit string, calculated on the UTF-8
               representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
@@ -7682,12 +7430,8 @@ WHERE {
           </section>
           <section id="func-sha256">
             <h5>SHA256</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">SHA256</span> (<span class="type"><span class=
-                                                                                                                                         "type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">SHA256</span> (<span class="type"><span class=
-                                                                                                                                         "type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA256</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA256</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
             <p>Returns the SHA256 checksum, as a hex digit string, calculated on the UTF-8
               representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
@@ -7711,12 +7455,8 @@ WHERE {
           </section>
           <section id="func-sha384">
             <h5>SHA384</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">SHA384</span> (<span class="type"><span class=
-                                                                                                                                         "type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">SHA384</span> (<span class="type"><span class=
-                                                                                                                                         "type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA384</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA384</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
             <p>Returns the SHA384 checksum, as a hex digit string, calculated on the UTF-8
               representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
@@ -7740,12 +7480,8 @@ WHERE {
           </section>
           <section id="func-sha512">
             <h5>SHA512</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">SHA512</span> (<span class="type"><span class=
-                                                                                                                                         "type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class=
-                                                                                      "operator">SHA512</span> (<span class="type"><span class=
-                                                                                                                                         "type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA512</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
+            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA512</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
             <p>Returns the SHA512 checksum, as a hex digit string, calculated on the UTF-8
               representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
@@ -7790,8 +7526,7 @@ WHERE {
             literal to the target datatype.
           </li>
         </ul>
-        <p>The table below summarizes the casting operations that are always allowed (<span class=
-                                                                                            "castY">Y</span>), never allowed (<span class="castN">N</span>) and dependent on the lexical
+        <p>The table below summarizes the casting operations that are always allowed (<span class="castY">Y</span>), never allowed (<span class="castN">N</span>) and dependent on the lexical
           value (<span class="castM">M</span>). For example, a casting operation from an
           <code>xsd:string</code> (the first row) to an <code>xsd:float</code> (the second column) is
           dependent on the lexical value (<span class="castM">M</span>).</p>
@@ -7998,8 +7733,7 @@ WHERE {
           that identifies the function.</p>
         <p>SPARQL queries using extension functions are likely to have limited interoperability.</p>
         <p>As an example, consider a function called <code>func:even</code>:</p>
-        <pre class="prototype nohighlight"> <code>xsd:boolean</code>   <code>func:even</code> (<code><span class=
-                                                                                               "type numeric">numeric</span></code> <code>value</code>)
+        <pre class="prototype nohighlight"> <code>xsd:boolean</code>   <code>func:even</code> (<code><span class="type numeric">numeric</span></code> <code>value</code>)
         </pre>
         <div class="exampleGroup">
           <div class="queryGroup">
@@ -8019,11 +7753,7 @@ WHERE {
         <p>For a second example, consider a function <code>aGeo:distance</code> that calculates the
           distance between two points, which is used here to find the places near Grenoble:</p>
         <pre class="prototype nohighlight">
-          <code>xsd:double</code>   <code>aGeo:distance</code> (<code><span class=
-                                                                            "type numeric">numeric</span></code> <code>x1</code>, <code><span class=
-                                                                                                                                              "type numeric">numeric</span></code> <code>y1</code>, <code><span class=
-                                                                                                                                                                                                                "type numeric">numeric</span></code> <code>x2</code>, <code><span class=
-                                                                                                                                                                                                                                                                                  "type numeric">numeric</span></code> <code>y2</code>)
+          <code>xsd:double</code>   <code>aGeo:distance</code> (<code><span class="type numeric">numeric</span></code> <code>x1</code>, <code><span class="type numeric">numeric</span></code> <code>y1</code>, <code><span class="type numeric">numeric</span></code> <code>x2</code>, <code><span class="type numeric">numeric</span></code> <code>y2</code>)
         </pre>
         <div class="exampleGroup">
           <div class="queryGroup">
@@ -8161,8 +7891,7 @@ WHERE {
           <h4>Basic Graph Patterns</h4>
           <div class="defn">
             <p><b>Definition: <span id="defn_BasicGraphPattern">Basic Graph Pattern</span></b></p>
-            <p>A <span class="definedTerm">Basic Graph Pattern</span> is a set of <a href=
-                                                                                     "#defn_TriplePattern">Triple Patterns</a>.</p>
+            <p>A <span class="definedTerm">Basic Graph Pattern</span> is a set of <a href="#defn_TriplePattern">Triple Patterns</a>.</p>
           </div>
           <p>The empty graph pattern is a basic graph pattern which is the empty set.</p>
         </section>
@@ -8561,13 +8290,11 @@ WHERE {
             <p>This is illustrated by two non-normative test cases:</p>
             <ul>
               <li>
-                <a href=
-                   "http://www.w3.org/2001/sw/DataAccess/tests/data-r2/optional-filter/manifest#dawg-optional-filter-005-not-simplified">
+                <a href="http://www.w3.org/2001/sw/DataAccess/tests/data-r2/optional-filter/manifest#dawg-optional-filter-005-not-simplified">
                   Simplification applied after all transformations</a> or not at all.
               </li>
               <li>
-                <a href=
-                   "http://www.w3.org/2001/sw/DataAccess/tests/data-r2/optional-filter/manifest#dawg-optional-filter-005-simplified">
+                <a href="http://www.w3.org/2001/sw/DataAccess/tests/data-r2/optional-filter/manifest#dawg-optional-filter-005-simplified">
                   Simplification applied during transformation</a>.
               </li>
             </ul>
@@ -8576,8 +8303,7 @@ WHERE {
             preferred reading.</p>
           <section id="sparqlExpandForms">
             <h5>Expand Syntax Forms</h5>
-            <p>Expand abbreviations for IRIs and triple patterns given in <a href=
-                                                                             "#sparqlSyntax">section 4</a>.</p>
+            <p>Expand abbreviations for IRIs and triple patterns given in <a href="#sparqlSyntax">section 4</a>.</p>
           </section>
           <section id="sparqlCollectFilters">
             <h5>Collect <code>FILTER</code> Elements</h5>
@@ -8759,8 +8485,7 @@ For each form FILTER(expr) in the group graph pattern:
             <p>Next, we translate each remaining graph pattern form, recursively applying the
               translation process.</p>
             <blockquote>
-              <p>If the form is <code><a href=
-                                         "#rGroupOrUnionGraphPattern">GroupOrUnionGraphPattern</a></code></p>
+              <p>If the form is <code><a href="#rGroupOrUnionGraphPattern">GroupOrUnionGraphPattern</a></code></p>
             </blockquote>
 
 <pre class="code nohighlightBlock">Let A := undefined
@@ -9066,8 +8791,7 @@ Replace join(A, Z) by A
             <h5>Grouping and Aggregation</h5>
             <p>Step: GROUP BY</p>
             <p>If the <code>GROUP BY</code> keyword is used, or there is implicit grouping due to the
-              use of aggregates in the projection, then grouping is performed by the <a href=
-                                                                                        "#defn_algGroup">Group</a> function. It divides the solution set into groups of one or
+              use of aggregates in the projection, then grouping is performed by the <a href="#defn_algGroup">Group</a> function. It divides the solution set into groups of one or
               more solutions, with the same overall cardinality. In case of implicit grouping, a fixed
               constant (1) is used to group all solutions into a single group.</p>
             <p>Step: Aggregates</p>
@@ -9221,8 +8945,7 @@ The set PV is used later for projection.
           </section>
           <section id="sparqlProjection">
             <h5>Projection</h5>
-            <p>The set of projection variables, <code>PV</code>, was calculated in the <a href=
-                                                                                          "#sparqlSelectExpressions">processing of SELECT expressions</a>.</p>
+            <p>The set of projection variables, <code>PV</code>, was calculated in the <a href="#sparqlSelectExpressions">processing of SELECT expressions</a>.</p>
             <blockquote>
               <p>M := Project(M, PV)</p>
             </blockquote>
@@ -9295,8 +9018,7 @@ The set PV is used later for projection.
           <h4>SPARQL Basic Graph Pattern Matching</h4>
           <p>A basic graph pattern is matched against the active graph for that part of the query.
             Basic graph patterns can be instantiated by replacing both variables and blank nodes by
-            terms, giving two notions of instance. Blank nodes are replaced using an <a data-cite=
-                                                                                        "RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
+            terms, giving two notions of instance. Blank nodes are replaced using an <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
             variables are replaced by a solution mapping from query variables to RDF terms.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_PatternInstanceMapping">Pattern Instance Mapping</span></b></p>
@@ -9347,8 +9069,7 @@ The set PV is used later for projection.
         <h3>Property Path Patterns</h3>
         <p>This section defines the evaluation of <a href="#defn_PropertyPathPattern">property path
             patterns</a>. A property path pattern is a subject endpoint (an RDF term or a variable), a
-          property path express and an object endpoint. The <a href=
-                                                               "#sparqlTranslatePathExpressions">translation of property path expressions</a> converts some
+          property path express and an object endpoint. The <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a> converts some
           forms to other SPARQL expressions, such as converting property paths of length one to triple
           patterns, which in turn are combined into basic graph patterns. This leaves property path
           operators ZeroOrOnePath, ZeroOrMorePath, OneOrMorePath and NegatedPropertySets and also path
@@ -9723,8 +9444,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_exists">Exists</span></b></p>
-          <p>exists(pattern) is a function that returns true if the pattern <a href=
-                                                                               "#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
+          <p>exists(pattern) is a function that returns true if the pattern <a href="#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
             solution mapping and active graph at the time of evaluation; otherwise it returns
             false.</p>
         </div>
@@ -10001,8 +9721,7 @@ F : an expression
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
             <pre class="code nohighlight">eval(D(G), Filter(F, P)) = Filter(F, eval(D(G),P), D(G))</pre>
           </div>
-          <p>'substitute' is a filter function in support of the evaluation of <a href=
-                                                                                  "#func-filter-exists"><code>EXISTS</code> and <code>NOT EXISTS</code></a> forms which were
+          <p>'substitute' is a filter function in support of the evaluation of <a href="#func-filter-exists"><code>EXISTS</code> and <code>NOT EXISTS</code></a> forms which were
             translated to <code>exists</code>.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_substitute">Substitute</span></b></p>
@@ -10290,8 +10009,7 @@ _:x rdf:type xsd:decimal .
             <tr>
               <td>
                 <span class="token">'\U'</span> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a>
-                <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href=
-                                                                                        "#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a>
+                <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a>
               </td>
               <td>A Unicode code point in the range U+0 to U+10FFFF inclusive corresponding to the
                 encoded hexadecimal value.</td>
@@ -10350,8 +10068,7 @@ _:x rdf:type xsd:decimal .
         <p>Base IRIs declared with the <span class="token">BASE</span> keyword must be absolute
           IRIs. A prefix declared with the <span class="token">PREFIX</span> keyword may not be
           re-declared in the same query. See section 4.1.1, <a href="#QSynIRI">Syntax of IRI
-            Terms</a>, for a description of <span class="token">BASE</span> and <span class=
-                                                                                      "token">PREFIX</span>.</p>
+            Terms</a>, for a description of <span class="token">BASE</span> and <span class="token">PREFIX</span>.</p>
       </section>
       <section id="grammarBNodes">
         <h3>Blank Nodes and Blank Node Labels</h3>
@@ -10374,17 +10091,13 @@ _:x rdf:type xsd:decimal .
           <li>two <code><a href="#rInsertData">INSERT DATA</a></code> operations within a single
             SPARQL Update request</li>
         </ul>
-        <p>Note that the same blank node label can occur in different <a href=
-                                                                         "#rQuadPattern">QuadPattern</a> clauses in a [[[SPARQL11-UPDATE]]] request.</p>
+        <p>Note that the same blank node label can occur in different <a href="#rQuadPattern">QuadPattern</a> clauses in a [[[SPARQL11-UPDATE]]] request.</p>
       </section>
       <section id="grammarEscapes">
         <h3>Escape sequences in strings</h3>
         <p>In addition to the <a href="#codepointEscape">codepoint escape sequences</a>, the
           following escape sequences any <code><a href="#rString">string</a></code> production (e.g.
-          <code><a href="#rSTRING_LITERAL1">STRING_LITERAL1</a></code>, <code><a href=
-                                                                                 "#rSTRING_LITERAL2">STRING_LITERAL2</a></code>, <code><a href=
-                                                                                                                                          "#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a></code>, <code><a href=
-                                                                                                                                                                                                             "#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a></code>):</p>
+          <code><a href="#rSTRING_LITERAL1">STRING_LITERAL1</a></code>, <code><a href="#rSTRING_LITERAL2">STRING_LITERAL2</a></code>, <code><a href="#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a></code>, <code><a href="#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a></code>):</p>
         <table title="String escapes">
           <colgroup>
             <col style="width: 40%">
@@ -10513,45 +10226,38 @@ _:x rdf:type xsd:decimal .
                 <td><code>[7]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSelectQuery">SelectQuery</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rSelectClause">SelectClause</a> <a href="#rDatasetClause">DatasetClause</a>* <a href="#rWhereClause">WhereClause</a> <a href=
-                                                                                                                                                            "#rSolutionModifier">SolutionModifier</a></code></td>
+                <td><code><a href="#rSelectClause">SelectClause</a> <a href="#rDatasetClause">DatasetClause</a>* <a href="#rWhereClause">WhereClause</a> <a href="#rSolutionModifier">SolutionModifier</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[8]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSubSelect">SubSelect</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rSelectClause">SelectClause</a> <a href="#rWhereClause">WhereClause</a> <a href="#rSolutionModifier">SolutionModifier</a> <a href=
-                                                                                                                                                                 "#rValuesClause">ValuesClause</a></code></td>
+                <td><code><a href="#rSelectClause">SelectClause</a> <a href="#rWhereClause">WhereClause</a> <a href="#rSolutionModifier">SolutionModifier</a> <a href="#rValuesClause">ValuesClause</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[9]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSelectClause">SelectClause</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'SELECT'</span> ( <span class="token">'DISTINCT'</span> | <span class="token">'REDUCED'</span> )? ( ( <a href="#rVar">Var</a> | ( <span class=
-                                                                                                                                                                                      "token">'('</span> <a href="#rExpression">Expression</a> <span class="token">'AS'</span> <a href="#rVar">Var</a> <span class="token">')'</span> ) )+ | <span class="token">'*'</span>
+                <td><code><span class="token">'SELECT'</span> ( <span class="token">'DISTINCT'</span> | <span class="token">'REDUCED'</span> )? ( ( <a href="#rVar">Var</a> | ( <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">'AS'</span> <a href="#rVar">Var</a> <span class="token">')'</span> ) )+ | <span class="token">'*'</span>
                     )</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[10]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rConstructQuery">ConstructQuery</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'CONSTRUCT'</span> ( <a href="#rConstructTemplate">ConstructTemplate</a> <a href="#rDatasetClause">DatasetClause</a>* <a href=
-                                                                                                                                                                       "#rWhereClause">WhereClause</a> <a href="#rSolutionModifier">SolutionModifier</a> | <a href="#rDatasetClause">DatasetClause</a>* <span class="token">'WHERE'</span> <span class=
-                                                                                                                                                                                                                                                                                                                                                 "token">'{'</span> <a href="#rTriplesTemplate">TriplesTemplate</a>? <span class="token">'}'</span> <a href="#rSolutionModifier">SolutionModifier</a> )</code></td>
+                <td><code><span class="token">'CONSTRUCT'</span> ( <a href="#rConstructTemplate">ConstructTemplate</a> <a href="#rDatasetClause">DatasetClause</a>* <a href="#rWhereClause">WhereClause</a> <a href="#rSolutionModifier">SolutionModifier</a> | <a href="#rDatasetClause">DatasetClause</a>* <span class="token">'WHERE'</span> <span class="token">'{'</span> <a href="#rTriplesTemplate">TriplesTemplate</a>? <span class="token">'}'</span> <a href="#rSolutionModifier">SolutionModifier</a> )</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[11]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDescribeQuery">DescribeQuery</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'DESCRIBE'</span> ( <a href="#rVarOrIri">VarOrIri</a>+ | <span class="token">'*'</span> ) <a href="#rDatasetClause">DatasetClause</a>* <a href=
-                                                                                                                                                                                        "#rWhereClause">WhereClause</a>? <a href="#rSolutionModifier">SolutionModifier</a></code></td>
+                <td><code><span class="token">'DESCRIBE'</span> ( <a href="#rVarOrIri">VarOrIri</a>+ | <span class="token">'*'</span> ) <a href="#rDatasetClause">DatasetClause</a>* <a href="#rWhereClause">WhereClause</a>? <a href="#rSolutionModifier">SolutionModifier</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[12]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rAskQuery">AskQuery</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'ASK'</span> <a href="#rDatasetClause">DatasetClause</a>* <a href="#rWhereClause">WhereClause</a> <a href=
-                                                                                                                                                   "#rSolutionModifier">SolutionModifier</a></code></td>
+                <td><code><span class="token">'ASK'</span> <a href="#rDatasetClause">DatasetClause</a>* <a href="#rWhereClause">WhereClause</a> <a href="#rSolutionModifier">SolutionModifier</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[13]&nbsp;&nbsp;</code></td>
@@ -10587,8 +10293,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[18]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSolutionModifier">SolutionModifier</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rGroupClause">GroupClause</a>? <a href="#rHavingClause">HavingClause</a>? <a href="#rOrderClause">OrderClause</a>? <a href=
-                                                                                                                                                          "#rLimitOffsetClauses">LimitOffsetClauses</a>?</code></td>
+                <td><code><a href="#rGroupClause">GroupClause</a>? <a href="#rHavingClause">HavingClause</a>? <a href="#rOrderClause">OrderClause</a>? <a href="#rLimitOffsetClauses">LimitOffsetClauses</a>?</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[19]&nbsp;&nbsp;</code></td>
@@ -10600,8 +10305,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[20]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rGroupCondition">GroupCondition</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rBuiltInCall">BuiltInCall</a> | <a href="#rFunctionCall">FunctionCall</a> | <span class="token">'('</span> <a href="#rExpression">Expression</a> ( <span class=
-                                                                                                                                                                                             "token">'AS'</span> <a href="#rVar">Var</a> )? <span class="token">')'</span> | <a href="#rVar">Var</a></code></td>
+                <td><code><a href="#rBuiltInCall">BuiltInCall</a> | <a href="#rFunctionCall">FunctionCall</a> | <span class="token">'('</span> <a href="#rExpression">Expression</a> ( <span class="token">'AS'</span> <a href="#rVar">Var</a> )? <span class="token">')'</span> | <a href="#rVar">Var</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[21]&nbsp;&nbsp;</code></td>
@@ -10632,8 +10336,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[25]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rLimitOffsetClauses">LimitOffsetClauses</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rLimitClause">LimitClause</a> <a href="#rOffsetClause">OffsetClause</a>? | <a href="#rOffsetClause">OffsetClause</a> <a href=
-                                                                                                                                                            "#rLimitClause">LimitClause</a>?</code></td>
+                <td><code><a href="#rLimitClause">LimitClause</a> <a href="#rOffsetClause">OffsetClause</a>? | <a href="#rOffsetClause">OffsetClause</a> <a href="#rLimitClause">LimitClause</a>?</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[26]&nbsp;&nbsp;</code></td>
@@ -10664,8 +10367,7 @@ _:x rdf:type xsd:decimal .
                 <td><code><span class="doc-ref" id="rUpdate1">Update1</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code><a href="#rLoad">Load</a> | <a href="#rClear">Clear</a> | <a href="#rDrop">Drop</a> | <a href="#rAdd">Add</a> | <a href="#rMove">Move</a> | <a href="#rCopy">Copy</a> |
-                    <a href="#rCreate">Create</a> | <a href="#rInsertData">InsertData</a> | <a href="#rDeleteData">DeleteData</a> | <a href="#rDeleteWhere">DeleteWhere</a> | <a href=
-                                                                                                                                                                                 "#rModify">Modify</a></code></td>
+                    <a href="#rCreate">Create</a> | <a href="#rInsertData">InsertData</a> | <a href="#rDeleteData">DeleteData</a> | <a href="#rDeleteWhere">DeleteWhere</a> | <a href="#rModify">Modify</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[31]&nbsp;&nbsp;</code></td>
@@ -10696,22 +10398,19 @@ _:x rdf:type xsd:decimal .
                 <td><code>[35]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rAdd">Add</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'ADD'</span> <span class="token">'SILENT'</span>? <a href="#rGraphOrDefault">GraphOrDefault</a> <span class="token">'TO'</span> <a href=
-                                                                                                                                                                                 "#rGraphOrDefault">GraphOrDefault</a></code></td>
+                <td><code><span class="token">'ADD'</span> <span class="token">'SILENT'</span>? <a href="#rGraphOrDefault">GraphOrDefault</a> <span class="token">'TO'</span> <a href="#rGraphOrDefault">GraphOrDefault</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[36]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rMove">Move</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'MOVE'</span> <span class="token">'SILENT'</span>? <a href="#rGraphOrDefault">GraphOrDefault</a> <span class="token">'TO'</span> <a href=
-                                                                                                                                                                                  "#rGraphOrDefault">GraphOrDefault</a></code></td>
+                <td><code><span class="token">'MOVE'</span> <span class="token">'SILENT'</span>? <a href="#rGraphOrDefault">GraphOrDefault</a> <span class="token">'TO'</span> <a href="#rGraphOrDefault">GraphOrDefault</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[37]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rCopy">Copy</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'COPY'</span> <span class="token">'SILENT'</span>? <a href="#rGraphOrDefault">GraphOrDefault</a> <span class="token">'TO'</span> <a href=
-                                                                                                                                                                                  "#rGraphOrDefault">GraphOrDefault</a></code></td>
+                <td><code><span class="token">'COPY'</span> <span class="token">'SILENT'</span>? <a href="#rGraphOrDefault">GraphOrDefault</a> <span class="token">'TO'</span> <a href="#rGraphOrDefault">GraphOrDefault</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[38]&nbsp;&nbsp;</code></td>
@@ -10735,8 +10434,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[41]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rModify">Modify</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code>( <span class="token">'WITH'</span> <a href="#riri">iri</a> )? ( <a href="#rDeleteClause">DeleteClause</a> <a href="#rInsertClause">InsertClause</a>? | <a href=
-                                                                                                                                                                                     "#rInsertClause">InsertClause</a> ) <a href="#rUsingClause">UsingClause</a>* <span class="token">'WHERE'</span> <a href="#rGroupGraphPattern">GroupGraphPattern</a></code></td>
+                <td><code>( <span class="token">'WITH'</span> <a href="#riri">iri</a> )? ( <a href="#rDeleteClause">DeleteClause</a> <a href="#rInsertClause">InsertClause</a>? | <a href="#rInsertClause">InsertClause</a> ) <a href="#rUsingClause">UsingClause</a>* <span class="token">'WHERE'</span> <a href="#rGroupGraphPattern">GroupGraphPattern</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[42]&nbsp;&nbsp;</code></td>
@@ -10790,15 +10488,13 @@ _:x rdf:type xsd:decimal .
                 <td><code>[50]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rQuads">Quads</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rTriplesTemplate">TriplesTemplate</a>? ( <a href="#rQuadsNotTriples">QuadsNotTriples</a> <span class="token">'.'</span>? <a href=
-                                                                                                                                                                "#rTriplesTemplate">TriplesTemplate</a>? )*</code></td>
+                <td><code><a href="#rTriplesTemplate">TriplesTemplate</a>? ( <a href="#rQuadsNotTriples">QuadsNotTriples</a> <span class="token">'.'</span>? <a href="#rTriplesTemplate">TriplesTemplate</a>? )*</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[51]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rQuadsNotTriples">QuadsNotTriples</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'GRAPH'</span> <a href="#rVarOrIri">VarOrIri</a> <span class="token">'{'</span> <a href="#rTriplesTemplate">TriplesTemplate</a>? <span class=
-                                                                                                                                                                                     "token">'}'</span></code></td>
+                <td><code><span class="token">'GRAPH'</span> <a href="#rVarOrIri">VarOrIri</a> <span class="token">'{'</span> <a href="#rTriplesTemplate">TriplesTemplate</a>? <span class="token">'}'</span></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[52]&nbsp;&nbsp;</code></td>
@@ -10816,8 +10512,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[54]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rGroupGraphPatternSub">GroupGraphPatternSub</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rTriplesBlock">TriplesBlock</a>? ( <a href="#rGraphPatternNotTriples">GraphPatternNotTriples</a> <span class="token">'.'</span>? <a href=
-                                                                                                                                                                        "#rTriplesBlock">TriplesBlock</a>? )*</code></td>
+                <td><code><a href="#rTriplesBlock">TriplesBlock</a>? ( <a href="#rGraphPatternNotTriples">GraphPatternNotTriples</a> <span class="token">'.'</span>? <a href="#rTriplesBlock">TriplesBlock</a>? )*</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[55]&nbsp;&nbsp;</code></td>
@@ -10829,9 +10524,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[56]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rGraphPatternNotTriples">GraphPatternNotTriples</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rGroupOrUnionGraphPattern">GroupOrUnionGraphPattern</a> | <a href="#rOptionalGraphPattern">OptionalGraphPattern</a> | <a href=
-                                                                                                                                                             "#rMinusGraphPattern">MinusGraphPattern</a> | <a href="#rGraphGraphPattern">GraphGraphPattern</a> | <a href="#rServiceGraphPattern">ServiceGraphPattern</a> | <a href=
-                                                                                                                                                                                                                                                                                                                              "#rFilter">Filter</a> | <a href="#rBind">Bind</a> | <a href="#rInlineData">InlineData</a></code></td>
+                <td><code><a href="#rGroupOrUnionGraphPattern">GroupOrUnionGraphPattern</a> | <a href="#rOptionalGraphPattern">OptionalGraphPattern</a> | <a href="#rMinusGraphPattern">MinusGraphPattern</a> | <a href="#rGraphGraphPattern">GraphGraphPattern</a> | <a href="#rServiceGraphPattern">ServiceGraphPattern</a> | <a href="#rFilter">Filter</a> | <a href="#rBind">Bind</a> | <a href="#rInlineData">InlineData</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[57]&nbsp;&nbsp;</code></td>
@@ -10855,8 +10548,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[60]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rBind">Bind</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'BIND'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">'AS'</span> <a href="#rVar">Var</a> <span class=
-                                                                                                                                                                                               "token">')'</span></code></td>
+                <td><code><span class="token">'BIND'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">'AS'</span> <a href="#rVar">Var</a> <span class="token">')'</span></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[61]&nbsp;&nbsp;</code></td>
@@ -10880,8 +10572,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[64]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rInlineDataFull">InlineDataFull</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code>( <a href="#rNIL">NIL</a> | <span class="token">'('</span> <a href="#rVar">Var</a>* <span class="token">')'</span> ) <span class="token">'{'</span> ( <span class=
-                                                                                                                                                                                      "token">'('</span> <a href="#rDataBlockValue">DataBlockValue</a>* <span class="token">')'</span> | <a href="#rNIL">NIL</a> )* <span class="token">'}'</span></code></td>
+                <td><code>( <a href="#rNIL">NIL</a> | <span class="token">'('</span> <a href="#rVar">Var</a>* <span class="token">')'</span> ) <span class="token">'{'</span> ( <span class="token">'('</span> <a href="#rDataBlockValue">DataBlockValue</a>* <span class="token">')'</span> | <a href="#rNIL">NIL</a> )* <span class="token">'}'</span></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[65]&nbsp;&nbsp;</code></td>
@@ -10950,8 +10641,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[75]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rTriplesSameSubject">TriplesSameSubject</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rVarOrTerm">VarOrTerm</a> <a href="#rPropertyListNotEmpty">PropertyListNotEmpty</a> | <a href="#rTriplesNode">TriplesNode</a> <a href=
-                                                                                                                                                                     "#rPropertyList">PropertyList</a></code></td>
+                <td><code><a href="#rVarOrTerm">VarOrTerm</a> <a href="#rPropertyListNotEmpty">PropertyListNotEmpty</a> | <a href="#rTriplesNode">TriplesNode</a> <a href="#rPropertyList">PropertyList</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[76]&nbsp;&nbsp;</code></td>
@@ -10988,8 +10678,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[81]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rTriplesSameSubjectPath">TriplesSameSubjectPath</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rVarOrTerm">VarOrTerm</a> <a href="#rPropertyListPathNotEmpty">PropertyListPathNotEmpty</a> | <a href="#rTriplesNodePath">TriplesNodePath</a> <a href=
-                                                                                                                                                                                     "#rPropertyListPath">PropertyListPath</a></code></td>
+                <td><code><a href="#rVarOrTerm">VarOrTerm</a> <a href="#rPropertyListPathNotEmpty">PropertyListPathNotEmpty</a> | <a href="#rTriplesNodePath">TriplesNodePath</a> <a href="#rPropertyListPath">PropertyListPath</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[82]&nbsp;&nbsp;</code></td>
@@ -11001,8 +10690,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[83]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPropertyListPathNotEmpty">PropertyListPathNotEmpty</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code>( <a href="#rVerbPath">VerbPath</a> | <a href="#rVerbSimple">VerbSimple</a> ) <a href="#rObjectListPath">ObjectListPath</a> ( <span class="token">';'</span> ( ( <a href=
-                                                                                                                                                                                              "#rVerbPath">VerbPath</a> | <a href="#rVerbSimple">VerbSimple</a> ) <a href="#rObjectListPath">ObjectListPath</a> )? )*</code></td>
+                <td><code>( <a href="#rVerbPath">VerbPath</a> | <a href="#rVerbSimple">VerbSimple</a> ) <a href="#rObjectListPath">ObjectListPath</a> ( <span class="token">';'</span> ( ( <a href="#rVerbPath">VerbPath</a> | <a href="#rVerbSimple">VerbSimple</a> ) <a href="#rObjectListPath">ObjectListPath</a> )? )*</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[84]&nbsp;&nbsp;</code></td>
@@ -11068,15 +10756,13 @@ _:x rdf:type xsd:decimal .
                 <td><code>[94]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPathPrimary">PathPrimary</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#riri">iri</a> | <span class="token">'a'</span> | <span class="token">'!'</span> <a href="#rPathNegatedPropertySet">PathNegatedPropertySet</a> | <span class=
-                                                                                                                                                                                          "token">'('</span> <a href="#rPath">Path</a> <span class="token">')'</span></code></td>
+                <td><code><a href="#riri">iri</a> | <span class="token">'a'</span> | <span class="token">'!'</span> <a href="#rPathNegatedPropertySet">PathNegatedPropertySet</a> | <span class="token">'('</span> <a href="#rPath">Path</a> <span class="token">')'</span></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[95]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPathNegatedPropertySet">PathNegatedPropertySet</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rPathOneInPropertySet">PathOneInPropertySet</a> | <span class="token">'('</span> ( <a href="#rPathOneInPropertySet">PathOneInPropertySet</a> ( <span class=
-                                                                                                                                                                                         "token">'|'</span> <a href="#rPathOneInPropertySet">PathOneInPropertySet</a> )* )? <span class="token">')'</span></code></td>
+                <td><code><a href="#rPathOneInPropertySet">PathOneInPropertySet</a> | <span class="token">'('</span> ( <a href="#rPathOneInPropertySet">PathOneInPropertySet</a> ( <span class="token">'|'</span> <a href="#rPathOneInPropertySet">PathOneInPropertySet</a> )* )? <span class="token">')'</span></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[96]&nbsp;&nbsp;</code></td>
@@ -11160,8 +10846,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[109]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rGraphTerm">GraphTerm</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#riri">iri</a> | <a href="#rRDFLiteral">RDFLiteral</a> | <a href="#rNumericLiteral">NumericLiteral</a> | <a href="#rBooleanLiteral">BooleanLiteral</a> | <a href=
-                                                                                                                                                                                               "#rBlankNode">BlankNode</a> | <a href="#rNIL">NIL</a></code></td>
+                <td><code><a href="#riri">iri</a> | <a href="#rRDFLiteral">RDFLiteral</a> | <a href="#rNumericLiteral">NumericLiteral</a> | <a href="#rBooleanLiteral">BooleanLiteral</a> | <a href="#rBlankNode">BlankNode</a> | <a href="#rNIL">NIL</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[110]&nbsp;&nbsp;</code></td>
@@ -11195,8 +10880,7 @@ _:x rdf:type xsd:decimal .
                 <td><code><a href="#rNumericExpression">NumericExpression</a> ( <span class="token">'='</span> <a href="#rNumericExpression">NumericExpression</a> | <span class="token">'!='</span>
                     <a href="#rNumericExpression">NumericExpression</a> | <span class="token">'&lt;'</span> <a href="#rNumericExpression">NumericExpression</a> | <span class="token">'&gt;'</span>
                     <a href="#rNumericExpression">NumericExpression</a> | <span class="token">'&lt;='</span> <a href="#rNumericExpression">NumericExpression</a> | <span class="token">'&gt;='</span>
-                    <a href="#rNumericExpression">NumericExpression</a> | <span class="token">'IN'</span> <a href="#rExpressionList">ExpressionList</a> | <span class="token">'NOT'</span> <span class=
-                                                                                                                                                                                                 "token">'IN'</span> <a href="#rExpressionList">ExpressionList</a> )?</code></td>
+                    <a href="#rNumericExpression">NumericExpression</a> | <span class="token">'IN'</span> <a href="#rExpressionList">ExpressionList</a> | <span class="token">'NOT'</span> <span class="token">'IN'</span> <a href="#rExpressionList">ExpressionList</a> )?</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[115]&nbsp;&nbsp;</code></td>
@@ -11209,16 +10893,14 @@ _:x rdf:type xsd:decimal .
                 <td><code><span class="doc-ref" id="rAdditiveExpression">AdditiveExpression</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code><a href="#rMultiplicativeExpression">MultiplicativeExpression</a> ( <span class="token">'+'</span> <a href="#rMultiplicativeExpression">MultiplicativeExpression</a> |
-                    <span class="token">'-'</span> <a href="#rMultiplicativeExpression">MultiplicativeExpression</a> | ( <a href="#rNumericLiteralPositive">NumericLiteralPositive</a> | <a href=
-                                                                                                                                                                                            "#rNumericLiteralNegative">NumericLiteralNegative</a> ) ( ( <span class="token">'*'</span> <a href="#rUnaryExpression">UnaryExpression</a> ) | ( <span class="token">'/'</span>
+                    <span class="token">'-'</span> <a href="#rMultiplicativeExpression">MultiplicativeExpression</a> | ( <a href="#rNumericLiteralPositive">NumericLiteralPositive</a> | <a href="#rNumericLiteralNegative">NumericLiteralNegative</a> ) ( ( <span class="token">'*'</span> <a href="#rUnaryExpression">UnaryExpression</a> ) | ( <span class="token">'/'</span>
                     <a href="#rUnaryExpression">UnaryExpression</a> ) )* )*</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[117]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rMultiplicativeExpression">MultiplicativeExpression</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rUnaryExpression">UnaryExpression</a> ( <span class="token">'*'</span> <a href="#rUnaryExpression">UnaryExpression</a> | <span class="token">'/'</span> <a href=
-                                                                                                                                                                                               "#rUnaryExpression">UnaryExpression</a> )*</code></td>
+                <td><code><a href="#rUnaryExpression">UnaryExpression</a> ( <span class="token">'*'</span> <a href="#rUnaryExpression">UnaryExpression</a> | <span class="token">'/'</span> <a href="#rUnaryExpression">UnaryExpression</a> )*</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[118]&nbsp;&nbsp;</code></td>
@@ -11233,8 +10915,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[119]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPrimaryExpression">PrimaryExpression</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rBrackettedExpression">BrackettedExpression</a> | <a href="#rBuiltInCall">BuiltInCall</a> | <a href="#ririOrFunction">iriOrFunction</a> | <a href=
-                                                                                                                                                                                 "#rRDFLiteral">RDFLiteral</a> | <a href="#rNumericLiteral">NumericLiteral</a> | <a href="#rBooleanLiteral">BooleanLiteral</a> | <a href="#rVar">Var</a></code></td>
+                <td><code><a href="#rBrackettedExpression">BrackettedExpression</a> | <a href="#rBuiltInCall">BuiltInCall</a> | <a href="#ririOrFunction">iriOrFunction</a> | <a href="#rRDFLiteral">RDFLiteral</a> | <a href="#rNumericLiteral">NumericLiteral</a> | <a href="#rBooleanLiteral">BooleanLiteral</a> | <a href="#rVar">Var</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[120]&nbsp;&nbsp;</code></td>
@@ -11330,8 +11011,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[124]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rStrReplaceExpression">StrReplaceExpression</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><span class="token">'REPLACE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href=
-                                                                                                                                                                      "#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> ( <span class="token">','</span> <a href="#rExpression">Expression</a> )?
+                <td><code><span class="token">'REPLACE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> ( <span class="token">','</span> <a href="#rExpression">Expression</a> )?
                     <span class="token">')'</span></code></td>
               </tr>
               <tr style="vertical-align: baseline">
@@ -11350,15 +11030,13 @@ _:x rdf:type xsd:decimal .
                 <td><code>[127]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rAggregate">Aggregate</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code>&nbsp;&nbsp;<span class="token">'COUNT'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? ( <span class="token">'*'</span> | <a href=
-                                                                                                                                                                                     "#rExpression">Expression</a> ) <span class="token">')'</span><br>
+                <td><code>&nbsp;&nbsp;<span class="token">'COUNT'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? ( <span class="token">'*'</span> | <a href="#rExpression">Expression</a> ) <span class="token">')'</span><br>
                     | <span class="token">'SUM'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
                     | <span class="token">'MIN'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
                     | <span class="token">'MAX'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
                     | <span class="token">'AVG'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
                     | <span class="token">'SAMPLE'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> <span class="token">')'</span><br>
-                    | <span class="token">'GROUP_CONCAT'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> ( <span class=
-                                                                                                                                                                                    "token">';'</span> <span class="token">'SEPARATOR'</span> <span class="token">'='</span> <a href="#rString">String</a> )? <span class="token">')'</span></code></td>
+                    | <span class="token">'GROUP_CONCAT'</span> <span class="token">'('</span> <span class="token">'DISTINCT'</span>? <a href="#rExpression">Expression</a> ( <span class="token">';'</span> <span class="token">'SEPARATOR'</span> <span class="token">'='</span> <a href="#rString">String</a> )? <span class="token">')'</span></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[128]&nbsp;&nbsp;</code></td>
@@ -11376,8 +11054,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[130]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rNumericLiteral">NumericLiteral</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rNumericLiteralUnsigned">NumericLiteralUnsigned</a> | <a href="#rNumericLiteralPositive">NumericLiteralPositive</a> | <a href=
-                                                                                                                                                             "#rNumericLiteralNegative">NumericLiteralNegative</a></code></td>
+                <td><code><a href="#rNumericLiteralUnsigned">NumericLiteralUnsigned</a> | <a href="#rNumericLiteralPositive">NumericLiteralPositive</a> | <a href="#rNumericLiteralNegative">NumericLiteralNegative</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[131]&nbsp;&nbsp;</code></td>
@@ -11407,8 +11084,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[135]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rString">String</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code><a href="#rSTRING_LITERAL1">STRING_LITERAL1</a> | <a href="#rSTRING_LITERAL2">STRING_LITERAL2</a> | <a href="#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a> | <a href=
-                                                                                                                                                                                             "#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a></code></td>
+                <td><code><a href="#rSTRING_LITERAL1">STRING_LITERAL1</a> | <a href="#rSTRING_LITERAL2">STRING_LITERAL2</a> | <a href="#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a> | <a href="#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a></code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[136]&nbsp;&nbsp;</code></td>
@@ -11620,8 +11296,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[169]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_LOCAL">PN_LOCAL</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code>(<a href="#rPN_CHARS_U">PN_CHARS_U</a> | ':' | [0-9] | <a href="#rPLX">PLX</a> ) ((<a href="#rPN_CHARS">PN_CHARS</a> | '.' | ':' | <a href="#rPLX">PLX</a>)* (<a href=
-                                                                                                                                                                                           "#rPN_CHARS">PN_CHARS</a> | ':' | <a href="#rPLX">PLX</a>) )?</code></td>
+                <td><code>(<a href="#rPN_CHARS_U">PN_CHARS_U</a> | ':' | [0-9] | <a href="#rPLX">PLX</a> ) ((<a href="#rPN_CHARS">PN_CHARS</a> | '.' | ':' | <a href="#rPLX">PLX</a>)* (<a href="#rPN_CHARS">PN_CHARS</a> | ':' | <a href="#rPLX">PLX</a>) )?</code></td>
               </tr>
               <tr style="vertical-align: baseline">
                 <td><code>[170]&nbsp;&nbsp;</code></td>
