@@ -2176,7 +2176,7 @@ SELECT *
           <p>Differences also arise because in a filter, variables from the group
             are <a href="#scopeFilters">in scope</a>. 
             In this example, the <code>FILTER</code> inside the 
-            <code>NOT EXISTS</code> has access to the value of ?n for the solution being considered.</p>
+            <code>NOT EXISTS</code> has access to the value of `?n` for the solution being considered.</p>
           <pre class="data nohighlight">
 @prefix : &lt;http://example.com/&gt; .
 :a :p 1 .
@@ -2886,9 +2886,9 @@ HAVING (SUM(?lprice) &gt; 10)
         <p>Within <code>GROUP BY</code> clauses the binding keyword, <code>AS</code>, may be used,
           such as <code>GROUP BY (?x + ?y AS ?z)</code>. This is equivalent to 
           <code>{ ... BIND (?x + ?y AS ?z) } GROUP BY ?z</code>.</p>
-        <p>For example, given a solution sequence S, ( {?x→2, ?y→3}, {?x→2, ?y→5}, {?x→6, ?y→7} ), we
-          might wish to group the solutions according to the value of ?x, and calculate the average of
-          the values of ?y for each group.</p>
+        <p>For example, given a solution sequence `S`, `( {?x→2, ?y→3}, {?x→2, ?y→5}, {?x→6, ?y→7} )`, we
+          might wish to group the solutions according to the value of `?x`, and calculate the average of
+          the values of `?y` for each group.</p>
         <p>This could be written as:</p>
         <pre class="query nohighlight">
 SELECT (AVG(?y) AS ?avg)
