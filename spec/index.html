@@ -4826,7 +4826,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <ul>
             <li>The EBV of any literal whose type is <code>xsd:boolean</code> or 
               <span class="type">numeric</span> is false if the lexical form is not valid for that
-              datatype (e.g. "abc"^^xsd:integer).</li>
+              datatype, such as <code>"abc"^^xsd:integer</code>.</li>
             <li>If the argument is a <span class="type typedLiteral">typed literal</span> with a
               <span class="type datatype">datatype</span> of <code>xsd:boolean</code>, and it has a
               valid lexical form, the EBV is the value of that argument.</li>
