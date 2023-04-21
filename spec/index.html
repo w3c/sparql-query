@@ -572,10 +572,6 @@ span.cancast:hover { background-color: #ffa;
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
             </li>
             <li>
-              <a class="type typedLiteral" data-cite=
-                 "RDF12-CONCEPTS#dfn-typed-literal">typed literal</a>
-            </li>
-            <li>
               <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">datatype IRI</a>
               (corresponds to the Concepts and Abstract Syntax term "<code>recognized datatype URI</code>")
             </li>
@@ -709,9 +705,9 @@ _:b foaf:box   &lt;mailto:peter@example.org&gt; .
 :z   ns:p     "abc"^^dt:specialDatatype .
 </pre>
           <p>Note that, in Turtle, <code>"cat"@en</code> is an RDF literal with a lexical form "cat"
-            and a language tag "en"; <code>"42"^^xsd:integer</code> is a typed literal with the
+            and a language tag "en"; <code>"42"^^xsd:integer</code> is a literal with the
             datatype <code>http://www.w3.org/2001/XMLSchema#integer</code>; and
-            <code>"abc"^^dt:specialDatatype</code> is a typed literal with the datatype
+            <code>"abc"^^dt:specialDatatype</code> is a literal with the datatype
             <code>http://example.org/datatype#specialDatatype</code>.</p>
         </div>
         <p>This RDF data is the data graph for the query examples in sections 2.3.1–2.3.3.</p>
@@ -752,7 +748,7 @@ _:b foaf:box   &lt;mailto:peter@example.org&gt; .
         </section>
         <section id="matchNumber">
           <h4>Matching Literals with Numeric Types</h4>
-          <p>Integers in a SPARQL query indicate an RDF typed literal with the datatype
+          <p>Integers in a SPARQL query indicate an RDF literal with the datatype
             <code>xsd:integer</code>. For example: <code>42</code> is a shortened form of&nbsp;
             <code>"42"^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;</code>.</p>
           <p>The pattern in the following query has a solution with variable <code>v</code> bound to
@@ -1178,7 +1174,7 @@ book:book1</pre>
             tag (introduced by <code>@</code>) or an optional datatype IRI or prefixed name (introduced
             by <code>^^</code>).</p>
           <p>As a convenience, integers can be written directly (without quotation marks and an
-            explicit datatype IRI) and are interpreted as typed literals of datatype
+            explicit datatype IRI) and are interpreted as literals with datatype
             <code>xsd:integer</code>; decimal numbers for which there is '.' in the number but no
             exponent are interpreted as <code>xsd:decimal</code>; and numbers with exponents are
             interpreted as <code>xsd:double</code>. Values of type <code>xsd:boolean</code> can also be
@@ -1203,7 +1199,7 @@ book:book1</pre>
           </ul>
           <p>Tokens matching the productions <a href="#rINTEGER">INTEGER</a>, <a href=
                                                                                  "#rDECIMAL">DECIMAL</a>, <a href="#rDOUBLE">DOUBLE</a> and <a href=
-                                                                                                                                               "#rBooleanLiteral">BooleanLiteral</a> are equivalent to a typed literal with the lexical
+                                                                                                                                               "#rBooleanLiteral">BooleanLiteral</a> are equivalent to a literal with the lexical
             value of the token and the corresponding datatype (<code>xsd:integer</code>,
             <code>xsd:decimal</code>, <code>xsd:double</code>, <code>xsd:boolean</code>).</p>
         </section>
@@ -4573,7 +4569,7 @@ _:b   dc:date       "2004-12-31T19:01:00-05:00"^^&lt;http://www.w3.org/2001/XMLS
           has the datatype <code>xsd:dateTime</code>.</p>
         <p>SPARQL expressions are constructed according to the grammar and provide access to
           functions (named by IRI) and operator functions (invoked by keywords and symbols in the
-          SPARQL grammar). SPARQL operators can be used to compare the values of typed literals:</p>
+          SPARQL grammar). SPARQL operators can be used to compare the values of literals:</p>
         <div class="queryGroup">
           <pre class="query nohighlight">
 PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
@@ -4603,14 +4599,14 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         <p>SPARQL functions and operators operate on RDF terms and SPARQL variables. A subset of
           these functions and operators are taken from the [[[XPATH-FUNCTIONS]]] [[XPATH-FUNCTIONS]] and have XML Schema
           <a data-cite="XPATH20#dt-typed-value">typed value</a> arguments and return types. RDF
-          <code>typed literals</code> passed as arguments to these functions and operators are mapped
+          <code>literals</code> passed as arguments to these functions and operators are mapped
           to XML Schema typed values with a <a data-cite="XPATH20#dt-string-value">string value</a> of
           the <code>lexical form</code> and an <a href=
                                                   "http://www.w3.org/TR/xmlschema-2/#dt-atomic">atomic datatype</a> corresponding to the
           <span class="type datatypeIRI">datatype IRI</span>. The returned typed values are mapped back
-          to RDF <code>typed literals</code> the same way.</p>
+          to RDF <code>literals</code> the same way.</p>
         <p>SPARQL has additional operators which operate on specific subsets of RDF terms. When
-          referring to a type, the following terms denote a <code>typed literal</code> with the
+          referring to a type, the following terms denote a <code>literal</code> with the
           corresponding [[[XMLSCHEMA-2]]] [[XMLSCHEMA-2]] <span class="type datatypeIRI">datatype
             IRI</span>:</p>
         <ul>
@@ -4624,7 +4620,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         </ul>
         <p>The following terms identify additional types used in SPARQL value tests:</p>
         <ul>
-          <li><span class="type numeric">numeric</span> denotes <code>typed literals</code> with
+          <li><span class="type numeric">numeric</span> denotes <code>literals</code> with
             datatypes <code>xsd:integer</code>, <code>xsd:decimal</code>, <code>xsd:float</code>, and
             <code>xsd:double</code>.</li>
           <li><span class="type RDFterm">RDF term</span> denotes the types <code>IRI</code>,
@@ -4814,21 +4810,21 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <li>The EBV of any literal whose type is <code>xsd:boolean</code> or <span class=
                                                                                        "type">numeric</span> is false if the lexical form is not valid for that datatype (e.g.
               "abc"^^xsd:integer).</li>
-            <li>If the argument is a <span class="type typedLiteral">typed literal</span> with a
+            <li>If the argument is a <span class="type literal">literal</span> with a
               <span class="type datatype">datatype</span> of <code>xsd:boolean</code>, and it has a
               valid lexical form, the EBV is the value of that argument.</li>
-            <li>If the argument is a <span class="type typedLiteral">typed literal</span> with a
+            <li>If the argument is a <span class="type literal">literal</span> with a
               <span class="type datatype">datatype</span> of <code>xsd:string</code>, the EBV is false if the
               operand value has zero length; otherwise the EBV is true.</li>
             <li>If the argument is a <span class="type numeric">numeric</span> type or a <span class=
-                                                                                               "type typedLiteral">typed literal</span> with a datatype derived from a <span class=
+                                                                                               "type literal">literal</span> with a datatype derived from a <span class=
                                                                                                                                                                              "type numeric">numeric</span> type, and it has a valid lexical form, the EBV is false if
               the operand value is NaN or is numerically equal to zero; otherwise the EBV is true.</li>
             <li>All other arguments, including unbound arguments, produce a type error.</li>
           </ul>
           <p>An EBV of <code>true</code> is represented as a <span class="type typedLiteral">typed
               literal</span> with a datatype of <code>xsd:boolean</code> and a lexical value of "true";
-            an EBV of false is represented as a <span class="type typedLiteral">typed literal</span>
+            an EBV of false is represented as a <span class="type literal">literal</span>
             with a datatype of <code>xsd:boolean</code> and a lexical value of "false".</p>
         </section>
       </section>
@@ -5794,7 +5790,7 @@ WHERE {
             </div>
             <p>Unlike <span class="operator">RDFterm-equal</span>, <span class=
                                                                          "operator">sameTerm</span> can be used to test for non-equivalent <span class=
-                                                                                                                                                 "type typedLiteral">typed literals</span> with unsupported datatypes:</p>
+                                                                                                                                                 "type literal">literals</span> with unsupported datatypes:</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 @prefix :          &lt;http://example.org/WMterms#&gt; .
@@ -7595,7 +7591,7 @@ WHERE {
           is defined as follows:</p>
         <ul>
           <li>Casting an <span class="IRI type">IRI</span> to an <code>xsd:string</code> produces a
-            <span class="IRI typedLiteral">typed literal</span> with a lexical value of the codepoints
+            <span class="IRI literal">literal</span> with a lexical value of the codepoints
             comprising the IRI, and a datatype of <code>xsd:string</code>.</li>
         </ul>
         <p>The table below summarizes the casting operations that are always allowed (<span class=
