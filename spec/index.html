@@ -6267,11 +6267,9 @@ WHERE {
             </pre>
             <p>Returns the <span class="type datatypeIRI">datatype IRI</span> of a
               <code>literal</code>.</p>
-            <ul>
-              <li>If the literal is a literal without language tag, return the datatype IRI.</li>
-              <li>If the literal is a literal with a language tag, return
-                <code>rdf:langString</code></li>
-            </ul>
+            <p class="note">
+                The datatype of literals with a <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> is <code>rdf:langString</code>.
+            </p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 @prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
