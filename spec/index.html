@@ -537,8 +537,7 @@ span.cancast:hover { background-color: #ffa;
               </tbody>
             </table>
           </div>
-          <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>, <a href=
-                                                                                   "#defn_RDFTerm">RDF term</a>). In this result set, there are three variables:
+          <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>, <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>). In this result set, there are three variables:
             <code>x</code>, <code>y</code> and <code>z</code> (shown as column headers). Each solution
             is shown as one row in the body of the table.&nbsp; Here, there is a single solution, in
             which variable <code>x</code> is bound to <code>"Alice"</code>, variable <code>y</code> is
@@ -583,12 +582,8 @@ span.cancast:hover { background-color: #ffa;
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>
             </li>
-          </ul>
-          <p>In addition, we define the following term:</p>
-          <ul>
             <li>
-              <a class="type" href="#defn_RDFTerm">RDF Term</a>, which includes IRIs, blank nodes and
-              literals
+              <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>
             </li>
           </ul>
         </section>
@@ -599,7 +594,7 @@ span.cancast:hover { background-color: #ffa;
       <p>Most forms of SPARQL query contain a set of triple patterns called a <em>basic graph
           pattern</em>. Triple patterns are like RDF triples except that each of the subject, predicate
         and object may be a variable. A basic graph pattern <em>matches</em> a subgraph of the RDF data
-        when <a href="#defn_RDFTerm">RDF terms</a> from that subgraph may be substituted for the
+        when <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> from that subgraph may be substituted for the
         variables and the result is RDF graph equivalent to the subgraph.</p>
       <section id="WritingSimpleQueries">
         <h3>Writing a Simple Query</h3>
@@ -7860,23 +7855,6 @@ WHERE {
         abstract query is then evaluated on an RDF dataset.</p>
       <section id="initDefinitions">
         <h3>Initial Definitions</h3>
-        <section id="sparqlBasicTerms">
-          <h4>RDF Terms</h4>
-          <p>SPARQL is defined in terms of IRIs [[RFC3987]]. IRIs are a subset of RDF URI References
-            that omits the use of spaces.</p>
-          <div class="defn">
-            <p><b>Definition: <span id="defn_RDFTerm">RDF Term</span></b></p>
-            <p>Let I be the set of all IRIs.<br>
-              Let RDF-L be the set of all <a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a><br>
-              Let RDF-B be the set of all <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank nodes</a> in RDF graphs</p>
-            <p>The set of <span class="definedTerm">RDF Terms</span>, RDF-T, is I ∪ RDF-L ∪
-              RDF-B.</p>
-          </div>
-          <p>This definition of <span class="definedTerm">RDF Term</span> collects together several
-            basic notions from the <a data-cite="RDF12-CONCEPTS#data-model">RDF data model</a>,
-            but <a data-cite="RDF12-CONCEPTS#section-IRIs">updated</a> to refer to IRIs rather
-            than RDF URI references.</p>
-        </section>
         <section id="sparqlDataset">
           <h4>RDF Dataset</h4>
           <div class="defn">
