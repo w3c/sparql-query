@@ -570,15 +570,11 @@ span.cancast:hover { background-color: #ffa;
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
             </li>
             <li>
-              <a data-cite="RDF12-CONCEPTS#dfn-simple-literal">simple literal</a>
-            </li>
-            <li>
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
             </li>
             <li>
               <a class="type typedLiteral" data-cite=
-                 "RDF12-CONCEPTS#dfn-typed-literal">typed
-                literal</a>
+                 "RDF12-CONCEPTS#dfn-typed-literal">typed literal</a>
             </li>
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">datatype IRI</a>
@@ -3697,7 +3693,7 @@ ORDER BY ?name DESC(?emp)
             Mapping</a> and <a href="#operatorExtensibility">17.3.1 Operator Extensibility</a>) defines
           the relative order of pairs of <code>numerics</code>,
           <code>xsd:strings</code>, <code>xsd:booleans</code> and <code>xsd:dateTimes</code>. Pairs of
-          IRIs are ordered by comparing them as <code>simple literals</code>.</p>
+          IRIs are ordered by comparing them as literals with datatype <code>xsd:string</code>.</p>
         <p>SPARQL also fixes an order between some kinds of RDF terms that would not otherwise be
           ordered:</p>
         <ol>
@@ -3709,9 +3705,9 @@ ORDER BY ?name DESC(?emp)
         <p>SPARQL does not define a total ordering of all possible RDF terms. Here are a few examples
           of pairs of terms for which the relative order is undefined:</p>
         <ul>
-          <li>"a" and "a"@en_gb (a simple literal and a literal with a language tag)</li>
+          <li>"a" and "a"@en_gb (a literal with datatype <code>xsd:string</code> and a literal with a language tag)</li>
           <li>"a"@en_gb and "b"@en_gb (two literals with language tags)</li>
-          <li>"a" and "1"^^xsd:integer (a simple literal and a literal with a supported
+          <li>"a" and "1"^^xsd:integer (a literal with datatype <code>xsd:string</code> and a literal with a supported
             datatype)</li>
           <li>"1"^^my:integer and "2"^^my:integer (two unsupported datatypes)</li>
           <li>"1"^^xsd:integer and "2"^^my:integer (a supported datatype and an unsupported
@@ -3755,11 +3751,7 @@ ORDER BY ?name DESC(?emp)
               </tr>
               <tr>
                 <td><code>"http://script.example/Latin"</code></td>
-                <td>Simple literals follow IRIs.</td>
-              </tr>
-              <tr>
-                <td><code>"http://script.example/Latin"^^xsd:string</code></td>
-                <td>xsd:strings follow simple literals.</td>
+                <td><code>xsd:strings</code> follow IRIs.</td>
               </tr>
             </tbody>
           </table>
@@ -6383,9 +6375,9 @@ WHERE {
             <p>The <code>BNODE</code> function constructs a blank node that is distinct from all
               blank nodes in the dataset being queried and distinct from all blank nodes created by
               calls to this constructor for other query solutions. If the no argument form is used,
-              every call results in a distinct blank node. If the form with a simple literal is used,
-              every call results in distinct blank nodes for different simple literals, and the same
-              blank node for calls with the same simple literal within expressions for one <a href=
+              every call results in a distinct blank node. If the form with an <code>xsd:string</code> literal is used,
+              every call results in distinct blank nodes for different <code>xsd:string</code> literals, and the same
+              blank node for calls with the same <code>xsd:string</code> literal within expressions for one <a href=
                                                                                               "#defn_sparqlSolutionMapping">solution mapping</a>.</p>
             <p>This functionality is compatible with the <a href="#templatesWithBNodes">treatment of
                 blank nodes in SPARQL CONSTRUCT templates</a>.</p>
@@ -6453,8 +6445,8 @@ WHERE {
             <h5>STRUUID</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class=
                                                                                      "operator">STRUUID</span>()</pre>
-            <p>Return a string that is the scheme specific part of UUID. That is, as a simple
-              literal, the result of generating a UUID, converting to a simple literal and removing the
+            <p>Return a string that is the scheme specific part of UUID. That is, as a literal with datatype <code>xsd:string</code>,
+              the result of generating a UUID, converting to a literal with datatype <code>xsd:string</code> and removing the
               initial <code>urn:uuid:</code>.</p>
             <div class="result">
               <table>
@@ -6475,8 +6467,7 @@ WHERE {
             <section id="func-string">
               <h6>String arguments</h6>
               <p>Certain functions (e.g. <a href="#func-regex">REGEX</a>, <a href=
-                                                                             "#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>) take a <code>string
-                  literal</code> as an argument and accept a simple literal, or a literal with
+                                                                             "#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>) take a <code>string literal</code> as an argument and accept a literal with datatype <code>xsd:string</code>, or a literal with
                 language tag. They then act on the lexical form
                 of the literal.</p>
               <p>The term <code>string literal</code> is used in the function descriptions for this.
@@ -6491,9 +6482,9 @@ WHERE {
                 functions raises an error.</p>
               <p>Compatibility of two arguments is defined as:</p>
               <ul>
-                <li>The arguments are simple literals</li>
+                <li>The arguments are literals with datatype <code>xsd:string</code></li>
                 <li>The arguments are literals with identical language tags</li>
-                <li>The first argument is a literal with language tag and the second argument is a simple literal</li>
+                <li>The first argument is a literal with language tag and the second argument is a literal with datatype <code>xsd:string</code></li>
               </ul>
               <div class="result">
                 <table>
@@ -6545,7 +6536,7 @@ WHERE {
             <section id="idp1915512">
               <h6>String Literal Return Type</h6>
               <p>Functions that return a string literal do so with the string literal of the same
-                kind as the first argument (simple literal, literal with the same language tag). This includes <a href="#func-substr">SUBSTR</a>, <a href=
+                kind as the first argument (literal with datatype <code>xsd:string</code>, literal with the same language tag). This includes <a href="#func-substr">SUBSTR</a>, <a href=
                                                                                  "#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.</p>
               <p>The function <a href="#func-concat">CONCAT</a> returns a string literal based on the
                 details of all its arguments.</p>
@@ -6589,7 +6580,7 @@ WHERE {
                                                                                                                                                                                                                   "type">xsd:integer</span> length)</pre>
             <p>The <code>substr</code> function corresponds to the XPath <a data-cite=
                                                                             "XPATH-FUNCTIONS#func-substring">fn:substring</a> function and returns a literal of the
-              same kind (simple literal, literal with the same language tag) as the <code>source</code> input parameter but with a lexical form formed from
+              same kind (literal with datatype <code>xsd:string</code>, literal with the same language tag) as the <code>source</code> input parameter but with a lexical form formed from
               the substring of the lexcial form of the source.</p>
             <p>The arguments <code>startingLoc</code> and <code>length</code> may be derived types of
               xsd:integer.</p>
@@ -6825,12 +6816,12 @@ WHERE {
               raised.</p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
-              the same kind as the first argument <code>arg1</code> (simple literal, literal with the same
+              the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
               language tag). The lexical form of the result is the substring of the lexical
               form of <code>arg1</code> that precedes the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the empty string.</p>
-            <p>If there is no such occurrence, an empty simple literal is returned.</p>
+            <p>If there is no such occurrence, an empty literal with datatype <code>xsd:string</code> is returned.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -6885,13 +6876,13 @@ WHERE {
               raised.</p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
-              the same kind as the first argument <code>arg1</code> (simple literal, literal with the same
+              the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
               language tag). The lexical form of the result is the substring of the lexical
               form of <code>arg1</code> that follows the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the lexical form of
               <code>arg1</code>.</p>
-            <p>If there is no such occurrence, an empty simple literal is returned.</p>
+            <p>If there is no such occurrence, an empty literal with datatype <code>xsd:string</code> is returned.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -6940,8 +6931,8 @@ WHERE {
             <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class=
                                                                                      "operator">ENCODE_FOR_URI</span>(<span class="type">string literal</span> ltrl)</pre>
             <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite=
-                                                                                    "XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a simple
-              literal with the lexical form obtained from the lexical form of its input after
+                                                                                    "XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a
+              literal with datatype <code>xsd:string</code> with the lexical form obtained from the lexical form of its input after
               translating reserved characters according to the <a data-cite=
                                                                   "XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a>
               function.</p>
@@ -6976,7 +6967,7 @@ WHERE {
             <p>The lexical form of the returned literal is obtained by concatenating the lexical
               forms of its inputs. If all input literals are literals with identical language
               tag, then the returned literal is a literal with the same language tag, in all
-              other cases, the returned literal is a simple literal.</p>
+              other cases, the returned literal is a literal with datatype <code>xsd:string</code>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7478,7 +7469,7 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class=
                                                                                       "operator">TZ</span> (<span class="type"><span class=
                                                                                                                                      "type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
-            <p>Returns the timezone part of <code>arg</code> as a simple literal. Returns the empty
+            <p>Returns the timezone part of <code>arg</code> as a literal with datatype <code>xsd:string</code>. Returns the empty
               string if there is no timezone.</p>
             <div class="result">
               <table>
