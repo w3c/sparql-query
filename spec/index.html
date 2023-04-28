@@ -4546,10 +4546,8 @@ foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
         [[[XQUERY-31]]] [[XQUERY-31]] section <a data-cite="XQUERY-31#dt-type-error">2.3.1, <em>Kinds of
             Errors</em></a>. These errors have no effect outside of <code>FILTER</code> evaluation.</p>
       <div class="exampleGroup">
-        <p>RDF literals may have a</p>
-        <div>
-          datatype IRI
-        </div>:
+        <p><a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a> have datatypes 
+          that determine the value of the literal.</p>
         <pre class="data nohighlight">
 @prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
 @prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
@@ -4559,8 +4557,13 @@ _:a   dc:date       "2004-12-31T19:00:00-05:00" .
 
 _:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
 _:b   dc:date       "2004-12-31T19:01:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
-        <p>The object of the first <code>dc:date</code> triple has no type information. The second
-          has the datatype <code>xsd:dateTime</code>.</p>
+        <p>The object of the first <code>dc:date</code> triple is a 
+          <a data-cite="RDF12-CONCEPTS#dfn-simple-literal">simple literal</a>
+          has a datatype of <code>xsd:string</code>.
+          The second has the datatype <code>xsd:dateTime</code>.
+          They are different <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF terms</a>
+          with different values.
+        </p>
         <p>SPARQL expressions are constructed according to the grammar and provide access to
           functions (named by IRI) and operator functions (invoked by keywords and symbols in the
           SPARQL grammar). SPARQL operators can be used to compare the values of literals:</p>
