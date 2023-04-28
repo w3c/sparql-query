@@ -5362,19 +5362,11 @@ WHERE {
                   </table>
                 </div>
               </div>
-              <p>One may test that a graph pattern is <em>not</em> expressed by specifying an</p>
-              <div>
-                <span class="term">OPTIONAL</span>
-              </div>
-              <div>
-                graph pattern
-              </div>that introduces a variable and testing to see that the variable is
-              <div>
-                <span class="term">not</span>
-              </div>
-              <div>
+              <p>One may test that a graph pattern is <em>not</em> expressed by specifying an
+              <code>OPTIONAL</code> graph pattern
+              that introduces a variable and testing to see that the variable is not
                 <span class="term">bound</span>
-              </div>. This is called <em>Negation as Failure</em> in logic programming.
+                This is called <em>Negation as Failure</em> in logic programming.</p>
               <div class="queryGroup">
                 <p>This query matches the people with a <code>name</code> but <em>no</em> expressed
                   <code>date</code>:</p>
@@ -6468,9 +6460,10 @@ WHERE {
           </section>
           <section id="func-substr">
             <h5>SUBSTR</h5>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc)</pre>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc, <span class=
-                                                                                                                                                                                                                  "type">xsd:integer</span> length)</pre>
+            <pre class="prototype nohighlight">
+<span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc)
+<span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc, <span class="type">xsd:integer</span> length)
+            </pre>
             <p>The <code>substr</code> function corresponds to the XPath 
               <a data-cite="XPATH-FUNCTIONS#func-substring">fn:substring</a> function and returns a literal of the
               same kind (literal with datatype <code>xsd:string</code>, literal with the same language tag)
@@ -6948,9 +6941,10 @@ WHERE {
           </section>
           <section id="func-regex">
             <h5>REGEX</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">pattern</span>)
-              <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">pattern</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">flags</span>)
-            </pre>
+            <pre class="prototype nohighlight">
+<span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">pattern</span>)
+<span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">pattern</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">flags</span>)
+</pre>
             <p>Invokes the XPath <a data-cite="XPATH-FUNCTIONS#func-matches">fn:matches</a> function to match
               <code>text</code> against a regular expression <code>pattern</code>. The regular
               expression language is defined in XQuery 1.0 and XPath 2.0 Functions and Operators
@@ -6990,8 +6984,10 @@ WHERE {
           </section>
           <section id="func-replace">
             <h5>REPLACE</h5>
-            <pre class="prototype nohighlight"> <span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">xsd:string</span></span> pattern, <span class="type"><span class="type">xsd:string</span></span> replacement )
-              <span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">xsd:string</span></span> pattern, <span class="type"><span class="type">xsd:string</span></span> replacement,  <span class="type"><span class="type">xsd:string</span></span> flags)</pre>
+            <pre class="prototype nohighlight">
+<span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">xsd:string</span></span> pattern, <span class="type"><span class="type">xsd:string</span></span> replacement )
+<span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">xsd:string</span></span> pattern, <span class="type"><span class="type">xsd:string</span></span> replacement,  <span class="type"><span class="type">xsd:string</span></span> flags)
+            </pre>
             <p>The <code>REPLACE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-replace">fn:replace</a> function. It replaces each non-overlapping
               occurrence of the regular expression <code>pattern</code> with the replacement string.
               Regular expession matching may involve modifier flags. See <a href="#func-regex">REGEX</a>.
