@@ -1110,12 +1110,6 @@ WHERE   {
             '&lt;' and '&gt;' delimiters do not form part of the IRI reference. Relative IRIs match the
             <code>irelative-ref</code> reference in section 2.2 ABNF for IRI References and IRIs in
             [[RFC3987]] and are resolved to IRIs as described below.</p>
-          <p>The set of RDF terms defined in [[[RDF12-CONCEPTS]]] includes RDF URI references while
-            SPARQL terms include IRIs. RDF URI references containing "<code>&lt;</code>",
-            "<code>&gt;</code>", '<code>"</code>' (double quote), space, "<code>{</code>",
-            "<code>}</code>", "<code>|</code>", "<code>\</code>", "<code>^</code>", and
-            "<code>`</code>" are not IRIs. The behavior of a SPARQL query against RDF statements
-            composed of such RDF URI references is not defined.</p>
           <section id="prefNames">
             <h5>Prefixed Names</h5>
             <p>The <code>PREFIX</code> keyword associates a prefix label with an IRI. A prefixed name
