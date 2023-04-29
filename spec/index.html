@@ -527,7 +527,8 @@ span.cancast:hover { background-color: #ffa;
             </table>
           </div>
           <p>A 'binding' is a pair (<a href="#defn_QueryVariable">variable</a>,
-            <a href="#defn_RDFTerm">RDF term</a>). In this result set, there are three variables:
+            <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>). 
+            In this result set, there are three variables:
             <code>x</code>, <code>y</code> and <code>z</code> (shown as column headers). Each solution
             is shown as one row in the body of the table.&nbsp; Here, there is a single solution, in
             which variable <code>x</code> is bound to <code>"Alice"</code>, variable <code>y</code> is
@@ -547,9 +548,6 @@ span.cancast:hover { background-color: #ffa;
           <p class="note">
             IRI : align to RDF Concept2 -- "RDF URI reference" is RDF 1.0 terminology.
           </p>
-          <p class="note">
-            Plain literal - does not exists in RDF 1.1/1.2.
-          </p>
           <ul>
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
@@ -562,14 +560,7 @@ span.cancast:hover { background-color: #ffa;
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
             </li>
             <li>
-              plain literal
-            </li>
-            <li>
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
-            </li>
-            <li>
-              <a class="type typedLiteral" data-cite="RDF12-CONCEPTS#dfn-typed-literal">typed
-                literal</a>
             </li>
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">datatype IRI</a>
@@ -578,16 +569,8 @@ span.cancast:hover { background-color: #ffa;
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>
             </li>
-          </ul>
-          <p>In addition, we define the following terms:</p>
-          <ul>
             <li>
-              <a class="type" href="#defn_RDFTerm">RDF Term</a>, which includes IRIs, blank nodes and
-              literals
-            </li>
-            <li>
-              <a class="type" href="#defn_SimpleLiteral">Simple Literal</a>, which covers literals
-              without language tag or datatype IRI
+              <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>
             </li>
           </ul>
         </section>
@@ -598,7 +581,7 @@ span.cancast:hover { background-color: #ffa;
       <p>Most forms of SPARQL query contain a set of triple patterns called a <em>basic graph
           pattern</em>. Triple patterns are like RDF triples except that each of the subject, predicate
         and object may be a variable. A basic graph pattern <em>matches</em> a subgraph of the RDF data
-        when <a href="#defn_RDFTerm">RDF terms</a> from that subgraph may be substituted for the
+        when <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> from that subgraph may be substituted for the
         variables and the result is RDF graph equivalent to the subgraph.</p>
       <section id="WritingSimpleQueries">
         <h3>Writing a Simple Query</h3>
@@ -713,9 +696,9 @@ _:b foaf:box   &lt;mailto:peter@example.org&gt; .
 :z   ns:p     "abc"^^dt:specialDatatype .
 </pre>
           <p>Note that, in Turtle, <code>"cat"@en</code> is an RDF literal with a lexical form "cat"
-            and a language tag "en"; <code>"42"^^xsd:integer</code> is a typed literal with the
+            and a language tag "en"; <code>"42"^^xsd:integer</code> is a literal with the
             datatype <code>http://www.w3.org/2001/XMLSchema#integer</code>; and
-            <code>"abc"^^dt:specialDatatype</code> is a typed literal with the datatype
+            <code>"abc"^^dt:specialDatatype</code> is a literal with the datatype
             <code>http://example.org/datatype#specialDatatype</code>.</p>
         </div>
         <p>This RDF data is the data graph for the query examples in sections 2.3.1–2.3.3.</p>
@@ -756,7 +739,7 @@ _:b foaf:box   &lt;mailto:peter@example.org&gt; .
         </section>
         <section id="matchNumber">
           <h4>Matching Literals with Numeric Types</h4>
-          <p>Integers in a SPARQL query indicate an RDF typed literal with the datatype
+          <p>Integers in a SPARQL query indicate an RDF literal with the datatype
             <code>xsd:integer</code>. For example: <code>42</code> is a shortened form of&nbsp;
             <code>"42"^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;</code>.</p>
           <p>The pattern in the following query has a solution with variable <code>v</code> bound to
@@ -1115,7 +1098,8 @@ WHERE   {
     <section id="sparqlSyntax">
       <h2>SPARQL Syntax</h2>
       <p>
-        This section covers the syntax used by SPARQL for <a href="#sparqlBasicTerms">RDF terms</a>
+        This section covers the syntax used by SPARQL for 
+        <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF terms</a>
         and <a href="#sparqlTriplePatterns">triple patterns</a>. 
         The full grammar is given in <a href="#grammar">section 19</a>.
       </p>
@@ -1182,7 +1166,7 @@ book:book1</pre>
             tag (introduced by <code>@</code>) or an optional datatype IRI or prefixed name (introduced
             by <code>^^</code>).</p>
           <p>As a convenience, integers can be written directly (without quotation marks and an
-            explicit datatype IRI) and are interpreted as typed literals of datatype
+            explicit datatype IRI) and are interpreted as literals with datatype
             <code>xsd:integer</code>; decimal numbers for which there is '.' in the number but no
             exponent are interpreted as <code>xsd:decimal</code>; and numbers with exponents are
             interpreted as <code>xsd:double</code>. Values of type <code>xsd:boolean</code> can also be
@@ -3691,9 +3675,9 @@ ORDER BY ?name DESC(?emp)
         </div>
         <p>The <a href="#op_lt">"&lt;" operator</a> (see the <a href="#OperatorMapping">Operator
             Mapping</a> and <a href="#operatorExtensibility">17.3.1 Operator Extensibility</a>) defines
-          the relative order of pairs of <code>numerics</code>, <code>simple literals</code>,
+          the relative order of pairs of <code>numerics</code>,
           <code>xsd:strings</code>, <code>xsd:booleans</code> and <code>xsd:dateTimes</code>. Pairs of
-          IRIs are ordered by comparing them as <code>simple literals</code>.</p>
+          IRIs are ordered by comparing them as literals with datatype <code>xsd:string</code>.</p>
         <p>SPARQL also fixes an order between some kinds of RDF terms that would not otherwise be
           ordered:</p>
         <ol>
@@ -3702,14 +3686,12 @@ ORDER BY ?name DESC(?emp)
           <li>IRIs</li>
           <li>RDF literals</li>
         </ol>
-        <p>A plain literal is lower than an RDF literal with type <code>xsd:string</code> of the same
-          lexical form.</p>
         <p>SPARQL does not define a total ordering of all possible RDF terms. Here are a few examples
           of pairs of terms for which the relative order is undefined:</p>
         <ul>
-          <li>"a" and "a"@en_gb (a simple literal and a literal with a language tag)</li>
+          <li>"a" and "a"@en_gb (a literal with datatype <code>xsd:string</code> and a literal with a language tag)</li>
           <li>"a"@en_gb and "b"@en_gb (two literals with language tags)</li>
-          <li>"a" and "1"^^xsd:integer (a simple literal and a literal with a supported
+          <li>"a" and "1"^^xsd:integer (a literal with datatype <code>xsd:string</code> and a literal with a supported
             datatype)</li>
           <li>"1"^^my:integer and "2"^^my:integer (two unsupported datatypes)</li>
           <li>"1"^^xsd:integer and "2"^^my:integer (a supported datatype and an unsupported
@@ -3753,11 +3735,7 @@ ORDER BY ?name DESC(?emp)
               </tr>
               <tr>
                 <td><code>"http://script.example/Latin"</code></td>
-                <td>Simple literals follow IRIs.</td>
-              </tr>
-              <tr>
-                <td><code>"http://script.example/Latin"^^xsd:string</code></td>
-                <td>xsd:strings follow simple literals.</td>
+                <td><code>xsd:strings</code> follow IRIs.</td>
               </tr>
             </tbody>
           </table>
@@ -4568,10 +4546,8 @@ foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
         [[[XQUERY-31]]] [[XQUERY-31]] section <a data-cite="XQUERY-31#dt-type-error">2.3.1, <em>Kinds of
             Errors</em></a>. These errors have no effect outside of <code>FILTER</code> evaluation.</p>
       <div class="exampleGroup">
-        <p>RDF literals may have a</p>
-        <div>
-          datatype IRI
-        </div>:
+        <p><a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a> have datatypes 
+          that determine the value of the literal.</p>
         <pre class="data nohighlight">
 @prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
 @prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
@@ -4581,11 +4557,16 @@ _:a   dc:date       "2004-12-31T19:00:00-05:00" .
 
 _:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
 _:b   dc:date       "2004-12-31T19:01:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
-        <p>The object of the first <code>dc:date</code> triple has no type information. The second
-          has the datatype <code>xsd:dateTime</code>.</p>
+        <p>The object of the first <code>dc:date</code> triple is a 
+          <a data-cite="RDF12-CONCEPTS#dfn-simple-literal">simple literal</a>
+          has a datatype of <code>xsd:string</code>.
+          The second has the datatype <code>xsd:dateTime</code>.
+          They are different <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF terms</a>
+          with different values.
+        </p>
         <p>SPARQL expressions are constructed according to the grammar and provide access to
           functions (named by IRI) and operator functions (invoked by keywords and symbols in the
-          SPARQL grammar). SPARQL operators can be used to compare the values of typed literals:</p>
+          SPARQL grammar). SPARQL operators can be used to compare the values of literals:</p>
         <div class="queryGroup">
           <pre class="query nohighlight">
 PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
@@ -4615,14 +4596,14 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         <p>SPARQL functions and operators operate on RDF terms and SPARQL variables. A subset of
           these functions and operators are taken from the [[[XPATH-FUNCTIONS]]] [[XPATH-FUNCTIONS]] and have XML Schema
           <a data-cite="XPATH20#dt-typed-value">typed value</a> arguments and return types. RDF
-          <code>typed literals</code> passed as arguments to these functions and operators are mapped
+          <code>literals</code> passed as arguments to these functions and operators are mapped
           to XML Schema typed values with a <a data-cite="XPATH20#dt-string-value">string value</a> of
           the <code>lexical form</code> and an 
           <a href="http://www.w3.org/TR/xmlschema-2/#dt-atomic">atomic datatype</a> corresponding to the
           <span class="type datatypeIRI">datatype IRI</span>. The returned typed values are mapped back
-          to RDF <code>typed literals</code> the same way.</p>
+          to RDF <code>literals</code> the same way.</p>
         <p>SPARQL has additional operators which operate on specific subsets of RDF terms. When
-          referring to a type, the following terms denote a <code>typed literal</code> with the
+          referring to a type, the following terms denote a <code>literal</code> with the
           corresponding [[[XMLSCHEMA-2]]] [[XMLSCHEMA-2]] <span class="type datatypeIRI">datatype
             IRI</span>:</p>
         <ul>
@@ -4636,11 +4617,9 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         </ul>
         <p>The following terms identify additional types used in SPARQL value tests:</p>
         <ul>
-          <li><span class="type numeric">numeric</span> denotes <code>typed literals</code> with
+          <li><span class="type numeric">numeric</span> denotes <code>literals</code> with
             datatypes <code>xsd:integer</code>, <code>xsd:decimal</code>, <code>xsd:float</code>, and
             <code>xsd:double</code>.</li>
-          <li><span class="type simpleLiteral">simple literal</span> denotes a <code>plain
-              literal</code> with no <code>language tag</code>.</li>
           <li><span class="type RDFterm">RDF term</span> denotes the types <code>IRI</code>,
             <code>literal</code>, and <code>blank node</code>.</li>
           <li><span class="type variable">variable</span> denotes a SPARQL variable.</li>
@@ -4830,8 +4809,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <li>If the argument is a <span class="type typedLiteral">typed literal</span> with a
               <span class="type datatype">datatype</span> of <code>xsd:boolean</code>, and it has a
               valid lexical form, the EBV is the value of that argument.</li>
-            <li>If the argument is a <span class="type plainLiteral">plain literal</span> or a
-              <span class="type typedLiteral">typed literal</span> with a 
+            <li>If the argument is a literal with a 
               <span class="type datatype">datatype</span> of <code>xsd:string</code>, the EBV is false if the
               operand value has zero length; otherwise the EBV is true.</li>
             <li>If the argument is a <span class="type numeric">numeric</span> type or a 
@@ -4842,7 +4820,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           </ul>
           <p>An EBV of <code>true</code> is represented as a <span class="type typedLiteral">typed
               literal</span> with a datatype of <code>xsd:boolean</code> and a lexical value of "true";
-            an EBV of false is represented as a <span class="type typedLiteral">typed literal</span>
+            an EBV of false is represented as a <span class="type literal">literal</span>
             with a datatype of <code>xsd:boolean</code> and a lexical value of "false".</p>
         </section>
       </section>
@@ -4992,17 +4970,6 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <th scope="row">
                 <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
               </th>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 0)
-              </td>
-              <td>xsd:boolean</td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
-              </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
@@ -5040,17 +5007,6 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
                 <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
-              </td>
-              <td>xsd:boolean</td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a>
-              </th>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 0))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5102,17 +5058,6 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <th scope="row">
                 <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;</span> B</a>
               </th>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), -1)
-              </td>
-              <td>xsd:boolean</td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;</span> B</a>
-              </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
@@ -5150,17 +5095,6 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
                 <a data-cite="XPATH-FUNCTIONS#func-numeric-greater-than">op:numeric-greater-than</a>(A, B)
-              </td>
-              <td>xsd:boolean</td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;</span> B</a>
-              </th>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 1)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5213,17 +5147,6 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <th scope="row">
                 <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;=</span> B</a>
               </th>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), 1))
-              </td>
-              <td>xsd:boolean</td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;=</span> B</a>
-              </th>
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
@@ -5262,17 +5185,6 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td class="xpathOp">
                 <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-greater-than">op:numeric-greater-than</a>(A, B),
                 <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
-              </td>
-              <td>xsd:boolean</td>
-            </tr>
-            <tr>
-              <th scope="row">
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;=</span> B</a>
-              </th>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td><span class="type simpleLiteral">simple literal</span></td>
-              <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(A, B), -1))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5450,19 +5362,11 @@ WHERE {
                   </table>
                 </div>
               </div>
-              <p>One may test that a graph pattern is <em>not</em> expressed by specifying an</p>
-              <div>
-                <span class="term">OPTIONAL</span>
-              </div>
-              <div>
-                graph pattern
-              </div>that introduces a variable and testing to see that the variable is
-              <div>
-                <span class="term">not</span>
-              </div>
-              <div>
+              <p>One may test that a graph pattern is <em>not</em> expressed by specifying an
+              <code>OPTIONAL</code> graph pattern
+              that introduces a variable and testing to see that the variable is not
                 <span class="term">bound</span>
-              </div>. This is called <em>Negation as Failure</em> in logic programming.
+                This is called <em>Negation as Failure</em> in logic programming.</p>
               <div class="queryGroup">
                 <p>This query matches the people with a <code>name</code> but <em>no</em> expressed
                   <code>date</code>:</p>
@@ -6164,8 +6068,8 @@ WHERE {
           <section id="func-str">
             <h5>STR</h5>
             <pre class="prototype nohighlight">
-<span class="return"><span class="type">simple literal</span></span>  <span class="operator">STR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
-<span class="return"><span class="type">simple literal</span></span>  <span class="operator">STR</span> (<span class="type"><span class="type IRI">IRI</span></span> <span class="name">rsrc</span>)
+<span class="return">xsd:string</span>  <span class="operator">STR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
+<span class="return">xsd:string</span>  <span class="operator">STR</span> (<span class="type"><span class="type IRI">IRI</span></span> <span class="name">rsrc</span>)
             </pre>
             <p>Returns the <span class="type lexicalForm">lexical form</span> of <code>ltrl</code> (a
               <span class="type literal">literal</span>); returns the codepoint representation of
@@ -6213,7 +6117,7 @@ WHERE {
           </section>
           <section id="func-lang">
             <h5>LANG</h5>
-            <pre class="prototype nohighlight"> <span class="return"><span class="type">simple literal</span></span>  <span class="operator">LANG</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">LANG</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
             </pre>
             <p>Returns the <span class="type langTag">language tag</span> of <code>ltrl</code>, if it
               has one. It returns <code>""</code> if 
@@ -6264,12 +6168,9 @@ WHERE {
             </pre>
             <p>Returns the <span class="type datatypeIRI">datatype IRI</span> of a
               <code>literal</code>.</p>
-            <ul>
-              <li>If the literal is a typed literal, return the datatype IRI.</li>
-              <li>If the literal is a simple literal, return <code>xsd:string</code></li>
-              <li>If the literal is literal with a language tag, return
-                <code>rdf:langString</code></li>
-            </ul>
+            <p class="note">
+                The datatype of literals with a <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> is <code>rdf:langString</code>.
+            </p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 @prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
@@ -6330,10 +6231,9 @@ WHERE {
           </section>
           <section id="func-iri">
             <h5>IRI</h5>
-            <pre class="prototype nohighlight"> <span class="return">iri</span>  <span class="operator">IRI</span>(<code>simple literal</code>)
+            <pre class="prototype nohighlight">
               <span class="return">iri</span>  <span class="operator">IRI</span>(<span class="type">xsd:string</span>)
               <span class="return">iri</span>  <span class="operator">IRI</span>(<span class="type">iri</span>)
-              <span class="return">iri</span>  <span class="operator">URI</span>(<code>simple literal</code>)
               <span class="return">iri</span>  <span class="operator">URI</span>(<span class="type">xsd:string</span>)
               <span class="return">iri</span>  <span class="operator">URI</span>(<span class="type">iri</span>)</pre>
             <p>The <code>IRI</code> function constructs an IRI by resolving the string argument (see
@@ -6341,7 +6241,7 @@ WHERE {
               IRI is resolved against the base IRI of the query and must result in an absolute IRI.</p>
             <p>The <code>URI</code> function is a synonym for <a href="#func-iri"><code>IRI</code></a>.</p>
             <p>If the function is passed an IRI, it returns the IRI unchanged.</p>
-            <p>Passing any RDF term other than a simple literal, xsd:string or an IRI is an
+            <p>Passing any RDF term other than a literal with datatype <code>xsd:string</code> or an IRI is an
               error.</p>
             <p>An implementation <em class="rfc2119" title="Keyword in RFC 2119 context">MAY</em>
               normalize the IRI.</p>
@@ -6364,21 +6264,20 @@ WHERE {
           <section id="func-bnode">
             <h5>BNODE</h5>
             <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class="operator">BNODE</span>()</pre>
-            <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class="operator">BNODE</span>(<span class="type">simple literal</span>)</pre>
             <pre class="prototype nohighlight"><span class="return">blank node</span>  <span class="operator">BNODE</span>(<span class="type">xsd:string</span>)</pre>
             <p>The <code>BNODE</code> function constructs a blank node that is distinct from all
               blank nodes in the dataset being queried and distinct from all blank nodes created by
               calls to this constructor for other query solutions. If the no argument form is used,
-              every call results in a distinct blank node. If the form with a simple literal is used,
-              every call results in distinct blank nodes for different simple literals, and the same
-              blank node for calls with the same simple literal within expressions for one
-              <a href="#defn_sparqlSolutionMapping">solution mapping</a>.</p>
+              every call results in a distinct blank node. If the form with an <code>xsd:string</code> literal is used,
+              every call results in distinct blank nodes for different <code>xsd:string</code> literals, and the same
+              blank node for calls with the same <code>xsd:string</code> literal within expressions for one <a href="#defn_sparqlSolutionMapping">solution mapping</a>.
+            </p>
             <p>This functionality is compatible with the <a href="#templatesWithBNodes">treatment of
                 blank nodes in SPARQL CONSTRUCT templates</a>.</p>
           </section>
           <section id="func-strdt">
             <h5>STRDT</h5>
-            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRDT</span>(<span class="type">simple literal</span> lexicalForm, <span class="type">IRI</span> datatypeIRI)</pre>
+            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRDT</span>(<span class="type">xsd:string</span> lexicalForm, <span class="type">IRI</span> datatypeIRI)</pre>
             <p>The <code>STRDT</code> function constructs a literal with lexical form and type as
               specified by the arguments.</p>
             <div class="result">
@@ -6398,7 +6297,7 @@ WHERE {
           </section>
           <section id="func-strlang">
             <h5>STRLANG</h5>
-            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRLANG</span>(<span class="type">simple literal</span> lexicalForm, <span class="type">simple literal</span> langTag)</pre>
+            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRLANG</span>(<span class="type">xsd:string</span> lexicalForm, <span class="type">xsd:string</span> langTag)</pre>
             <p>The <code>STRLANG</code> function constructs a literal with lexical form and language
               tag as specified by the arguments.</p>
             <div class="result">
@@ -6431,9 +6330,9 @@ WHERE {
           </section>
           <section id="func-struuid">
             <h5>STRUUID</h5>
-            <pre class="prototype nohighlight"><span class="return">simple literal</span>  <span class="operator">STRUUID</span>()</pre>
-            <p>Return a string that is the scheme specific part of UUID. That is, as a simple
-              literal, the result of generating a UUID, converting to a simple literal and removing the
+            <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class="operator">STRUUID</span>()</pre>
+            <p>Return a string that is the scheme specific part of UUID. That is, as a literal with datatype <code>xsd:string</code>,
+              the result of generating a UUID, converting to a literal with datatype <code>xsd:string</code> and removing the
               initial <code>urn:uuid:</code>.</p>
             <div class="result">
               <table>
@@ -6453,11 +6352,9 @@ WHERE {
             <h5>Strings in SPARQL Functions</h5>
             <section id="func-string">
               <h6>String arguments</h6>
-              <p>Certain functions (e.g. <a href="#func-regex">REGEX</a>, 
-                <a href="#func-strlen">STRLEN</a>, 
-                <a href="#func-contains">CONTAINS</a>) take a <code>string
-                  literal</code> as an argument and accept a simple literal, a plain literal with
-                language tag, or a literal with datatype xsd:string. They then act on the lexcial form
+              <p>Certain functions (e.g. <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>)
+                take a <code>string literal</code> as an argument and accept a literal with datatype <code>xsd:string</code>, or a literal with
+                language tag. They then act on the lexical form
                 of the literal.</p>
               <p>The term <code>string literal</code> is used in the function descriptions for this.
                 Use of any other RDF term will cause a call to the function to raise an error.</p>
@@ -6473,10 +6370,9 @@ WHERE {
                 functions raises an error.</p>
               <p>Compatibility of two arguments is defined as:</p>
               <ul>
-                <li>The arguments are simple literals or literals typed as xsd:string</li>
-                <li>The arguments are plain literals with identical language tags</li>
-                <li>The first argument is a plain literal with language tag and the second argument
-                  is a simple literal or literal typed as xsd:string</li>
+                <li>The arguments are literals with datatype <code>xsd:string</code></li>
+                <li>The arguments are literals with identical language tags</li>
+                <li>The first argument is a literal with language tag and the second argument is a literal with datatype <code>xsd:string</code></li>
               </ul>
               <div class="result">
                 <table>
@@ -6492,28 +6388,8 @@ WHERE {
                       <td>yes</td>
                     </tr>
                     <tr>
-                      <td>"abc"</td>
-                      <td>"b"^^xsd:string</td>
-                      <td>yes</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"^^xsd:string</td>
-                      <td>"b"</td>
-                      <td>yes</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"^^xsd:string</td>
-                      <td>"b"^^xsd:string</td>
-                      <td>yes</td>
-                    </tr>
-                    <tr>
                       <td>"abc"@en</td>
                       <td>"b"</td>
-                      <td>yes</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"@en</td>
-                      <td>"b"^^xsd:string</td>
                       <td>yes</td>
                     </tr>
                     <tr>
@@ -6536,21 +6412,21 @@ WHERE {
                       <td>"b"@en</td>
                       <td>no</td>
                     </tr>
-                    <tr>
-                      <td>"abc"^^xsd:string</td>
-                      <td>"b"@en</td>
-                      <td>no</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
+              <p class="note">
+                <code>"abc"</code> is a                 
+                <a data-cite="RDF12-CONCEPTS#dfn-simple-literal">simple literal</a>
+                syntactic shorthand for <code>"abc"^^xsd:string</code>.
+              </p>
             </section>
             <section id="idp1915512">
               <h6>String Literal Return Type</h6>
               <p>Functions that return a string literal do so with the string literal of the same
-                kind as the first argument (simple literal, plain literal with same language tag,
-                xsd:string). This includes <a href="#func-substr">SUBSTR</a>, 
-                <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.</p>
+                kind as the first argument (literal with datatype <code>xsd:string</code>, literal with the same language tag).
+                This includes <a href="#func-substr">SUBSTR</a>, <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.
+              </p>
               <p>The function <a href="#func-concat">CONCAT</a> returns a string literal based on the
                 details of all its arguments.</p>
             </section>
@@ -6584,13 +6460,14 @@ WHERE {
           </section>
           <section id="func-substr">
             <h5>SUBSTR</h5>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc)</pre>
-            <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc, <span class="type">xsd:integer</span> length)</pre>
-            <p>The <code>substr</code> function corresponds to the XPath
-              <a data-cite="XPATH-FUNCTIONS#func-substring">fn:substring</a>
-              function and returns a literal of the
-              same kind (simple literal, literal with language tag, <code>xsd:string</code> typed
-              literal) as the <code>source</code> input parameter but with a lexical form formed from
+            <pre class="prototype nohighlight">
+<span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc)
+<span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc, <span class="type">xsd:integer</span> length)
+            </pre>
+            <p>The <code>substr</code> function corresponds to the XPath 
+              <a data-cite="XPATH-FUNCTIONS#func-substring">fn:substring</a> function and returns a literal of the
+              same kind (literal with datatype <code>xsd:string</code>, literal with the same language tag)
+              as the <code>source</code> input parameter but with a lexical form formed from
               the substring of the lexcial form of the source.</p>
             <p>The arguments <code>startingLoc</code> and <code>length</code> may be derived types of
               xsd:integer.</p>
@@ -6812,12 +6689,12 @@ WHERE {
               raised.</p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
-              the same kind as the first argument <code>arg1</code> (simple literal, plain literal same
-              language tag, xsd:string). The lexical form of the result is the substring of the lexical
+              the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
+              language tag). The lexical form of the result is the substring of the lexical
               form of <code>arg1</code> that precedes the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the empty string.</p>
-            <p>If there is no such occurrence, an empty simple literal is returned.</p>
+            <p>If there is no such occurrence, an empty literal with datatype <code>xsd:string</code> is returned.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -6869,13 +6746,13 @@ WHERE {
               raised.</p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
-              the same kind as the first argument <code>arg1</code> (simple literal, plain literal same
-              language tag, xsd:string). The lexical form of the result is the substring of the lexcial
+              the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
+              language tag). The lexical form of the result is the substring of the lexical
               form of <code>arg1</code> that follows the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the lexical form of
               <code>arg1</code>.</p>
-            <p>If there is no such occurrence, an empty simple literal is returned.</p>
+            <p>If there is no such occurrence, an empty literal with datatype <code>xsd:string</code> is returned.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -6921,9 +6798,9 @@ WHERE {
           </section>
           <section id="func-encode">
             <h5>ENCODE_FOR_URI</h5>
-            <pre class="prototype nohighlight"><span class="return">simple literal</span>  <span class="operator">ENCODE_FOR_URI</span>(<span class="type">string literal</span> ltrl)</pre>
-            <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a simple
-              literal with the lexical form obtained from the lexical form of its input after
+            <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class="operator">ENCODE_FOR_URI</span>(<span class="type">string literal</span> ltrl)</pre>
+            <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a
+              literal with datatype <code>xsd:string</code> with the lexical form obtained from the lexical form of its input after
               translating reserved characters according to the <a data-cite="XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a>
               function.</p>
             <div class="result">
@@ -6951,11 +6828,9 @@ WHERE {
             <p>The <code>CONCAT</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-concat">fn:concat</a> function. The function accepts string
               literals as arguments.</p>
             <p>The lexical form of the returned literal is obtained by concatenating the lexical
-              forms of its inputs. If all input literals are typed literals of type
-              <code>xsd:string</code>, then the returned literal is also of type
-              <code>xsd:string</code>, if all input literals are plain literals with identical language
-              tag, then the returned literal is a plain literal with the same language tag, in all
-              other cases, the returned literal is a simple literal.</p>
+              forms of its inputs. If all input literals are literals with identical language
+              tag, then the returned literal is a literal with the same language tag, in all
+              other cases, the returned literal is a literal with datatype <code>xsd:string</code>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -6968,11 +6843,7 @@ WHERE {
                     <td>"foobar"@en</td>
                   </tr>
                   <tr>
-                    <td><code>concat("foo"^^xsd:string, "bar"^^xsd:string)</code></td>
-                    <td>"foobar"^^xsd:string</td>
-                  </tr>
-                  <tr>
-                    <td><code>concat("foo", "bar"^^xsd:string)</code></td>
+                    <td><code>concat("foo", "bar")</code></td>
                     <td>"foobar"</td>
                   </tr>
                   <tr>
@@ -6980,7 +6851,7 @@ WHERE {
                     <td>"foobar"</td>
                   </tr>
                   <tr>
-                    <td><code>concat("foo"@en, "bar"^^xsd:string)</code></td>
+                    <td><code>concat("foo"@en, "bar")</code></td>
                     <td>"foobar"</td>
                   </tr>
                 </tbody>
@@ -6989,7 +6860,7 @@ WHERE {
           </section>
           <section id="func-langMatches">
             <h5>langMATCHES</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">langMatches</span> (<span class="type"><span class="type">simple literal</span></span> <span class="name">language-tag</span>, <span class="type"><span class="type">simple literal</span></span> <span class="name">language-range</span>)
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">langMatches</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">language-tag</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">language-range</span>)
             </pre>
             <p>Returns <code>true</code> if <code>language-tag</code> (first argument) matches
               <code>language-range</code> (second argument) per the basic filtering scheme defined in
@@ -7070,9 +6941,10 @@ WHERE {
           </section>
           <section id="func-regex">
             <h5>REGEX</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">simple literal</span></span> <span class="name">pattern</span>)
-              <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">simple literal</span></span> <span class="name">pattern</span>, <span class="type"><span class="type">simple literal</span></span> <span class="name">flags</span>)
-            </pre>
+            <pre class="prototype nohighlight">
+<span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">pattern</span>)
+<span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">pattern</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">flags</span>)
+</pre>
             <p>Invokes the XPath <a data-cite="XPATH-FUNCTIONS#func-matches">fn:matches</a> function to match
               <code>text</code> against a regular expression <code>pattern</code>. The regular
               expression language is defined in XQuery 1.0 and XPath 2.0 Functions and Operators
@@ -7112,11 +6984,14 @@ WHERE {
           </section>
           <section id="func-replace">
             <h5>REPLACE</h5>
-            <pre class="prototype nohighlight"> <span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">simple literal</span></span> pattern, <span class="type"><span class="type">simple literal</span></span> replacement )
-              <span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">simple literal</span></span> pattern, <span class="type"><span class="type">simple literal</span></span> replacement,  <span class="type"><span class="type">simple literal</span></span> flags)</pre>
+            <pre class="prototype nohighlight">
+<span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">xsd:string</span></span> pattern, <span class="type"><span class="type">xsd:string</span></span> replacement )
+<span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">xsd:string</span></span> pattern, <span class="type"><span class="type">xsd:string</span></span> replacement,  <span class="type"><span class="type">xsd:string</span></span> flags)
+            </pre>
             <p>The <code>REPLACE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-replace">fn:replace</a> function. It replaces each non-overlapping
               occurrence of the regular expression <code>pattern</code> with the replacement string.
-              Regular expession matching may involve modifier flags. See <a href="#func-regex">REGEX</a>.</p>
+              Regular expession matching may involve modifier flags. See <a href="#func-regex">REGEX</a>.
+            </p>
             <div class="result">
               <table class="resultTable">
                 <tbody>
@@ -7400,8 +7275,8 @@ WHERE {
           </section>
           <section id="func-tz">
             <h5>TZ</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">TZ</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
-            <p>Returns the timezone part of <code>arg</code> as a simple literal. Returns the empty
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">TZ</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
+            <p>Returns the timezone part of <code>arg</code> as a literal with datatype <code>xsd:string</code>. Returns the empty
               string if there is no timezone.</p>
             <div class="result">
               <table>
@@ -7427,10 +7302,8 @@ WHERE {
           <h4>Hash Functions</h4>
           <section id="func-md5">
             <h5>MD5</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">MD5</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">MD5</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the MD5 checksum, as a hex digit string, calculated on the UTF-8
-              representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">MD5</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <p>Returns the MD5 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
               case.</p>
             <div class="result">
@@ -7440,20 +7313,14 @@ WHERE {
                     <td><code>MD5("abc")</code></td>
                     <td><code>"900150983cd24fb0d6963f7d28e17f72"</code></td>
                   </tr>
-                  <tr>
-                    <td><code>MD5("abc"^^xsd:string)</code></td>
-                    <td><code>"900150983cd24fb0d6963f7d28e17f72"</code></td>
-                  </tr>
                 </tbody>
               </table>
             </div>
           </section>
           <section id="func-sha1">
             <h5>SHA1</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA1</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA1</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the SHA1 checksum, as a hex digit string, calculated on the UTF-8
-              representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">SHA1</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <p>Returns the SHA1 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
               case.</p>
             <div class="result">
@@ -7463,20 +7330,14 @@ WHERE {
                     <td><code>SHA1("abc")</code></td>
                     <td><code>"a9993e364706816aba3e25717850c26c9cd0d89d"</code></td>
                   </tr>
-                  <tr>
-                    <td><code>SHA1("abc"^^xsd:string)</code></td>
-                    <td><code>"a9993e364706816aba3e25717850c26c9cd0d89d"</code></td>
-                  </tr>
                 </tbody>
               </table>
             </div>
           </section>
           <section id="func-sha256">
             <h5>SHA256</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA256</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA256</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the SHA256 checksum, as a hex digit string, calculated on the UTF-8
-              representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">SHA256</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <p>Returns the SHA256 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
               case.</p>
             <div class="result">
@@ -7487,21 +7348,14 @@ WHERE {
                     <td>
                       <code>"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"</code></td>
                   </tr>
-                  <tr>
-                    <td><code>SHA256("abc"^^xsd:string)</code></td>
-                    <td>
-                      <code>"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"</code></td>
-                  </tr>
                 </tbody>
               </table>
             </div>
           </section>
           <section id="func-sha384">
             <h5>SHA384</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA384</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA384</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the SHA384 checksum, as a hex digit string, calculated on the UTF-8
-              representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">SHA384</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <p>Returns the SHA384 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
               case.</p>
             <div class="result">
@@ -7512,21 +7366,14 @@ WHERE {
                     <td>
                       <code>"cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed8086072ba1e7cc2358baeca134c825a7"</code></td>
                   </tr>
-                  <tr>
-                    <td><code>SHA384("abc"^^xsd:string)</code></td>
-                    <td>
-                      <code>"cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed8086072ba1e7cc2358baeca134c825a7"</code></td>
-                  </tr>
                 </tbody>
               </table>
             </div>
           </section>
           <section id="func-sha512">
             <h5>SHA512</h5>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA512</span> (<span class="type"><span class="type simple literal">simple literal</span></span> <span class="name">arg</span>)</pre>
-            <pre class="prototype nohighlight"> <span class="return">simple literal</span>  <span class="operator">SHA512</span> (<span class="type"><span class="type simple literal">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the SHA512 checksum, as a hex digit string, calculated on the UTF-8
-              representation of the simple literal or lexical form of the <code>xsd:string</code>. Hex
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">SHA512</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
+            <p>Returns the SHA512 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
               digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
               case.</p>
             <div class="result">
@@ -7534,11 +7381,6 @@ WHERE {
                 <tbody>
                   <tr>
                     <td><code>SHA512("abc")</code></td>
-                    <td>
-                      <code>"ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f"</code></td>
-                  </tr>
-                  <tr>
-                    <td><code>SHA512("abc"^^xsd:string)</code></td>
                     <td>
                       <code>"ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f"</code></td>
                   </tr>
@@ -7557,17 +7399,12 @@ WHERE {
           <a href="#operandDataTypes">additional datatypes</a> imposed by the RDF data model. Casting
           in SPARQL is performed by calling a constructor function for the target type on an operand of
           the source type.</p>
-        <p>XPath defines only the casts from one XML Schema datatype to another. The remaining casts
-          are defined as follows:</p>
+        <p>XPath defines only the casts from one XML Schema datatype to another. The remaining cast
+          is defined as follows:</p>
         <ul>
           <li>Casting an <span class="IRI type">IRI</span> to an <code>xsd:string</code> produces a
-            <span class="IRI typedLiteral">typed literal</span> with a lexical value of the codepoints
+            <span class="IRI literal">literal</span> with a lexical value of the codepoints
             comprising the IRI, and a datatype of <code>xsd:string</code>.</li>
-          <li>Casting a <span class="simpleLiteral type">simple literal</span> to any XML Schema
-            datatype is defined as the product of casting an <code>xsd:string</code> with the
-            <a data-cite="XPATH20#dt-string-value">string value</a> equal to the lexical value of the
-            literal to the target datatype.
-          </li>
         </ul>
         <p>The table below summarizes the casting operations that are always allowed 
           (<span class="castY">Y</span>), never allowed (<span class="castN">N</span>)
@@ -7583,8 +7420,7 @@ WHERE {
             int = <a data-cite="XMLSCHEMA-2#integer">xsd:integer</a><br>
             dT = <a data-cite="XMLSCHEMA-2#dateTime">xsd:dateTime</a><br>
             str = <a data-cite="XMLSCHEMA-2#string">xsd:string</a><br>
-            <span class="rdfDM">IRI</span> = <span class="type IRI">IRI</span><br>
-            <span class="rdfDM">ltrl</span> = <code>simple literal</code></p>
+            <span class="rdfDM">IRI</span> = <span class="type IRI">IRI</span></p>
         </blockquote>
         <table title="Casting table" class="casting" 
                style="border-spacing: 1px; border-width:1px">
@@ -7747,23 +7583,6 @@ WHERE {
               <td class="castN" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
                                                                                         "Cast IRI to boolean? No">N</span></td>
             </tr>
-            <tr>
-              <th><span class="cancast rdfDM" title="Literal">ltrl</span></th>
-              <td class="castY" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
-                                                                                        "Cast Literal to string? Yes">Y</span></td>
-              <td class="castM" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
-                                                                                        "Cast Literal to float? No">M</span></td>
-              <td class="castM" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
-                                                                                        "Cast Literal to double? No">M</span></td>
-              <td class="castM" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
-                                                                                        "Cast Literal to decimal? No">M</span></td>
-              <td class="castM" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
-                                                                                        "Cast Literal to integer? No">M</span></td>
-              <td class="castM" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
-                                                                                        "Cast Literal to dateTime? No">M</span></td>
-              <td class="castM" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
-                                                                                        "Cast Literal to boolean? No">M</span></td>
-            </tr>
           </tbody>
         </table>
       </section>
@@ -7836,32 +7655,6 @@ WHERE {
         abstract query is then evaluated on an RDF dataset.</p>
       <section id="initDefinitions">
         <h3>Initial Definitions</h3>
-        <section id="sparqlBasicTerms">
-          <h4>RDF Terms</h4>
-          <p>SPARQL is defined in terms of IRIs [[RFC3987]]. IRIs are a subset of RDF URI References
-            that omits the use of spaces.</p>
-          <div class="defn">
-            <p><b>Definition: <span id="defn_RDFTerm">RDF Term</span></b></p>
-            <p>Let I be the set of all IRIs.<br>
-              Let RDF-L be the set of all <a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a><br>
-              Let RDF-B be the set of all <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank nodes</a> in RDF graphs</p>
-            <p>The set of <span class="definedTerm">RDF Terms</span>, RDF-T, is I ∪ RDF-L ∪
-              RDF-B.</p>
-          </div>
-          <p>This definition of <span class="definedTerm">RDF Term</span> collects together several
-            basic notions from the <a data-cite="RDF12-CONCEPTS#data-model">RDF data model</a>,
-            but <a data-cite="RDF12-CONCEPTS#section-IRIs">updated</a> to refer to IRIs rather
-            than RDF URI references.</p>
-        </section>
-        <section id="simple_literal">
-          <h4>Simple Literal</h4>
-          <div class="defn">
-            <p><b>Definition: <span id="defn_SimpleLiteral">Simple Literal</span></b></p>
-            <p>The set of <b>Simple Literals</b> is the set of all 
-              <a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a>
-              with no language tag or datatype IRI.</p>
-          </div>
-        </section>
         <section id="sparqlDataset">
           <h4>RDF Dataset</h4>
           <div class="defn">
