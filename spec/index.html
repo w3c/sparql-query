@@ -581,7 +581,7 @@ span.cancast:hover { background-color: #ffa;
       <p>Most forms of SPARQL query contain a set of triple patterns called a <em>basic graph
           pattern</em>. Triple patterns are like RDF triples except that each of the subject, predicate
         and object may be a variable. A basic graph pattern <em>matches</em> a subgraph of the RDF data
-        when <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> from that subgraph may be substituted for the
+        when an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> from that subgraph may be substituted for the
         variables and the result is RDF graph equivalent to the subgraph.</p>
       <section id="WritingSimpleQueries">
         <h3>Writing a Simple Query</h3>
@@ -4319,7 +4319,7 @@ CONSTRUCT { ?s ?p ?o } WHERE
         <section id="SolModandCONSTRUCT">
           <h4>Solution Modifiers and CONSTRUCT</h4>
           <p>The solution modifiers of a query affect the results of a <code>CONSTRUCT</code> query.
-            In this example, the output graph from the <code>CONSTRUCT</code> template is formed from
+            In this example, the output graph from the <code>CONSTRUCT</code> template is derived from
             just two of the solutions from graph pattern matching. The query outputs a graph with the
             names of the people with the top two sites, rated by hits. The triples in the RDF graph are
             not ordered.</p>
@@ -4559,7 +4559,7 @@ _:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
 _:b   dc:date       "2004-12-31T19:01:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
         <p>The object of the first <code>dc:date</code> triple is a 
           <a data-cite="RDF12-CONCEPTS#dfn-simple-literal">simple literal</a>
-          has a datatype of <code>xsd:string</code>.
+          and has a datatype of <code>xsd:string</code>.
           The second has the datatype <code>xsd:dateTime</code>.
           They are different <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF terms</a>
           with different values.
@@ -5362,9 +5362,9 @@ WHERE {
                   </table>
                 </div>
               </div>
-              <p>One may test that a graph pattern is <em>not</em> expressed by specifying an
+              <p>One may test whether a graph pattern is <em>not</em> expressed by specifying an
               <code>OPTIONAL</code> graph pattern
-              that introduces a variable and testing to see that the variable is not
+              that introduces a variable and testing to see whether the variable is not
                 <span class="term">bound</span>
                 This is called <em>Negation as Failure</em> in logic programming.</p>
               <div class="queryGroup">
@@ -6169,7 +6169,7 @@ WHERE {
             <p>Returns the <span class="type datatypeIRI">datatype IRI</span> of a
               <code>literal</code>.</p>
             <p class="note">
-                The datatype of literals with a <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> is <code>rdf:langString</code>.
+                The datatype of a literal with a <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> is <code>rdf:langString</code>.
             </p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
@@ -6331,7 +6331,7 @@ WHERE {
           <section id="func-struuid">
             <h5>STRUUID</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class="operator">STRUUID</span>()</pre>
-            <p>Return a string that is the scheme specific part of UUID. That is, as a literal with datatype <code>xsd:string</code>,
+            <p>Return a string that is the scheme-specific part of UUID. That is, as a literal with datatype <code>xsd:string</code>,
               the result of generating a UUID, converting to a literal with datatype <code>xsd:string</code> and removing the
               initial <code>urn:uuid:</code>.</p>
             <div class="result">
@@ -6352,8 +6352,8 @@ WHERE {
             <h5>Strings in SPARQL Functions</h5>
             <section id="func-string">
               <h6>String arguments</h6>
-              <p>Certain functions (e.g. <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>)
-                take a <code>string literal</code> as an argument and accept a literal with datatype <code>xsd:string</code>, or a literal with
+              <p>Certain functions (e.g., <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>)
+                take a <code>string literal</code> as an argument and accept a literal with datatype <code>xsd:string</code>, or a literal with a
                 language tag. They then act on the lexical form
                 of the literal.</p>
               <p>The term <code>string literal</code> is used in the function descriptions for this.
@@ -6372,7 +6372,7 @@ WHERE {
               <ul>
                 <li>The arguments are literals with datatype <code>xsd:string</code></li>
                 <li>The arguments are literals with identical language tags</li>
-                <li>The first argument is a literal with language tag and the second argument is a literal with datatype <code>xsd:string</code></li>
+                <li>The first argument is a literal with a language tag and the second argument is a literal with datatype <code>xsd:string</code></li>
               </ul>
               <div class="result">
                 <table>
@@ -6467,8 +6467,8 @@ WHERE {
             <p>The <code>substr</code> function corresponds to the XPath 
               <a data-cite="XPATH-FUNCTIONS#func-substring">fn:substring</a> function and returns a literal of the
               same kind (literal with datatype <code>xsd:string</code>, literal with the same language tag)
-              as the <code>source</code> input parameter but with a lexical form formed from
-              the substring of the lexcial form of the source.</p>
+              as the <code>source</code> input parameter but with a lexical form derived from
+              the substring of the lexical form of the source.</p>
             <p>The arguments <code>startingLoc</code> and <code>length</code> may be derived types of
               xsd:integer.</p>
             <p>The index of the first character in a strings is 1.</p>
@@ -6829,7 +6829,7 @@ WHERE {
               literals as arguments.</p>
             <p>The lexical form of the returned literal is obtained by concatenating the lexical
               forms of its inputs. If all input literals are literals with identical language
-              tag, then the returned literal is a literal with the same language tag, in all
+              tags, then the returned literal is a literal with the same language tag, in all
               other cases, the returned literal is a literal with datatype <code>xsd:string</code>.</p>
             <div class="result">
               <table>
@@ -8707,7 +8707,7 @@ For each HAVING(E) in Q
 <pre class="code nohighlightBlock">
 Let P := the algebra translation of the query level so far
 P := Join(P, ToMultiSet(data))
-  where <i>data</i> is a solution sequence formed from the VALUES clause
+  where <i>data</i> is a solution sequence derived from the VALUES clause
 </pre>
 
             <p>The translatation of the data is the same as for <a href="#data-block">inline
