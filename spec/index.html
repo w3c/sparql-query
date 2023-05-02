@@ -5444,11 +5444,17 @@ WHERE {
               <span class="return">rdfTerm</span> <span class="operator">COALESCE</span>(<span
 class="expression">expression, ....</span>)
             </pre>
-            <p>The <code>COALESCE</code> function form returns the RDF term value of the first
-              expression that evaluates without error. In SPARQL, evaluating an unbound variable raises
-              an error.</p>
-            <p>If none of the arguments evaluates to an RDF term, an error is raised. If no
-              expressions are evaluated without error, an error is raised.</p>
+            <p>
+              The <code>COALESCE</code> function form returns the RDF term value of the first
+              expression that evaluates without error.
+              In SPARQL, evaluating an unbound variable raises an error.
+            </p>
+            <p>
+              If none of the expressions evaluate without error, an error is raised.
+            </p>
+            <p>
+              If there are zero expressions, an error is raised.
+            </p>
             <p>Examples: Suppose ?x = 2 and ?y is not bound in some query solution:</p>
             <div class="result">
               <table>
@@ -5472,6 +5478,10 @@ class="expression">expression, ....</span>)
                   <tr>
                     <td><code>COALESCE(?y)</code></td>
                     <td>raises an error because <code>y</code> is not bound.</td>
+                  </tr>
+                  <tr>
+                    <td><code>COALESCE()</code></td>
+                    <td>raises an error because there are zero arguments.</td>
                   </tr>
                 </tbody>
               </table>
