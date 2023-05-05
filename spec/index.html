@@ -4266,10 +4266,19 @@ _:v2 vcard:familyName "Hacker" .
               </div>
             </div>
           </div>
-          <p>The use of the blank node <code>_:v</code> in the template will in this example be scoped to the two query solutions.
-            This will cause it to be bound to blank nodes with labels <code>_:v1</code> and <code>_:v2</code>.</p>
-          <p>As the blank node labels <code>_:a</code> and <code>_:b</code> originate from query solutions
-            from the underlying RDF dataset, they will not be rebound.</p>
+          <p>
+            The blank node with identifier <code>_:v</code> in the template
+            will be replaced by a different blank node when the template is applied
+            to each of the two query solutions.
+            In this example, this will cause the template to generate blank nodes
+            with identifiers <code>_:v1</code> and <code>_:v2</code> in the
+            results graph.
+          </p>
+          <p>
+            The blank nodes in the query solutions, shown with identifiers 
+            <code>_:a</code> and <code>_:b</code>, originate from the underlying
+            RDF dataset and will not be altered.
+          </p>
         </section>
         <section id="accessingRdfGraphs">
           <h4>Accessing Graphs in the RDF Dataset</h4>
