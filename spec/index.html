@@ -799,12 +799,15 @@ _:b foaf:box   &lt;mailto:peter@example.org&gt; .
         </section>
       </section>
       <section id="BlankNodesInResults">
-        <h3>Blank Node Labels in Query Results</h3>
-        <p>Query results can contain blank nodes. Blank nodes in the example result sets in this
-          document are written in the form "_:" followed by a blank node label.</p>
-        <p>Blank node labels are scoped to a result set (see "[[[RDF-SPARQL-XMLRES]]]" and
+        <h3>Blank Node Identifiers in Query Results</h3>
+        <p>
+          Query results can contain blank nodes. Blank nodes in the example
+          result sets in this document are written in the form "_:" followed by a
+          <a data-cite="RDF12-CONCEPTS#dfn-blank-node-identifier">blank node identifier</a>.
+        </p>
+        <p>Blank node identifiers are scoped to a result set (see "[[[RDF-SPARQL-XMLRES]]]" and
           "[[[SPARQL11-RESULTS-JSON]]]") or, for the <code>CONSTRUCT</code> query form, the result
-          graph. Use of the same label within a result set indicates the same blank node.</p>
+          graph. Use of the same identifier within a result set indicates the same blank node.</p>
         <div class="exampleGroup">
           Data:
 <pre class="data nohighlight">
@@ -840,9 +843,12 @@ WHERE  { ?x foaf:name ?name }
               </table>
             </div>
           </div>
-          <p>The results above could equally be given with different blank node labels because the
-            labels in the results only indicate whether RDF terms in the solutions are the same or
-            different.</p>
+          <p>
+            The results above could equally be given with different blank node
+            identifiers because the blank node identifiers in the results only
+            indicate whether RDF terms in the solutions are the same or
+            different.
+          </p>
           <div class="result">
             <div id="table57"></div>
             <table class="resultTable">
@@ -863,12 +869,17 @@ WHERE  { ?x foaf:name ?name }
             </table>
           </div>
         </div>
-        <p>These two results have the same information: the blank nodes used to match the query are
-          different in the two solutions. There need not be any relation between a label
-          <code>_:a</code> in the result set and a blank node in the data graph with the same
-          label.</p>
-        <p>An application writer should not expect blank node labels in a query to refer to a
-          particular blank node in the data.</p>
+        <p>
+          These two results have the same information: the blank nodes used to
+          match the query are different in the two solutions. There need not be
+          any relation between a blank node identifier
+          <code>_:a</code> in the result set and a blank node identifier
+          used in the syntax for the data.
+        </p>
+        <p>
+          An application writer should not expect blank node identifiers in a
+          query to refer to a particular blank node in the data.
+        </p>
       </section>
       <section id="CreatingValuesWithExpressions">
         <h3>Creating Values with Expressions</h3>
@@ -1208,19 +1219,28 @@ book:book1</pre>
         </section>
         <section id="QSynBlankNodes">
           <h4>Syntax for Blank Nodes</h4>
-          <p><a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank nodes</a>
+          <p>
+            <a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank nodes</a>
             in graph patterns act as variables, not as references to specific
-            blank nodes in the data being queried.</p>
-          <p>Blank nodes are indicated by either the label form, such as "<code>_:abc</code>", or the
-            abbreviated form "<code>[]</code>". A blank node that is used in only one place in the
-            query syntax can be indicated with <code>[]</code>. A unique blank node will be used to
-            form the triple pattern. Blank node labels are written as "<code>_:abc</code>" for a blank
-            node with label "<code>abc</code>". The same blank node label cannot be used in two
-            different basic graph patterns in the same query.</p>
-          <p>The <code>[:p :v]</code> construct can be used in triple patterns. It creates a blank
-            node label which is used as the subject of all contained predicate-object pairs. The
+            blank nodes in the data being queried.
+          </p>
+          <p>
+            Blank nodes are indicated by either the identifier form, such as
+            "<code>_:abc</code>", or the abbreviation form "<code>[]</code>". A
+            blank node that is used in only one place in the query syntax can be
+            indicated with <code>[]</code>. A unique blank node will be used to
+            form the triple pattern. Blank node identifiers are written as
+            "<code>_:abc</code>" for a blank node with identifier
+            "<code>abc</code>".
+            The same blank node identifier cannot be used in two
+            different basic graph patterns in the same query.
+          </p>
+          <p>
+            The <code>[:p :v]</code> construct can be used in triple patterns. It creates a blank
+            node which is used as the subject of contained predicate-object pairs. The
             created blank node can also be used in further triple patterns in the subject and object
-            positions.</p>
+            positions.
+          </p>
           <p>The following two forms</p>
           <pre class="query nohighlight">
 [ :p "v" ] .
@@ -1228,12 +1248,12 @@ book:book1</pre>
           <pre class="query nohighlight">
 [] :p "v" .
           </pre>
-          <p>allocate a unique blank node label (here "<code>b57</code>") and are equivalent to
+          <p>allocate a unique blank node identifier (here "<code>b57</code>") and are equivalent to
             writing:</p>
           <pre class="query nohighlight">
 _:b57 :p "v" .
           </pre>
-          <p>This allocated blank node label can be used as the subject or object of further triple
+          <p>This allocated blank node identifier can be used as the subject or object of further triple
             patterns. For example, as a subject:</p>
           <pre class="query nohighlight">[ :p "v" ] :q "w" .
           </pre>
@@ -1258,7 +1278,7 @@ _:b57 :p "v" .
   foaf:mbox  &lt;mailto:alice@example.org&gt; ]
           </pre>
           <p>This is the same as writing the following basic graph pattern for some uniquely
-            allocated blank node label, "<code>b18</code>":</p>
+            allocated blank node identifier, "<code>b18</code>":</p>
           <pre class="query nohighlight">  
 _:b18  foaf:name  ?name .
 _:b18  foaf:mbox  &lt;mailto:alice@example.org&gt; .
@@ -1439,11 +1459,12 @@ _:b0  :p        "v" .
           in terms of combining the results from matching basic graph patterns.</p>
         <p>A sequence of triple patterns, with optional filters, comprises a single basic graph
           pattern. Any other graph pattern terminates a basic graph pattern.</p>
-        <section id="bgpBNodeLabels">
-          <h4>Blank Node Labels</h4>
-          <p>When using blank nodes of the form <code>_:abc</code>,&nbsp; labels for blank nodes are
-            scoped to the basic graph pattern.&nbsp; A label can be used in only a single basic graph
-            pattern in any query.</p>
+        <section id="bgpBNodeIdentifiers">
+          <h4>Blank Node Identifiers</h4>
+          <p>When using blank nodes of the form <code>_:abc</code>, identifiers for blank nodes are
+            scoped to the basic graph pattern. A 
+            <a data-cite="RDF12-CONCEPTS#dfn-blank-node-identifier">blank node identifier</a>
+            can only be used in one basic graph pattern in any query.</p>
         </section>
         <section id="bgpExtend">
           <h4>Extending Basic Graph Pattern Matching</h4>
@@ -3143,9 +3164,11 @@ _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
         <p>RDF data can be combined by the <a data-cite="RDF12-SEMANTICS#dfn-merge">RDF merge</a>
           [[RDF12-SEMANTICS]] of graphs. One possible arrangement of graphs in an RDF Dataset is to have the
           default graph be the RDF merge of some or all of the information in the named graphs.</p>
-        <p>In this next example, the named graphs contain the same triples as before. The RDF dataset
-          includes an RDF merge of the named graphs in the default graph, re-labeling blank nodes to
-          keep them distinct.</p>
+        <p>
+          In this next example, the named graphs contain the same triples as before. The RDF dataset
+          includes an <a data-cite="RDF12-SEMANTICS#dfn-merge">RDF merge</a>
+          of the named graphs in the default graph, which keeps blank nodes distinct.
+        </p>
         <div class="exampleGroup">
           <pre class="data nohighlight">
 # <b>Default graph</b>
@@ -3369,7 +3392,7 @@ _:z  foaf:nick     "Robert" .
         rdf:type      foaf:PersonalProfileDocument .
           </pre>
         </div>
-        <section id="accessByLabel">
+        <section id="accessByIdentifier">
           <h4>Accessing Graph Names</h4>
           <p>The query below matches the graph pattern against each of the named graphs in the
             dataset and forms solutions which have the <code>src</code> variable bound to IRIs of the
@@ -3413,7 +3436,7 @@ WHERE
             </div>
           </div>
         </section>
-        <section id="restrictByLabel">
+        <section id="restrictByIdentifier">
           <h4>Restricting by Graph IRI</h4>
           <p>The query can restrict the matching applied to a specific graph by supplying the graph
             IRI. This sets the active graph to the graph named by the IRI. This query looks for Bob's
@@ -4234,10 +4257,10 @@ WHERE       { ?x foaf:name ?name }
         <section id="templatesWithBNodes">
           <h4>Templates with Blank Nodes</h4>
           <p>A template can create an RDF graph containing blank nodes. 
-            The blank node labels inside the template are scoped to the
+            The blank node identifiers inside the template are scoped to the
             template for each solution, while blank nodes from query solutions
             are not scoped.
-            If the same label occurs twice in a template, every occurrence
+            If the same identifier occurs twice in a template, every occurrence
             is replaced by the same blank node which is created for each
             query solution, and there will be different blank nodes for triples
             generated by different query solutions.
@@ -4283,15 +4306,15 @@ _:v2 vcard:familyName "Hacker" .
             </div>
           </div>
           <p>
-            The blank node with label <code>_:v</code> in the template
+            The blank node with identifier <code>_:v</code> in the template
             will be replaced by a different blank node when the template is applied
             to each of the two query solutions.
             In this example, this will cause the template to generate blank nodes
-            with labels <code>_:v1</code> and <code>_:v2</code> in the
+            with identifier <code>_:v1</code> and <code>_:v2</code> in the
             results graph.
           </p>
           <p>
-            The blank nodes in the query solutions, shown with labels 
+            The blank nodes in the query solutions, shown with identifiers
             <code>_:a</code> and <code>_:b</code>, originate from the underlying
             RDF dataset and will not be altered.
           </p>
@@ -9992,27 +10015,31 @@ _:x rdf:type xsd:decimal .
           <span class="token">PREFIX</span>.</p>
       </section>
       <section id="grammarBNodes">
-        <h3>Blank Nodes and Blank Node Labels</h3>
+        <h3>Blank Nodes and Blank Node Identifiers</h3>
         <p>Blank nodes can not be used in:</p>
         <ul>
           <li><code><a href="#rDeleteWhere">DELETE WHERE</a></code></li>
           <li><code><a href="#rDeleteData">DELETE DATA</a></code></li>
           <li>a <code><a href="#rDeleteClause">DeleteClause</a></code></li>
         </ul>
-        <p>in a <a data-cite="SPARQL11-UPDATE#terminology">SPARQL Update request</a>.</p>
-        <p>Blank node labels are scoped to the <a>SPARQL Request String</a> in which they occur.
-          Different uses of the same blank node label in a request
+        <p>in a <a data-cite="SPARQL11-UPDATE#terminology">SPARQL Update
+            request</a>.
+        </p>
+        <p>
+          <a data-cite="RDF12-CONCEPTS#dfn-blank-node-identifier">Blank node identifiers</a>
+          are scoped to the <a>SPARQL Request String</a> in which they occur.
+          Different uses of the same blank node identifier in a request
           string refer to the same blank node. Fresh blank nodes are generated for each request;
-          blank nodes can not be referenced by label across requests.</p>
-        <p>The same blank node label can not be used in:</p>
+          blank nodes can not be referenced by identifier across requests.</p>
+        <p>The same blank node identifier can not be used in:</p>
         <ul>
-          <li>two basic graph patterns in a SPARQL Query</li>
+          <li>two separate basic graph patterns in a SPARQL Query</li>
           <li>two <code><a href="#rModify">WHERE</a></code> clauses within a single SPARQL Update
             request</li>
           <li>two <code><a href="#rInsertData">INSERT DATA</a></code> operations within a single
             SPARQL Update request</li>
         </ul>
-        <p>Note that the same blank node label can occur in different
+        <p>Note that the same blank node identifier can occur in different
           <a href="#rQuadPattern">QuadPattern</a> clauses in a [[[SPARQL11-UPDATE]]] request.</p>
       </section>
       <section id="grammarEscapes">
@@ -10110,7 +10137,7 @@ _:x rdf:type xsd:decimal .
             the <code><a href="#rDeleteClause">DeleteClause</a></code> for 
             <code>DELETE</code>,
             nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.</li>
-          <li>Rules for limiting the use of blank node labels are given in <a href="#grammarBNodes">section 19.6</a>.</li>
+          <li>Rules for limiting the use of blank node identifiers are given in <a href="#grammarBNodes">section 19.6</a>.</li>
           <li>The number of variables in the variable list of <code>VALUES</code> block 
             must be the same as the number of each list of associated values in the <code>DataBlock</code>.</li>
           <li>Variables introduced by <code>AS</code> in a <code>SELECT</code> clause
