@@ -6457,7 +6457,7 @@ WHERE {
                 syntactic shorthand for <code>"abc"^^xsd:string</code>.
               </p>
             </section>
-            <section id="idp1915512">
+            <section id="string-literal-return-type">
               <h6>String Literal Return Type</h6>
               <p>Functions that return a string literal do so with the string literal of the same
                 kind as the first argument (literal with datatype <code>xsd:string</code>, literal with the same language tag).
@@ -6861,12 +6861,16 @@ WHERE {
           <section id="func-concat">
             <h5>CONCAT</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">CONCAT</span>(<span class="type">string literal</span> <span>ltrl<sub>1</sub></span> ... <span class="type">string literal</span> <span>ltrl<sub>n</sub></span>)</pre>
-            <p>The <code>CONCAT</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-concat">fn:concat</a> function. The function accepts string
-              literals as arguments.</p>
-            <p>The lexical form of the returned literal is obtained by concatenating the lexical
-              forms of its inputs. If all input literals are literals with identical language
-              tags, then the returned literal is a literal with the same language tag, in all
-              other cases, the returned literal is a literal with datatype <code>xsd:string</code>.</p>
+            <p>The <code>CONCAT</code> function returns a string literal following the 
+              <a href="#string-literal-return-type">string literal return type</a> rule.
+              The <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> of the
+              returned string literal is obtained by concatenating the lexical
+              forms of the arguments of the function. 
+              If zero arguments are given, the result is an empty string literal without language tag.
+              If all input literals are literals with identical language tag,
+              then the returned literal is a literal with that language tag.
+              Otherwise, the returned literal is a literal with datatype <code>xsd:string</code>.
+            </p>
             <div class="result">
               <table>
                 <tbody>
@@ -6887,8 +6891,20 @@ WHERE {
                     <td>"foobar"</td>
                   </tr>
                   <tr>
-                    <td><code>concat("foo"@en, "bar")</code></td>
+                    <td><code>concat("foo"@en, "bar"@es)</code></td>
                     <td>"foobar"</td>
+                  </tr>
+                  <tr>
+                    <td><code>concat("abc")</code></td>
+                    <td>"abc"</td>
+                  </tr>
+                  <tr>
+                    <td><code>concat("abc"@en)</code></td>
+                    <td>"abc"@en</td>
+                  </tr>
+                  <tr>
+                    <td><code>concat()</code></td>
+                    <td>""</td>
                   </tr>
                 </tbody>
               </table>
