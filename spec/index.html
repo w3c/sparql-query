@@ -6861,10 +6861,9 @@ WHERE {
           <section id="func-concat">
             <h5>CONCAT</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">CONCAT</span>(<span class="type">string literal</span> <span>ltrl<sub>1</sub></span>, ..., <span class="type">string literal</span> <span>ltrl<sub>n</sub></span>)</pre>
-            <p>The <code>CONCAT</code> function returns a string literal following the 
-              <a href="#string-literal-return-type">string literal return type</a> rule.
-              The <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> of the
-              returned string literal is obtained by concatenating the lexical
+            <p>The <code>CONCAT</code> function returns a string literal such that
+              the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> of
+              this literal is obtained by concatenating the lexical
               forms of the arguments of the function. 
               If zero arguments are given, the result is an empty string literal without language tag.
               If all input literals are literals with identical language tag,
