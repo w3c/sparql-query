@@ -333,10 +333,9 @@ span.cancast:hover { background-color: #ffa;
       em.rfc2119 { text-transform: lowercase;
                    font-variant: small-caps;
                    font-style: normal; }
-      table { word-break: break-all; max-width: 80vw; }
-      table th:nth-child(1), table td:nth-child(1) { padding: .2em; min-width: 4vw; }
-      table th:nth-child(2), table td:nth-child(2) { padding: .2em; min-width: 10vw; }
-      table th:nth-child(3), table td:nth-child(3) { padding: .2em; min-width: 4vw; }
+      @media (max-width: 767px) {
+        table { word-break: break-all; max-width: 80vw; }
+      }
     </style>
   </head>
   <body>
