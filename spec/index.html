@@ -5764,20 +5764,32 @@ WHERE {
             <pre class="prototype nohighlight">
 <span class="return">boolean</span>  rdfTerm <span class="operator">IN</span> (<span class="expression">expression</span>, <span class="expression">...</span>)
             </pre>
-            <p>The <code>IN</code> operator tests whether the RDF term on the left-hand side is found
-              in the list of values of the expressions on the right-hand side. The test is done with "="
-              operator, which tests for the same value, as determined by the 
-              <a href="#OperatorMapping">operator mapping</a>.</p>
-            <p>A list of zero terms on the right-hand side is legal.</p>
-            <p>Errors in comparisons cause the <code>IN</code> expression to raise an error if the
-              RDF term being tested is not found elsewhere in the list of terms.</p>
-            <p>The <code>IN</code> operator is equivalent to the SPARQL expression:</p>
-            <pre>(rdfTerm = expression1) || (rdfTerm = expression2) || ...</pre>
+            <p>
+              The <code>IN</code> operator tests whether the RDF term on the
+              left-hand side is found in the list of values of the expressions
+              on the right-hand side. The test is done with the "=" operator,
+              which tests for the same value, as determined by the
+              <a href="#OperatorMapping">operator mapping</a>.
+            </p>
+            <p>
+              A list of zero terms on the right-hand side is legal and evaluates
+              to <code>false</code>.
+            </p>
+            <p>
+              Errors in comparisons cause the <code>IN</code> expression to
+              raise an error if the RDF term being tested is not found elsewhere
+              in the list of terms.
+            </p>
             <p>
               If <code>IN</code> is used with an expression to produce the
-              <code>rdfTerm</code> then that expression is evaluated only once, 
+              <code>rdfTerm</code>, then that expression is evaluated only once, 
               before evaluating the <code>IN</code> expression.
             </p>
+            <p>
+              The <code>IN</code> operator is equivalent to the 
+              SPARQL expression:
+            </p>
+            <pre>(rdfTerm = value of expression1) || (rdfTerm = value of expression2) || ...</pre>
             <p>Examples:</p>
             <div class="result">
               <table>
@@ -5815,22 +5827,33 @@ WHERE {
             <pre class="prototype nohighlight">
 <span class="return">boolean</span>  rdfTerm <span class="operator">NOT IN</span> (<span class="expression">expression</span>, <span class="expression">...</span>)
 </pre>
-            <p>The <code>NOT IN</code> operator tests whether the RDF term on the left-hand side is
-              not found in the values of list of the expressions on the right-hand side. The test is done
-              with "!=" operator, which tests that two values are not the same value, as determined by the 
-              <a href="#OperatorMapping">operator mapping</a>.</p>
-            <p>A list of zero terms on the right-hand side is legal.</p>
-            <p>Errors in comparisons cause the <code>NOT IN</code> expression to raise an error if
-              the RDF term being tested is not found to be elsewhere in the list of
-              terms.</p>
-            <p>The <code>NOT IN</code> operator is equivalent to the SPARQL expression:</p>
-            <pre>(rdfTerm != expression1) &amp;& (rdfTerm != expression2) &amp;& ...</pre>
+            <p>
+              The <code>NOT IN</code> operator tests whether the RDF term on
+              the left-hand side is not found in the values of list of the
+              expressions on the right-hand side. The test is done with the "!="
+              operator, which tests that two values are not the same value, as
+              determined by the
+              <a href="#OperatorMapping">operator mapping</a>.
+            </p>
+            <p>
+              A list of zero terms on the right-hand side is legal and evaluates
+              to <code>true</code>.
+            </p>
             <p>
               If <code>NOT IN</code> is used with an expression to produce the
               <code>rdfTerm</code>, then that expression is evaluated only once, 
               before evaluating the <code>NOT IN</code> expression.
             </p>
+            <p>Errors in comparisons cause the <code>NOT IN</code> expression to raise an error if
+              the RDF term being tested is not found elsewhere in the list of
+              terms.</p>
+            <p>
+              The <code>NOT IN</code> operator is equivalent to the
+              SPARQL expression: 
+            </p>
+            <pre>(rdfTerm != value of expression1) &amp;&amp; (rdfTerm != value of expression2) &amp;&amp; ...</pre>
             <p><code>NOT IN (...)</code> is equivalent to <code>!(IN (...))</code>.</p>
+
             <p>Examples:</p>
             <div class="result">
               <table>
