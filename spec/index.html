@@ -861,7 +861,7 @@ WHERE  { ?x foaf:name ?name }
         <h3>Creating Values with Expressions</h3>
         <p>SPARQL 1.2 allows values to be created from complex expressions. The queries below show how
           the <a href="#func-concat">CONCAT</a> function can be used to concatenate first names and
-          last names from foaf data, then assign the value using an 
+          last names from FOAF data, then assign the value using an 
           <a href="#selectExpressions">expression in the <code>SELECT</code> clause</a> and also assign the
           value by using the <a href="#bind">BIND</a> form.</p>
         <div class="exampleGroup">
@@ -6847,15 +6847,26 @@ WHERE {
           <section id="func-concat">
             <h5>CONCAT</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">CONCAT</span>(<span class="type">string literal</span> <span>ltrl<sub>1</sub></span>, ..., <span class="type">string literal</span> <span>ltrl<sub>n</sub></span>)</pre>
-            <p>The <code>CONCAT</code> function returns a string literal such that
-              the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> of
-              this literal is obtained by concatenating the lexical
-              forms of the arguments of the function. 
-              If zero arguments are given, the result is an empty string literal without language tag.
-              If all input literals are literals with identical language tag,
-              then the returned literal is a literal with that language tag.
-              Otherwise, the returned literal is a literal with datatype <code>xsd:string</code>
-              (and no language tag).
+
+            <p>The <code>CONCAT</code> function takes zero or more arguments.</p>
+            <p>
+              If zero arguments are given, the result is an empty string literal
+              without language tag.
+            </p>
+            <p>
+              If one argument is given, the result is that argument value.
+            </p>
+            <p>
+              If two or more arguments are given, the function returns a string
+              literal such that the
+              <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> 
+              of the resulting string literal is obtained by concatenating the
+              lexical forms of the arguments of the function using the
+              <a data-cite="XPATH-FUNCTIONS#func-concat">fn:concat</a> function.
+              If all input literals are literals with the same language tag,
+              then the returned string literal is a literal with that language
+              tag.  Otherwise, the returned literal is a literal with
+              datatype <code>xsd:string</code> and no language tag.
             </p>
             <div class="result">
               <table>
