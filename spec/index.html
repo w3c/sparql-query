@@ -10074,6 +10074,7 @@ _:x rdf:type xsd:decimal .
               call</a>. Aggregate functions may only be used in 
             <a href="#rSelectClause">SELECT</a>, <a href="#rHavingClause">HAVING</a>
             and <a href="#rOrderClause">ORDER BY</a> clauses.</li>
+          <li>The expression argument of an aggregate function can not contain an aggregate function.</li>
           <li>Only custom aggregate functions use the <code>DISTINCT</code> keyword
             in a <a href="#rFunctionCall">function call</a>.</li>
         </ol>
