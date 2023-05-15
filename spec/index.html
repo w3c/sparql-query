@@ -61,7 +61,7 @@
   .add		{ background-color: #7fff7f }
   .remove	{ background-color: #ff7f7f }
 ul.issue	{}
-  .issueBlock	{ margin: 1em 4em 1em 2.5em ; /* Top Right Bottom Left */
+  .issueBlock	{ margin: 1em 1em 1em 2.5em ; /* Top Right Bottom Left */
                   padding: 1ex;
 	          /*overflow: auto;*/
                   page-break-inside: avoid ; }
@@ -72,7 +72,7 @@ p.todo		{}
 
 .wgNote	{ border: 0.2em solid red;
       padding: 0.5em ;
-      margin: 1em 4em 1em 2em ; }
+      margin: 1em 1em 1em 2em ; }
 
 .box     { border: thin solid #888888;
            page-break-inside: avoid ;
@@ -139,7 +139,8 @@ div.grammarExtract
                   padding: 1ex 2ex 1ex 2ex ; /* top, right, bottom, left */
                   margin: 1em 6em 1em 2em ; 
                   page-break-inside: avoid ;
-                  background-color: #F8F8F8 ; }
+                  background-color: #F8F8F8 ;
+                  width: fit-content; }
 
 pre.codeBlock  { font-family:monospace ; page-break-inside: avoid ; 
                  margin: 0 ;
@@ -152,16 +153,16 @@ pre.codeBlock  { font-family:monospace ; page-break-inside: avoid ;
 /* Examples */
 pre.data	{ border: thin solid #88AA88;
                   background-color: #E8F0E8;
-                  margin: 1em 4em 1em 0em ; }
+                  margin: 1em 1em 1em 0em ; }
 
 pre.dataExcerpt	{ border: thin solid #88AA88;
                   background-color: #E8F0E8;
-                  margin: 1em 4em 1em 0em ; }
+                  margin: 1em 1em 1em 0em ; }
 /* Example Queries */
 .query          { background-color:#f7f8ff; }
 .queryExcerpt   { background-color:#f7f8ff; }
 pre.query	{ border:thin solid #8888aa;
-                  margin: 1em 4em 1em 0em ; }
+                  margin: 1em 1em 1em 0em ; }
 /* Example Results */
 .result		{ border: thin solid  #888888 ;
                   background-color: #F0F0F0 ; }
@@ -182,11 +183,11 @@ pre.resultTurtle{  margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
                    font-size: 100% ;
                    page-break-inside: avoid ; }
 
-pre.result	{ margin: 1em 4em 1em 0em ; }
+pre.result	{ margin: 1em 1em 1em 0em ; }
 
 div.result	{ font-family: monospace;
-                  margin:  1em 4em 1em 0em ;
-                  padding: 1ex ; }
+                  margin:  1em 1em 1em 0em ;
+                  padding: 1ex ;}
 
 .result table	{ border-collapse: collapse; }
 .result table td{ border-width: 1px ;
@@ -333,10 +334,16 @@ span.cancast:hover { background-color: #ffa;
       em.rfc2119 { text-transform: lowercase;
                    font-variant: small-caps;
                    font-style: normal; }
+    @media (max-width: 850px) {
+        table th, table td { font-size: 12px; padding: 3px 4px;}
+        .result table tr td:nth-child(2n), .result table  tr th:nth-child(2n) { overflow-wrap: anywhere; min-width: 90px; }
+        div.result { overflow-x: scroll; max-width: 80vw; width: fit-content;}
+        pre.query	{ margin: 1em 1em 1em 0em; }
+    }                   
       @media (max-width: 767px) {
-        table { max-width: 80vw; overflow-x: scroll; }
-        .grammarTable table td:nth-child(1) { min-width: 60px; }
-        .grammarTable table td:nth-child(3) { min-width: 60px; }
+        table { word-break: normal; overflow-wrap: anywhere; max-width: 80vw; }
+        .FAndOTable { overflow-x: scroll; display: block;  max-width: 70vw; }
+        .grammarTable { overflow-x: scroll; }
       }
     </style>
   </head>
