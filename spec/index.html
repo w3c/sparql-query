@@ -115,7 +115,7 @@ th a:hover	{ background-color:#FFFF99;
 /* == Prototypes == */
 pre.prototype	{ background-color:#f7f8ff;
                   border:thin solid #8888aa;
-                  margin: 1em 4em 1em 0em ; }
+                  margin: 1em 1em 1em 0em ; }
 .return, .type	{ color: #177 }
 
 /* == Notes ==  */
@@ -337,13 +337,14 @@ span.cancast:hover { background-color: #ffa;
     @media (max-width: 850px) {
         table th, table td { font-size: 12px; padding: 3px 4px;}
         .result table tr td:nth-child(2n), .result table  tr th:nth-child(2n) { overflow-wrap: anywhere; min-width: 90px; }
-        div.result { overflow-x: scroll; max-width: 80vw; width: fit-content;}
+        div.result { overflow-x: scroll; width: fit-content; max-width: 100%; }
         pre.query	{ margin: 1em 1em 1em 0em; }
     }                   
       @media (max-width: 767px) {
-        table { word-break: normal; overflow-wrap: anywhere; max-width: 80vw; }
-        .FAndOTable { overflow-x: scroll; display: block;  max-width: 70vw; }
+        table { word-break: normal; overflow-wrap: anywhere; }
+        .FAndOTable { overflow-x: scroll; display: block; max-width: 100% }
         .grammarTable { overflow-x: scroll; }
+        .grammarTable table tr td:last-child { overflow-wrap: anywhere!important; }
       }
     </style>
   </head>
