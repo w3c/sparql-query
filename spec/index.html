@@ -581,6 +581,17 @@ span.cancast:hover { background-color: #ffa;
               <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>
             </li>
           </ul>
+
+          <p>
+            Blank node identifiers are 
+            <a data-cite="?RDF12-CONCEPTS#note-bnode-id">part of
+            SPARQL and RDF concrete serializations</a>.
+            In this document, the syntax form "<code>_:abc</code>" is used where the
+            <a data-cite="RDF12-CONCEPTS#dfn-blank-node-identifier">blank node identifier</a> 
+            is <code>abc</code>.  and the "<code>_:</code>" is
+            the Turtle and SPARQL syntax used to introduce blank nodes with
+            identifiers.
+          </p>
         </section>
       </section>
     </section>
@@ -1278,7 +1289,7 @@ _:b57 :p "v" .
   foaf:mbox  &lt;mailto:alice@example.org&gt; ]
           </pre>
           <p>This is the same as writing the following basic graph pattern for some uniquely
-            allocated blank node identifier, "<code>b18</code>":</p>
+            allocated blank node identifier in the syntax <code>_:b18</code>:</p>
           <pre class="query nohighlight">  
 _:b18  foaf:name  ?name .
 _:b18  foaf:mbox  &lt;mailto:alice@example.org&gt; .
