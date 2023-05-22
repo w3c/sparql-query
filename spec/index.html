@@ -5684,116 +5684,6 @@ class="expression">expression, ....</span>)
         </section>
         <section id="func-rdfTerms">
           <h4>Functions on RDF Terms</h4>
-          <section id="func-sameTerm">
-            <h5>sameTerm</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">sameTerm</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)</pre>
-            <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
-              defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
-            <div class="exampleGroup">
-              <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
-
-_:a  foaf:name       "Alice".
-_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
-
-_:b  foaf:name       "Ms A.".
-_:b  foaf:mbox       &lt;mailto:alice@work.example&gt; .
-              </pre>
-              <div class="queryGroup">
-                <p>This query finds the people who have multiple <code>foaf:name</code> triples:</p>
-                <pre class="query nohighlight">
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-SELECT ?name1 ?name2
-WHERE {
-    ?x foaf:name  ?name1 ;
-       foaf:mbox  ?mbox1 .
-    ?y foaf:name  ?name2 ;
-       foaf:mbox  ?mbox2 .
-    FILTER (sameTerm(?mbox1, ?mbox2) &amp;& !sameTerm(?name1, ?name2))
-}
-                </pre>
-                <p>Query result:</p>
-                <div class="result">
-                  <table class="resultTable">
-                    <tbody>
-                      <tr>
-                        <th>name1</th>
-                        <th>name2</th>
-                      </tr>
-                      <tr>
-                        <td>"Alice"</td>
-                        <td>"Ms A."</td>
-                      </tr>
-                      <tr>
-                        <td>"Ms A."</td>
-                        <td>"Alice"</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <p>Unlike <span class="operator">RDFterm-equal</span>, <span class="operator">sameTerm</span> can be used to test for non-equivalent <span class="type typedLiteral">typed literals</span> with unsupported datatypes:</p>
-            <div class="exampleGroup">
-              <pre class="data nohighlight">
-@prefix :          &lt;http://example.org/WMterms#&gt; .
-@prefix t:         &lt;http://example.org/types#&gt; .
-
-_:c1  :label        "Container 1" .
-_:c1  :weight       "100"^^t:kilos .
-_:c1  :displacement  "100"^^t:liters .
-
-_:c2  :label        "Container 2" .
-_:c2  :weight       "100"^^t:kilos .
-_:c2  :displacement  "85"^^t:liters .
-
-_:c3  :label        "Container 3" .
-_:c3  :weight       "85"^^t:kilos .
-_:c3  :displacement  "85"^^t:liters .
-              </pre>
-              <div class="queryGroup">
-                <pre class="query nohighlight">
-PREFIX  :      &lt;http://example.org/WMterms#&gt;
-PREFIX  t:     &lt;http://example.org/types#&gt;
-
-SELECT ?aLabel1 ?bLabel
-WHERE { 
-   ?a  :label        ?aLabel .
-   ?a  :weight       ?aWeight .
-   ?a  :displacement ?aDisp .
-
-   ?b  :label        ?bLabel .
-   ?b  :weight       ?bWeight .
-   ?b  :displacement ?bDisp .
-
-   FILTER ( sameTerm(?aWeight, ?bWeight) &amp;& !sameTerm(?aDisp, ?bDisp)) 
-}
-                </pre>
-                <div class="result">
-                  <table class="resultTable">
-                    <tbody>
-                      <tr>
-                        <th>aLabel</th>
-                        <th>bLabel</th>
-                      </tr>
-                      <tr>
-                        <td>"Container 1"</td>
-                        <td>"Container 2"</td>
-                      </tr>
-                      <tr>
-                        <td>"Container 2"</td>
-                        <td>"Container 1"</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <p>The test for boxes with the same weight may also be done with the '=' operator
-              (<a href="#func-RDFterm-equal" class="SPARQLoperator">RDFterm-equal</a>) as the test for
-              <code>"100"^^t:kilos = "85"^^t:kilos</code> will result in an error, eliminating that
-              potential solution.</p>
-          </section>
           <section id="func-RDFterm-equal">
             <h5>RDFterm-equal</h5>
             <pre class="prototype nohighlight">
@@ -5925,6 +5815,116 @@ WHERE {
                 </div>
               </div>
             </div>
+          </section>
+          <section id="func-sameTerm">
+            <h5>sameTerm</h5>
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">sameTerm</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)</pre>
+            <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
+              defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
+            <div class="exampleGroup">
+              <pre class="data nohighlight">
+@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+
+_:a  foaf:name       "Alice".
+_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+
+_:b  foaf:name       "Ms A.".
+_:b  foaf:mbox       &lt;mailto:alice@work.example&gt; .
+              </pre>
+              <div class="queryGroup">
+                <p>This query finds the people who have multiple <code>foaf:name</code> triples:</p>
+                <pre class="query nohighlight">
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+SELECT ?name1 ?name2
+WHERE {
+    ?x foaf:name  ?name1 ;
+       foaf:mbox  ?mbox1 .
+    ?y foaf:name  ?name2 ;
+       foaf:mbox  ?mbox2 .
+    FILTER (sameTerm(?mbox1, ?mbox2) &amp;& !sameTerm(?name1, ?name2))
+}
+                </pre>
+                <p>Query result:</p>
+                <div class="result">
+                  <table class="resultTable">
+                    <tbody>
+                      <tr>
+                        <th>name1</th>
+                        <th>name2</th>
+                      </tr>
+                      <tr>
+                        <td>"Alice"</td>
+                        <td>"Ms A."</td>
+                      </tr>
+                      <tr>
+                        <td>"Ms A."</td>
+                        <td>"Alice"</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <p>Unlike <span class="operator">RDFterm-equal</span>, <span class="operator">sameTerm</span> can be used to test for non-equivalent <span class="type typedLiteral">typed literals</span> with unsupported datatypes:</p>
+            <div class="exampleGroup">
+              <pre class="data nohighlight">
+@prefix :          &lt;http://example.org/WMterms#&gt; .
+@prefix t:         &lt;http://example.org/types#&gt; .
+
+_:c1  :label        "Container 1" .
+_:c1  :weight       "100"^^t:kilos .
+_:c1  :displacement  "100"^^t:liters .
+
+_:c2  :label        "Container 2" .
+_:c2  :weight       "100"^^t:kilos .
+_:c2  :displacement  "85"^^t:liters .
+
+_:c3  :label        "Container 3" .
+_:c3  :weight       "85"^^t:kilos .
+_:c3  :displacement  "85"^^t:liters .
+              </pre>
+              <div class="queryGroup">
+                <pre class="query nohighlight">
+PREFIX  :      &lt;http://example.org/WMterms#&gt;
+PREFIX  t:     &lt;http://example.org/types#&gt;
+
+SELECT ?aLabel1 ?bLabel
+WHERE { 
+   ?a  :label        ?aLabel .
+   ?a  :weight       ?aWeight .
+   ?a  :displacement ?aDisp .
+
+   ?b  :label        ?bLabel .
+   ?b  :weight       ?bWeight .
+   ?b  :displacement ?bDisp .
+
+   FILTER ( sameTerm(?aWeight, ?bWeight) &amp;& !sameTerm(?aDisp, ?bDisp)) 
+}
+                </pre>
+                <div class="result">
+                  <table class="resultTable">
+                    <tbody>
+                      <tr>
+                        <th>aLabel</th>
+                        <th>bLabel</th>
+                      </tr>
+                      <tr>
+                        <td>"Container 1"</td>
+                        <td>"Container 2"</td>
+                      </tr>
+                      <tr>
+                        <td>"Container 2"</td>
+                        <td>"Container 1"</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <p>The test for boxes with the same weight may also be done with the '=' operator
+              (<a href="#func-RDFterm-equal" class="SPARQLoperator">RDFterm-equal</a>) as the test for
+              <code>"100"^^t:kilos = "85"^^t:kilos</code> will result in an error, eliminating that
+              potential solution.</p>
           </section>
           <section id="func-isIRI">
             <h5>isIRI</h5>
