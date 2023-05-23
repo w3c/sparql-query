@@ -9257,9 +9257,9 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         <div class="defn">
           <p><b>Definition: <span id="defn_algFilter">Filter</span></b></p>
           <p>Let Ω be a multiset of solution mappings and expr be an expression. We define:</p>
-          <p>Filter(expr, Ω, D(G)) = { μ | μ in Ω and expr(μ) is an expression that has an
+          <p>Filter(expr, Ω) = { μ | μ in Ω and expr(μ) is an expression that has an
             effective boolean value of true }</p>
-          <p>card[Filter(expr, Ω, D(G))](μ) = card[Ω](μ)</p>
+          <p>card[Filter(expr, Ω)](μ) = card[Ω](μ)</p>
           <blockquote>
             Note that evaluating an <code>exists(pattern)</code> expression uses the dataset and
             active graph, D(G). See the <a href="#defn_evalFilter">evaluation of filter</a>.
