@@ -9322,8 +9322,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p><b>Definition: <span id="defn_algProjection">Project</span></b></p>
           <p>Let Ψ be a sequence of solution mappings and PV a set of variables.</p>
           <p>For mapping μ, write Proj(μ, PV) to be the restriction of μ to variables in PV.</p>
-          <p>Project(Ψ, PV) = [ Proj(Ψ[μ], PV) | μ in Ψ ]</p>
-          <p>card[Project(Ψ, PV)](μ) = card[Ψ](μ)</p>
+          <p>Project(Ψ, PV) = [ Proj(μ, PV) | μ in Ψ ]</p>
+          <p>card[Project(Ψ, PV)](μ) = sum(card[Ψ](ν) | ν in Ψ such that ν = Proj(μ, PV))</p>
           <p>The order of Project(Ψ, PV) must preserve any ordering given by OrderBy.</p>
         </div>
         <div class="defn">
