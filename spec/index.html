@@ -1076,7 +1076,7 @@ WHERE   {
         </div>
         <p>The regular expression language is <a data-cite="XPATH-FUNCTIONS#regex-syntax">defined by XQuery
             and XPath Functions and Operators</a> and is based on
-          <a data-cite="XMLSCHEMA-2#regexs">XML Schema Regular Expressions</a>.</p>
+          <a data-cite="XMLSCHEMA-2#dt-regex">XML Schema Regular Expressions</a>.</p>
       </section>
       <section id="restrictNumber">
         <h3>Restricting Numeric Values</h3>
@@ -4648,7 +4648,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <code>literals</code> passed as arguments to these functions and operators are mapped
           to XML Schema typed values with a <a data-cite="XPATH20#dt-string-value">string value</a> of
           the <code>lexical form</code> and an 
-          <a href="http://www.w3.org/TR/xmlschema-2/#dt-atomic">atomic datatype</a> corresponding to the
+          <a data-cite="XMLSCHEMA-2#dt-atomic">atomic datatype</a> corresponding to the
           <span class="type datatypeIRI">datatype IRI</span>. The returned typed values are mapped back
           to RDF <code>literals</code> the same way.</p>
         <p>SPARQL has additional operators which operate on specific subsets of RDF terms. When
@@ -7522,13 +7522,13 @@ WHERE {
           <code>xsd:string</code> (the first row) to an <code>xsd:float</code> (the second column) is
           dependent on the lexical value (<span class="castM">M</span>).</p>
         <blockquote>
-          <p>bool = <a data-cite="XMLSCHEMA-2#boolean">xsd:boolean</a><br>
-            dbl = <a data-cite="XMLSCHEMA-2#double">xsd:double</a><br>
-            flt = <a data-cite="XMLSCHEMA-2#float">xsd:float</a><br>
-            dec = <a data-cite="XMLSCHEMA-2#decimal">xsd:decimal</a><br>
-            int = <a data-cite="XMLSCHEMA-2#integer">xsd:integer</a><br>
-            dT = <a data-cite="XMLSCHEMA-2#dateTime">xsd:dateTime</a><br>
-            str = <a data-cite="XMLSCHEMA-2#string">xsd:string</a><br>
+          <p>bool = <a data-cite="XMLSCHEMA-2#dt-boolean">xsd:boolean</a><br>
+            dbl = <a data-cite="XMLSCHEMA-2#dt-double">xsd:double</a><br>
+            flt = <a data-cite="XMLSCHEMA-2#dt-float">xsd:float</a><br>
+            dec = <a data-cite="XMLSCHEMA-2#dt-decimal">xsd:decimal</a><br>
+            int = <a data-cite="XMLSCHEMA-2#dt-integer">xsd:integer</a><br>
+            dT = <a data-cite="XMLSCHEMA-2#dt-dateTime">xsd:dateTime</a><br>
+            str = <a data-cite="XMLSCHEMA-2#dt-string">xsd:string</a><br>
             <span class="rdfDM">IRI</span> = <span class="type IRI">IRI</span></p>
         </blockquote>
         <table title="Casting table" class="casting" 
