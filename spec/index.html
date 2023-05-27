@@ -1076,7 +1076,7 @@ WHERE   {
         </div>
         <p>The regular expression language is <a data-cite="XPATH-FUNCTIONS#regex-syntax">defined by XQuery
             and XPath Functions and Operators</a> and is based on
-          <a data-cite="XMLSCHEMA-2#dt-regex">XML Schema Regular Expressions</a>.</p>
+          <a data-cite="XMLSCHEMA11-2#dt-regex">XML Schema Regular Expressions</a>.</p>
       </section>
       <section id="restrictNumber">
         <h3>Restricting Numeric Values</h3>
@@ -4648,21 +4648,21 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <code>literals</code> passed as arguments to these functions and operators are mapped
           to XML Schema typed values with a <a data-cite="XPATH20#dt-string-value">string value</a> of
           the <code>lexical form</code> and an 
-          <a data-cite="XMLSCHEMA-2#dt-atomic">atomic datatype</a> corresponding to the
+          <a data-cite="XMLSCHEMA11-2#dt-atomic">atomic datatype</a> corresponding to the
           <span class="type datatypeIRI">datatype IRI</span>. The returned typed values are mapped back
           to RDF <code>literals</code> the same way.</p>
         <p>SPARQL has additional operators which operate on specific subsets of RDF terms. When
           referring to a type, the following terms denote a <code>literal</code> with the
-          corresponding [[[XMLSCHEMA-2]]] [[XMLSCHEMA-2]] <span class="type datatypeIRI">datatype
+          corresponding [[[XMLSCHEMA11-2]]] [[XMLSCHEMA11-2]] <span class="type datatypeIRI">datatype
             IRI</span>:</p>
         <ul>
-          <li><code><a data-cite="XMLSCHEMA-2#dt-integer">xsd:integer</a></code></li>
-          <li><code><a data-cite="XMLSCHEMA-2#dt-decimal">xsd:decimal</a></code></li>
-          <li><code><a data-cite="XMLSCHEMA-2#dt-float">xsd:float</a></code></li>
-          <li><code><a data-cite="XMLSCHEMA-2#dt-double">xsd:double</a></code></li>
-          <li><code><a data-cite="XMLSCHEMA-2#dt-string">xsd:string</a></code></li>
-          <li><code><a data-cite="XMLSCHEMA-2#dt-boolean">xsd:boolean</a></code></li>
-          <li><code><a data-cite="XMLSCHEMA-2#dt-dateTime">xsd:dateTime</a></code></li>
+          <li><code><a data-cite="XMLSCHEMA11-2#dt-integer">xsd:integer</a></code></li>
+          <li><code><a data-cite="XMLSCHEMA11-2#dt-decimal">xsd:decimal</a></code></li>
+          <li><code><a data-cite="XMLSCHEMA11-2#dt-float">xsd:float</a></code></li>
+          <li><code><a data-cite="XMLSCHEMA11-2#dt-double">xsd:double</a></code></li>
+          <li><code><a data-cite="XMLSCHEMA11-2#dt-string">xsd:string</a></code></li>
+          <li><code><a data-cite="XMLSCHEMA11-2#dt-boolean">xsd:boolean</a></code></li>
+          <li><code><a data-cite="XMLSCHEMA11-2#dt-dateTime">xsd:dateTime</a></code></li>
         </ul>
         <p>The following terms identify additional types used in SPARQL value tests:</p>
         <ul>
@@ -4677,40 +4677,40 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           are valid arguments to functions and operators taking <span class="type numeric">numeric</span> arguments:</p>
         <ul>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-nonPositiveInteger"><code>xsd:nonPositiveInteger</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-nonPositiveInteger"><code>xsd:nonPositiveInteger</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-negativeInteger"><code>xsd:negativeInteger</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-negativeInteger"><code>xsd:negativeInteger</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-long"><code>xsd:long</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-long"><code>xsd:long</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-int"><code>xsd:int</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-int"><code>xsd:int</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-short"><code>xsd:short</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-short"><code>xsd:short</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-byte"><code>xsd:byte</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-byte"><code>xsd:byte</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-nonNegativeInteger"><code>xsd:nonNegativeInteger</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-nonNegativeInteger"><code>xsd:nonNegativeInteger</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-unsignedLong"><code>xsd:unsignedLong</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-unsignedLong"><code>xsd:unsignedLong</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-unsignedInt"><code>xsd:unsignedInt</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-unsignedInt"><code>xsd:unsignedInt</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-unsignedShort"><code>xsd:unsignedShort</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-unsignedShort"><code>xsd:unsignedShort</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-unsignedByte"><code>xsd:unsignedByte</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-unsignedByte"><code>xsd:unsignedByte</code></a>
           </li>
           <li>
-            <a data-cite="XMLSCHEMA-2#dt-positiveInteger"><code>xsd:positiveInteger</code></a>
+            <a data-cite="XMLSCHEMA11-2#dt-positiveInteger"><code>xsd:positiveInteger</code></a>
           </li>
         </ul>
         <p>SPARQL language extensions may treat additional types as being derived from XML schema
@@ -7522,13 +7522,13 @@ WHERE {
           <code>xsd:string</code> (the first row) to an <code>xsd:float</code> (the second column) is
           dependent on the lexical value (<span class="castM">M</span>).</p>
         <blockquote>
-          <p>bool = <a data-cite="XMLSCHEMA-2#dt-boolean">xsd:boolean</a><br>
-            dbl = <a data-cite="XMLSCHEMA-2#dt-double">xsd:double</a><br>
-            flt = <a data-cite="XMLSCHEMA-2#dt-float">xsd:float</a><br>
-            dec = <a data-cite="XMLSCHEMA-2#dt-decimal">xsd:decimal</a><br>
-            int = <a data-cite="XMLSCHEMA-2#dt-integer">xsd:integer</a><br>
-            dT = <a data-cite="XMLSCHEMA-2#dt-dateTime">xsd:dateTime</a><br>
-            str = <a data-cite="XMLSCHEMA-2#dt-string">xsd:string</a><br>
+          <p>bool = <a data-cite="XMLSCHEMA11-2#dt-boolean">xsd:boolean</a><br>
+            dbl = <a data-cite="XMLSCHEMA11-2#dt-double">xsd:double</a><br>
+            flt = <a data-cite="XMLSCHEMA11-2#dt-float">xsd:float</a><br>
+            dec = <a data-cite="XMLSCHEMA11-2#dt-decimal">xsd:decimal</a><br>
+            int = <a data-cite="XMLSCHEMA11-2#dt-integer">xsd:integer</a><br>
+            dT = <a data-cite="XMLSCHEMA11-2#dt-dateTime">xsd:dateTime</a><br>
+            str = <a data-cite="XMLSCHEMA11-2#dt-string">xsd:string</a><br>
             <span class="rdfDM">IRI</span> = <span class="type IRI">IRI</span></p>
         </blockquote>
         <table title="Casting table" class="casting" 
