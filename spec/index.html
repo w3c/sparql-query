@@ -1230,26 +1230,27 @@ book:book1</pre>
         <section id="QSynBlankNodes">
           <h4>Syntax for Blank Nodes</h4>
           <p>
-            <a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank nodes</a>
-            in graph patterns act as variables, not as references to specific
-            blank nodes in the data being queried.
+            <a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank nodes</a> in
+            graph patterns act as variables, not as references to specific blank
+            nodes in the data being queried.  Blank nodes are indicated by
+            either the identifier form, such as "<code>_:abc</code>", or an
+            abbreviation form using "<code>[]</code>" or "<code>[...]</code>".
           </p>
           <p>
-            Blank nodes are indicated by either the identifier form, such as
-            "<code>_:abc</code>", or the abbreviation form "<code>[]</code>". A
-            blank node that is used in only one place in the query syntax can be
+            Blank node identifiers are written as "<code>_:abc</code>" for a
+            blank node with identifier "<code>abc</code>".  The same blank node
+            identifier cannot be used in two different basic graph patterns in
+            the same query.
+          </p>
+          <p>
+            A blank node that is used in only one place in the query syntax can be
             indicated with <code>[]</code>. A unique blank node will be used to
-            form the triple pattern. Blank node identifiers are written as
-            "<code>_:abc</code>" for a blank node with identifier
-            "<code>abc</code>".
-            The same blank node identifier cannot be used in two
-            different basic graph patterns in the same query.
+            form the triple pattern. 
           </p>
           <p>
-            The <code>[:p :v]</code> construct can be used in triple patterns. It creates a blank
-            node which is used as the subject of contained predicate-object pairs. The
-            created blank node can also be used in further triple patterns in the subject and object
-            positions.
+            The <code>[:p :v]</code> construct can be used to create triple
+            patterns with a  unique blank node as the subject of contained 
+            predicate-object pairs.
           </p>
           <p>The following two forms</p>
           <pre class="query nohighlight">
@@ -1258,13 +1259,13 @@ book:book1</pre>
           <pre class="query nohighlight">
 [] :p "v" .
           </pre>
-          <p>allocate a unique blank node identifier (here "<code>b57</code>") and are equivalent to
-            writing:</p>
+          <p>allocate a unique blank node (here, illustreated by
+            "<code>_:b57</code>") and both are equivalent to writing:</p>
           <pre class="query nohighlight">
 _:b57 :p "v" .
           </pre>
-          <p>This allocated blank node identifier can be used as the subject or object of further triple
-            patterns. For example, as a subject:</p>
+          <p>The allocated blank node can be used as the subject or object of
+            further triple patterns. For example, as a subject:</p>
           <pre class="query nohighlight">[ :p "v" ] :q "w" .
           </pre>
           <p>which is equivalent to the two triples:</p>
@@ -1281,15 +1282,16 @@ _:b57 :q "w" .
 :x  :q _:b57 .
 _:b57 :p "v" .
           </pre>
-          <p>Abbreviated blank node syntax can be combined with other abbreviations
-            for <a href="#predObjLists">common subjects</a> and <a href="#objLists">common predicates</a>.</p>
+          <p>Abbreviated blank node syntax can be combined with other
+            abbreviations for <a href="#predObjLists">common subjects</a>
+            and <a href="#objLists">common predicates</a>.</p>
           <pre class="query nohighlight">
 [ foaf:name  ?name ;
   foaf:mbox  &lt;mailto:alice@example.org&gt; ]
           </pre>
-          <p>This is the same as writing the following basic graph pattern for some uniquely
-            allocated blank node identifier in the syntax <code>_:b18</code>:</p>
-          <pre class="query nohighlight">  
+          <p>This is the same as writing the following basic graph pattern using
+            a blank node identifer instead.</p>
+          <pre class="query nohighlight">
 _:b18  foaf:name  ?name .
 _:b18  foaf:mbox  &lt;mailto:alice@example.org&gt; .
           </pre>
