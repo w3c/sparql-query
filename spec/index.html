@@ -7410,6 +7410,110 @@ WHERE {
             </div>
           </section>
         </section>
+
+        <!-- QT -->
+        <section id="func-quoted-triples">
+          <h4>Functions on Quoted Triples</h4>
+          <section id="func-triple">
+            <h5>TRIPLE</h5>
+            <pre class="prototype nohighlight">
+              <span class="return">quoted triple</span>  <span class="operator">TRIPLE</span> (<span class="type RDFterm">RDF term</span> <span class="name">subj</span>, <span class="type RDFterm">RDF term</span> <span class="name">pred</span>, <span class="type RDFterm">RDF term</span> <span
+class="name">obj</span>)
+            </pre>
+            <pre class="query nohighlight">
+                  <span class="operator">&lt;&lt;</span> term1 term2 term3 <span class="operator">&gt;&gt;</span>
+            </pre>
+            <p>
+              If the 3-tuple (<code style="color:black">term1</code>, 
+              <code style="color:black">term2</code>, 
+              <code style="color:black">term3</code>)
+              is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-triple">RDF triple</a>
+              (that is, the subject is a IRI, 
+              <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a> or a 
+              <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>,
+              and the predicate is an IRI),
+              the function returns a quoted triple with these three elements.
+              Otherwise, the function raises an error.
+            </p>
+            <p>
+              A <code>TRIPLE</code> can also be written with a 
+              <a href="#rExprQuotedTriple">quoted triple expression</a>
+              using <code>&lt;&lt;</code> and  <code>&gt;&gt;</code>.
+            </p>
+            <pre class="query nohighlight">
+              PREFIX : <http://example/>
+              SELECT ?s ?date {
+                  ?s ?p ?o
+                  BIND( &lt;&lt; ?s ?p ?o &gt;&gt; AS ?qt )
+                  ?qt :tripleAdded ?date
+              }
+            </pre>
+            <pre class="query nohighlight">
+              PREFIX : <http://example/>
+              SELECT ?s ?date {
+                  ?s ?p ?o
+                  BIND( TRIPLE(?s, ?p, ?o) AS ?qt )
+                  ?qt :tripleAdded ?date
+              }
+            </pre>
+          </section>
+
+          <section id="func-subject">
+            <h5>SUBJECT</h5>
+            <pre class="prototype nohighlight"><span class="return">RDF term</span>  <span class="operator">SUBJECT</span> (<span class="type RDFterm">quoted triple</span> <span class="name">quoted-triple</span>)</pre>
+            <p>
+              If <code style="color:black">triple</code> is a 
+              <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>, 
+              the function returns the subject of the quoted triple. 
+              If the argument is not a <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>,
+              an error is raised.
+            </p>
+          </section>
+          
+          <section id="func-predicate">
+            <h5>PREDICATE</h5>
+            <pre class="prototype nohighlight"><span class="return">RDF term</span>  <span class="operator">PREDICATE</span> (<span class="type RDFterm">quoted triple</span> <span class="name">quoted-triple</span>)</pre>
+            <p>
+              If <code style="color:black">triple</code> is a 
+              <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>,
+              the function returns the predicate of the quoted triple.
+              If the argument is not a <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>,
+              an error is raised.
+            </p>
+          </section>
+
+          <section id="func-object">
+            <h5>OBJECT</h5>
+            <pre class="prototype nohighlight"><span class="return">RDF term</span>  <span class="operator">OBJECT</span> (<span class="type RDFterm">quoted triple</span> <span class="name">quoted-triple</span>)</pre>
+            <p>
+              If <code style="color:black">triple</code> is a <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>,
+              the function returns the object of the quoted triple.
+              If the argument is not a <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>, 
+              an error is raised.
+            </p>
+          </section>
+
+          <section>
+            <h5>isTRIPLE</h5>
+            <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">isTRIPLE</span> (<span class="type RDFterm">RDF term</span>)</pre>
+
+            <p>
+              <code>xsd:boolean</code> &nbsp;
+              <code style="color:black;font-weight:bold">isTRIPLE</code>
+              (
+              <code>RDF-star term  <span style="color:black">term</span></code>
+              )
+            </p>
+
+            <p>
+              If the argument is a <a  data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>, 
+              the function returns true.
+              Otherwise the function returns false.
+            </p>
+          </section>
+        </section>
+        <!-- QT -->
+
         <section id="func-hash">
           <h4>Hash Functions</h4>
           <section id="func-md5">
