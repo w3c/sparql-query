@@ -7447,11 +7447,12 @@ class="name">obj</span>)
               As a shorthand notation, the <code>TRIPLE</code> function 
               can also be written in the form of a
               <a href="#rExprQuotedTriple">quoted triple expression</a>
-              using <code>&lt;&lt;</code> and  <code>&gt;&gt;</code> 
-              with the syntax limitation that the three elements of the quoted triple
-              can not be given by arbitrary expressions, only as variables and 
-              directly written RDF terms. In contrast, the function form, 
-              <code>TRIPLE</code>, can be used with arbitrary expressions.
+              using <code>&lt;&lt;</code> and <code>&gt;&gt;</code>.  There is a
+              syntax limitation to this shorthand form because the three elements of
+              the quoted triple expression can only be variables and directly
+              written RDF terms, not arbitrary expressions. 
+              In contrast, the function form, <code>TRIPLE</code>,
+              can be used with arbitrary expressions.
             </p>
             <pre class="query nohighlight">
               PREFIX : <http://example/>
