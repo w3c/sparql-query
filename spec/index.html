@@ -1,4 +1,4 @@
-f<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
@@ -7428,21 +7428,30 @@ class="name">obj</span>)
               <code style="color:black">term2</code>, 
               <code style="color:black">term3</code>)
               is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-triple">RDF triple</a>
-              (that is, the subject is a IRI, 
+              (that is, the subject of the triple is an
+              <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>,
               <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a> or a 
               <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>,
-              and the predicate is an IRI),
+              the predicate is an 
+              <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>,
+              and the object is an
+              <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>,
+              <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>,
+              <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a> or a 
+              <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>)
               the function returns a quoted triple with these three elements.
               Otherwise, the function raises an error.
             </p>
+
             <p>
-              A <code>TRIPLE</code> can also be written with a
+              As a shorthand notation, the <code>TRIPLE</code> function 
+              can also be written with a
               <a href="#rExprQuotedTriple">quoted triple expression</a>
               using <code>&lt;&lt;</code> and  <code>&gt;&gt;</code> 
               with the syntax limitation that the elements of quoted triple
-              can not be expressions, only variables and 
+              can not be arbitrary expressions, only variables and 
               directly written RDF terms. The function form, 
-              <code>TRIPLE</code> can be used with expressions.
+              <code>TRIPLE</code>, can be used with expressions.
             </p>
             <pre class="query nohighlight">
               PREFIX : <http://example/>
@@ -7500,19 +7509,12 @@ class="name">obj</span>)
           <section>
             <h5>isTRIPLE</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">isTRIPLE</span> (<span class="type RDFterm">RDF term</span>)</pre>
-
             <p>
-              <code>xsd:boolean</code> &nbsp;
-              <code style="color:black;font-weight:bold">isTRIPLE</code>
-              (
-              <code>RDF-star term  <span style="color:black">term</span></code>
-              )
-            </p>
-
-            <p>
-              If the argument is a <a  data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>, 
+              If the argument is a <a data-cite="RDF12-CONCEPTS#dfn-quoted-triple">quoted triple</a>, 
               the function returns true.
-              Otherwise the function returns false.
+              Otherwise, if the argument is any other kind of 
+              <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>, 
+              the function returns false.
             </p>
           </section>
         </section>
