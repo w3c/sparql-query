@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+f<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
@@ -7421,7 +7421,7 @@ WHERE {
 class="name">obj</span>)
             </pre>
             <pre class="query nohighlight">
-                  <span class="operator">&lt;&lt;</span> term1 term2 term3 <span class="operator">&gt;&gt;</span>
+                  <span class="operator">&lt;&lt;</span> subj pred obj <span class="operator">&gt;&gt;</span>
             </pre>
             <p>
               If the 3-tuple (<code style="color:black">term1</code>, 
@@ -7436,9 +7436,13 @@ class="name">obj</span>)
               Otherwise, the function raises an error.
             </p>
             <p>
-              A <code>TRIPLE</code> can also be written with a 
+              A <code>TRIPLE</code> can also be written with a
               <a href="#rExprQuotedTriple">quoted triple expression</a>
-              using <code>&lt;&lt;</code> and  <code>&gt;&gt;</code>.
+              using <code>&lt;&lt;</code> and  <code>&gt;&gt;</code> 
+              with the syntax limitation that the elements of quoted triple
+              can not be expressions, only variables and 
+              directly written RDF terms. The function form, 
+              <code>TRIPLE</code> can be used with expressions.
             </p>
             <pre class="query nohighlight">
               PREFIX : <http://example/>
