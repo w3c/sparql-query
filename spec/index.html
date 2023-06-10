@@ -6295,21 +6295,6 @@ WHERE {
                 </div>
               </div>
             </div>
-            <div class="note">
-              <p>In [[[RDF-SPARQL-QUERY]]] the <code>DATATYPE</code> function was not defined for
-                literals with a language tag. Therefore, an unextended implementation would raise an
-                error when <code>DATATYPE</code> was called with a literal with a language tag.
-                <a href="#operatorExtensibility">Operator extensibility</a> allows implementations to
-                return a result rather than raise an error. SPARQL 1.2 defines the result of
-                <code>DATATYPE</code> applied to a literal with a language tag to be
-                <code>rdf:langString</code>.</p>
-            </div>
-            <div class="wgNote">
-              The SPARQL Working Group is using <code>rdf:langString</code> based on the latest
-              Working Drafts of the RDF Working Group. This usage should be considered experimental
-              (and non-normative) until/unless <code>rdf:langString</code> becomes part of an updated
-              RDF Recommendation.
-            </div>
           </section>
           <section id="func-iri">
             <h5>IRI</h5>
