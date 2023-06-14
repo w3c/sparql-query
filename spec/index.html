@@ -8745,7 +8745,11 @@ Replace join(A, Z) by A
             <p>Step: GROUP BY</p>
             <p>If the <code>GROUP BY</code> keyword is used, or there is implicit grouping due to the
               use of aggregates in the projection, then grouping is performed by the 
-              <a href="#defn_algGroup">Group</a> function. It divides the solution set into groups of one or
+              <a href="#defn_algGroup">Group</a> function.
+              In this case, before grouping, the solution set is converted into a solution
+              sequence by applying the <a href="#defn_algToList">ToList</a> function.
+              Next, the <a href="#defn_algGroup">Group</a> function
+              divides this solution sequence into groups of one or
               more solutions, with the same overall cardinality. In case of implicit grouping, a fixed
               constant (1) is used to group all solutions into a single group.</p>
             <p>Step: Aggregates</p>
@@ -8765,9 +8769,9 @@ Let P := the algebra translation of the GroupGraphPattern of the query level
 Let E := [], a list of pairs of the form (variable, expression)
 
 If Q contains GROUP BY exprlist
-   Let G := Group(exprlist, P)
+   Let G := Group(exprlist, ToList(P))
 Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
-   Let G := Group((1), P)
+   Let G := Group((1), ToList(P))
 Else
    skip the rest of the aggregate step
    End
@@ -9415,10 +9419,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div id="defn_algGroup">
               <b>Definition: Group</b>
             </div>
-            <p>Group evaluates a list of expressions against a solution sequence, producing a set
+            <p>Group evaluates a list of expressions against a solution sequence Ψ, producing a set
               of partial functions from keys to solution sequences.</p>
-            <p>Group(exprlist, Ω) = { ListEval(exprlist, μ) → { μ' | μ' in Ω, ListEval(exprlist, μ)
-              = ListEval(exprlist, μ') } | μ in Ω }</p>
+            <p>Group(exprlist, Ψ) = { ListEval(exprlist, μ) → [ μ' | μ' in Ψ, ListEval(exprlist, μ)
+              = ListEval(exprlist, μ') ] | μ in Ψ }</p>
           </div>
           <div class="defn">
             <p><b>Definition: ListEval</b></p>
@@ -9441,22 +9445,22 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             </div>
             <p>Let <i>exprlist</i> be a list of expressions or *, <i>func</i> a set function,
               <i>scalarvals</i> a set of partial functions (possibly empty) passed from the aggregate
-              in the query, and let { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-              key<sub>m</sub>→Ω<sub>m</sub> } be a multiset of partial functions from keys to
+              in the query, and let { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
+              key<sub>m</sub>→Ψ<sub>m</sub> } be a set of partial functions from keys to
               solution sequences as produced by the grouping step.</p>
-            <p>Aggregation applies the set function func to the given multiset and produces a
-              single value for each key and partition of solutions for that key.</p>
-            <p>Aggregation(exprlist, func, scalarvals, { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-              key<sub>m</sub>→Ω<sub>m</sub> } )<br>
-              &nbsp;&nbsp;&nbsp;= { (key, F(Ω)) | key → Ω in { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-              key<sub>m</sub>→Ω<sub>m</sub> } }</p>
+            <p>Aggregation applies the set function func to the given set and produces a
+              single value for each key and group of solutions for that key.</p>
+            <p>Aggregation(exprlist, func, scalarvals, { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
+              key<sub>m</sub>→Ψ<sub>m</sub> } )<br>
+              &nbsp;&nbsp;&nbsp;= { (key, F(Ψ)) | key → Ψ in { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
+              key<sub>m</sub>→Ψ<sub>m</sub> } }</p>
             <p>where<br>
-              &nbsp;&nbsp;M(Ω) = { ListEval(exprlist, μ) | μ in Ω }<br>
-              &nbsp;&nbsp;F(Ω) = func(M(Ω), scalarvals), for non-DISTINCT<br>
-              &nbsp;&nbsp;F(Ω) = func(Distinct(M(Ω)), scalarvals), for DISTINCT</p>
+              &nbsp;&nbsp;M(Ψ) = [ ListEval(exprlist, μ) | μ in Ψ ]<br>
+              &nbsp;&nbsp;F(Ψ) = func(M(Ψ), scalarvals), for non-DISTINCT<br>
+              &nbsp;&nbsp;F(Ψ) = func(Distinct(M(Ψ)), scalarvals), for DISTINCT</p>
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
               <code>*</code> the value of F will be the cardinality of the group solution sequence,
-              <code>card[Ω]</code>, or <code>card[Distinct(Ω)]</code> if the <code>DISTINCT</code>
+              <code>card[Ψ]</code>, or <code>card[Distinct(Ψ)]</code> if the <code>DISTINCT</code>
               keyword is present.</p>
           </div>
           <p><i>scalarvals</i> are used to pass values to the underlying set function, bypassing
@@ -9466,7 +9470,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>All aggregates may have the <code>DISTINCT</code> keyword as the first token in their
             argument list. If this keyword is present then first argument to func is Distinct(M).</p>
           <p>Example</p>
-          <p>Given a solution multiset (Ω) with the following values:</p>
+          <p>Given a solution sequence Ψ with the following values:</p>
           <table>
             <tbody>
               <tr>
@@ -9497,10 +9501,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </table>
           <p>And the query expression SELECT (ex:agg(?y, ?z) AS ?agg) WHERE { ?x ?y ?z } GROUP BY
             ?x.</p>
-          <p>We produce G = Group((?x), Ω) = { ( (1), { μ<sub>1</sub>, μ<sub>2</sub> } ), ( (2), {
-            μ<sub>3</sub> } ) }</p>
+          <p>We produce G = Group((?x), Ψ) = { (1) → [μ<sub>1</sub>, μ<sub>2</sub>], (2) →
+          [μ<sub>3</sub>] }</p>
           <p>And so Aggregation((?y, ?z), ex:agg, {}, G) =<br>
-            { ((1), eg:agg({(2, 3), (3, 4)}, {})), ((2), eg:agg({(5, 6)}, {})) }.</p>
+            { ((1), eg:agg([(2, 3), (3, 4)], {})), ((2), eg:agg([(5, 6)], {})) }.</p>
           <div class="defn">
             <p><b>Definition: AggregateJoin</b></p>
             <p>Let S<sub>1</sub>, ..., S<sub>n</sub> be a list of sets, where each set
