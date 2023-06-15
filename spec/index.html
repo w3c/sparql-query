@@ -9368,10 +9368,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algDistinct">Distinct</span></b></p>
-          <p>Let Ψ be a sequence of solution mappings. We define:</p>
-          <p>Distinct(Ψ) = [ μ | μ in Ψ ]</p>
-          <p>card[Distinct(Ψ)](μ) = 1</p>
-          <p>The order of Distinct(Ψ) must preserve any ordering given by OrderBy.</p>
+          <p>Let Ψ be a sequence of elements which may be either solution mappings or lists of RDF terms. We define:</p>
+          <p>Distinct(Ψ) = [ e | e in Ψ ]</p>
+          <p>card[Distinct(Ψ)](e) = 1</p>
+          <p>The order of Distinct(Ψ) must preserve any ordering given by OrderBy (if any).</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algReduced">Reduced</span></b></p>
