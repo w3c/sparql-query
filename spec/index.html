@@ -9515,24 +9515,24 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               ..., agg<sub>n</sub>→val<sub>n</sub> | key in K and key→val<sub>i</sub> in
               S<sub>i</sub> for each 1 &lt;= i &lt;= n }</p>
           </div>
-          <p>Flatten is a function which is used to collapse multisets of lists into a multiset, so
-            for example { (1, 2), (3, 4) } becomes { 1, 2, 3, 4 }.</p>
+          <p>Flatten is a function which is used to collapse a sequence of lists into a single list.
+            For example, [(1,&nbsp;2), (3,&nbsp;4)] becomes (1, 2, 3, 4).</p>
           <div class="defn">
             <p><b>Definition: Flatten</b></p>
-            <p>The Flatten(M) function takes a multiset of lists, M {(L<sub>1</sub>, L<sub>2</sub>,
-              ...), ...}, and returns the multiset { x | L in M and x in L }.</p>
+            <p>The Flatten(S) function takes a sequence of lists, S = [(L<sub>1</sub>, L<sub>2</sub>,
+              ...), ...], and returns the list ( x | L in S and x in L ).</p>
           </div>
           <section id="setFunctions">
             <h5>Set Functions</h5>
             <p>The set functions which underlie SPARQL aggregates all have a common signature:
-              SetFunc(M), or SetFunc(M, scalarvals) where M is a multiset of lists, and scalarvals is
+              SetFunc(S), or SetFunc(S, scalarvals) where S is a sequence of lists, and scalarvals is
               one or more scalar values that are passed to the set function indirectly via the ( ...
               ; key=value ) syntax for aggregates in the SPARQL grammar. The only use of this that is
               supported by the built-in aggregates in SPARQL Query 1.1 is <code>GROUP_CONCAT</code>,
               as in <code>GROUP_CONCAT(?x ; separator=", ")</code>.</p>
             <p>Note that the name "Set Function" is somewhat historical — the arguments to set
-              functions are in fact multisets. The name is retained due to the commonality with SQL
-              Set Functions, which also operate over multisets.</p>
+              functions are in fact sequences. The name is retained due to the commonality with SQL
+              Set Functions, which operate over multisets.</p>
             <p>The set functions defined in this document are Count, Sum, Min, Max, Avg,
               GroupConcat, and Sample — corresponding to the aggregates <code>COUNT</code>,
               <code>SUM</code>, <code>MIN</code>, <code>MAX</code>, <code>AVG</code>,
@@ -9550,10 +9550,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               has a bound, non-error value within the aggregate group.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggCount">Count</span></b></p>
-              <pre class="code nohighlight">xsd:integer Count(multiset M)</pre>
-              <p>N = Flatten(M)</p>
-              <p>remove error elements from N</p>
-              <p>Count(M) = card[N]</p>
+              <pre class="code nohighlight">xsd:integer Count(sequence S)</pre>
+              <p>L = Flatten(S)</p>
+              <p>remove error elements from L</p>
+              <p>Count(S) = card[L]</p>
             </div>
           </section>
           <section id="aggSum">
@@ -9565,13 +9565,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               be 6.0 (float).</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
-              <pre class="code nohighlight">numeric Sum(multiset M)</pre>
-              <p>Sum(M) = Sum(ToList(Flatten(M))).</p>
-              <p>Sum(S) = op:numeric-add(S<sub>1</sub>, Sum(S<sub>2..n</sub>)) when card[S] &gt;
+              <pre class="code nohighlight">numeric Sum(sequence S)</pre>
+              <p>L = Flatten(S)</p>
+              <p>Sum(S) = Sum(L)</p>
+              <p>Sum(L) = op:numeric-add(L<sub>1</sub>, Sum(L<sub>2..n</sub>)) when card[L] &gt;
                 1<br>
-                Sum(S) = op:numeric-add(S<sub>1</sub>, 0) when card[S] = 1<br>
-                Sum(S) = "0"^^xsd:integer when card[S] = 0</p>
-              <p>In this way, Sum({1, 2, 3}) = op:numeric-add(1, op:numeric-add(2,
+                Sum(L) = op:numeric-add(L<sub>1</sub>, 0) when card[L] = 1<br>
+                Sum(L) = "0"^^xsd:integer when card[L] = 0</p>
+              <p>In this way, Sum( (1, 2, 3) ) = op:numeric-add(1, op:numeric-add(2,
                 op:numeric-add(3, 0))).</p>
             </div>
           </section>
@@ -9581,11 +9582,11 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             average value for an expression over a group. It is defined in terms of Sum and Count.
             <div class="defn">
               <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
-              <pre class="code nohighlight">numeric Avg(multiset M)</pre>
-              <p>Avg(M) = "0"^^xsd:integer, where Count(M) = 0</p>
-              <p>Avg(M) = Sum(M) / Count(M), where Count(M) &gt; 0</p>
+              <pre class="code nohighlight">numeric Avg(sequence S)</pre>
+              <p>Avg(S) = "0"^^xsd:integer, where Count(S) = 0</p>
+              <p>Avg(S) = Sum(S) / Count(S), where Count(S) &gt; 0</p>
             </div>
-            <p>For example, Avg({1, 2, 3}) = Sum({1, 2, 3})/Count({1, 2, 3}) = 6/3 = 2.</p>
+            <p>For example, Avg([(1), (2), (3)]) = Sum([(1), (2), (3)])/Count([(1), (2), (3)]) = 6/3 = 2.</p>
           </section>
           <section id="aggMin">
             <h5>Min</h5>
@@ -9595,12 +9596,12 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
-              <pre class="code nohighlight">term Min(multiset M)</pre>
-              <p>Min(M) = Min(ToList(Flatten(M)))</p>
-              <p>Min({}) = error.</p>
-              <p>The flattened multiset of values passed as an argument is converted to a sequence
-                S, this sequence is ordered as per the <code>ORDER BY ASC</code> clause.</p>
-              <p>Min(S) = S<sub>0</sub></p>
+              <pre class="code nohighlight">term Min(sequence S)</pre>
+              <p>L = Flatten(S)</p>
+              <p>Min(S) = Min(L)</p>
+              <p>The flattened list L of values is ordered as per the <code>ORDER BY ASC</code> clause.</p>
+              <p>Min(L) = L<sub>0</sub> if card[L] > 0<br>
+                Min(L) = error if card[L] = 0</p>
             </div>
           </section>
           <section id="aggMax">
@@ -9611,12 +9612,12 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
-              <pre class="code nohighlight">term Max(multiset M)</pre>
-              <p>Max(M) = Max(ToList(Flatten(M)))</p>
-              <p>Max({}) = error.</p>
-              <p>The multiset of values passed as an argument is converted to a sequence S, this
-                sequence is ordered as per the <code>ORDER BY DESC</code> clause.</p>
-              <p>Max(S) = S<sub>0</sub></p>
+              <pre class="code nohighlight">term Max(sequence S)</pre>
+              <p>L = Flatten(S)</p>
+              <p>Max(S) = Max(L)</p>
+              <p>The flattened list L of values is ordered as per the <code>ORDER BY DESC</code> clause.</p>
+              <p>Max(L) = L<sub>0</sub> if card[L] > 0<br>
+                Max(L) = error if card[L] = 0</p>
             </div>
           </section>
           <section id="aggGroupConcat">
@@ -9627,33 +9628,33 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               SEPARATOR.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
-              <pre class="code nohighlight">literal GroupConcat(multiset M)</pre>
+              <pre class="code nohighlight">literal GroupConcat(sequence S)</pre>
               <p>If the "separator" scalar argument is absent from GROUP_CONCAT then it is taken to
                 be the "space" character, unicode codepoint U+0020.</p>
-              <p>The multiset of values, M passed as an argument is converted to a sequence S.</p>
-              <p>GroupConcat(M, scalarvals) = GroupConcat(Flatten(M), scalarvals("separator"))</p>
-              <p>GroupConcat(S, sep) = "", where <span style=
-                                                       "font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 0</p>
-              <p>GroupConcat(S, sep) = CONCAT("", S<sub>0</sub>), where 
-                <span style="font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 1</p>
-              <p>GroupConcat(S, sep) = CONCAT(S<sub>0</sub>, sep, GroupConcat(S<sub>1..n-1</sub>,
-                sep)), where <span style="font-size: 140%">|</span>S<span style="font-size: 140%">|</span> &gt; 1</p>
+              <p>L = Flatten(S)</p>
+              <p>GroupConcat(S, scalarvals) = GroupConcat(L, scalarvals("separator"))</p>
+              <p>GroupConcat(L, sep) = "", where <span style=
+                                                       "font-size: 140%">|</span>L<span style="font-size: 140%">|</span> = 0</p>
+              <p>GroupConcat(L, sep) = CONCAT("", L<sub>0</sub>), where 
+                <span style="font-size: 140%">|</span>L<span style="font-size: 140%">|</span> = 1</p>
+              <p>GroupConcat(L, sep) = CONCAT(L<sub>0</sub>, sep, GroupConcat(L<sub>1..n-1</sub>,
+                sep)), where <span style="font-size: 140%">|</span>L<span style="font-size: 140%">|</span> &gt; 1</p>
             </div>
-            <p>For example, GroupConcat({"a", "b", "c"}, {"separator" → "."}) = "a.b.c".</p>
+            <p>For example, GroupConcat([("a"), ("b"), ("c")], {"separator" → "."}) = "a.b.c".</p>
           </section>
           <section id="aggSample">
             <h5>Sample</h5>
-            <p>Sample is a set function which returns an arbitrary value from the multiset passed
+            <p>Sample is a set function which returns an arbitrary value from the sequence passed
               to it.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
-              <pre class="code nohighlight">RDFTerm Sample(multiset M)</pre>
-              <p>Sample(M) = v, where v in Flatten(M)</p>
-              <p>Sample({}) = error</p>
+              <pre class="code nohighlight">RDFTerm Sample(sequence S)</pre>
+              <p>Sample(S) = v, where v in Flatten(S)</p>
+              <p>Sample([]) = error</p>
             </div>
-            <p>For example, given Sample({"a", "b", "c"}), "a", "b", and "c" are all valid return
+            <p>For example, given Sample([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
               values. Note that Sample() is not required to be deterministic for a given input, the
-              only restriction is that the output value must be present in the input multiset.</p>
+              only restriction is that the output value must be present in the input sequence.</p>
           </section>
         </section>
         <section id="sparqlAlgebraEval">
