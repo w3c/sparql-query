@@ -8770,7 +8770,7 @@ Let E := [], a list of pairs of the form (variable, expression)
 
 If Q contains GROUP BY exprlist
    Let G := Group(exprlist, ToList(P))
-Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
+Else If Q contains an aggregate in <code>SELECT</code>, <code>HAVING</code>, <code>ORDER BY</code>
    Let G := Group((1), ToList(P))
 Else
    skip the rest of the aggregate step
@@ -9456,8 +9456,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               key<sub>m</sub>→Ψ<sub>m</sub> } }</p>
             <p>where<br>
               &nbsp;&nbsp;M(Ψ) = [ ListEval(exprlist, μ) | μ in Ψ ]<br>
-              &nbsp;&nbsp;F(Ψ) = func(M(Ψ), scalarvals), for non-DISTINCT<br>
-              &nbsp;&nbsp;F(Ψ) = func(Distinct(M(Ψ)), scalarvals), for DISTINCT</p>
+              &nbsp;&nbsp;F(Ψ) = func(M(Ψ), scalarvals), for non-<code>DISTINCT</code><br>
+              &nbsp;&nbsp;F(Ψ) = func(Distinct(M(Ψ)), scalarvals), for <code>DISTINCT</code></p>
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
               <code>*</code> the value of F will be the cardinality of the group solution sequence,
               <code>card[Ψ]</code>, or <code>card[Distinct(Ψ)]</code> if the <code>DISTINCT</code>
