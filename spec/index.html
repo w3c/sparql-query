@@ -9368,10 +9368,22 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algDistinct">Distinct</span></b></p>
-          <p>Let Ψ be a sequence of elements which may be either solution mappings or lists of RDF terms. We define:</p>
-          <p>Distinct(Ψ) = [ e | e in Ψ ]</p>
-          <p>card[Distinct(Ψ)](e) = 1</p>
-          <p>The order of Distinct(Ψ) must preserve any ordering given by OrderBy (if any).</p>
+          <p>Let <var>Ψ</var> be a sequence of elements which may be either solution mappings or lists of RDF terms.</p>
+          <p>Distinct(<var>Ψ</var>) is a sequence of elements that has the following properties.</p>
+          <ol>
+            <li>Every element in <var>Ψ</var> is contained in Distinct(<var>Ψ</var>).</li>
+            <li>Every element in Distinct(<var>Ψ</var>) is contained in <var>Ψ</var>.</li>
+            <li>Distinct(<var>Ψ</var>) is free of duplicates. That is, the element at the |i|-th position in Distinct(<var>Ψ</var>) is different from the element at the |j|-th position in Distinct(<var>Ψ</var>) for every two natural numbers |i| and |j| such that |i| &ne; |j|.
+            </li>
+            <li>For every two elements <var>e<sub>1</sub></var> and <var>e<sub>2</sub></var> in Distinct(<var>Ψ</var>), the relative order of their first occurrences in <var>Ψ</var> is preserved in Distinct(<var>Ψ</var>). That is, if <var>i<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>i<sub>2</sub></var>, then <var>j<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>j<sub>2</sub></var>, where
+              <ul>
+                <li><var>i<sub>1</sub></var> is the smallest natural number such that <var>e<sub>1</sub></var> is at the <var>i<sub>1</sub></var>-th position in <var>Ψ</var>,</li>
+                <li><var>i<sub>2</sub></var> is the smallest natural number such that <var>e<sub>2</sub></var> is at the <var>i<sub>2</sub></var>-th position in <var>Ψ</var>,</li>
+                <li><var>j<sub>1</sub></var> is the position of <var>e<sub>1</sub></var> in Distinct(<var>Ψ</var>), and</li>
+                <li><var>j<sub>2</sub></var> is the position of <var>e<sub>2</sub></var> in Distinct(<var>Ψ</var>).</li>
+              </ul>
+            </li>
+          </ol>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algReduced">Reduced</span></b></p>
