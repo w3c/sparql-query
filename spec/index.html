@@ -552,7 +552,7 @@ span.cancast:hover { background-color: #ffa;
           <h4>Terminology</h4>
           <p>The SPARQL language includes IRIs.
             Note that all IRIs in SPARQL queries are absolute; they may or may not include a fragment
-            identifier [[RFC3987], section 3.1. IRIs include URIs [[RFC3986]] and URLs. The abbreviated
+            identifier [[RFC3987]], section 3.1. IRIs include URIs [[RFC3986]] and URLs. The abbreviated
             forms (<a href="#QSynIRI">relative IRIs and prefixed names</a>) in the SPARQL syntax are
             resolved to produce absolute IRIs.</p>
           <p>The following terms are defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]] and used in
@@ -1075,7 +1075,7 @@ WHERE   {
             </table>
           </div>
         </div>
-        <p>The regular expression language is <a data-cite="XPATH-FUNCTIONS#regex-syntax">defined by XQuery
+        <p>The regular expression language is <a data-cite="XPATH-FUNCTIONS-31#regex-syntax">defined by XQuery
             and XPath Functions and Operators</a> and is based on
           <a data-cite="XMLSCHEMA-2#regexs">XML Schema Regular Expressions</a>.</p>
       </section>
@@ -4646,10 +4646,10 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       <section id="operandDataTypes">
         <h3>Operand Data Types</h3>
         <p>SPARQL functions and operators operate on RDF terms and SPARQL variables. A subset of
-          these functions and operators are taken from the [[[XPATH-FUNCTIONS]]] [[XPATH-FUNCTIONS]] and have XML Schema
-          <a data-cite="XPATH20#dt-typed-value">typed value</a> arguments and return types. RDF
+          these functions and operators are taken from the [[[XPATH-FUNCTIONS-31]]] [[XPATH-FUNCTIONS-31]] and have XML Schema
+          <a data-cite="XPATH-31#dt-typed-value">typed value</a> arguments and return types. RDF
           <code>literals</code> passed as arguments to these functions and operators are mapped
-          to XML Schema typed values with a <a data-cite="XPATH20#dt-string-value">string value</a> of
+          to XML Schema typed values with a <a data-cite="XPATH-31#dt-string-value">string value</a> of
           the <code>lexical form</code> and an 
           <a href="http://www.w3.org/TR/xmlschema-2/#dt-atomic">atomic datatype</a> corresponding to the
           <span class="type datatypeIRI">datatype IRI</span>. The returned typed values are mapped back
@@ -4848,10 +4848,10 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <h4>Effective Boolean Value (EBV)</h4>
           <p>Effective boolean value is used to calculate the arguments to the logical functions
             <a href="#func-logical-and">logical-and</a>, <a href="#func-logical-or">logical-or</a>, and
-            <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>, as well as evaluate the result of a
+            <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>, as well as evaluate the result of a
             <code>FILTER</code> expression.</p>
           <p>The XQuery <a data-cite="XQUERY-31#id-ebv">Effective Boolean Value</a> rules rely on the
-            definition of XPath's <a data-cite="XPATH-FUNCTIONS#func-boolean">fn:boolean</a>. The following
+            definition of XPath's <a data-cite="XPATH-FUNCTIONS-31#func-boolean">fn:boolean</a>. The following
             rules reflect the rules for <code>fn:boolean</code> applied to the argument types present
             in SPARQL queries:</p>
           <ul>
@@ -4883,7 +4883,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <code><span class="token">*</span></code>, <code><span class="token">isIRI</span></code>) used
           to construct constraints. The following table associates each of these grammatical
           productions with the appropriate operands and an operator function defined by either
-          [[[XPATH-FUNCTIONS]]] [[XPATH-FUNCTIONS]] or the SPARQL operators specified in <a href="#SparqlOps">section
+          [[[XPATH-FUNCTIONS-31]]] [[XPATH-FUNCTIONS-31]] or the SPARQL operators specified in <a href="#SparqlOps">section
             17.4</a>. When selecting the operator definition for a given set of parameters, the
           definition with the most specific parameters applies. For instance, when evaluating
           <code>xsd:integer = xsd:signedInt</code>, the definition for <code>=</code> with two
@@ -4892,17 +4892,17 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           candidate is the most specific. Operators invoked without appropriate operands result in a
           type error.</p>
         <p>SPARQL follows XPath's scheme for numeric type promotions and subtype substitution for
-          arguments to numeric operators. The <a data-cite="XPATH20#mapping">XPath Operator Mapping</a>
+          arguments to numeric operators. The <a data-cite="XPATH-31#mapping">XPath Operator Mapping</a>
           rules for <span class="type numeric">numeric</span> operands (<code>xsd:integer</code>,
           <code>xsd:decimal</code>, <code>xsd:float</code>, <code>xsd:double</code>, and types derived
           from a <span class="type numeric">numeric</span> type) apply to SPARQL operators as well (see
-          [[[XPATH20]]] [[XPATH20]] for definitions of <a data-cite="XPATH20#promotion">numeric type
-            promotions</a> and <a data-cite="XPATH20#dt-subtype-substitution">subtype substitution</a>).
+          [[[XPATH-31]]] [[XPATH-31]] for definitions of <a data-cite="XPATH-31#promotion">numeric type
+            promotions</a> and <a data-cite="XPATH-31#dt-subtype-substitution">subtype substitution</a>).
           Some of the operators are associated with nested function expressions, e.g.
           <code>fn:not(op:numeric-equal(A, B))</code>. Note that per the XPath definitions,
           <code>fn:not</code> and <code>op:numeric-equal</code> produce an error if their argument is
           an error.</p>
-        <p>The collation for <code>fn:compare</code> is <a data-cite="XPATH-FUNCTIONS#collations">defined by
+        <p>The collation for <code>fn:compare</code> is <a data-cite="XPATH-FUNCTIONS-31#collations">defined by
             XPath</a> and identified by
           <code>http://www.w3.org/2005/xpath-functions/collation/codepoint</code>. This collation
           allows for string comparison based on code point values. Codepoint string equivalence can be
@@ -4931,7 +4931,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
                 xsd:boolean <a href="#ebv-arg">(EBV)</a>
               </td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(A)
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(A)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -4942,7 +4942,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-unary-plus">op:numeric-unary-plus</a>(A)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-unary-plus">op:numeric-unary-plus</a>(A)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -4953,7 +4953,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               </th>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-unary-minus">op:numeric-unary-minus</a>(A)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-unary-minus">op:numeric-unary-minus</a>(A)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -5014,7 +5014,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5025,7 +5025,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS-31#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5036,7 +5036,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-boolean-equal">op:boolean-equal</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-boolean-equal">op:boolean-equal</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5047,7 +5047,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-dateTime-equal">op:dateTime-equal</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-dateTime-equal">op:dateTime-equal</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5058,7 +5058,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5069,7 +5069,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS-31#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 0))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5080,7 +5080,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-boolean-equal">op:boolean-equal</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-boolean-equal">op:boolean-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5091,7 +5091,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-dateTime-equal">op:dateTime-equal</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-dateTime-equal">op:dateTime-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5102,7 +5102,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-less-than">op:numeric-less-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-less-than">op:numeric-less-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5113,7 +5113,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS-31#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5124,7 +5124,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-boolean-less-than">op:boolean-less-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-boolean-less-than">op:boolean-less-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5135,7 +5135,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-dateTime-less-than">op:dateTime-less-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-dateTime-less-than">op:dateTime-less-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5146,7 +5146,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-greater-than">op:numeric-greater-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-greater-than">op:numeric-greater-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5157,7 +5157,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS-31#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5168,7 +5168,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-boolean-greater-than">op:boolean-greater-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-boolean-greater-than">op:boolean-greater-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5179,7 +5179,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5190,8 +5190,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-less-than">op:numeric-less-than</a>(A, B),
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
+                <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-less-than">op:numeric-less-than</a>(A, B),
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5202,7 +5202,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS-31#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), 1))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5213,7 +5213,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-boolean-greater-than">op:boolean-greater-than</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-boolean-greater-than">op:boolean-greater-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5224,7 +5224,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-dateTime-greater-than">op:dateTime-greater-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5235,8 +5235,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-greater-than">op:numeric-greater-than</a>(A, B),
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(A, B))
+                <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-greater-than">op:numeric-greater-than</a>(A, B),
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5247,7 +5247,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:string</td>
               <td>xsd:string</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a data-cite="XPATH-FUNCTIONS-31#func-compare">fn:compare</a>(<a href="#func-str" class="FAOTtoken">STR</a>(A), <a href="#func-str" class="FAOTtoken">STR</a>(B)), -1))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5258,7 +5258,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:boolean</td>
               <td>xsd:boolean</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-boolean-less-than">op:boolean-less-than</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-boolean-less-than">op:boolean-less-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5269,7 +5269,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>xsd:dateTime</td>
               <td>xsd:dateTime</td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS#func-dateTime-less-than">op:dateTime-less-than</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-dateTime-less-than">op:dateTime-less-than</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5283,7 +5283,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-multiply">op:numeric-multiply</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-multiply">op:numeric-multiply</a>(A, B)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -5294,7 +5294,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-divide">op:numeric-divide</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-divide">op:numeric-divide</a>(A, B)
               </td>
               <td><span class="type numeric">numeric</span>; but xsd:decimal if both operands are
                 xsd:integer</td>
@@ -5306,7 +5306,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-add">op:numeric-add</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-add">op:numeric-add</a>(A, B)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -5317,7 +5317,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type numeric">numeric</span></td>
               <td><span class="type numeric">numeric</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-numeric-subtract">op:numeric-subtract</a>(A, B)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-subtract">op:numeric-subtract</a>(A, B)
               </td>
               <td><span class="type numeric">numeric</span></td>
             </tr>
@@ -5342,7 +5342,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type RDFterm">RDF term</span></td>
               <td><span class="type RDFterm">RDF term</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS#func-not">fn:not</a>(<a href="#func-RDFterm-equal" class="SPARQLoperator">RDFterm-equal</a>(A, B))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a href="#func-RDFterm-equal" class="SPARQLoperator">RDFterm-equal</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -6520,7 +6520,7 @@ WHERE {
             <h5>STRLEN</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:integer</span>  <span class="operator">STRLEN</span>(<span class="type">string literal</span> str)</pre>
             <p>The <code>strlen</code> function corresponds to the XPath
-              <a data-cite="XPATH-FUNCTIONS#func-string-length">fn:string-length</a>
+              <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
               function and returns an
               <code>xsd:integer</code> equal to the length in characters of the lexical form of the
               literal.</p>
@@ -6550,7 +6550,7 @@ WHERE {
 <span class="return">string literal</span>  <span class="operator">SUBSTR</span>(<span class="type">string literal</span> source, <span class="type">xsd:integer</span> startingLoc, <span class="type">xsd:integer</span> length)
             </pre>
             <p>The <code>substr</code> function corresponds to the XPath 
-              <a data-cite="XPATH-FUNCTIONS#func-substring">fn:substring</a> function and returns a literal of the
+              <a data-cite="XPATH-FUNCTIONS-31#func-substring">fn:substring</a> function and returns a literal of the
               same kind (literal with datatype <code>xsd:string</code>, literal with the same language tag)
               as the <code>source</code> input parameter but with a lexical form derived from
               the substring of the lexical form of the source.</p>
@@ -6592,7 +6592,7 @@ WHERE {
             <h5>UCASE</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">UCASE</span>(<span class="type">string literal</span> str)</pre>
             <p>The <code>UCASE</code> function corresponds to the XPath 
-              <a data-cite="XPATH-FUNCTIONS#func-upper-case">fn:upper-case</a>
+              <a data-cite="XPATH-FUNCTIONS-31#func-upper-case">fn:upper-case</a>
               function. It returns a string literal
               whose lexical form is the upper case of the lexcial form of the argument.</p>
             <div class="result">
@@ -6618,7 +6618,7 @@ WHERE {
             <h5>LCASE</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">LCASE</span>(<span class="type">string literal</span> str)</pre>
             <p>The <code>LCASE</code> function corresponds to the XPath 
-              <a data-cite="XPATH-FUNCTIONS#func-lower-case">fn:lower-case</a> function.
+              <a data-cite="XPATH-FUNCTIONS-31#func-lower-case">fn:lower-case</a> function.
               It returns a string literal whose lexical form is the lower case of the lexcial form of the argument.</p>
             <div class="result">
               <table>
@@ -6642,7 +6642,7 @@ WHERE {
           <section id="func-strstarts">
             <h5>STRSTARTS</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">STRSTARTS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>STRSTARTS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-starts-with">fn:starts-with</a> function. The arguments must be
+            <p>The <code>STRSTARTS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-starts-with">fn:starts-with</a> function. The arguments must be
               <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
               raised.</p>
             <p>For such input pairs, the function returns true if the lexical form of
@@ -6686,7 +6686,7 @@ WHERE {
           <section id="func-strends">
             <h5>STRENDS</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">STRENDS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>STRENDS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-ends-with">fn:ends-with</a> function. The arguments must be
+            <p>The <code>STRENDS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-ends-with">fn:ends-with</a> function. The arguments must be
               <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
               raised.</p>
             <p>For such input pairs, the function returns true if the lexical form of
@@ -6730,7 +6730,7 @@ WHERE {
           <section id="func-contains">
             <h5>CONTAINS</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">CONTAINS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>CONTAINS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-contains">fn:contains</a>. The arguments must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is raised.</p>
+            <p>The <code>CONTAINS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-contains">fn:contains</a>. The arguments must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is raised.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -6769,7 +6769,7 @@ WHERE {
           <section id="func-strbefore">
             <h5>STRBEFORE</h5>
             <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRBEFORE</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>STRBEFORE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-substring-before">fn:substring-before</a> function. The arguments
+            <p>The <code>STRBEFORE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-substring-before">fn:substring-before</a> function. The arguments
               must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
               raised.</p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
@@ -6826,7 +6826,7 @@ WHERE {
           <section id="func-strafter">
             <h5>STRAFTER</h5>
             <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRAFTER</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>STRAFTER</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-substring-after">fn:substring-after</a> function. The arguments
+            <p>The <code>STRAFTER</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-substring-after">fn:substring-after</a> function. The arguments
               must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
               raised.</p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
@@ -6884,9 +6884,9 @@ WHERE {
           <section id="func-encode">
             <h5>ENCODE_FOR_URI</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class="operator">ENCODE_FOR_URI</span>(<span class="type">string literal</span> ltrl)</pre>
-            <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a
+            <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a
               literal with datatype <code>xsd:string</code> with the lexical form obtained from the lexical form of its input after
-              translating reserved characters according to the <a data-cite="XPATH-FUNCTIONS#func-encode-for-uri">fn:encode-for-uri</a>
+              translating reserved characters according to the <a data-cite="XPATH-FUNCTIONS-31#func-encode-for-uri">fn:encode-for-uri</a>
               function.</p>
             <div class="result">
               <table>
@@ -6925,7 +6925,7 @@ WHERE {
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> 
               of the resulting string literal is obtained by concatenating the
               lexical forms of the arguments of the function using the
-              <a data-cite="XPATH-FUNCTIONS#func-concat">fn:concat</a> function.
+              <a data-cite="XPATH-FUNCTIONS-31#func-concat">fn:concat</a> function.
               If all input literals are literals with the same language tag,
               then the returned string literal is a literal with that language
               tag.  Otherwise, the returned literal is a literal with
@@ -7057,11 +7057,11 @@ WHERE {
 <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">pattern</span>)
 <span class="return">xsd:boolean</span>  <span class="operator">REGEX</span> (<span class="type"><span class="type">string literal</span></span> <span class="name">text</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">pattern</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">flags</span>)
 </pre>
-            <p>Invokes the XPath <a data-cite="XPATH-FUNCTIONS#func-matches">fn:matches</a> function to match
+            <p>Invokes the XPath <a data-cite="XPATH-FUNCTIONS-31#func-matches">fn:matches</a> function to match
               <code>text</code> against a regular expression <code>pattern</code>. The regular
               expression language is defined in XQuery 1.0 and XPath 2.0 Functions and Operators
-              section <a data-cite="XPATH-FUNCTIONS#regex-syntax">7.6.1 Regular Expression Syntax</a>
-              [[XPATH-FUNCTIONS]].</p>
+              section <a data-cite="XPATH-FUNCTIONS-31#regex-syntax">7.6.1 Regular Expression Syntax</a>
+              [[XPATH-FUNCTIONS-31]].</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 @prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
@@ -7100,7 +7100,7 @@ WHERE {
 <span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">xsd:string</span></span> pattern, <span class="type"><span class="type">xsd:string</span></span> replacement )
 <span class="return"><span class="type">string literal</span></span>  <span class="operator">REPLACE</span> (<span class="type"><span class="type">string literal</span></span> arg, <span class="type"><span class="type">xsd:string</span></span> pattern, <span class="type"><span class="type">xsd:string</span></span> replacement,  <span class="type"><span class="type">xsd:string</span></span> flags)
             </pre>
-            <p>The <code>REPLACE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS#func-replace">fn:replace</a> function. It replaces each non-overlapping
+            <p>The <code>REPLACE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-replace">fn:replace</a> function. It replaces each non-overlapping
               occurrence of the regular expression <code>pattern</code> with the replacement string.
               Regular expession matching may involve modifier flags. See <a href="#func-regex">REGEX</a>.
             </p>
@@ -7132,8 +7132,8 @@ WHERE {
             <p>Returns the absolute value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
             <p>This function is the same as 
-              <a data-cite="XPATH-FUNCTIONS#func-abs">fn:numeric-abs</a>
-              for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
+              <a data-cite="XPATH-FUNCTIONS-31#func-abs">fn:numeric-abs</a>
+              for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7155,7 +7155,7 @@ WHERE {
             <p>Returns the number with no fractional part that is closest to the argument. If there
               are two such numbers, then the one that is closest to positive infinity is returned. An
               error is raised if <code>arg</code> is not a numeric value.</p>
-            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS#func-round">fn:numeric-round</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
+            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS-31#func-round">fn:numeric-round</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7182,8 +7182,8 @@ WHERE {
               that is not less than the value of <code>arg</code>. An error is raised if
               <code>arg</code> is not a numeric value.</p>
             <p>This function is the same as 
-              <a data-cite="XPATH-FUNCTIONS#func-ceiling">fn:numeric-ceil</a>
-              for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
+              <a data-cite="XPATH-FUNCTIONS-31#func-ceiling">fn:numeric-ceil</a>
+              for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7206,8 +7206,8 @@ WHERE {
               is not greater than the value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
             <p>This function is the same as
-              <a data-cite="XPATH-FUNCTIONS#func-floor">fn:numeric-floor</a>
-              for terms with a datatype from <a data-cite="XPATH-DATAMODEL#">XDM</a>.</p>
+              <a data-cite="XPATH-FUNCTIONS-31#func-floor">fn:numeric-floor</a>
+              for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7264,7 +7264,7 @@ WHERE {
             <h5>YEAR</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">YEAR</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the year part of <code>arg</code> as an integer.</p>
-            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-year-from-dateTime">fn:year-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS-31#func-year-from-dateTime">fn:year-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7280,7 +7280,7 @@ WHERE {
             <h5>MONTH</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">MONTH</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the month part of <code>arg</code> as an integer.</p>
-            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-month-from-dateTime">fn:month-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS-31#func-month-from-dateTime">fn:month-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7296,7 +7296,7 @@ WHERE {
             <h5>DAY</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">DAY</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the day part of <code>arg</code> as an integer.</p>
-            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-day-from-dateTime">fn:day-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS-31#func-day-from-dateTime">fn:day-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7313,7 +7313,7 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">HOURS</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the hours part of <code>arg</code> as an integer. The value is as given in the
               lexical form of the XSD dateTime.</p>
-            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-hours-from-dateTime">fn:hours-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS-31#func-hours-from-dateTime">fn:hours-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7330,7 +7330,7 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">xsd:integer</span>  <span class="operator">MINUTES</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
             <p>Returns the minutes part of the lexical form of <code>arg</code>. The value is as
               given in the lexical form of the XSD dateTime.</p>
-            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-minutes-from-dateTime">fn:minutes-from-dateTime</a>.</p>
+            <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS-31#func-minutes-from-dateTime">fn:minutes-from-dateTime</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7346,7 +7346,7 @@ WHERE {
             <h5>SECONDS</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:decimal</span>  <span class="operator">SECONDS</span> (<span class="type"><span class="type">xsd:dateTime</span></span> <span class="parm">arg</span>)</pre>
               <p>Returns the seconds part of the lexical form of <code>arg</code>.</p>
-              <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS#func-seconds-from-dateTime">fn:seconds-from-dateTime</a>.</p>
+              <p>This function corresponds to <a data-cite="XPATH-FUNCTIONS-31#func-seconds-from-dateTime">fn:seconds-from-dateTime</a>.</p>
               <div class="result">
                 <table>
                   <tbody>
@@ -7364,7 +7364,7 @@ WHERE {
             <p>Returns the timezone part of <code>arg</code> as an xsd:dayTimeDuration.
               Raises an error if there is no timezone.</p>
             <p>This function corresponds to 
-              <a data-cite="XPATH-FUNCTIONS#func-timezone-from-dateTime">fn:timezone-from-dateTime</a>
+              <a data-cite="XPATH-FUNCTIONS-31#func-timezone-from-dateTime">fn:timezone-from-dateTime</a>
               except for the treatment of literals with no timezone.</p>
             <div class="result">
               <table>
@@ -7504,8 +7504,8 @@ WHERE {
       </section>
       <section id="FunctionMapping">
         <h3>XPath Constructor Functions</h3>
-        <p>SPARQL imports a subset of the XPath constructor functions defined in [[[XPATH-FUNCTIONS]]]
-          [[XPATH-FUNCTIONS]] in section <a data-cite="XPATH-FUNCTIONS#casting-from-primitive-to-primitive">17.1 Casting
+        <p>SPARQL imports a subset of the XPath constructor functions defined in [[[XPATH-FUNCTIONS-31]]]
+          [[XPATH-FUNCTIONS-31]] in section <a data-cite="XPATH-FUNCTIONS-31#casting-from-primitive-to-primitive">17.1 Casting
             from primitive types to primitive types</a>. SPARQL constructors include all of the XPath
           constructors for the <a href="#operandDataTypes">SPARQL operand datatypes</a> plus the
           <a href="#operandDataTypes">additional datatypes</a> imposed by the RDF data model. Casting
