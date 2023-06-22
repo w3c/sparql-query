@@ -8770,7 +8770,7 @@ Let E := [], a list of pairs of the form (variable, expression)
 
 If Q contains GROUP BY exprlist
    Let G := Group(exprlist, ToList(P))
-Else If Q contains an aggregate in <code>SELECT</code>, <code>HAVING</code>, <code>ORDER BY</code>
+Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
    Let G := Group((1), ToList(P))
 Else
    skip the rest of the aggregate step
