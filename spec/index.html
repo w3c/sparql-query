@@ -8745,7 +8745,11 @@ Replace join(A, Z) by A
             <p>Step: GROUP BY</p>
             <p>If the <code>GROUP BY</code> keyword is used, or there is implicit grouping due to the
               use of aggregates in the projection, then grouping is performed by the 
-              <a href="#defn_algGroup">Group</a> function. It divides the solution set into groups of one or
+              <a href="#defn_algGroup">Group</a> function.
+              In this case, before grouping, the solution set is converted into a solution
+              sequence by applying the <a href="#defn_algToList">ToList</a> function.
+              Next, the <a href="#defn_algGroup">Group</a> function
+              divides this solution sequence into groups of one or
               more solutions, with the same overall cardinality. In case of implicit grouping, a fixed
               constant (1) is used to group all solutions into a single group.</p>
             <p>Step: Aggregates</p>
@@ -8765,9 +8769,9 @@ Let P := the algebra translation of the GroupGraphPattern of the query level
 Let E := [], a list of pairs of the form (variable, expression)
 
 If Q contains GROUP BY exprlist
-   Let G := Group(exprlist, P)
+   Let G := Group(exprlist, ToList(P))
 Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
-   Let G := Group((1), P)
+   Let G := Group((1), ToList(P))
 Else
    skip the rest of the aggregate step
    End
@@ -9415,10 +9419,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div id="defn_algGroup">
               <b>Definition: Group</b>
             </div>
-            <p>Group evaluates a list of expressions against a solution sequence, producing a set
+            <p>Group evaluates a list of expressions against a solution sequence Ψ, producing a set
               of partial functions from keys to solution sequences.</p>
-            <p>Group(exprlist, Ω) = { ListEval(exprlist, μ) → { μ' | μ' in Ω, ListEval(exprlist, μ)
-              = ListEval(exprlist, μ') } | μ in Ω }</p>
+            <p>Group(exprlist, Ψ) = { ListEval(exprlist, μ) → [ μ' | μ' in Ψ, ListEval(exprlist, μ)
+              = ListEval(exprlist, μ') ] | μ in Ψ }</p>
           </div>
           <div class="defn">
             <p><b>Definition: ListEval</b></p>
@@ -9441,22 +9445,37 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             </div>
             <p>Let <i>exprlist</i> be a list of expressions or *, <i>func</i> a set function,
               <i>scalarvals</i> a set of partial functions (possibly empty) passed from the aggregate
-              in the query, and let { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-              key<sub>m</sub>→Ω<sub>m</sub> } be a multiset of partial functions from keys to
+              in the query, and let { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
+              key<sub>m</sub>→Ψ<sub>m</sub> } be a set of partial functions from keys to
               solution sequences as produced by the grouping step.</p>
-            <p>Aggregation applies the set function func to the given multiset and produces a
-              single value for each key and partition of solutions for that key.</p>
-            <p>Aggregation(exprlist, func, scalarvals, { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-              key<sub>m</sub>→Ω<sub>m</sub> } )<br>
-              &nbsp;&nbsp;&nbsp;= { (key, F(Ω)) | key → Ω in { key<sub>1</sub>→Ω<sub>1</sub>, ...,
-              key<sub>m</sub>→Ω<sub>m</sub> } }</p>
+            <p>Aggregation applies the set function func to the given set and produces a
+              single value for each key and group of solutions for that key.</p>
+            <p>Aggregation(exprlist, func, scalarvals, { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
+              key<sub>m</sub>→Ψ<sub>m</sub> } )<br>
+              &nbsp;&nbsp;&nbsp;= { (key, F(Ψ)) | key → Ψ in { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
+              key<sub>m</sub>→Ψ<sub>m</sub> } }</p>
             <p>where<br>
-              &nbsp;&nbsp;M(Ω) = { ListEval(exprlist, μ) | μ in Ω }<br>
-              &nbsp;&nbsp;F(Ω) = func(M(Ω), scalarvals), for non-DISTINCT<br>
-              &nbsp;&nbsp;F(Ω) = func(Distinct(M(Ω)), scalarvals), for DISTINCT</p>
+              &nbsp;&nbsp;M(Ψ) = [ ListEval(exprlist, μ) | μ in Ψ ]<br>
+              &nbsp;&nbsp;F(Ψ) = func(M(Ψ), scalarvals), for non-<code>DISTINCT</code><br>
+              &nbsp;&nbsp;F(Ψ) = func(Dedup(M(Ψ)), scalarvals), for <code>DISTINCT</code></p>
+            <p>with Dedup(M(Ψ)) being an order-preserving, duplicate-free version of the sequence M(Ψ); that is, Dedup(M(Ψ)) is a sequence of RDF terms that has the following four properties.</p>
+            <ol>
+              <li>Every unique element in M(Ψ) is contained in Dedup(M(Ψ)).</li>
+              <li>Every element in Dedup(M(Ψ)) is contained in M(Ψ).</li>
+              <li>Dedup(M(Ψ)) is free of duplicates. That is, the element at the |i|-th position in Dedup(M(Ψ)) is not the same term as the element at the |j|-th position in Dedup(M(Ψ)) for every two natural numbers |i| and |j| such that |i| &ne; |j|.</li>
+              <li>For any two elements <var>e<sub>1</sub></var> and <var>e<sub>2</sub></var> in Dedup(M(Ψ)), the relative order of their first occurrences in M(Ψ) is preserved in Dedup(M(Ψ)). That is, if <var>i<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>i<sub>2</sub></var>, then <var>j<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>j<sub>2</sub></var>, where
+                <ul>
+                  <li><var>i<sub>1</sub></var> is the smallest natural number such that <var>e<sub>1</sub></var> is at the <var>i<sub>1</sub></var>-th position in M(Ψ),</li>
+                  <li><var>i<sub>2</sub></var> is the smallest natural number such that <var>e<sub>2</sub></var> is at the <var>i<sub>2</sub></var>-th position in M(Ψ),</li>
+                  <li><var>j<sub>1</sub></var> is the position of <var>e<sub>1</sub></var> in Dedup(M(Ψ)), and</li>
+                  <li><var>j<sub>2</sub></var> is the position of <var>e<sub>2</sub></var> in Dedup(M(Ψ)).</li>
+                </ul>
+              </li>
+            </ol>
+
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
               <code>*</code> the value of F will be the cardinality of the group solution sequence,
-              <code>card[Ω]</code>, or <code>card[Distinct(Ω)]</code> if the <code>DISTINCT</code>
+              <code>card[Ψ]</code>, or <code>card[Dedup(Ψ)]</code> if the <code>DISTINCT</code>
               keyword is present.</p>
           </div>
           <p><i>scalarvals</i> are used to pass values to the underlying set function, bypassing
@@ -9466,7 +9485,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>All aggregates may have the <code>DISTINCT</code> keyword as the first token in their
             argument list. If this keyword is present then first argument to func is Distinct(M).</p>
           <p>Example</p>
-          <p>Given a solution multiset (Ω) with the following values:</p>
+          <p>Given a solution sequence Ψ with the following values:</p>
           <table>
             <tbody>
               <tr>
@@ -9497,10 +9516,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </table>
           <p>And the query expression SELECT (ex:agg(?y, ?z) AS ?agg) WHERE { ?x ?y ?z } GROUP BY
             ?x.</p>
-          <p>We produce G = Group((?x), Ω) = { ( (1), { μ<sub>1</sub>, μ<sub>2</sub> } ), ( (2), {
-            μ<sub>3</sub> } ) }</p>
+          <p>We produce G = Group((?x), Ψ) = { (1) → [μ<sub>1</sub>, μ<sub>2</sub>], (2) →
+          [μ<sub>3</sub>] }</p>
           <p>And so Aggregation((?y, ?z), ex:agg, {}, G) =<br>
-            { ((1), eg:agg({(2, 3), (3, 4)}, {})), ((2), eg:agg({(5, 6)}, {})) }.</p>
+            { ((1), eg:agg([(2, 3), (3, 4)], {})), ((2), eg:agg([(5, 6)], {})) }.</p>
           <div class="defn">
             <p><b>Definition: AggregateJoin</b></p>
             <p>Let S<sub>1</sub>, ..., S<sub>n</sub> be a list of sets, where each set
@@ -9511,24 +9530,24 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               ..., agg<sub>n</sub>→val<sub>n</sub> | key in K and key→val<sub>i</sub> in
               S<sub>i</sub> for each 1 &lt;= i &lt;= n }</p>
           </div>
-          <p>Flatten is a function which is used to collapse multisets of lists into a multiset, so
-            for example { (1, 2), (3, 4) } becomes { 1, 2, 3, 4 }.</p>
+          <p>Flatten is a function which is used to collapse a sequence of lists into a single list.
+            For example, [(1,&nbsp;2), (3,&nbsp;4)] becomes (1, 2, 3, 4).</p>
           <div class="defn">
             <p><b>Definition: Flatten</b></p>
-            <p>The Flatten(M) function takes a multiset of lists, M {(L<sub>1</sub>, L<sub>2</sub>,
-              ...), ...}, and returns the multiset { x | L in M and x in L }.</p>
+            <p>The Flatten(S) function takes a sequence of lists, S = [(L<sub>1</sub>, L<sub>2</sub>,
+              ...), ...], and returns the list ( x | L in S and x in L ).</p>
           </div>
           <section id="setFunctions">
             <h5>Set Functions</h5>
             <p>The set functions which underlie SPARQL aggregates all have a common signature:
-              SetFunc(M), or SetFunc(M, scalarvals) where M is a multiset of lists, and scalarvals is
+              SetFunc(S), or SetFunc(S, scalarvals) where S is a sequence of lists, and scalarvals is
               one or more scalar values that are passed to the set function indirectly via the ( ...
               ; key=value ) syntax for aggregates in the SPARQL grammar. The only use of this that is
               supported by the built-in aggregates in SPARQL Query 1.1 is <code>GROUP_CONCAT</code>,
               as in <code>GROUP_CONCAT(?x ; separator=", ")</code>.</p>
             <p>Note that the name "Set Function" is somewhat historical — the arguments to set
-              functions are in fact multisets. The name is retained due to the commonality with SQL
-              Set Functions, which also operate over multisets.</p>
+              functions are in fact sequences. The name is retained due to the commonality with SQL
+              Set Functions, which operate over multisets.</p>
             <p>The set functions defined in this document are Count, Sum, Min, Max, Avg,
               GroupConcat, and Sample — corresponding to the aggregates <code>COUNT</code>,
               <code>SUM</code>, <code>MIN</code>, <code>MAX</code>, <code>AVG</code>,
@@ -9546,10 +9565,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               has a bound, non-error value within the aggregate group.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggCount">Count</span></b></p>
-              <pre class="code nohighlight">xsd:integer Count(multiset M)</pre>
-              <p>N = Flatten(M)</p>
-              <p>remove error elements from N</p>
-              <p>Count(M) = card[N]</p>
+              <pre class="code nohighlight">xsd:integer Count(sequence S)</pre>
+              <p>L = Flatten(S)</p>
+              <p>remove error elements from L</p>
+              <p>Count(S) = card[L]</p>
             </div>
           </section>
           <section id="aggSum">
@@ -9561,13 +9580,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               be 6.0 (float).</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
-              <pre class="code nohighlight">numeric Sum(multiset M)</pre>
-              <p>Sum(M) = Sum(ToList(Flatten(M))).</p>
-              <p>Sum(S) = op:numeric-add(S<sub>1</sub>, Sum(S<sub>2..n</sub>)) when card[S] &gt;
+              <pre class="code nohighlight">numeric Sum(sequence S)</pre>
+              <p>L = Flatten(S)</p>
+              <p>Sum(S) = Sum(L)</p>
+              <p>Sum(L) = op:numeric-add(L<sub>1</sub>, Sum(L<sub>2..n</sub>)) when card[L] &gt;
                 1<br>
-                Sum(S) = op:numeric-add(S<sub>1</sub>, 0) when card[S] = 1<br>
-                Sum(S) = "0"^^xsd:integer when card[S] = 0</p>
-              <p>In this way, Sum({1, 2, 3}) = op:numeric-add(1, op:numeric-add(2,
+                Sum(L) = op:numeric-add(L<sub>1</sub>, 0) when card[L] = 1<br>
+                Sum(L) = "0"^^xsd:integer when card[L] = 0</p>
+              <p>In this way, Sum( (1, 2, 3) ) = op:numeric-add(1, op:numeric-add(2,
                 op:numeric-add(3, 0))).</p>
             </div>
           </section>
@@ -9577,11 +9597,11 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             average value for an expression over a group. It is defined in terms of Sum and Count.
             <div class="defn">
               <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
-              <pre class="code nohighlight">numeric Avg(multiset M)</pre>
-              <p>Avg(M) = "0"^^xsd:integer, where Count(M) = 0</p>
-              <p>Avg(M) = Sum(M) / Count(M), where Count(M) &gt; 0</p>
+              <pre class="code nohighlight">numeric Avg(sequence S)</pre>
+              <p>Avg(S) = "0"^^xsd:integer, where Count(S) = 0</p>
+              <p>Avg(S) = Sum(S) / Count(S), where Count(S) &gt; 0</p>
             </div>
-            <p>For example, Avg({1, 2, 3}) = Sum({1, 2, 3})/Count({1, 2, 3}) = 6/3 = 2.</p>
+            <p>For example, Avg([(1), (2), (3)]) = Sum([(1), (2), (3)])/Count([(1), (2), (3)]) = 6/3 = 2.</p>
           </section>
           <section id="aggMin">
             <h5>Min</h5>
@@ -9591,12 +9611,12 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
-              <pre class="code nohighlight">term Min(multiset M)</pre>
-              <p>Min(M) = Min(ToList(Flatten(M)))</p>
-              <p>Min({}) = error.</p>
-              <p>The flattened multiset of values passed as an argument is converted to a sequence
-                S, this sequence is ordered as per the <code>ORDER BY ASC</code> clause.</p>
-              <p>Min(S) = S<sub>0</sub></p>
+              <pre class="code nohighlight">term Min(sequence S)</pre>
+              <p>L = Flatten(S)</p>
+              <p>Min(S) = Min(L)</p>
+              <p>The flattened list L of values is ordered as per the <code>ORDER BY ASC</code> clause.</p>
+              <p>Min(L) = L<sub>0</sub> if card[L] > 0<br>
+                Min(L) = error if card[L] = 0</p>
             </div>
           </section>
           <section id="aggMax">
@@ -9607,12 +9627,12 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
-              <pre class="code nohighlight">term Max(multiset M)</pre>
-              <p>Max(M) = Max(ToList(Flatten(M)))</p>
-              <p>Max({}) = error.</p>
-              <p>The multiset of values passed as an argument is converted to a sequence S, this
-                sequence is ordered as per the <code>ORDER BY DESC</code> clause.</p>
-              <p>Max(S) = S<sub>0</sub></p>
+              <pre class="code nohighlight">term Max(sequence S)</pre>
+              <p>L = Flatten(S)</p>
+              <p>Max(S) = Max(L)</p>
+              <p>The flattened list L of values is ordered as per the <code>ORDER BY DESC</code> clause.</p>
+              <p>Max(L) = L<sub>0</sub> if card[L] > 0<br>
+                Max(L) = error if card[L] = 0</p>
             </div>
           </section>
           <section id="aggGroupConcat">
@@ -9623,33 +9643,33 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               SEPARATOR.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
-              <pre class="code nohighlight">literal GroupConcat(multiset M)</pre>
+              <pre class="code nohighlight">literal GroupConcat(sequence S)</pre>
               <p>If the "separator" scalar argument is absent from GROUP_CONCAT then it is taken to
                 be the "space" character, unicode codepoint U+0020.</p>
-              <p>The multiset of values, M passed as an argument is converted to a sequence S.</p>
-              <p>GroupConcat(M, scalarvals) = GroupConcat(Flatten(M), scalarvals("separator"))</p>
-              <p>GroupConcat(S, sep) = "", where <span style=
-                                                       "font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 0</p>
-              <p>GroupConcat(S, sep) = CONCAT("", S<sub>0</sub>), where 
-                <span style="font-size: 140%">|</span>S<span style="font-size: 140%">|</span> = 1</p>
-              <p>GroupConcat(S, sep) = CONCAT(S<sub>0</sub>, sep, GroupConcat(S<sub>1..n-1</sub>,
-                sep)), where <span style="font-size: 140%">|</span>S<span style="font-size: 140%">|</span> &gt; 1</p>
+              <p>L = Flatten(S)</p>
+              <p>GroupConcat(S, scalarvals) = GroupConcat(L, scalarvals("separator"))</p>
+              <p>GroupConcat(L, sep) = "", where <span style=
+                                                       "font-size: 140%">|</span>L<span style="font-size: 140%">|</span> = 0</p>
+              <p>GroupConcat(L, sep) = CONCAT("", L<sub>0</sub>), where 
+                <span style="font-size: 140%">|</span>L<span style="font-size: 140%">|</span> = 1</p>
+              <p>GroupConcat(L, sep) = CONCAT(L<sub>0</sub>, sep, GroupConcat(L<sub>1..n-1</sub>,
+                sep)), where <span style="font-size: 140%">|</span>L<span style="font-size: 140%">|</span> &gt; 1</p>
             </div>
-            <p>For example, GroupConcat({"a", "b", "c"}, {"separator" → "."}) = "a.b.c".</p>
+            <p>For example, GroupConcat([("a"), ("b"), ("c")], {"separator" → "."}) = "a.b.c".</p>
           </section>
           <section id="aggSample">
             <h5>Sample</h5>
-            <p>Sample is a set function which returns an arbitrary value from the multiset passed
+            <p>Sample is a set function which returns an arbitrary value from the sequence passed
               to it.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
-              <pre class="code nohighlight">RDFTerm Sample(multiset M)</pre>
-              <p>Sample(M) = v, where v in Flatten(M)</p>
-              <p>Sample({}) = error</p>
+              <pre class="code nohighlight">RDFTerm Sample(sequence S)</pre>
+              <p>Sample(S) = v, where v in Flatten(S)</p>
+              <p>Sample([]) = error</p>
             </div>
-            <p>For example, given Sample({"a", "b", "c"}), "a", "b", and "c" are all valid return
+            <p>For example, given Sample([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
               values. Note that Sample() is not required to be deterministic for a given input, the
-              only restriction is that the output value must be present in the input multiset.</p>
+              only restriction is that the output value must be present in the input sequence.</p>
           </section>
         </section>
         <section id="sparqlAlgebraEval">
