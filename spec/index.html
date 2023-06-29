@@ -9589,10 +9589,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <pre class="code nohighlight">numeric Sum(sequence S)</pre>
               <p>L = Flatten(S)</p>
               <p>Sum(S) = Sum(L)</p>
-              <p>Sum(L) = op:numeric-add(L<sub>1</sub>, Sum(L<sub>2..n</sub>)) when <a href="#defn_Card">Card</a>(L) &gt;
+              <p>Sum(L) = op:numeric-add(L<sub>1</sub>, Sum(L<sub>2..n</sub>)) if <a href="#defn_Card">Card</a>(L) &gt;
                 1<br>
-                Sum(L) = op:numeric-add(L<sub>1</sub>, 0) when <a href="#defn_Card">Card</a>(L) = 1<br>
-                Sum(L) = "0"^^xsd:integer when <a href="#defn_Card">Card</a>(L) = 0</p>
+                Sum(L) = op:numeric-add(L<sub>1</sub>, 0) if <a href="#defn_Card">Card</a>(L) = 1<br>
+                Sum(L) = "0"^^xsd:integer if <a href="#defn_Card">Card</a>(L) = 0</p>
               <p>In this way, Sum( (1, 2, 3) ) = op:numeric-add(1, op:numeric-add(2,
                 op:numeric-add(3, 0))).</p>
             </div>
@@ -9604,8 +9604,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div class="defn">
               <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
               <pre class="code nohighlight">numeric Avg(sequence S)</pre>
-              <p>Avg(S) = "0"^^xsd:integer, where Count(S) = 0</p>
-              <p>Avg(S) = Sum(S) / Count(S), where Count(S) &gt; 0</p>
+              <p>Avg(S) = "0"^^xsd:integer if Count(S) = 0</p>
+              <p>Avg(S) = Sum(S) / Count(S) if Count(S) &gt; 0</p>
             </div>
             <p>For example, Avg([(1), (2), (3)]) = Sum([(1), (2), (3)])/Count([(1), (2), (3)]) = 6/3 = 2.</p>
           </section>
@@ -9654,11 +9654,11 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 be the "space" character, unicode codepoint U+0020.</p>
               <p>L = Flatten(S)</p>
               <p>GroupConcat(S, scalarvals) = GroupConcat(L, scalarvals("separator"))</p>
-              <p>GroupConcat(L, sep) = "", where <a href="#defn_Card">Card</a>(L) = 0</p>
-              <p>GroupConcat(L, sep) = CONCAT("", L<sub>0</sub>), where 
+              <p>GroupConcat(L, sep) = "" if <a href="#defn_Card">Card</a>(L) = 0</p>
+              <p>GroupConcat(L, sep) = CONCAT("", L<sub>0</sub>) if
                 <a href="#defn_Card">Card</a>(L) = 1</p>
               <p>GroupConcat(L, sep) = CONCAT(L<sub>0</sub>, sep, GroupConcat(L<sub>1..n-1</sub>,
-                sep)), where <a href="#defn_Card">Card</a>(L) &gt; 1</p>
+                sep)) if <a href="#defn_Card">Card</a>(L) &gt; 1</p>
             </div>
             <p>For example, GroupConcat([("a"), ("b"), ("c")], {"separator" → "."}) = "a.b.c".</p>
           </section>
