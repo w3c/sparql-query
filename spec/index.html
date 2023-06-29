@@ -9649,11 +9649,13 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               SEPARATOR.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
-              <pre class="code nohighlight">literal GroupConcat(sequence S)</pre>
-              <p>If the "separator" scalar argument is absent from GROUP_CONCAT then it is taken to
-                be the "space" character, unicode codepoint U+0020.</p>
+              <pre class="code nohighlight">literal GroupConcat(sequence S, function scalarvals)</pre>
+              <p>If the scalarvals argument is absent from GROUP_CONCAT, then scalarvals is taken to
+                be the empty function.</p>
+              <p>|separator| = scalarvals("separator") if scalarvals is defined for the argument "separator"</p>
+              <p>|separator| = the "space" character, unicode codepoint U+0020, if scalarvals is undefined for the argument "separator"</p>
               <p>L = Flatten(S)</p>
-              <p>GroupConcat(S, scalarvals) = GroupConcat(L, scalarvals("separator"))</p>
+              <p>GroupConcat(S, scalarvals) = GroupConcat(L, |separator|)</p>
               <p>GroupConcat(L, sep) = "" if <a href="#defn_Card">Card</a>(L) = 0</p>
               <p>GroupConcat(L, sep) = CONCAT("", L<sub>0</sub>) if
                 <a href="#defn_Card">Card</a>(L) = 1</p>
