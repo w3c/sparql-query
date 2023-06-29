@@ -9621,7 +9621,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>L = Flatten(S)</p>
               <p>Min(S) = Min(L)</p>
               <p>The flattened list L of values is ordered as per the <code>ORDER BY ASC</code> clause.</p>
-              <p>Min(L) = L<sub>0</sub> if <a href="#defn_Card">Card</a>(L) > 0<br>
+              <p>Min(L) = L<sub>1</sub> if <a href="#defn_Card">Card</a>(L) > 0<br>
                 Min(L) = error if <a href="#defn_Card">Card</a>(L) = 0</p>
             </div>
           </section>
@@ -9637,7 +9637,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>L = Flatten(S)</p>
               <p>Max(S) = Max(L)</p>
               <p>The flattened list L of values is ordered as per the <code>ORDER BY DESC</code> clause.</p>
-              <p>Max(L) = L<sub>0</sub> if <a href="#defn_Card">Card</a>(L) > 0<br>
+              <p>Max(L) = L<sub>1</sub> if <a href="#defn_Card">Card</a>(L) > 0<br>
                 Max(L) = error if <a href="#defn_Card">Card</a>(L) = 0</p>
             </div>
           </section>
@@ -9657,9 +9657,9 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>L = Flatten(S)</p>
               <p>GroupConcat(S, scalarvals) = GroupConcat(L, |separator|)</p>
               <p>GroupConcat(L, sep) = "" if <a href="#defn_Card">Card</a>(L) = 0</p>
-              <p>GroupConcat(L, sep) = CONCAT("", L<sub>0</sub>) if
+              <p>GroupConcat(L, sep) = CONCAT("", L<sub>1</sub>) if
                 <a href="#defn_Card">Card</a>(L) = 1</p>
-              <p>GroupConcat(L, sep) = CONCAT(L<sub>0</sub>, sep, GroupConcat(L<sub>1..n-1</sub>,
+              <p>GroupConcat(L, sep) = CONCAT(L<sub>1</sub>, sep, GroupConcat(L<sub>2..n</sub>,
                 sep)) if <a href="#defn_Card">Card</a>(L) &gt; 1</p>
             </div>
             <p>For example, GroupConcat([("a"), ("b"), ("c")], {"separator" → "."}) = "a.b.c".</p>
