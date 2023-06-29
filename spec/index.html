@@ -4243,6 +4243,11 @@ SELECT  ?title (?p AS ?fullPrice) (?fullPrice*(1-?discount) AS ?customerPrice)
           included in the output RDF graph. The graph template can contain triples with no variables
           (known as ground or explicit triples), and these also appear in the output RDF graph returned
           by the CONSTRUCT query form.</p>
+        <p class="note">
+          The construction of the result graph by "set union" does not
+          enforce whether or not duplicated triples appear in the graph serialization.
+          Implementations are allowed to produce duplicate triples or to deduplicate them.
+        </p>
         <div class="exampleGroup">
           <pre class="data nohighlight">
 @prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
