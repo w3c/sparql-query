@@ -9525,11 +9525,11 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <p><b>Definition: AggregateJoin</b></p>
             <p>Let S<sub>1</sub>, ..., S<sub>n</sub> be a list of sets, where each set
               S<sub>i</sub> contains key to (aggregated) value maps as produced by Aggregate.</p>
-            <p>Let K = { key | key in dom(S<sub>j</sub>) for some 1 &lt;= j &lt;= n } be the set of
+            <p>Let K = { key | key in dom(S<sub>j</sub>) for some 1 &le; j &le; n } be the set of
               keys, then<br>
               AggregateJoin(S<sub>1</sub>, ..., S<sub>n</sub>) = { agg<sub>1</sub>→val<sub>1</sub>,
               ..., agg<sub>n</sub>→val<sub>n</sub> | key in K and key→val<sub>i</sub> in
-              S<sub>i</sub> for each 1 &lt;= i &lt;= n }</p>
+              S<sub>i</sub> for each 1 &le; i &le; n }</p>
           </div>
           <p>Flatten is a function which is used to collapse a sequence of lists into a single list.
             For example, [(1,&nbsp;2), (3,&nbsp;4)] becomes (1, 2, 3, 4).</p>
