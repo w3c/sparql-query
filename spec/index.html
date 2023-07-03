@@ -8759,9 +8759,9 @@ Let P := the algebra translation of the GroupGraphPattern of the query level
 Let E := [], a list of pairs of the form (variable, expression)
 
 If Q contains GROUP BY exprlist
-   Let G := Group(exprlist, ToList(P))
+   Let Grp := Group(exprlist, ToList(P))
 Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
-   Let G := Group((1), ToList(P))
+   Let Grp := Group((1), ToList(P))
 Else
    skip the rest of the aggregate step
    End
@@ -8774,14 +8774,14 @@ For each (X AS Var) in SELECT, each HAVING(X), and each ORDER BY X in Q
       End
   For each aggregate R(args ; scalarvals) now in X
       # note scalarvals may be omitted, then it's equivalent to the empty set
-      A<span><sub>i</sub></span> := Aggregation(args, R, scalarvals, G)
+      A<span><sub>i</sub></span> := Aggregation(args, R, scalarvals, Grp)
       Replace R(...) with agg<span><sub>i</sub></span> in Q
       i := i + 1
       End
   End
 
 For each variable V appearing outside of an aggregate
-   A<span><sub>i</sub></span> := Aggregation(V, Sample, {}, G)
+   A<span><sub>i</sub></span> := Aggregation(V, Sample, {}, Grp)
    E := E append (V, agg<span><sub>i</sub></span>)
    i := i + 1
    End
@@ -9753,8 +9753,8 @@ eval(D(G), Graph(var,P)) =
             <div id="defn_evalAggregation">
               <b>Definition: Evaluation of Aggregation</b>
             </div>
-            <p>eval(D(G), Aggregation(exprlist, func, scalarvals, P)) = Aggregation(exprlist, func,
-              scalarvals, eval(D(G), P))</p>
+            <p>eval(D(G), Aggregation(exprlist, func, scalarvals, Grp)) = Aggregation(exprlist, func,
+              scalarvals, eval(D(G), Grp))</p>
           </div>
           <div class="defn">
             <div id="defn_evalAggregateJoin">
