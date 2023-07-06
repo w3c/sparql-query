@@ -7445,7 +7445,7 @@ class="name">obj</span>)
               can be used with arbitrary expressions.
             </p>
             <pre class="query nohighlight">
-              PREFIX : <http://example/>
+              PREFIX : &lt;http://example/&gt;
               SELECT ?s ?date {
                   ?s ?p ?o
                   BIND( &lt;&lt; ?s ?p ?o &gt;&gt; AS ?qt )
@@ -7453,7 +7453,7 @@ class="name">obj</span>)
               }
             </pre>
             <pre class="query nohighlight">
-              PREFIX : <http://example/>
+              PREFIX : &lt;http://example/&gt;
               SELECT ?s ?date {
                   ?s ?p ?o
                   BIND( TRIPLE(?s, ?p, ?o) AS ?qt )
