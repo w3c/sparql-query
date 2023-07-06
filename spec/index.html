@@ -6251,7 +6251,64 @@ WHERE {
                 </div>
               </div>
             </div>
+
+            <p>@@LANGDIR@@ Revisions for LANGDIR</p>
+            <table role="table">
+              <thead>
+                <tr>
+                  <th>Function</th>
+                  <th><code>"abc"@ar</code></th>
+                  <th><code>"abc"@ar--rtl</code></th>
+                  <th>notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>LANG</code></td>
+                  <td><code>"ar"</code></td>
+                  <td><code>"ar"</code></td>
+                  <td>behaves like old text</td>
+                </tr>
+                <tr>
+                  <td><code>LANGDIR</code></td>
+                  <td><code>""</code></td>
+                  <td><code>"rtl"</code></td>
+                  <td>New function</td>
+                </tr>
+                <tr>
+                  <td><code>DATATYPE</code></td>
+                  <td><code>rdf:langString</code></td>
+                  <td><code>rdf:dirLangString</code></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
           </section>
+          <section id="func-islang">
+            <h5>isLANG</h5>
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">isLANG</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
+            </pre>
+            <p>@@LANGDIR@@</p>
+            <pre>
+              isLANG(?x) -> ( DATATYPE(?x) = rdf:i18nString || DATATYPE(?x) = rdf:langString )
+            </pre>
+
+          </section>
+          <section id="func-langdir">
+            <h5>LANGDIR</h5>
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">LANGDIR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
+            </pre>
+            <p>@@LANGDIR@@</p>
+            <pre>
+LANGDIR("abc"@ar--rtl) -> "rtl"
+LANGDIR("abc"@ar) -> ""
+LANGDIR("abc") -> ""
+LANGDIR(1) -> ""
+LANGDIR(<uri>) -> error
+            </pre>
+          </section>
+          
+
           <section id="func-datatype">
             <h5>DATATYPE</h5>
             <pre class="prototype nohighlight"> <span class="return"><span class="type IRI">iri</span></span>  <span class="operator">DATATYPE</span> (<span class="type"><span class="type">literal</span></span> <span class="name">literal</span>)
@@ -6448,6 +6505,11 @@ WHERE {
                 <li>The arguments are literals with datatype <code>xsd:string</code></li>
                 <li>The arguments are literals with identical language tags</li>
                 <li>The first argument is a literal with a language tag and the second argument is a literal with datatype <code>xsd:string</code></li>
+                <li>@@LANGDIR@@ The arguments have datatype <code>rdf:dirLangString</code>
+                  with identical language and text direction.
+                </li>
+                <li>@@LANGDIR@@ The first argument has datatype <code>rdf:dirLangString</code>,
+                  and the second argument has datatype <code>xsd:string</code>.</li>
               </ul>
               <div class="result">
                 <table>
@@ -11196,7 +11258,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[127]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rBuiltInCall">BuiltInCall</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">&nbsp;&nbsp;<a href="#rAggregate">Aggregate</a> <br/>|	<span class="token">'STR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'LANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'LANGMATCHES'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'DATATYPE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'BOUND'</span> <span class="token">'('</span> <a href="#rVar">Var</a> <span class="token">')'</span> <br/>|	<span class="token">'IRI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'URI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'BNODE'</span> ( <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> | <a href="#rNIL">NIL</a> ) <br/>|	<span class="token">'RAND'</span> <a href="#rNIL">NIL</a> <br/>|	<span class="token">'ABS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'CEIL'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'FLOOR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'ROUND'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'CONCAT'</span> <a href="#rExpressionList">ExpressionList</a> <br/>|	<a href="#rSubstringExpression">SubstringExpression</a> <br/>|	<span class="token">'STRLEN'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<a href="#rStrReplaceExpression">StrReplaceExpression</a> <br/>|	<span class="token">'UCASE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'LCASE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'ENCODE_FOR_URI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'CONTAINS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRSTARTS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRENDS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRBEFORE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRAFTER'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'YEAR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'MONTH'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'DAY'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'HOURS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'MINUTES'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SECONDS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'TIMEZONE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'TZ'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'NOW'</span> <a href="#rNIL">NIL</a> <br/>|	<span class="token">'UUID'</span> <a href="#rNIL">NIL</a> <br/>|	<span class="token">'STRUUID'</span> <a href="#rNIL">NIL</a> <br/>|	<span class="token">'MD5'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SHA1'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SHA256'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SHA384'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SHA512'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'COALESCE'</span> <a href="#rExpressionList">ExpressionList</a> <br/>|	<span class="token">'IF'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRLANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRDT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'sameTerm'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isIRI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isURI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isBLANK'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isLITERAL'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isNUMERIC'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<a href="#rRegexExpression">RegexExpression</a> <br/>|	<a href="#rExistsFunc">ExistsFunc</a> <br/>|	<a href="#rNotExistsFunc">NotExistsFunc</a> <br/>|	<span class="token">'isTRIPLE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'TRIPLE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SUBJECT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'PREDICATE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'OBJECT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span></code></td>
+                <td><code class="gRuleBody">&nbsp;&nbsp;<a href="#rAggregate">Aggregate</a> <br/>|	<span class="token">'STR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'LANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'LANGMATCHES'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'LANGDIR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isLANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'DATATYPE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'BOUND'</span> <span class="token">'('</span> <a href="#rVar">Var</a> <span class="token">')'</span> <br/>|	<span class="token">'IRI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'URI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'BNODE'</span> ( <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> | <a href="#rNIL">NIL</a> ) <br/>|	<span class="token">'RAND'</span> <a href="#rNIL">NIL</a> <br/>|	<span class="token">'ABS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'CEIL'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'FLOOR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'ROUND'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'CONCAT'</span> <a href="#rExpressionList">ExpressionList</a> <br/>|	<a href="#rSubstringExpression">SubstringExpression</a> <br/>|	<span class="token">'STRLEN'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<a href="#rStrReplaceExpression">StrReplaceExpression</a> <br/>|	<span class="token">'UCASE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'LCASE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'ENCODE_FOR_URI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'CONTAINS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRSTARTS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRENDS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRBEFORE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRAFTER'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'YEAR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'MONTH'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'DAY'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'HOURS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'MINUTES'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SECONDS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'TIMEZONE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'TZ'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'NOW'</span> <a href="#rNIL">NIL</a> <br/>|	<span class="token">'UUID'</span> <a href="#rNIL">NIL</a> <br/>|	<span class="token">'STRUUID'</span> <a href="#rNIL">NIL</a> <br/>|	<span class="token">'MD5'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SHA1'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SHA256'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SHA384'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SHA512'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'COALESCE'</span> <a href="#rExpressionList">ExpressionList</a> <br/>|	<span class="token">'IF'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRLANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'STRDT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'sameTerm'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isIRI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isURI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isBLANK'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isLITERAL'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'isNUMERIC'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<a href="#rRegexExpression">RegexExpression</a> <br/>|	<a href="#rExistsFunc">ExistsFunc</a> <br/>|	<a href="#rNotExistsFunc">NotExistsFunc</a> <br/>|	<span class="token">'isTRIPLE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'TRIPLE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'SUBJECT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'PREDICATE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|	<span class="token">'OBJECT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -11252,7 +11314,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[135]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rRDFLiteral">RDFLiteral</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><a href="#rString">String</a> ( <a href="#rLANGTAG">LANGTAG</a> | ( <span class="token">'^^'</span> <a href="#riri">iri</a> ) )?</code></td>
+                <td><code class="gRuleBody"><a href="#rString">String</a> ( <a href="#rLANG_DIR">LANG_DIR</a> | ( <span class="token">'^^'</span> <a href="#riri">iri</a> ) )?</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -11332,237 +11394,244 @@ _:x rdf:type xsd:decimal .
 
               <tr style="vertical-align: baseline">
                 <td><code>[146]&nbsp;&nbsp;</code></td>
+                <td><code><span class="doc-ref" id="rS">S</span></code></td>
+                <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+                <td><code class="gRuleBody"></code></td>
+              </tr>
+
+              <tr style="vertical-align: baseline">
+                <td><code>[147]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPNAME_NS">PNAME_NS</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPN_PREFIX">PN_PREFIX</a>? ':'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[147]&nbsp;&nbsp;</code></td>
+                <td><code>[148]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPNAME_LN">PNAME_LN</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPNAME_NS">PNAME_NS</a> <a href="#rPN_LOCAL">PN_LOCAL</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[148]&nbsp;&nbsp;</code></td>
+                <td><code>[149]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rBLANK_NODE_LABEL">BLANK_NODE_LABEL</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'_:' ( <a href="#rPN_CHARS_U">PN_CHARS_U</a> | [0-9] ) ((<a href="#rPN_CHARS">PN_CHARS</a>|'.')* <a href="#rPN_CHARS">PN_CHARS</a>)?</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[149]&nbsp;&nbsp;</code></td>
+                <td><code>[150]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rVAR1">VAR1</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'?' <a href="#rVARNAME">VARNAME</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[150]&nbsp;&nbsp;</code></td>
+                <td><code>[151]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rVAR2">VAR2</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'$' <a href="#rVARNAME">VARNAME</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[151]&nbsp;&nbsp;</code></td>
-                <td><code><span class="doc-ref" id="rLANGTAG">LANGTAG</span></code></td>
+                <td><code>[152]&nbsp;&nbsp;</code></td>
+                <td><code><span class="doc-ref" id="rLANG_DIR">LANG_DIR</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">'@' [a-zA-Z]+ ('-' [a-zA-Z0-9]+)*</code></td>
+                <td><code class="gRuleBody">'@' [a-zA-Z]+ ('-' [a-zA-Z0-9]+)* ('--' [a-zA-Z]+)?</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[152]&nbsp;&nbsp;</code></td>
+                <td><code>[153]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rINTEGER">INTEGER</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">[0-9]+</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[153]&nbsp;&nbsp;</code></td>
+                <td><code>[154]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDECIMAL">DECIMAL</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">[0-9]* '.' [0-9]+</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[154]&nbsp;&nbsp;</code></td>
+                <td><code>[155]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDOUBLE">DOUBLE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">[0-9]+ '.' [0-9]* <a href="#rEXPONENT">EXPONENT</a> | '.' ([0-9])+ <a href="#rEXPONENT">EXPONENT</a> | ([0-9])+ <a href="#rEXPONENT">EXPONENT</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[155]&nbsp;&nbsp;</code></td>
+                <td><code>[156]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rINTEGER_POSITIVE">INTEGER_POSITIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'+'</span> <a href="#rINTEGER">INTEGER</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[156]&nbsp;&nbsp;</code></td>
+                <td><code>[157]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDECIMAL_POSITIVE">DECIMAL_POSITIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'+'</span> <a href="#rDECIMAL">DECIMAL</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[157]&nbsp;&nbsp;</code></td>
+                <td><code>[158]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDOUBLE_POSITIVE">DOUBLE_POSITIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'+'</span> <a href="#rDOUBLE">DOUBLE</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[158]&nbsp;&nbsp;</code></td>
+                <td><code>[159]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rINTEGER_NEGATIVE">INTEGER_NEGATIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'-'</span> <a href="#rINTEGER">INTEGER</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[159]&nbsp;&nbsp;</code></td>
+                <td><code>[160]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDECIMAL_NEGATIVE">DECIMAL_NEGATIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'-'</span> <a href="#rDECIMAL">DECIMAL</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[160]&nbsp;&nbsp;</code></td>
+                <td><code>[161]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDOUBLE_NEGATIVE">DOUBLE_NEGATIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'-'</span> <a href="#rDOUBLE">DOUBLE</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[161]&nbsp;&nbsp;</code></td>
+                <td><code>[162]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rEXPONENT">EXPONENT</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">[eE] [+-]? [0-9]+</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[162]&nbsp;&nbsp;</code></td>
+                <td><code>[163]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSTRING_LITERAL1">STRING_LITERAL1</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">"'" ( ([^#x27#x5C#xA#xD]) | <a href="#rECHAR">ECHAR</a> )* "'"</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[163]&nbsp;&nbsp;</code></td>
+                <td><code>[164]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSTRING_LITERAL2">STRING_LITERAL2</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'"' ( ([^#x22#x5C#xA#xD]) | <a href="#rECHAR">ECHAR</a> )* '"'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[164]&nbsp;&nbsp;</code></td>
+                <td><code>[165]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">"'''" ( ( "'" | "''" )? ( [^'\] | <a href="#rECHAR">ECHAR</a> ) )* "'''"</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[165]&nbsp;&nbsp;</code></td>
+                <td><code>[166]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'"""' ( ( '"' | '""' )? ( [^"\] | <a href="#rECHAR">ECHAR</a> ) )* '"""'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[166]&nbsp;&nbsp;</code></td>
+                <td><code>[167]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rECHAR">ECHAR</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'\' [tbnrf\"']</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[167]&nbsp;&nbsp;</code></td>
+                <td><code>[168]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rNIL">NIL</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'(' <a href="#rWS">WS</a>* ')'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[168]&nbsp;&nbsp;</code></td>
+                <td><code>[169]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rWS">WS</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">#x20 | #x9 | #xD | #xA</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[169]&nbsp;&nbsp;</code></td>
+                <td><code>[170]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rANON">ANON</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'['  <a href="#rWS">WS</a>* ']'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[170]&nbsp;&nbsp;</code></td>
+                <td><code>[171]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_CHARS_BASE">PN_CHARS_BASE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">[A-Z] | [a-z] | [#x00C0-#x00D6] | [#x00D8-#x00F6] | [#x00F8-#x02FF] | [#x0370-#x037D] | [#x037F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[171]&nbsp;&nbsp;</code></td>
+                <td><code>[172]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_CHARS_U">PN_CHARS_U</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPN_CHARS_BASE">PN_CHARS_BASE</a> | '_'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[172]&nbsp;&nbsp;</code></td>
+                <td><code>[173]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rVARNAME">VARNAME</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">( <a href="#rPN_CHARS_U">PN_CHARS_U</a>  | [0-9] ) ( <a href="#rPN_CHARS_U">PN_CHARS_U</a> | [0-9] | #x00B7 | [#x0300-#x036F] | [#x203F-#x2040] )*</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[173]&nbsp;&nbsp;</code></td>
+                <td><code>[174]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_CHARS">PN_CHARS</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPN_CHARS_U">PN_CHARS_U</a> | '-' | [0-9] | #x00B7 | [#x0300-#x036F] | [#x203F-#x2040]</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[174]&nbsp;&nbsp;</code></td>
+                <td><code>[175]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_PREFIX">PN_PREFIX</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPN_CHARS_BASE">PN_CHARS_BASE</a> ((<a href="#rPN_CHARS">PN_CHARS</a>|'.')* <a href="#rPN_CHARS">PN_CHARS</a>)?</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[175]&nbsp;&nbsp;</code></td>
+                <td><code>[176]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_LOCAL">PN_LOCAL</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">(<a href="#rPN_CHARS_U">PN_CHARS_U</a> | ':' | [0-9] | <a href="#rPLX">PLX</a> ) ((<a href="#rPN_CHARS">PN_CHARS</a> | '.' | ':' | <a href="#rPLX">PLX</a>)* (<a href="#rPN_CHARS">PN_CHARS</a> | ':' | <a href="#rPLX">PLX</a>) )?</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[176]&nbsp;&nbsp;</code></td>
+                <td><code>[177]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPLX">PLX</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPERCENT">PERCENT</a> | <a href="#rPN_LOCAL_ESC">PN_LOCAL_ESC</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[177]&nbsp;&nbsp;</code></td>
+                <td><code>[178]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPERCENT">PERCENT</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'%' <a href="#rHEX">HEX</a> <a href="#rHEX">HEX</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[178]&nbsp;&nbsp;</code></td>
+                <td><code>[179]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rHEX">HEX</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">[0-9] | [A-F] | [a-f]</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[179]&nbsp;&nbsp;</code></td>
+                <td><code>[180]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_LOCAL_ESC">PN_LOCAL_ESC</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'\' ( '_' | '~' | '.' | '-' | '!' | '$' | '&amp;' | "'" | '(' | ')' | '*' | '+' | ',' | ';' | '=' | '/' | '?' | '#' | '@' | '%' )</code></td>
