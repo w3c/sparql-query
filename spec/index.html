@@ -9464,9 +9464,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             </ol>
 
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
-              <code>*</code> the value of F will be the cardinality of the group solution sequence,
-              <code>card[Ψ]</code>, or <code>card[Dedup(Ψ)]</code> if the <code>DISTINCT</code>
-              keyword is present.</p>
+              <code>*</code>, then F(Ψ) is the cardinality of the group solution sequence,
+              i.e., F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(Ψ),
+              or F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(Dedup(Ψ))
+              if the <code>DISTINCT</code> keyword is present.</p>
           </div>
           <p><i>scalarvals</i> are used to pass values to the underlying set function, bypassing
             the mechanics of the grouping. For example, the aggregate expression
@@ -9514,11 +9515,11 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <p><b>Definition: AggregateJoin</b></p>
             <p>Let S<sub>1</sub>, ..., S<sub>n</sub> be a list of sets, where each set
               S<sub>i</sub> contains key to (aggregated) value maps as produced by Aggregate.</p>
-            <p>Let K = { key | key in dom(S<sub>j</sub>) for some 1 &lt;= j &lt;= n } be the set of
+            <p>Let K = { key | key in dom(S<sub>j</sub>) for some 1 &le; j &le; n } be the set of
               keys, then<br>
               AggregateJoin(S<sub>1</sub>, ..., S<sub>n</sub>) = { agg<sub>1</sub>→val<sub>1</sub>,
               ..., agg<sub>n</sub>→val<sub>n</sub> | key in K and key→val<sub>i</sub> in
-              S<sub>i</sub> for each 1 &lt;= i &lt;= n }</p>
+              S<sub>i</sub> for each 1 &le; i &le; n }</p>
           </div>
           <p>Flatten is a function which is used to collapse a sequence of lists into a single list.
             For example, [(1,&nbsp;2), (3,&nbsp;4)] becomes (1, 2, 3, 4).</p>
@@ -9526,6 +9527,11 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <p><b>Definition: Flatten</b></p>
             <p>The Flatten(S) function takes a sequence of lists, S = [(L<sub>1</sub>, L<sub>2</sub>,
               ...), ...], and returns the list ( x | L in S and x in L ).</p>
+          </div>
+          <p>Card is a function that returns the cardinality of a sequence or a list of elements (which may be solution mappings or other types of elements, depending on the context).
+          <div class="defn">
+            <p><b>Definition: <span id="defn_Card">Card</span></b></p>
+            <p>Given a sequence or a list |L|, Card(|L|) is the cardinality of |L|.</p>
           </div>
           <section id="setFunctions">
             <h5>Set Functions</h5>
@@ -9558,7 +9564,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <pre class="code nohighlight">xsd:integer Count(sequence S)</pre>
               <p>L = Flatten(S)</p>
               <p>remove error elements from L</p>
-              <p>Count(S) = card[L]</p>
+              <p>Count(S) = <a href="#defn_Card">Card</a>(L)</p>
             </div>
           </section>
           <section id="aggSum">
@@ -9573,10 +9579,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <pre class="code nohighlight">numeric Sum(sequence S)</pre>
               <p>L = Flatten(S)</p>
               <p>Sum(S) = Sum(L)</p>
-              <p>Sum(L) = op:numeric-add(L<sub>1</sub>, Sum(L<sub>2..n</sub>)) when card[L] &gt;
+              <p>Sum(L) = op:numeric-add(L<sub>1</sub>, Sum(L<sub>2..n</sub>)) if <a href="#defn_Card">Card</a>(L) &gt;
                 1<br>
-                Sum(L) = op:numeric-add(L<sub>1</sub>, 0) when card[L] = 1<br>
-                Sum(L) = "0"^^xsd:integer when card[L] = 0</p>
+                Sum(L) = op:numeric-add(L<sub>1</sub>, 0) if <a href="#defn_Card">Card</a>(L) = 1<br>
+                Sum(L) = "0"^^xsd:integer if <a href="#defn_Card">Card</a>(L) = 0</p>
               <p>In this way, Sum( (1, 2, 3) ) = op:numeric-add(1, op:numeric-add(2,
                 op:numeric-add(3, 0))).</p>
             </div>
@@ -9588,8 +9594,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div class="defn">
               <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
               <pre class="code nohighlight">numeric Avg(sequence S)</pre>
-              <p>Avg(S) = "0"^^xsd:integer, where Count(S) = 0</p>
-              <p>Avg(S) = Sum(S) / Count(S), where Count(S) &gt; 0</p>
+              <p>Avg(S) = "0"^^xsd:integer if Count(S) = 0</p>
+              <p>Avg(S) = Sum(S) / Count(S) if Count(S) &gt; 0</p>
             </div>
             <p>For example, Avg([(1), (2), (3)]) = Sum([(1), (2), (3)])/Count([(1), (2), (3)]) = 6/3 = 2.</p>
           </section>
@@ -9605,8 +9611,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>L = Flatten(S)</p>
               <p>Min(S) = Min(L)</p>
               <p>The flattened list L of values is ordered as per the <code>ORDER BY ASC</code> clause.</p>
-              <p>Min(L) = L<sub>0</sub> if card[L] > 0<br>
-                Min(L) = error if card[L] = 0</p>
+              <p>Min(L) = L<sub>1</sub> if <a href="#defn_Card">Card</a>(L) > 0<br>
+                Min(L) = error if <a href="#defn_Card">Card</a>(L) = 0</p>
             </div>
           </section>
           <section id="aggMax">
@@ -9621,8 +9627,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p>L = Flatten(S)</p>
               <p>Max(S) = Max(L)</p>
               <p>The flattened list L of values is ordered as per the <code>ORDER BY DESC</code> clause.</p>
-              <p>Max(L) = L<sub>0</sub> if card[L] > 0<br>
-                Max(L) = error if card[L] = 0</p>
+              <p>Max(L) = L<sub>1</sub> if <a href="#defn_Card">Card</a>(L) > 0<br>
+                Max(L) = error if <a href="#defn_Card">Card</a>(L) = 0</p>
             </div>
           </section>
           <section id="aggGroupConcat">
@@ -9633,17 +9639,18 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               SEPARATOR.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
-              <pre class="code nohighlight">literal GroupConcat(sequence S)</pre>
-              <p>If the "separator" scalar argument is absent from GROUP_CONCAT then it is taken to
-                be the "space" character, unicode codepoint U+0020.</p>
+              <pre class="code nohighlight">literal GroupConcat(sequence S, function scalarvals)</pre>
+              <p>If the scalarvals argument is absent from GROUP_CONCAT, then scalarvals is taken to
+                be the empty function.</p>
+              <p>|separator| = scalarvals("separator") if scalarvals is defined for the argument "separator"</p>
+              <p>|separator| = the "space" character, unicode codepoint U+0020, if scalarvals is undefined for the argument "separator"</p>
               <p>L = Flatten(S)</p>
-              <p>GroupConcat(S, scalarvals) = GroupConcat(L, scalarvals("separator"))</p>
-              <p>GroupConcat(L, sep) = "", where <span style=
-                                                       "font-size: 140%">|</span>L<span style="font-size: 140%">|</span> = 0</p>
-              <p>GroupConcat(L, sep) = CONCAT("", L<sub>0</sub>), where 
-                <span style="font-size: 140%">|</span>L<span style="font-size: 140%">|</span> = 1</p>
-              <p>GroupConcat(L, sep) = CONCAT(L<sub>0</sub>, sep, GroupConcat(L<sub>1..n-1</sub>,
-                sep)), where <span style="font-size: 140%">|</span>L<span style="font-size: 140%">|</span> &gt; 1</p>
+              <p>GroupConcat(S, scalarvals) = GroupConcat(L, |separator|)</p>
+              <p>GroupConcat(L, sep) = "" if <a href="#defn_Card">Card</a>(L) = 0</p>
+              <p>GroupConcat(L, sep) = CONCAT("", L<sub>1</sub>) if
+                <a href="#defn_Card">Card</a>(L) = 1</p>
+              <p>GroupConcat(L, sep) = CONCAT(L<sub>1</sub>, sep, GroupConcat(L<sub>2..n</sub>,
+                sep)) if <a href="#defn_Card">Card</a>(L) &gt; 1</p>
             </div>
             <p>For example, GroupConcat([("a"), ("b"), ("c")], {"separator" → "."}) = "a.b.c".</p>
           </section>
