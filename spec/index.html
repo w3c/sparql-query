@@ -4741,7 +4741,9 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             "xsd:boolean (EBV)" in the operator mapping table below), are coerced to
             <code>xsd:boolean</code> using the <a href="#ebv">EBV rules</a> in section 17.2.2.
           </li>
-          <li>Apart from <a href="#func-bound">BOUND</a>, <a href="#func-coalesce">COALESCE</a>,
+          <li>Apart from the <a href="#func-forms">functional forms</a>
+            <a href="#func-bound">BOUND</a>, <a href="#func-coalesce">COALESCE</a>,
+            <a href="#func-if">IF</a>, <a href="#func-in">IN</a>, <a href="#func-not-in">NOT IN</a>, 
             <a href="#func-filter-exists">NOT EXISTS</a> and <a href="#func-filter-exists">EXISTS</a>,
             all functions and operators operate on RDF Terms and will produce a type error if any
             arguments are unbound.
