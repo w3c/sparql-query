@@ -8894,7 +8894,7 @@ For each (X AS Var) in SELECT, each HAVING(X), and each ORDER BY X in Q
       Replace V with Sample(V)
       End
   For each aggregate R(args ; scalarvals) now in X
-      # note scalarvals may be omitted, then it's equivalent to the empty function
+      # note: scalarvals may be omitted; if so, it's equivalent to the empty function
       A<span><sub>i</sub></span> := Aggregation(args, R, scalarvals, Grp)
       Replace R(...) with agg<span><sub>i</sub></span> in Q
       i := i + 1
@@ -9554,13 +9554,13 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div id="defn_algAggregation">
               <b>Definition: Aggregation</b>
             </div>
-            <p>Let <i>exprlist</i> be a list of expressions or *, <i>func</i> a set function,
-              <i>scalarvals</i> a partial function (possibly with an empty domain) passed from the aggregate
-              in the query, and let { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
-              key<sub>m</sub>→Ψ<sub>m</sub> } be a partial function from keys to
+            <p>Let <i>exprlist</i> be a list of expressions or `*`; <i>func</i>, a set function;
+              <i>scalarvals</i>, a partial function (possibly with an empty domain) passed from the aggregate
+              in the query; and { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
+              key<sub>m</sub>→Ψ<sub>m</sub> }, a partial function from keys to
               solution sequences as produced by the grouping step.</p>
-            <p>Aggregation applies the set function func to the given set and produces a
-              single value for each key and group of solutions for that key.</p>
+            <p>Aggregation applies the set function `func` to the given set and produces a
+              single value for each key and a group of solutions for that key.</p>
             <p>Aggregation(exprlist, func, scalarvals, { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
               key<sub>m</sub>→Ψ<sub>m</sub> } )<br>
               &nbsp;&nbsp;&nbsp;= { (key, F(Ψ)) | key → Ψ in { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
