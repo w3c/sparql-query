@@ -705,10 +705,10 @@ _:b foaf:box   &lt;mailto:peter@example.org&gt; .
         <p>The data below contains three RDF literals:</p>
         <div class="exampleGroup">
           <pre class="data nohighlight">
-@prefix dt:   &lt;http://example.org/datatype#&gt; .
-@prefix ns:   &lt;http://example.org/ns#&gt; .
-@prefix :     &lt;http://example.org/ns#&gt; .
-@prefix xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+PREFIX dt:   &lt;http://example.org/datatype#&gt;
+PREFIX ns:   &lt;http://example.org/ns#&gt;
+PREFIX :     &lt;http://example.org/ns#&gt;
+PREFIX xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 :x   ns:p     "cat"@en .
 :y   ns:p     "42"^^xsd:integer .
@@ -822,7 +822,7 @@ _:b foaf:box   &lt;mailto:peter@example.org&gt; .
         <div class="exampleGroup">
           Data:
 <pre class="data nohighlight">
-@prefix foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name   "Alice" .
 _:b  foaf:name   "Bob" .
@@ -902,7 +902,7 @@ WHERE  { ?x foaf:name ?name }
         <div class="exampleGroup">
           Data:
           <pre class="data nohighlight">
-@prefix foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
             
 _:a  foaf:givenName   "John" .
 _:a  foaf:surname  "Doe" .
@@ -949,7 +949,7 @@ WHERE  {
         <div class="exampleGroup">
           <p>Data:</p>
           <pre class="data nohighlight">
-@prefix org:    &lt;http://example.com/ns#&gt; .
+PREFIX org:    &lt;http://example.com/ns#&gt;
 
 _:a  org:employeeName   "Alice" .
 _:a  org:employeeId     12345 .
@@ -969,7 +969,7 @@ WHERE  { ?x org:employeeName ?name }
             <p>Results:</p>
             <div class="result">
               <pre class="resultGraph">
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
                 
 _:x foaf:name "Alice" .
 _:y foaf:name "Bob" .
@@ -1007,9 +1007,9 @@ _:y foaf:name "Bob" .
       <div class="exampleGroup">
         Data:
         <pre class="data nohighlight">
-@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-@prefix :     &lt;http://example.org/book/&gt; .
-@prefix ns:   &lt;http://example.org/ns#&gt; .
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX :     &lt;http://example.org/book/&gt;
+PREFIX ns:   &lt;http://example.org/ns#&gt;
 
 :book1  dc:title  "SPARQL Tutorial" .
 :book1  ns:price  42 .
@@ -1648,8 +1648,8 @@ WHERE {}
             without adding any additional bindings.</p>
           <p>Data:</p>
           <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
-@prefix rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
 _:a  rdf:type        foaf:Person .
 _:a  foaf:name       "Alice" .
@@ -1708,9 +1708,9 @@ WHERE  {
         <p>Constraints can be given in an optional graph pattern. For example:</p>
         <div class="exampleGroup">
           <pre class="data nohighlight">
-@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-@prefix :     &lt;http://example.org/book/&gt; .
-@prefix ns:   &lt;http://example.org/ns#&gt; .
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX :     &lt;http://example.org/book/&gt;
+PREFIX ns:   &lt;http://example.org/ns#&gt;
 
 :book1  dc:title  "SPARQL Tutorial" .
 :book1  ns:price  42 .
@@ -1759,7 +1759,7 @@ WHERE   {
         <div class="exampleGroup">
           Data:
           <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Alice" .
 _:a  foaf:homepage   &lt;http://work.example.org/alice/&gt; .
@@ -1814,8 +1814,8 @@ WHERE  {
       <div class="exampleGroup">
         Data:
         <pre class="data nohighlight">
-@prefix dc10:  &lt;http://purl.org/dc/elements/1.0/&gt; .
-@prefix dc11:  &lt;http://purl.org/dc/elements/1.1/&gt; .
+PREFIX dc10:  &lt;http://purl.org/dc/elements/1.0/&gt;
+PREFIX dc11:  &lt;http://purl.org/dc/elements/1.1/&gt;
 
 _:a  dc10:title     "SPARQL Query Language Tutorial" .
 _:a  dc10:creator   "Alice" .
@@ -1959,9 +1959,9 @@ WHERE {
           <div class="exampleGroup">
             <p>Data:</p>
             <pre class="data nohighlight">
-@prefix  :       &lt;http://example/&gt; .
-@prefix  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-@prefix  foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX  :       &lt;http://example/&gt;
+PREFIX  rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX  foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
 
 :alice  rdf:type   foaf:Person .
 :alice  foaf:name  "Alice" .
@@ -2038,8 +2038,8 @@ WHERE {
         <div class="exampleGroup">
           Data:
           <pre class="data nohighlight">
-@prefix :       &lt;http://example/&gt; .
-@prefix foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX :       &lt;http://example/&gt;
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
 
 :alice  foaf:givenName "Alice" ;
         foaf:familyName "Smith" .
@@ -2091,7 +2091,7 @@ WHERE {
         <section id="neg-example-1">
           <h4>Example: Sharing of variables</h4>
           <pre class="data nohighlight">
-@prefix : &lt;http://example/&gt; .
+PREFIX : &lt;http://example/&gt;
 :a :b :c .
 </pre>
           <pre class="query nohighlight">
@@ -2198,7 +2198,7 @@ SELECT *
             In this example, the <code>FILTER</code> inside the 
             <code>NOT EXISTS</code> has access to the value of <code>?n</code> for the solution being considered.</p>
           <pre class="data nohighlight">
-@prefix : &lt;http://example.com/&gt; .
+PREFIX : &lt;http://example.com/&gt;
 :a :p 1 .
 :a :q 1 .
 :a :q 2 .
@@ -2482,7 +2482,7 @@ SELECT ?x ?name {
           variables given in the query.</p>
         <p>For example, on the data:</p>
         <pre class="data nohighlight">
-@prefix :       &lt;http://example/&gt; .
+PREFIX :       &lt;http://example/&gt;
 
 :order  :item :z1 .
 :order  :item :z2 .
@@ -2627,9 +2627,9 @@ SELECT ?person
         <div class="exampleGroup">
           <p>Data:</p>
           <pre class="data nohighlight">
-@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-@prefix :     &lt;http://example.org/book/&gt; .
-@prefix ns:   &lt;http://example.org/ns#&gt; .
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX :     &lt;http://example.org/book/&gt;
+PREFIX ns:   &lt;http://example.org/ns#&gt;
 
 :book1  dc:title     "SPARQL Tutorial" .
 :book1  ns:price     42 .
@@ -2722,9 +2722,9 @@ VALUES ?z { "abc" "def" }
           <div class="exampleGroup">
             <p>Data:</p>
             <pre class="data nohighlight">
-@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-@prefix :     &lt;http://example.org/book/&gt; .
-@prefix ns:   &lt;http://example.org/ns#&gt; .
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX :     &lt;http://example.org/book/&gt;
+PREFIX ns:   &lt;http://example.org/ns#&gt;
 
 :book1  dc:title  "SPARQL Tutorial" .
 :book1  ns:price  42 .
@@ -2838,7 +2838,7 @@ VALUES (?book ?title) {
         <div class="exampleGroup">
           <p>Data:</p>
           <pre class="data nohighlight">
-@prefix : &lt;http://books.example/&gt; .
+PREFIX : &lt;http://books.example/&gt;
 
 :org1 :affiliates :auth1, :auth2 .
 :auth1 :writesBook :book1, :book2 .
@@ -2967,7 +2967,7 @@ WHERE {
           handled in results, in the presence of aggregates.</p>
         <p>Data:</p>
         <pre class="data nohighlight">
-@prefix : &lt;http://example.com/data/#&gt; .
+PREFIX : &lt;http://example.com/data/#&gt;
 
 :x :p 1, 2, 3, 4 .
 :y :p 1, _:b2, 3, 4 .
@@ -3026,7 +3026,7 @@ GROUP BY ?g</pre>
       <p>Data:</p>
       <div class="exampleGroup">
         <pre class="data nohighlight">
-@prefix : &lt;http://people.example/&gt; .
+PREFIX : &lt;http://people.example/&gt;
 
 :alice :name "Alice", "Alice Foo", "A. Foo" .
 :alice :knows :bob, :carol .
@@ -3150,21 +3150,21 @@ WHERE {
           <b>Example 1:</b>
           <pre class="data nohighlight">
 # <b>Default graph</b>
-@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
 
 &lt;http://example.org/bob&gt;    dc:publisher  "Bob" .
 &lt;http://example.org/alice&gt;  dc:publisher  "Alice" .
           </pre>
           <pre class="data nohighlight">
 # <b>Named graph: http://example.org/bob</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Bob" .
 _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
           </pre>
           <pre class="data nohighlight">
 # <b>Named graph: http://example.org/alice</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Alice" .
 _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
@@ -3185,7 +3185,7 @@ _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
         <div class="exampleGroup">
           <pre class="data nohighlight">
 # <b>Default graph</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:x foaf:name "Bob" .
 _:x foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
@@ -3195,14 +3195,14 @@ _:y foaf:mbox &lt;mailto:alice@work.example.org&gt; .
           </pre>
           <pre class="data nohighlight">
 # <b>Named graph: http://example.org/bob</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Bob" .
 _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
           </pre>
           <pre class="data nohighlight">
 # <b>Named graph: http://example.org/alice</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Alice" .
 _:a foaf:mbox &lt;<a href="mailto:alice@work.example">mailto:alice@work.example</a>&gt; .
@@ -3242,7 +3242,7 @@ _:a foaf:mbox &lt;<a href="mailto:alice@work.example">mailto:alice@work.example<
           <div class="exampleGroup">
             <pre class="data nohighlight">
 <b># Default graph (located at http://example.org/foaf/aliceFoaf)</b>
-@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name     "Alice" .
 _:a  foaf:mbox     &lt;mailto:alice@work.example&gt; .
@@ -3282,14 +3282,14 @@ WHERE   { ?x foaf:name ?name }
             that IRI appearing in the dataset.</p>
           <pre class="data nohighlight">
 <b># Graph: http://example.org/bob</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Bob" .
 _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
           </pre>
           <pre class="data nohighlight">
 <b># Graph: http://example.org/alice</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Alice" .
 _:a foaf:mbox &lt;mailto:alice@work.example&gt; .
@@ -3317,21 +3317,21 @@ FROM NAMED &lt;http://example.org/bob&gt;
           <div class="exampleGroup">
             <pre class="data nohighlight">
 # <b>Default graph (located at http://example.org/dft.ttl)
-</b>@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+</b>PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
 
 &lt;http://example.org/bob&gt;    dc:publisher  "Bob Hacker" .
 &lt;http://example.org/alice&gt;  dc:publisher  "Alice Hacker" .
             </pre>
             <pre class="data nohighlight">
 # <b>Named graph: http://example.org/bob</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Bob" .
 _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
             </pre>
             <pre class="data nohighlight">
 # <b>Named graph: http://example.org/alice</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Alice" .
 _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
@@ -3375,9 +3375,9 @@ WHERE
         <div class="exampleGroup">
           <pre class="data nohighlight">
 <b># Named graph: http://example.org/foaf/aliceFoaf
-</b>@prefix  foaf:     &lt;http://xmlns.com/foaf/0.1/&gt; .
-@prefix  rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-@prefix  rdfs:     &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+</b>PREFIX  foaf:     &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX  rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX  rdfs:     &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
 _:a  foaf:name     "Alice" .
 _:a  foaf:mbox     &lt;mailto:alice@work.example&gt; .
@@ -3393,9 +3393,9 @@ rdf:type      foaf:PersonalProfileDocument .
           </pre>
           <pre class="data nohighlight">
 <b># Named graph: http://example.org/foaf/bobFoaf</b>
-@prefix  foaf:     &lt;http://xmlns.com/foaf/0.1/&gt; .
-@prefix  rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-@prefix  rdfs:     &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+PREFIX  foaf:     &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX  rdf:      &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX  rdfs:     &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
 _:z  foaf:mbox     &lt;mailto:bob@work.example&gt; .
 _:z  rdfs:seeAlso  &lt;http://example.org/foaf/bobFoaf&gt; .
@@ -3557,9 +3557,9 @@ WHERE {
           <div class="exampleGroup">
             <pre class="data nohighlight">
 # <b>Default graph</b>
-@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
-@prefix g:  &lt;tag:example.org,2005-06-06:&gt; .
-@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX g:  &lt;tag:example.org,2005-06-06:&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 g:graph1 dc:publisher "Bob" .
 g:graph1 dc:date "2004-12-06"^^xsd:date .
@@ -3569,7 +3569,7 @@ g:graph2 dc:date "2005-01-10"^^xsd:date .
             </pre>
             <pre class="data nohighlight">
 # <b>Graph: locally allocated IRI: tag:example.org,2005-06-06:graph1</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Alice" .
 _:a foaf:mbox &lt;mailto:alice@work.example&gt; .
@@ -3579,7 +3579,7 @@ _:b foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
             </pre>
             <pre class="data nohighlight">
 # <b>Graph: locally allocated IRI: tag:example.org,2005-06-06:graph2</b>
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a foaf:name "Alice" .
 _:a foaf:mbox &lt;mailto:alice@work.example&gt; .
@@ -3806,7 +3806,7 @@ ORDER BY ?name DESC(?emp)
           RDF graph using FOAF properties.</p>
         <div class="exampleGroup">
           <pre class="data nohighlight">
-@prefix foaf:        &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:        &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Alice" .
 _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
@@ -3846,7 +3846,7 @@ WHERE
         <div class="exampleGroup">
           <p>Data:</p>
           <pre class="data nohighlight">
-@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:x    foaf:name   "Alice" .
 _:x    foaf:mbox   &lt;mailto:alice@example.com&gt; .
@@ -4030,7 +4030,7 @@ LIMIT 20
             <code>GROUP BY</code> clause.</p>
           <div class="exampleGroup">
             <pre class="data nohighlight">
-@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a    foaf:name   "Alice" .
 _:a    foaf:knows  _:b .
@@ -4150,9 +4150,9 @@ WHERE
           <div class="exampleGroup">
             <p>Data:</p>
             <pre class="data nohighlight">
-@prefix dc:   &lt;http://purl.org/dc/elements/1.1/&gt; .
-@prefix :     &lt;http://example.org/book/&gt; .
-@prefix ns:   &lt;http://example.org/ns#&gt; .
+PREFIX dc:   &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX :     &lt;http://example.org/book/&gt;
+PREFIX ns:   &lt;http://example.org/ns#&gt;
 
 :book1  dc:title  "SPARQL Tutorial" .
 :book1  ns:price  42 .
@@ -4250,7 +4250,7 @@ SELECT  ?title (?p AS ?fullPrice) (?fullPrice*(1-?discount) AS ?customerPrice)
         </p>
         <div class="exampleGroup">
           <pre class="data nohighlight">
-@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a    foaf:name   "Alice" .
 _:a    foaf:mbox   &lt;mailto:alice@example.org&gt; .
@@ -4265,7 +4265,7 @@ WHERE       { ?x foaf:name ?name }
             <p>creates vcard properties from the FOAF information:</p>
             <div class="result">
               <pre class="resultGraph" style="text-align:left;">
-@prefix vcard: &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt; .
+PREFIX vcard: &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt;
 
 &lt;http://example.org/person#Alice&gt; vcard:FN "Alice" .
               </pre>
@@ -4285,7 +4285,7 @@ WHERE       { ?x foaf:name ?name }
           </p>
           <div class="exampleGroup">
             <pre class="data nohighlight">
-@prefix  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a    foaf:givenname   "Alice" .
 _:a    foaf:family_name "Hacker" .
@@ -4310,7 +4310,7 @@ CONSTRUCT {
               <p>creates vcard properties corresponding to the FOAF information:</p>
               <div class="result">
                 <pre class="resultGraph">
-@prefix vcard: &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt; .
+PREFIX vcard: &lt;http://www.w3.org/2001/vcard-rdf/3.0#&gt;
 
 _:a vcard:N         _:v1 .
 _:v1 vcard:givenName  "Alice" .
@@ -4382,8 +4382,8 @@ CONSTRUCT { ?s ?p ?o } WHERE
             not ordered.</p>
           <div class="exampleGroup">
             <pre class="data nohighlight">
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
-@prefix site: &lt;http://example.org/stats#&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX site: &lt;http://example.org/stats#&gt;
 
 _:a foaf:name "Alice" .
 _:a site:hits 2349 .
@@ -4409,7 +4409,7 @@ LIMIT 2
               </pre>
               <div class="result">
                 <pre class="resultGraph">
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 _:x foaf:name "Alice" .
 _:y foaf:name "Eve" .
                 </pre>
@@ -4444,7 +4444,7 @@ WHERE
           not a solution exists.</p>
         <div class="exampleGroup">
           <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Alice" .
 _:a  foaf:homepage   &lt;http://work.example.org/alice/&gt; .
@@ -4565,11 +4565,11 @@ DESCRIBE ?x WHERE { ?x ent:employeeId "1234" }
                 details:</p>
               <div class="result">
                 <pre class="resultGraph">
-@prefix foaf:   &lt;http://xmlns.com/foaf/0.1/&gt; .
-@prefix vcard:  &lt;http://www.w3.org/2001/vcard-rdf/3.0&gt; .
-@prefix exOrg:  &lt;http://org.example.com/employees#&gt; .
-@prefix rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-@prefix owl:    &lt;http://www.w3.org/2002/07/owl#&gt;
+PREFIX foaf:   &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX vcard:  &lt;http://www.w3.org/2001/vcard-rdf/3.0&gt;
+PREFIX exOrg:  &lt;http://org.example.com/employees#&gt;
+PREFIX rdf:    &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX owl:    &lt;http://www.w3.org/2002/07/owl#&gt;
 
 _:a     exOrg:employeeId    "1234" ;
         foaf:mbox_sha1sum   "bee135d3af1e418104bc42904596fe148e90f033" ;
@@ -4606,8 +4606,8 @@ foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
         <p><a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a> have datatypes 
           that determine the value of the literal.</p>
         <pre class="data nohighlight">
-@prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
-@prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
+PREFIX a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
+PREFIX dc:         &lt;http://purl.org/dc/elements/1.1/&gt;
 
 _:a   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
 _:a   dc:date       "2004-12-31T19:00:00-05:00" .
@@ -5388,9 +5388,9 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <div class="exampleGroup">
               <p>Data:</p>
               <pre class="data nohighlight">
-@prefix foaf:        &lt;http://xmlns.com/foaf/0.1/&gt; .
-@prefix dc:          &lt;http://purl.org/dc/elements/1.1/&gt; .
-@prefix xsd:          &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+PREFIX foaf:        &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX dc:          &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX xsd:          &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 _:a  foaf:givenName  "Alice".
 
@@ -5782,7 +5782,7 @@ class="expression">expression, ....</span>)
                   "iv"^^my:romanNumeral</code></span>.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Alice".
 _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
@@ -5828,8 +5828,8 @@ WHERE {
               equivalent values according to their datatype:</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
-@prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
+PREFIX a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
+PREFIX dc:         &lt;http://purl.org/dc/elements/1.1/&gt;
 
 _:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
 _:b   dc:date       "2004-12-31T19:00:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
@@ -5868,7 +5868,7 @@ WHERE {
               defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Alice".
 _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
@@ -5913,8 +5913,8 @@ WHERE {
             <p>Unlike <span class="operator">RDFterm-equal</span>, <span class="operator">sameTerm</span> can be used to test for non-equivalent <span class="type typedLiteral">typed literals</span> with unsupported datatypes:</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix :          &lt;http://example.org/WMterms#&gt; .
-@prefix t:         &lt;http://example.org/types#&gt; .
+PREFIX :          &lt;http://example.org/WMterms#&gt;
+PREFIX t:         &lt;http://example.org/types#&gt;
 
 _:c1  :label        "Container 1" .
 _:c1  :weight       "100"^^t:kilos .
@@ -5985,7 +5985,7 @@ WHERE {
             </p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Alice".
 _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
@@ -6030,9 +6030,9 @@ WHERE {
                 node</span>. Returns <code>false</code> otherwise.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt; .
-@prefix dc:         &lt;http://purl.org/dc/elements/1.1/&gt; .
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
+PREFIX dc:         &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
 _:a   dc:creator    "Alice B. Toeclips" .
@@ -6083,7 +6083,7 @@ WHERE {
             <p>Returns <code>true</code> if <code>term</code> is a <span class="type literal">literal</span>. Returns <code>false</code> otherwise.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
                 
 _:a  foaf:name       "Alice".
 _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
@@ -6171,7 +6171,7 @@ WHERE {
               parts of an IRI, for instance, the host-name.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Alice".
 _:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
@@ -6220,7 +6220,7 @@ WHERE {
               literals with an empty <span class="type langTag">language tag</span>.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Robert"@en.
 _:a  foaf:name       "Roberto"@es.
@@ -6267,9 +6267,9 @@ WHERE {
             </p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
-@prefix eg:         &lt;http://biometrics.example/ns#&gt; .
-@prefix xsd:        &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX eg:         &lt;http://biometrics.example/ns#&gt;
+PREFIX xsd:        &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 _:a  foaf:name       "Alice".
 _:a  eg:shoeSize     "9.5"^^xsd:float .
@@ -6975,7 +6975,7 @@ WHERE {
               non-empty <code>language-tag</code> string.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix dc:       &lt;http://purl.org/dc/elements/1.1/&gt; .
+PREFIX dc:       &lt;http://purl.org/dc/elements/1.1/&gt;
 
 _:a  dc:title         "That Seventies Show"@en .
 _:a  dc:title         "Cette Série des Années Soixante-dix"@fr .
@@ -7058,7 +7058,7 @@ WHERE {
               [[XPATH-FUNCTIONS-31]].</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
-@prefix foaf:       &lt;http://xmlns.com/foaf/0.1/&gt; .
+PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name       "Alice".
 _:b  foaf:name       "Bob" .
