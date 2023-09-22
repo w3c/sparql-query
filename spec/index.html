@@ -9701,16 +9701,17 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               be 6.0 (float).</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
-              <pre class="code nohighlight">numeric Sum(sequence S)</pre>
-              <p>L = Flatten(S)</p>
-              <p>Sum(S) = Sum(L)</p>
-              <p>Sum(L) = op:numeric-add(L<sub>1</sub>, Sum(L<sub>2..n</sub>)) if <a href="#defn_Card">Card</a>(L) &gt;
+              <pre class="code nohighlight">numeric <var>Sum</var>(sequence <var>S</var>)</pre>
+              <p>|Sum|(|S|) = <var>Sum'</var>(|L|),
+                where |L| = Flatten(|S|)
+                and <var>Sum'</var>(|L|) is defined recursively as follows.</p>
+              <p><var>Sum'</var>(|L|) = op:numeric-add(|L|<sub>1</sub>, <var>Sum'</var>(|L|<sub>2..n</sub>)) if <a href="#defn_Card">Card</a>(|L|) &gt;
                 1<br>
-                Sum(L) = op:numeric-add(L<sub>1</sub>, 0) if <a href="#defn_Card">Card</a>(L) = 1<br>
-                Sum(L) = "0"^^xsd:integer if <a href="#defn_Card">Card</a>(L) = 0</p>
-              <p>In this way, Sum( (1, 2, 3) ) = op:numeric-add(1, op:numeric-add(2,
-                op:numeric-add(3, 0))).</p>
+                <var>Sum'</var>(|L|) = op:numeric-add(|L|<sub>1</sub>, 0) if <a href="#defn_Card">Card</a>(|L|) = 1<br>
+                <var>Sum'</var>(|L|) = "0"^^xsd:integer if <a href="#defn_Card">Card</a>(|L|) = 0</p>
             </div>
+            <p>In this way, <var>Sum</var>( [(1), (2), (3)] ) = <var>Sum'</var>( (1, 2, 3) ) =
+              op:numeric-add(1, op:numeric-add(2, op:numeric-add(3, 0))).</p>
           </section>
           <section id="aggAvg">
             <h5>Avg</h5>
