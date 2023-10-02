@@ -9807,10 +9807,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                   <var>GroupConcat'</var>(<var>L</var>, <var>sep</var>) = "".</li>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 1, then
                   <var>GroupConcat'</var>(<var>L</var>, <var>sep</var>) =
-                  CONCAT("", <var>L</var><sub>1</sub>).</li>
+                  <a href="#func-concat"><code>CONCAT</code></a>("", <var>L</var><sub>1</sub>).</li>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) > 1, then
                   <var>GroupConcat'</var>(<var>L</var>, <var>sep</var>) =
-                  CONCAT(<var>L</var><sub>1</sub>, <var>sep</var>, <var>GroupConcat'</var>(<var>L</var><sub>2..n</sub>, <var>sep</var>)).</li>
+                  <a href="#func-concat"><code>CONCAT</code></a>(<var>L</var><sub>1</sub>, <var>sep</var>, <var>GroupConcat'</var>(<var>L</var><sub>2..n</sub>, <var>sep</var>)).</li>
               </ul>
               <p>Note that <var>L</var><sub>1</sub> is the first element in
                 <var>L</var>, and <var>L</var><sub>2..n</sub> is <var>L</var>
