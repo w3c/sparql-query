@@ -3916,8 +3916,8 @@ SELECT DISTINCT ?name WHERE { ?x foaf:name ?name }
             <h4>REDUCED</h4>
             <p>While the <code>DISTINCT</code> modifier ensures that duplicate solutions are
               eliminated from the solution set, <code>REDUCED</code> simply permits them to be
-              eliminated. The cardinality of any set of variable bindings in a <code>REDUCED</code>
-              solution set is at least one and not more than the cardinality of the solution set with
+              eliminated. The multiplicity of any solution in a <code>REDUCED</code>
+              solution set is at least one and not more than the multiplicity of the solution within the solution set with
               no <code>DISTINCT</code> or <code>REDUCED</code> modifier. For example, using the data
               above, the query</p>
             <div class="queryGroup">
@@ -8880,7 +8880,7 @@ The set PV is used later for projection.
             <li>Limit</li>
           </ul>
           <p>Step: ToList</p>
-          <p>ToList turns a multiset into a sequence with the same elements and cardinality. There is
+          <p>ToList turns a multiset into a sequence with the same elements and multiplicities. There is
             no implied ordering to the sequence; duplicates need not be adjacent.</p>
           <blockquote>
             <p>Let M := ToList(Pattern)</p>
@@ -8993,8 +8993,9 @@ The set PV is used later for projection.
             <p>μ is a <b>solution</b> for BGP from G when there is a pattern instance mapping P such
               that P(BGP) is a subgraph of G and μ is the restriction of P to the query variables in
               BGP.</p>
-            <p>card[Ω](μ) = card[Ω](number of distinct RDF instance mappings, σ, such that P = μ(σ)
-              is a pattern instance mapping and P(BGP) is a subgraph of G).</p>
+            <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Ω ) =
+              number of distinct RDF instance mappings, σ, such that P = μ(σ)
+              is a pattern instance mapping and P(BGP) is a subgraph of G.</p>
           </div>
           <p>If a basic graph pattern is the empty set, then the solution is Ω<sub>0</sub>.</p>
         </section>
@@ -9275,16 +9276,16 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>Join(Ω<sub>1</sub>, Ω<sub>2</sub>) = { merge(μ<sub>1</sub>, μ<sub>2</sub>) |
             μ<sub>1</sub> in Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub>, and μ<sub>1</sub> and
             μ<sub>2</sub> are compatible }</p>
-          <p>card[Join(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) =<br>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Join(Ω<sub>1</sub>, Ω<sub>2</sub>) ) =<br>
             &nbsp;&nbsp;&nbsp; for each merge(μ<sub>1</sub>, μ<sub>2</sub>), μ<sub>1</sub> in
             Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub> such that μ = merge(μ<sub>1</sub>,
             μ<sub>2</sub>),<br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum over (μ<sub>1</sub>, μ<sub>2</sub>),
-            card[Ω<sub>1</sub>](μ<sub>1</sub>)*card[Ω<sub>2</sub>](μ<sub>2</sub>)</p>
+            <a href="#defn_Multiplicity">multiplicity</a>( μ<sub>1</sub> | Ω<sub>1</sub> ) * <a href="#defn_Multiplicity">multiplicity</a>( μ<sub>2</sub> | Ω<sub>2</sub> )</p>
         </div>
         <p>It is possible that a solution mapping μ in a Join can arise in different solution
-          mappings, μ<sub>1</sub> and μ<sub>2</sub> in the multisets being joined. The cardinality
-          of&nbsp; μ is the sum of the cardinalities from all possibilities.</p>
+          mappings, μ<sub>1</sub> and μ<sub>2</sub> in the multisets being joined. The multiplicity
+          of&nbsp; μ is the sum of the multiplicities from all possibilities.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algDiff">Diff</span></b></p>
           <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
@@ -9292,7 +9293,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = { μ | μ in Ω<sub>1</sub> such that ∀ μ′ in
             Ω<sub>2</sub>, either μ and μ′ are not compatible or μ and μ' are compatible and
             expr(merge(μ, μ')) does not have an effective boolean value of true }</p>
-          <p>card[Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)](μ) = card[Ω<sub>1</sub>](μ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω<sub>1</sub> )</p>
         </div>
         <p>The evaluation of expr(merge(μ, μ')) does not have an effective boolean
           value of true if it evaluates to false or if it raises an error.</p>
@@ -9303,9 +9305,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             expression. We define:</p>
           <p>LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = Filter(expr, Join(Ω<sub>1</sub>,
             Ω<sub>2</sub>)) ∪ Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)</p>
-          <p>card[LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)](μ) = card[Filter(expr,
-            Join(Ω<sub>1</sub>, Ω<sub>2</sub>))](μ) + card[Diff(Ω<sub>1</sub>, Ω<sub>2</sub>,
-            expr)](μ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Filter(expr,Join(Ω<sub>1</sub>, Ω<sub>2</sub>)) ) +
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Diff(Ω<sub>1</sub>, Ω<sub>2</sub>,
+            expr) )</p>
         </div>
 
         <div class="defn">
@@ -9313,8 +9316,9 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
           <p>Union(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> or μ in Ω<sub>2</sub>
             }</p>
-          <p>card[Union(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) = card[Ω<sub>1</sub>](μ) +
-            card[Ω<sub>2</sub>](μ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Union(Ω<sub>1</sub>, Ω<sub>2</sub>) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω<sub>1</sub> ) +
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω<sub>2</sub> )</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algMinus">Minus</span></b></p>
@@ -9322,7 +9326,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> . ∀ μ' in
             Ω<sub>2</sub>, either μ and μ' are not compatible or dom(μ) and dom(μ') are disjoint
             }</p>
-          <p>card[Minus(Ω<sub>1</sub>, Ω<sub>2</sub>)](μ) = card[Ω<sub>1</sub>](μ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω<sub>1</sub> )</p>
         </div>
         <p>The additional restriction on dom(μ) and dom(μ') is added because otherwise if there is
           a solution mapping in Ω<sub>2</sub> that has no variables in common with the solution
@@ -9340,13 +9345,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>Extend(Ω, var, expr) = { Extend(μ, var, expr) | μ in Ω }</p>
         </div>
         <p>Write [ x | C ] for a sequence of elements where C is a condition on x.</p>
-        <p>Write card[L](x) to be the cardinality of x in L.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algToList">ToList</span></b></p>
           <p>Let Ω be a multiset of solution mappings. We define:</p>
-          <p>ToList(Ω) = a sequence of mappings μ in Ω in any order, with card[Ω](μ) occurrences of
+          <p>ToList(Ω) = a sequence of mappings μ in Ω in any order, with
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω ) occurrences of
             μ</p>
-          <p>card[ToList(Ω)](μ) = card[Ω](μ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | ToList(Ω) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω )</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algOrdered">OrderBy</span></b></p>
@@ -9354,31 +9360,40 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <div id="defn_algOrderBy">
             OrderBy
           </div>(Ψ, condition) = [ μ | μ in Ψ and the sequence satisfies the ordering condition]
-          <p>card[OrderBy(Ψ, condition)](μ) = card[Ψ](μ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | OrderBy(Ψ, condition) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ψ )</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algProjection">Project</span></b></p>
           <p>Let Ψ be a sequence of solution mappings and PV a set of variables.</p>
           <p>For mapping μ, write Proj(μ, PV) to be the restriction of μ to variables in PV.</p>
           <p>Project(Ψ, PV) = [ Proj(μ, PV) | μ in Ψ ]</p>
-          <p>card[Project(Ψ, PV)](μ) = sum(card[Ψ](ν) | ν in Ψ such that ν = Proj(μ, PV))</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Project(Ψ, PV) ) =
+            sum( <a href="#defn_Multiplicity">multiplicity</a>( ν | Ψ ) | ν in Ψ such that ν = Proj(μ, PV))</p>
           <p>The order of Project(Ψ, PV) must preserve any ordering given by OrderBy.</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algDistinct">Distinct</span></b></p>
           <p>Let Ψ be a sequence of solution mappings. We define:</p>
           <p>Distinct(Ψ) = [ μ | μ in Ψ ]</p>
-          <p>card[Distinct(Ψ)](μ) = 1</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Distinct(Ψ) ) = 1
+            for every μ ∈ Distinct(Ψ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Distinct(Ψ) ) = 0
+            for every μ ∉ Distinct(Ψ)</p>
           <p>The order of Distinct(Ψ) must preserve any ordering given by OrderBy.</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algReduced">Reduced</span></b></p>
           <p>Let Ψ be a sequence of solution mappings. We define:</p>
           <p>Reduced(Ψ) = [ μ | μ in Ψ ]</p>
-          <p>card[Reduced(Ψ)](μ) is between 1 and card[Ψ](μ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Reduced(Ψ) ) is
+            between 1 and <a href="#defn_Multiplicity">multiplicity</a>( μ | Ψ )
+            for every μ ∈ Reduced(Ψ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Reduced(Ψ) ) = 0
+            for every μ ∉ Reduced(Ψ)</p>
           <p>The order of Reduced(Ψ) must preserve any ordering given by OrderBy.</p>
         </div>
-        <p>The Reduced solution sequence modifier does not guarantee a defined cardinality.</p>
+        <p>The Reduced solution sequence modifier does not guarantee a defined multiplicity.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algSlice">Slice</span></b></p>
           <p>Let Ψ be a sequence of solution mappings. We define:</p>
@@ -9390,7 +9405,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p><b>Definition: <span id="defn_algToMultiSet">ToMultiSet</span></b></p>
           <p>Let Ψ be a solution sequence. We define:</p>
           <p>ToMultiSet(Ψ) = { μ | μ in Ψ }</p>
-          <p>card[ToMultiSet(Ψ)](μ) = card[Ψ](μ)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | ToMultiSet(Ψ) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ψ )</p>
         </div>
         <p>ListEval is a function which is used to evaluate a list of expressions against a
           solution and return a list of the resulting values.</p>
@@ -9398,7 +9414,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <div id="defn_algToMultiset">
             <b>Definition: ToMultiset</b>
           </div>
-          <p>ToMultiset turns a sequence into a multiset with the same elements and cardinality as
+          <p>ToMultiset turns a sequence into a multiset with the same elements and multiplicities as
             the sequence. The order of the sequence has no effect on the resulting multiset, and
             duplicates are preserved.</p>
         </div>
@@ -9748,8 +9764,8 @@ eval(D(G), Graph(var,P)) =
     the result is R
             </pre>
           </div>
-          <p>The evaluation of graph uses the SPARQL algebra union operator. The cardinality of a
-            solution mapping is the sum of the cardinalities of that solution mapping in each join
+          <p>The evaluation of graph uses the SPARQL algebra union operator. The multiplicity of a
+            solution mapping is the sum of the multiplicities of that solution mapping in each join
             operation.</p>
           <div class="defn">
             <div id="defn_evalGroup">
