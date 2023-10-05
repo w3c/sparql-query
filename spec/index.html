@@ -9702,23 +9702,23 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
               <pre class="code nohighlight">numeric <var>Sum</var>(sequence <var>S</var>)</pre>
-              <p><var>Sum</var>(<var>S</var>) = <var>Sum'</var>(<var>L</var>),</p>
+              <p><var>Sum</var>(<var>S</var>) = <var>SumList</var>(<var>L</var>),</p>
               <p>where <var>L</var> = Flatten(<var>S</var>) and
-                <var>Sum'</var>(<var>L</var>) is defined recursively as follows.</p>
+                <var>SumList</var>(<var>L</var>) is defined recursively as follows.</p>
               <ul>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 0, then
-                  <var>Sum'</var>(<var>L</var>) = "0"^^<code>xsd:integer</code>.</li>
+                  <var>SumList</var>(<var>L</var>) = "0"^^<code>xsd:integer</code>.</li>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 1, then
-                  <var>Sum'</var>(<var>L</var>) = <a data-cite="XPATH-FUNCTIONS-31#func-numeric-add">op:numeric-add</a>(<var>L</var><sub>1</sub>, 0).</li>
+                  <var>SumList</var>(<var>L</var>) = <a data-cite="XPATH-FUNCTIONS-31#func-numeric-add">op:numeric-add</a>(<var>L</var><sub>1</sub>, 0).</li>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) > 1, then
-                  <var>Sum'</var>(<var>L</var>) = <a data-cite="XPATH-FUNCTIONS-31#func-numeric-add">op:numeric-add</a>(<var>L</var><sub>1</sub>,
-                  <var>Sum'</var>(<var>L</var><sub>2..n</sub>)).</li>
+                  <var>SumList</var>(<var>L</var>) = <a data-cite="XPATH-FUNCTIONS-31#func-numeric-add">op:numeric-add</a>(<var>L</var><sub>1</sub>,
+                  <var>SumList</var>(<var>L</var><sub>2..n</sub>)).</li>
               </ul>
               <p>Note that <var>L</var><sub>1</sub> is the first element in
                 <var>L</var>, and <var>L</var><sub>2..n</sub> is <var>L</var>
                 without its first element.</p>
             </div>
-            <p>In this way, <var>Sum</var>( [(1), (2), (3)] ) = <var>Sum'</var>( (1, 2, 3) ) =
+            <p>In this way, <var>Sum</var>( [(1), (2), (3)] ) = <var>SumList</var>( (1, 2, 3) ) =
               op:numeric-add(1, op:numeric-add(2, op:numeric-add(3, 0))).</p>
           </section>
           <section id="aggAvg">
@@ -9742,15 +9742,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
               <pre class="code nohighlight">term <var>Min</var>(sequence <var>S</var>)</pre>
-              <p><var>Min</var>(<var>S</var>) = <var>Min'</var>(<var>L</var>),</p>
+              <p><var>Min</var>(<var>S</var>) = <var>MinList</var>(<var>L</var>),</p>
               <p>where <var>L</var> is the list of values obtained by Flatten(<var>S</var>)
                 and then ordered as per the <code>ORDER BY ASC</code> clause,
-                and <var>Min'</var>(<var>L</var>) is defined as follows.</p>
+                and <var>MinList</var>(<var>L</var>) is defined as follows.</p>
               <ul>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 0, then
-                  <var>Min'</var>(<var>L</var>) = error.</li>
+                  <var>MinList</var>(<var>L</var>) = error.</li>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) > 0, then
-                  <var>Min'</var>(<var>L</var>) = <var>L</var><sub>1</sub>,
+                  <var>MinList</var>(<var>L</var>) = <var>L</var><sub>1</sub>,
                   where <var>L</var><sub>1</sub> is the first element in
                   <var>L</var>.</li>
               </ul>
@@ -9765,15 +9765,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
               <pre class="code nohighlight">term <var>Max</var>(sequence <var>S</var>)</pre>
-              <p><var>Max</var>(<var>S</var>) = <var>Max'</var>(<var>L</var>),</p>
+              <p><var>Max</var>(<var>S</var>) = <var>MaxList</var>(<var>L</var>),</p>
               <p>where <var>L</var> is the list of values obtained by Flatten(<var>S</var>)
                 and then ordered as per the <code>ORDER BY DESC</code> clause,
-                and <var>Max'</var>(<var>L</var>) is defined as follows.</p>
+                and <var>MaxList</var>(<var>L</var>) is defined as follows.</p>
               <ul>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 0, then
-                  <var>Max'</var>(<var>L</var>) = error.</li>
+                  <var>MaxList</var>(<var>L</var>) = error.</li>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) > 0, then
-                 <var>Max'</var>(<var>L</var>) = <var>L</var><sub>1</sub>,
+                 <var>MaxList</var>(<var>L</var>) = <var>L</var><sub>1</sub>,
                  where <var>L</var><sub>1</sub> is the first element in
                  <var>L</var>.</li>
               </ul>
@@ -9798,26 +9798,26 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                   then <var>sep</var> is the "space" character (i.e., unicode codepoint U+0020).</li>
               </ul>
               <p><var>GroupConcat</var>(<var>S</var>, <var>scalarvals</var>) =
-                <var>GroupConcat'</var>(<var>L</var>, <var>sep</var>),</p>
+                <var>GCList</var>(<var>L</var>, <var>sep</var>),</p>
               <p>where <var>L</var> = Flatten(<var>S</var>) and
-                <var>GroupConcat'</var>(<var>L</var>, <var>sep</var>)
+                <var>GCList</var>(<var>L</var>, <var>sep</var>)
                 is defined recursively as follows.</p>
               <ul>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 0, then
-                  <var>GroupConcat'</var>(<var>L</var>, <var>sep</var>) = "".</li>
+                  <var>GCList</var>(<var>L</var>, <var>sep</var>) = "".</li>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 1, then
-                  <var>GroupConcat'</var>(<var>L</var>, <var>sep</var>) =
+                  <var>GCList</var>(<var>L</var>, <var>sep</var>) =
                   <a href="#func-concat"><code>CONCAT</code></a>("", <var>L</var><sub>1</sub>).</li>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) > 1, then
-                  <var>GroupConcat'</var>(<var>L</var>, <var>sep</var>) =
-                  <a href="#func-concat"><code>CONCAT</code></a>(<var>L</var><sub>1</sub>, <var>sep</var>, <var>GroupConcat'</var>(<var>L</var><sub>2..n</sub>, <var>sep</var>)).</li>
+                  <var>GCList</var>(<var>L</var>, <var>sep</var>) =
+                  <a href="#func-concat"><code>CONCAT</code></a>(<var>L</var><sub>1</sub>, <var>sep</var>, <var>GCList</var>(<var>L</var><sub>2..n</sub>, <var>sep</var>)).</li>
               </ul>
               <p>Note that <var>L</var><sub>1</sub> is the first element in
                 <var>L</var>, and <var>L</var><sub>2..n</sub> is <var>L</var>
                 without its first element.</p>
             </div>
             <p>For example, <var>GroupConcat</var>([("a"), ("b"), ("c")], {"separator" → "."})
-              = <var>GroupConcat'</var>( ("a", "b", "c"), "." )
+              = <var>GCList</var>( ("a", "b", "c"), "." )
               = "a.b.c".</p>
           </section>
           <section id="aggSample">
