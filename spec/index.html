@@ -9605,7 +9605,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
               <code>*</code>, then F(Ψ) is the cardinality of the group solution sequence,
               i.e., F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(Ψ),
-              or F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(Dedup(Ψ))
+              or F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<a href="#defn_algDistinct">Distinct</a>(Ψ))
               if the <code>DISTINCT</code> keyword is present.</p>
           </div>
           <p><i>scalarvals</i> are used to pass values to the underlying set function, bypassing
