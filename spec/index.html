@@ -9688,10 +9688,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               has a bound, non-error value within the aggregate group.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggCount">Count</span></b></p>
-              <pre class="code nohighlight">xsd:integer Count(sequence S)</pre>
-              <p>L = <a href="#defn_Flatten">Flatten</a>(S)</p>
-              <p>remove error elements from L</p>
-              <p>Count(S) = <a href="#defn_Card">Card</a>(L)</p>
+              <pre class="code nohighlight">xsd:integer <var>Count</var>(sequence <var>S</var>)</pre>
+              <p><var>Count</var>(<var>S</var>) = <a href="#defn_Card">Card</a>(<var>L'</var>),</p>
+              <p>where <var>L'</var> is the list <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
+                with all error elements removed.</p>
             </div>
           </section>
           <section id="aggSum">
@@ -9729,11 +9729,17 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             average value for an expression over a group. It is defined in terms of Sum and Count.
             <div class="defn">
               <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
-              <pre class="code nohighlight">numeric Avg(sequence S)</pre>
-              <p>Avg(S) = "0"^^xsd:integer if Count(S) = 0</p>
-              <p>Avg(S) = Sum(S) / Count(S) if Count(S) &gt; 0</p>
+              <pre class="code nohighlight">numeric <var>Avg</var>(sequence <var>S</var>)</pre>
+              <p>If <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>) = 0,
+                then <var>Avg</var>(<var>S</var>) = "0"^^<code>xsd:integer</code>.</p>
+              <p>If <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>) &gt; 0,
+                then <var>Avg</var>(<var>S</var>) =
+                <var><a href="#defn_aggSum">Sum</a></var>(<var>S</var>) /
+                <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>).</p>
             </div>
-            <p>For example, Avg([(1), (2), (3)]) = Sum([(1), (2), (3)])/Count([(1), (2), (3)]) = 6/3 = 2.</p>
+            <p>For example, <var>Avg</var>([(1), (2), (3)]) =
+              <var>Sum</var>([(1), (2), (3)])/<var>Count</var>([(1), (2), (3)])
+              = 6/3 = 2.</p>
           </section>
           <section id="aggMin">
             <h5>Min</h5>
@@ -9830,12 +9836,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               to it.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
-              <pre class="code nohighlight">RDFTerm Sample(sequence S)</pre>
-              <p>Sample(S) = v, where v in <a href="#defn_Flatten">Flatten</a>(S)</p>
-              <p>Sample([]) = error</p>
+              <pre class="code nohighlight">RDFTerm <var>Sample</var>(sequence <var>S</var>)</pre>
+              <p>If <a href="#defn_Card">Card</a>(<var>S</var>) = 0, then
+                <var>Sample</var>(<var>S</var>) = error.</p>
+              <p>If <a href="#defn_Card">Card</a>(<var>S</var>) &gt; 0, then
+                <var>Sample</var>(<var>S</var>) = <var>v</var>, where <var>v</var>
+                in <a href="#defn_Flatten">Flatten</a>(<var>S</var>).</p>
             </div>
-            <p>For example, given Sample([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
-              values. Note that Sample() is not required to be deterministic for a given input, the
+            <p>For example, given <var>Sample</var>([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
+              values. Note that the <var>Sample</var> function is not required to be deterministic for a given input. The
               only restriction is that the output value must be present in the input sequence.</p>
           </section>
         </section>
