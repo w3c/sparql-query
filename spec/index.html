@@ -9689,7 +9689,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div class="defn">
               <p><b>Definition: <span id="defn_aggCount">Count</span></b></p>
               <pre class="code nohighlight">xsd:integer Count(sequence S)</pre>
-              <p>L = Flatten(S)</p>
+              <p>L = <a href="#defn_Flatten">Flatten</a>(S)</p>
               <p>remove error elements from L</p>
               <p>Count(S) = <a href="#defn_Card">Card</a>(L)</p>
             </div>
@@ -9705,7 +9705,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
               <pre class="code nohighlight">numeric <var>Sum</var>(sequence <var>S</var>)</pre>
               <p><var>Sum</var>(<var>S</var>) = <var>SumList</var>(<var>L</var>),</p>
-              <p>where <var>L</var> = Flatten(<var>S</var>) and
+              <p>where <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>) and
                 <var>SumList</var>(<var>L</var>) is defined recursively as follows.</p>
               <ul>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 0, then
@@ -9745,7 +9745,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
               <pre class="code nohighlight">term <var>Min</var>(sequence <var>S</var>)</pre>
               <p><var>Min</var>(<var>S</var>) = <var>MinList</var>(<var>L</var>),</p>
-              <p>where <var>L</var> is the list of values obtained by Flatten(<var>S</var>)
+              <p>where <var>L</var> is the list of values obtained by
+                <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 and then ordered as per the <code>ORDER BY ASC</code> clause,
                 and <var>MinList</var>(<var>L</var>) is defined as follows.</p>
               <ul>
@@ -9768,7 +9769,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
               <pre class="code nohighlight">term <var>Max</var>(sequence <var>S</var>)</pre>
               <p><var>Max</var>(<var>S</var>) = <var>MaxList</var>(<var>L</var>),</p>
-              <p>where <var>L</var> is the list of values obtained by Flatten(<var>S</var>)
+              <p>where <var>L</var> is the list of values obtained by
+                <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 and then ordered as per the <code>ORDER BY DESC</code> clause,
                 and <var>MaxList</var>(<var>L</var>) is defined as follows.</p>
               <ul>
@@ -9801,8 +9803,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               </ul>
               <p><var>GroupConcat</var>(<var>S</var>, <var>scalarvals</var>) =
                 <var>GCList</var>(<var>L</var>, <var>sep</var>),</p>
-              <p>where <var>L</var> = Flatten(<var>S</var>) and
-                <var>GCList</var>(<var>L</var>, <var>sep</var>)
+              <p>where <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
+                and <var>GCList</var>(<var>L</var>, <var>sep</var>)
                 is defined recursively as follows.</p>
               <ul>
                 <li>If <a href="#defn_Card">Card</a>(<var>L</var>) = 0, then
@@ -9829,7 +9831,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
               <pre class="code nohighlight">RDFTerm Sample(sequence S)</pre>
-              <p>Sample(S) = v, where v in Flatten(S)</p>
+              <p>Sample(S) = v, where v in <a href="#defn_Flatten">Flatten</a>(S)</p>
               <p>Sample([]) = error</p>
             </div>
             <p>For example, given Sample([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
