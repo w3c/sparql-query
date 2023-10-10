@@ -9584,14 +9584,17 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 Two lists <var>L</var> and <var>L'</var> from M(Ψ) are
                 considered the same iff they have the same number of elements
                 and, for every position&nbsp;<var>k</var> within the two lists,
-                the element at the <var>k</var>-th position of <var>L</var> is
-                an RDF term, the element at the <var>k</var>-th position of
-                <var>L'</var> is an RDF term, and these two RDF terms are the
-                <a href="#func-sameTerm">same term</a> (as a consequence of
-                this definition, if any of the two lists, <var>L</var> or
-                <var>L'</var>, contains an error, then the two lists cannot
-                be the same list, no matter what RDF terms they contain in
-                other positions).</li>
+                any of the following two conditions is true:
+                <ul>
+                  <li>either the element at the <var>k</var>-th position of
+                    <var>L</var> is an RDF term, the element at the <var>k</var>-th
+                    position of <var>L'</var> is also an RDF term, and these two
+                    RDF terms are the <a href="#func-sameTerm">same term</a>;</li>
+                  <li>or the element at the <var>k</var>-th position of <var>L</var>
+                    is an error and the element at the <var>k</var>-th position of
+                    <var>L'</var> is also an error.</li>
+                </ul>
+              </li>
               <li>For any two lists <var>L<sub>1</sub></var> and <var>L<sub>2</sub></var> in Dedup(M(Ψ)), the relative order of their first occurrences in M(Ψ) is preserved in Dedup(M(Ψ)). That is, if <var>i<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>i<sub>2</sub></var>, then <var>j<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>j<sub>2</sub></var>, where
                 <ul>
                   <li><var>i<sub>1</sub></var> is the smallest natural number such that <var>L<sub>1</sub></var> is at the <var>i<sub>1</sub></var>-th position in M(Ψ),</li>
