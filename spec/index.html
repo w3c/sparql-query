@@ -9577,11 +9577,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               (where each such list in this sequence may contain RDF terms and
               errors, as it is produced by the ListEval function).</p>
             <ol>
-              <li>Every unique list in M(Ψ) is contained in Dedup(M(Ψ)).</li>
-              <li>Every list in Dedup(M(Ψ)) is contained in M(Ψ).</li>
-              <li>Dedup(M(Ψ)) is free of duplicates. That is, the list at the |i|-th position in Dedup(M(Ψ)) is not the same list as the list at the |j|-th position in Dedup(M(Ψ)) for every two natural numbers |i| and |j| such that |i| &ne; |j|.
-                <br/>
-                Two lists <var>L</var> and <var>L'</var> from M(Ψ) are
+              <li>For every list&nbsp;<var>L</var> in M(Ψ) there exists a
+                list&nbsp;<var>L'</var> in Dedup(M(Ψ)) such that <var>L</var>
+                and <var>L'</var> are the same,
+                where two lists <var>L</var> and <var>L'</var> from M(Ψ) are
                 considered the same iff they have the same number of elements
                 and, for every position&nbsp;<var>k</var> within the two lists,
                 any of the following two conditions is true:
@@ -9595,6 +9594,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                     <var>L'</var> is also an error.</li>
                 </ul>
               </li>
+              <li>For every list&nbsp;<var>L</var> in Dedup(M(Ψ)) there exists
+                a list&nbsp;<var>L'</var> in M(Ψ) such that <var>L</var> and
+                <var>L'</var> are the same.</li>
+              <li>Dedup(M(Ψ)) is free of duplicates. That is, the list at the |i|-th position in Dedup(M(Ψ)) is not the same list as the list at the |j|-th position in Dedup(M(Ψ)) for every two natural numbers |i| and |j| such that |i| &ne; |j|.</li>
               <li>For any two lists <var>L<sub>1</sub></var> and <var>L<sub>2</sub></var> in Dedup(M(Ψ)), the relative order of their first occurrences in M(Ψ) is preserved in Dedup(M(Ψ)). That is, if <var>i<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>i<sub>2</sub></var>, then <var>j<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>j<sub>2</sub></var>, where
                 <ul>
                   <li><var>i<sub>1</sub></var> is the smallest natural number such that <var>L<sub>1</sub></var> is at the <var>i<sub>1</sub></var>-th position in M(Ψ),</li>
