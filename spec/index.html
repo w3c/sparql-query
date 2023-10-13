@@ -9573,17 +9573,37 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               &nbsp;&nbsp;M(Ψ) = [ ListEval(exprlist, μ) | μ in Ψ ]<br>
               &nbsp;&nbsp;F(Ψ) = func(M(Ψ), scalarvals), for non-<code>DISTINCT</code><br>
               &nbsp;&nbsp;F(Ψ) = func(Dedup(M(Ψ)), scalarvals), for <code>DISTINCT</code></p>
-            <p>with Dedup(M(Ψ)) being an order-preserving, duplicate-free version of the sequence M(Ψ); that is, Dedup(M(Ψ)) is a sequence of RDF terms that has the following four properties.</p>
+            <p>with Dedup(M(Ψ)) being an order-preserving, duplicate-free version of the sequence M(Ψ); that is, Dedup(M(Ψ)) is a sequence of lists that has the following four properties
+              (where each such list in this sequence may contain RDF terms and
+              errors, as it is produced by the ListEval function).</p>
             <ol>
-              <li>Every unique element in M(Ψ) is contained in Dedup(M(Ψ)).</li>
-              <li>Every element in Dedup(M(Ψ)) is contained in M(Ψ).</li>
-              <li>Dedup(M(Ψ)) is free of duplicates. That is, the element at the |i|-th position in Dedup(M(Ψ)) is not the same term as the element at the |j|-th position in Dedup(M(Ψ)) for every two natural numbers |i| and |j| such that |i| &ne; |j|.</li>
-              <li>For any two elements <var>e<sub>1</sub></var> and <var>e<sub>2</sub></var> in Dedup(M(Ψ)), the relative order of their first occurrences in M(Ψ) is preserved in Dedup(M(Ψ)). That is, if <var>i<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>i<sub>2</sub></var>, then <var>j<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>j<sub>2</sub></var>, where
+              <li>For every list&nbsp;<var>L</var> in M(Ψ) there exists a
+                list&nbsp;<var>L'</var> in Dedup(M(Ψ)) such that <var>L</var>
+                and <var>L'</var> are the same,
+                where two lists <var>L</var> and <var>L'</var> from M(Ψ) are
+                considered the same iff they have the same number of elements
+                and, for every position&nbsp;<var>k</var> within the two lists,
+                any of the following two conditions is true:
                 <ul>
-                  <li><var>i<sub>1</sub></var> is the smallest natural number such that <var>e<sub>1</sub></var> is at the <var>i<sub>1</sub></var>-th position in M(Ψ),</li>
-                  <li><var>i<sub>2</sub></var> is the smallest natural number such that <var>e<sub>2</sub></var> is at the <var>i<sub>2</sub></var>-th position in M(Ψ),</li>
-                  <li><var>j<sub>1</sub></var> is the position of <var>e<sub>1</sub></var> in Dedup(M(Ψ)), and</li>
-                  <li><var>j<sub>2</sub></var> is the position of <var>e<sub>2</sub></var> in Dedup(M(Ψ)).</li>
+                  <li>either the element at the <var>k</var>-th position of
+                    <var>L</var> is an RDF term, the element at the <var>k</var>-th
+                    position of <var>L'</var> is also an RDF term, and these two
+                    RDF terms are the <a href="#func-sameTerm">same term</a>;</li>
+                  <li>or the element at the <var>k</var>-th position of <var>L</var>
+                    is an error and the element at the <var>k</var>-th position of
+                    <var>L'</var> is also an error.</li>
+                </ul>
+              </li>
+              <li>For every list&nbsp;<var>L</var> in Dedup(M(Ψ)) there exists
+                a list&nbsp;<var>L'</var> in M(Ψ) such that <var>L</var> and
+                <var>L'</var> are the same.</li>
+              <li>Dedup(M(Ψ)) is free of duplicates. That is, the list at the |i|-th position in Dedup(M(Ψ)) is not the same list as the list at the |j|-th position in Dedup(M(Ψ)) for every two natural numbers |i| and |j| such that |i| &ne; |j|.</li>
+              <li>For any two lists <var>L<sub>1</sub></var> and <var>L<sub>2</sub></var> in Dedup(M(Ψ)), the relative order of their first occurrences in M(Ψ) is preserved in Dedup(M(Ψ)). That is, if <var>i<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>i<sub>2</sub></var>, then <var>j<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>j<sub>2</sub></var>, where
+                <ul>
+                  <li><var>i<sub>1</sub></var> is the smallest natural number such that <var>L<sub>1</sub></var> is at the <var>i<sub>1</sub></var>-th position in M(Ψ),</li>
+                  <li><var>i<sub>2</sub></var> is the smallest natural number such that <var>L<sub>2</sub></var> is at the <var>i<sub>2</sub></var>-th position in M(Ψ),</li>
+                  <li><var>j<sub>1</sub></var> is the position of <var>L<sub>1</sub></var> in Dedup(M(Ψ)), and</li>
+                  <li><var>j<sub>2</sub></var> is the position of <var>L<sub>2</sub></var> in Dedup(M(Ψ)).</li>
                 </ul>
               </li>
             </ol>
@@ -9591,7 +9611,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
               <code>*</code>, then F(Ψ) is the cardinality of the group solution sequence,
               i.e., F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(Ψ),
-              or F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(Dedup(Ψ))
+              or F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<a href="#defn_algDistinct">Distinct</a>(Ψ))
               if the <code>DISTINCT</code> keyword is present.</p>
           </div>
           <p><i>scalarvals</i> are used to pass values to the underlying set function, bypassing
@@ -9599,7 +9619,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <code>GROUP_CONCAT(?x ; separator="|")</code> has a scalarvals argument of { "separator"
             → "|" }.</p>
           <p>All aggregates may have the <code>DISTINCT</code> keyword as the first token in their
-            argument list. If this keyword is present then first argument to func is Distinct(M).</p>
+            argument list. If this keyword is present, then first argument to func is Dedup(M(Ψ)).</p>
           <p>Example</p>
           <p>Given a solution sequence Ψ with the following values:</p>
           <table>
