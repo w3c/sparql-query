@@ -9533,8 +9533,6 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p><a href="#defn_Multiplicity">multiplicity</a>( μ | ToMultiSet(Ψ) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( μ | Ψ )</p>
         </div>
-        <p>ListEval is a function which is used to evaluate a list of expressions against a
-          solution and return a list of the resulting values.</p>
         <div class="defn">
           <div id="defn_algToMultiset">
             <b>Definition: ToMultiset</b>
@@ -9558,21 +9556,41 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <div id="defn_algGroup">
               <b>Definition: Group</b>
             </div>
-            <p>Group evaluates a list of expressions against a solution sequence Ψ, producing a
+            <p>Group evaluates a list of expressions against a solution sequence <var>Ψ</var>, producing a
               partial function from keys to solution sequences.</p>
-            <p>Group(exprlist, Ψ) = { ListEval(exprlist, μ) → [ μ' | μ' in Ψ, ListEval(exprlist, μ)
-              = ListEval(exprlist, μ') ] | μ in Ψ }</p>
+            <p>Group(<var>exprlist</var>, <var>Ψ</var>) = {
+              <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ</var>)
+              → [ <var>μ'</var> | <var>μ'</var> in <var>Ψ</var> such that
+              <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ'</var>) and
+              <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ</var>)
+              are the same ] | <var>μ</var> in <var>Ψ</var> },</p>
+            <p>where two lists <var>L</var> and <var>L'</var> (as produced by
+              the <a href="#defn_ListEval">ListEval</a> function) are considered
+              the same iff they have the same number of elements and, for every
+              position&nbsp;<var>k</var> within the two lists, any of the
+              following two conditions is true:</p>
+            <ul>
+              <li>either the element at the <var>k</var>-th position of
+                <var>L</var> is an RDF term, the element at the <var>k</var>-th
+                position of <var>L'</var> is also an RDF term, and these two
+                RDF terms are the <a href="#func-sameTerm">same term</a>;</li>
+              <li>or the element at the <var>k</var>-th position of <var>L</var>
+                is an error and the element at the <var>k</var>-th position of
+                <var>L'</var> is also an error.</li>
+            </ul>
           </div>
           <div class="defn">
-            <p><b>Definition: ListEval</b></p>
+            <p><b>Definition: <span id="defn_ListEval">ListEval</span></b></p>
             <p>ListEval((expr<sub>1</sub>, ..., expr<sub>n</sub>), μ) returns a list
               (e<sub>1</sub>, ..., e<sub>n</sub>), where e<sub>i</sub> = expr<sub>i</sub>(μ) or
               error.</p>
             <p>ListEval retains errors resulting from the evaluation of the list elements.</p>
           </div>
-          <p>Note that, although the result of a ListEval can be an error, and errors may be used
+          <p>Note that, although the result of <a href="#defn_ListEval">ListEval</a>
+            may contain errors, and errors may be used
             to group, solutions containing error values are removed at projection time.</p>
-          <p>ListEval((unbound), μ) = (error), as the evaluation of an unbound expression is an
+          <p>Note also that the result of <a href="#defn_ListEval">ListEval</a>((unbound), μ)
+            is the list (error), as the evaluation of an unbound expression is an
             error.</p>
           <p>Aggregation, a function which calculates a scalar value as an output of the aggregate
             expression. It is used in the SELECT clause, the HAVING evaluation process, and in ORDER
@@ -9594,30 +9612,19 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               &nbsp;&nbsp;&nbsp;= { (key, F(Ψ)) | key → Ψ in { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
               key<sub>m</sub>→Ψ<sub>m</sub> } }</p>
             <p>where<br>
-              &nbsp;&nbsp;M(Ψ) = [ ListEval(exprlist, μ) | μ in Ψ ]<br>
+              &nbsp;&nbsp;M(Ψ) = [ <a href="#defn_ListEval">ListEval</a>(exprlist, μ) | μ in Ψ ]<br>
               &nbsp;&nbsp;F(Ψ) = func(M(Ψ), scalarvals), for non-<code>DISTINCT</code><br>
               &nbsp;&nbsp;F(Ψ) = func(Dedup(M(Ψ)), scalarvals), for <code>DISTINCT</code></p>
             <p>with Dedup(M(Ψ)) being an order-preserving, duplicate-free version of the sequence M(Ψ); that is, Dedup(M(Ψ)) is a sequence of lists that has the following four properties
               (where each such list in this sequence may contain RDF terms and
-              errors, as it is produced by the ListEval function).</p>
+              errors, as it is produced by the <a href="#defn_ListEval">ListEval</a> function).</p>
             <ol>
               <li>For every list&nbsp;<var>L</var> in M(Ψ) there exists a
                 list&nbsp;<var>L'</var> in Dedup(M(Ψ)) such that <var>L</var>
                 and <var>L'</var> are the same,
                 where two lists <var>L</var> and <var>L'</var> from M(Ψ) are
-                considered the same iff they have the same number of elements
-                and, for every position&nbsp;<var>k</var> within the two lists,
-                any of the following two conditions is true:
-                <ul>
-                  <li>either the element at the <var>k</var>-th position of
-                    <var>L</var> is an RDF term, the element at the <var>k</var>-th
-                    position of <var>L'</var> is also an RDF term, and these two
-                    RDF terms are the <a href="#func-sameTerm">same term</a>;</li>
-                  <li>or the element at the <var>k</var>-th position of <var>L</var>
-                    is an error and the element at the <var>k</var>-th position of
-                    <var>L'</var> is also an error.</li>
-                </ul>
-              </li>
+                considered the same as specified in the definition of the
+                <a href="#defn_algGroup">Group operator</a>.</li>
               <li>For every list&nbsp;<var>L</var> in Dedup(M(Ψ)) there exists
                 a list&nbsp;<var>L'</var> in M(Ψ) such that <var>L</var> and
                 <var>L'</var> are the same.</li>
