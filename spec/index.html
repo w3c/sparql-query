@@ -9567,16 +9567,16 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <p>where two lists <var>L</var> and <var>L'</var> (as produced by
               the <a href="#defn_ListEval">ListEval</a> function) are considered
               the same iff they have the same number of elements and, for every
-              position&nbsp;<var>k</var> within the two lists, any of the
+              position&nbsp;<var>k</var> within the two lists, either of the
               following two conditions is true:</p>
             <ul>
-              <li>either the element at the <var>k</var>-th position of
-                <var>L</var> is an RDF term, the element at the <var>k</var>-th
-                position of <var>L'</var> is also an RDF term, and these two
-                RDF terms are the <a href="#func-sameTerm">same term</a>;</li>
-              <li>or the element at the <var>k</var>-th position of <var>L</var>
-                is an error and the element at the <var>k</var>-th position of
-                <var>L'</var> is also an error.</li>
+              <li>the element at the <var>k</var>-th position of
+                <var>L</var> is an RDF term; the element at the <var>k</var>-th
+                position of <var>L'</var> is also an RDF term; and these two
+                RDF terms are the <a href="#func-sameTerm">same term</a></li>
+              <li>the element at the <var>k</var>-th position of <var>L</var>
+                is an error, and the element at the <var>k</var>-th position of
+                <var>L'</var> is also an error</li>
             </ul>
           </div>
           <div class="defn">
@@ -9589,7 +9589,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>Note that, although the result of <a href="#defn_ListEval">ListEval</a>
             may contain errors, and errors may be used
             to group, solutions containing error values are removed at projection time.</p>
-          <p>Note also that the result of <a href="#defn_ListEval">ListEval</a>((unbound), μ)
+          <p>Note also that the result of <a href="#defn_ListEval">ListEval</a>((unbound), <var>μ</var>)
             is the list (error), as the evaluation of an unbound expression is an
             error.</p>
           <p>Aggregation, a function which calculates a scalar value as an output of the aggregate
@@ -9612,7 +9612,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               &nbsp;&nbsp;&nbsp;= { (key, F(Ψ)) | key → Ψ in { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
               key<sub>m</sub>→Ψ<sub>m</sub> } }</p>
             <p>where<br>
-              &nbsp;&nbsp;M(Ψ) = [ <a href="#defn_ListEval">ListEval</a>(exprlist, μ) | μ in Ψ ]<br>
+              &nbsp;&nbsp;M(<var>Ψ</var>) = [ <a href="#defn_ListEval">ListEval</a>(exprlist, <var>μ</var>) | <var>μ</var> in <var>Ψ</var> ]<br>
               &nbsp;&nbsp;F(Ψ) = func(M(Ψ), scalarvals), for non-<code>DISTINCT</code><br>
               &nbsp;&nbsp;F(Ψ) = func(Dedup(M(Ψ)), scalarvals), for <code>DISTINCT</code></p>
             <p>with Dedup(M(Ψ)) being an order-preserving, duplicate-free version of the sequence M(Ψ); that is, Dedup(M(Ψ)) is a sequence of lists that has the following four properties
