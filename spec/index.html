@@ -9588,7 +9588,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <p>Note that, although the result of <a href="#defn_ListEval">ListEval</a>
             may contain errors, and errors may be used
-            to group, solutions containing error values are removed at projection time.</p>
+            to group, solutions containing error values are removed at the
+            end of evaluating the group and any aggregation functions.</p>
           <p>Note also that the result of <a href="#defn_ListEval">ListEval</a>((unbound), <var>μ</var>)
             is the list (error), as the evaluation of an unbound expression is an
             error.</p>
