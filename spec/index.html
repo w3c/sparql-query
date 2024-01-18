@@ -9697,20 +9697,6 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               ..., agg<sub>n</sub>→val<sub>n</sub> | key in K and key→val<sub>i</sub> in
               S<sub>i</sub> for each 1 &le; i &le; n }</p>
           </div>
-          <p>Flatten is a function which is used to collapse a sequence of lists into a single list.
-            For example, [(1,&nbsp;2), (3,&nbsp;4)] becomes (1, 2, 3, 4).</p>
-          <div class="defn">
-            <p><b>Definition: <span id="defn_Flatten">Flatten</span></b></p>
-            <p>The Flatten(S) function takes a sequence S of lists,
-              i.e., S = [L<sub>1</sub>, L<sub>2</sub>, ..., L<sub>m</sub>]
-              where every L<sub>i</sub> is a list,
-              and returns the list ( x | L in S and x in L ).</p>
-          </div>
-          <p>Card is a function that returns the cardinality of a sequence or a list of elements (which may be solution mappings or other types of elements, depending on the context).
-          <div class="defn">
-            <p><b>Definition: <span id="defn_Card">Card</span></b></p>
-            <p>Given a sequence or a list |L|, Card(|L|) is the cardinality of |L|.</p>
-          </div>
           <section id="setFunctions">
             <h5>Set Functions</h5>
             <p>The set functions which underlie SPARQL aggregates all have a common signature:
@@ -9731,6 +9717,33 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               this requires the parser to know whether some IRI refers to a function, cast, or
               aggregate before it can determine if there are any errors in a query where aggregates
               are used.</p>
+            <p>The definitions of the set functions in the following sections
+              are based on two functions, <a href="#defn_Flatten">Flatten</a>
+              and <a href="#defn_Card">Card</a>, which are defined as follows.</p>
+            <p><a href="#defn_Flatten">Flatten</a> is a function which is
+              used to collapse a sequence of lists into a single list.
+              For example, [(1,&nbsp;2), (3,&nbsp;4)] becomes (1,&nbsp;2,&nbsp;3,&nbsp;4).</p>
+            <div class="defn">
+              <p><b>Definition: <span id="defn_Flatten">Flatten</span></b></p>
+              <p>Let <var>S</var> be a sequence of lists,
+                i.e., <var>S</var> =
+                [<var>L<sub>1</sub></var>,
+                <var>L<sub>2</sub></var>, ...,
+                <var>L<sub><var>m</var></sub></var>]
+                where, for every <var>i</var> &in; {1, ..., <var>m</var>},
+                <var>L<sub><var>i</var></sub></var> is a list.</p>
+              <p>Flatten(<var>S</var>) is the list
+                ( <var>x</var> | <var>L</var> in <var>S</var> and
+                <var>x</var> in <var>L</var> ).</p>
+            </div>
+            <p><a href="#defn_Card">Card</a> is a function that returns the
+              cardinality of a sequence or a list of elements (which may be
+              solution mappings or other types of elements, depending on the
+              context).
+            <div class="defn">
+              <p><b>Definition: <span id="defn_Card">Card</span></b></p>
+              <p>Given a sequence or a list |L|, Card(|L|) is the cardinality of |L|.</p>
+            </div>
           </section>
 
           <section id="aggCount">
