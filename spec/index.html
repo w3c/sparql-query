@@ -8384,7 +8384,7 @@ WHERE {
 
             <pre class="code nohighlightBlock">
 Let FS := empty set
-For each form FILTER(expr) in the group graph pattern:
+For each form FILTER(expr) in the group graph pattern
     In expr, replace NOT EXISTS{P} with fn:not(<a href="#defn_evalExists">exists(translate(P)))</a> 
     In expr, replace EXISTS{P} with <a href="#defn_evalExists">exists(translate(P))</a>
     FS := FS ∪ {expr}
