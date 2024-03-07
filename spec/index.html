@@ -7931,16 +7931,25 @@ WHERE {
           <h4>Query Variables</h4>
           <div class="defn">
             <p><b>Definition: <span id="defn_QueryVariable">Query Variable</span></b></p>
-            <p>A <span class="definedTerm">query variable</span> is a member of the set V where V is
-              infinite and disjoint from RDF-T.</p>
+            <p>We assume a countably infinite set <var>V</var> that is disjoint
+              from the set of all <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF terms</a>.
+              Every member of this set <var>V</var> is a <span class="definedTerm">query variable</span>.</p>
           </div>
         </section>
         <section id="sparqlTriplePatterns">
           <h4>Triple Patterns</h4>
           <div class="defn">
             <p><b>Definition: <span id="defn_TriplePattern">Triple Pattern</span></b></p>
-            <p>A <span class="definedTerm">triple pattern</span> is member of the set:<br>
-              (RDF-T ∪ V) x (I ∪ V) x (RDF-T ∪ V)</p>
+            <p>A <span class="definedTerm">triple pattern</span> is a 3-tuple
+              (|s|, |p|, |o|) where:</p>
+            <ul>
+              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+                or a <a href="#defn_QueryVariable">variable</a>,</li>
+              <li>|p| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
+                or a <a href="#defn_QueryVariable">variable</a>, and</li>
+              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+                or a <a href="#defn_QueryVariable">variable</a>.</li>
+            </ul>
           </div>
           <p>This definition of Triple Pattern includes literal subjects. 
             <a href="http://www.w3.org/2000/03/rdf-tracking/#rdfms-literalsubjects">
@@ -7982,12 +7991,17 @@ WHERE {
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_PropertyPathPattern">Property Path Pattern</span></b></p>
-            <p>Let PP be the set of all property path expressions. A property path pattern is a
-              member of the set:<br>
-              (RDF-T ∪ V) x PP x (RDF-T ∪ V)</p>
+            <p>A property path pattern is a 3-tuple (|s|, |p|, |o|) where:</p>
+            <ul>
+              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+                or a <a href="#defn_QueryVariable">variable</a>,</li>
+              <li>|p| is a <a href="#defn_PropertyPathExpr">property path expression</a>, and</li>
+              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+                or a <a href="#defn_QueryVariable">variable</a>.</li>
+            </ul>
           </div>
           <p>A Property Path Pattern is a generalization of a <a href="#defn_TriplePattern">Triple
-              Pattern</a> to include a property path expression in the property position.</p>
+              Pattern</a> to include a property path expression in the predicate position.</p>
         </section>
         <section id="sparqlSolutions">
           <h4>Solution Mapping</h4>
@@ -7995,8 +8009,12 @@ WHERE {
             the term 'solution' where it is clear.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_sparqlSolutionMapping">Solution Mapping</span></b></p>
-            <p>A <b>solution mapping</b>, μ, is a partial function μ : V -&gt; RDF-T.</p>
-            <p>The domain of μ, dom(μ), is the subset of V where μ is defined.</p>
+            <p>A <b>solution mapping</b>, <var>μ</var>, is a partial function
+              <var>μ</var> : <var>V</var> → <var>T</var>, where
+              <var>V</var> is the set of all <a href="#defn_QueryVariable">variables</a> and
+              <var>T</var> is the set of all <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF terms</a>.</p>
+            <p>The domain of <var>μ</var>, denoted by dom(<var>μ</var>), is the
+              subset of <var>V</var> for which <var>μ</var> is defined.</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_sparqlSolutionSequence">Solution Sequence</span></b></p>
