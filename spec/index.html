@@ -8858,8 +8858,11 @@ Replace join(A, Z) by A
               Join(<br>
               &nbsp;&nbsp; BGP(?s :p ?o) ,<br>
               &nbsp;&nbsp; ToMultiSet(<br>
-              &nbsp;&nbsp;&nbsp;&nbsp; Distinct(Project(BGP(?o ?p ?z), {?o})) )<br>
-              &nbsp;&nbsp; )
+              &nbsp;&nbsp;&nbsp;&nbsp; Distinct( <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Project( ToList(BGP(?o ?p ?z)), {?o} ) <br>
+              &nbsp;&nbsp;&nbsp;&nbsp; ) <br>
+              &nbsp;&nbsp; ) <br>
+              )
             </div>
           </div>
         </section>
@@ -9012,8 +9015,22 @@ The set PV is used later for projection.
         </section>
         <section id="convertSolMod">
           <h4>Converting Solution Modifiers</h4>
-          <p>Solutions modifiers apply to the processing of a SPARQL query after pattern matching.
-            The solution modifiers are applied to a query in the following order:</p>
+          <p>Solution modifiers apply to the processing of a SPARQL query after pattern matching.</p>
+          <p>Since the solution modifiers operate on sequences
+            of solution mappings, the query result produced up to this
+            point is first turned from a multiset of solution mappings
+            into such a sequence. While there is no implied ordering to
+            this sequence, and duplicates need not be adjacent, the sequence
+            is identical to the multiset in terms of the elements that it
+            contains, and their multiplicities. To apply this conversion
+            from a multiset into a sequence, the algorithm for capturing
+            the solution modifiers in the algebra expression begins with
+            the following step, where <var>Pattern</var> is the algebra
+            expression produced by the algorithm in the previous section.</p>
+          <blockquote>
+            <p>Let M := ToList(<var>Pattern</var>)</p>
+          </blockquote>
+          <p>Now, the solution modifiers are applied in the following order:</p>
           <ul>
             <li>Order by</li>
             <li>Projection</li>
@@ -9022,12 +9039,6 @@ The set PV is used later for projection.
             <li>Offset</li>
             <li>Limit</li>
           </ul>
-          <p>Step: ToList</p>
-          <p>ToList turns a multiset into a sequence with the same elements and multiplicities. There is
-            no implied ordering to the sequence; duplicates need not be adjacent.</p>
-          <blockquote>
-            <p>Let M := ToList(Pattern)</p>
-          </blockquote>
           <section id="sparqlOrderBy">
             <h5>ORDER BY</h5>
             <p>If the query string has an ORDER BY clause</p>
