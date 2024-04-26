@@ -11803,7 +11803,40 @@ _:x rdf:type xsd:decimal .
       <h2>Changes between SPARQL 1.1 Query Language and SPARQL 1.2 Query Language</h2>
       <ul>
         <li>
-            Fix errata:
+            Normative changes:
+            <ul>
+                <li>Remove concepts of plain and simple literals, in favor of explicit mentions of xsd:string</li>
+                <li>Update grammar for quoted triples and triple functions in <a href="#sparqlGrammar" class="sectionRef"></a></li>
+                <li>Migrate XML Schema references to 1.1</li>
+                <li>Update references to XPath from 2.0 to 3.1</li>
+                <li>Add functions on quoted triples to <a href="#func-quoted-triples" class="sectionRef"></a></li>
+            </ul>
+        </li>
+        <li>
+            Editorial changes:
+            <ul>
+                <li>Define RDFterm-equal using an actual function signature in <a href="#func-RDFterm-equal" class="sectionRef"></a></li>
+                <li>Improve wording of blank nodes in <a href="#templatesWithBNodes" class="sectionRef"></a></li>
+                <li>Improve display on mobile</li>
+                <li>Move RDFterm-equal and sameTerm to <a href="#func-rdfTerms" class="sectionRef"></a></li>
+                <li>Add note on deduplication of triples produced by CONSTRUCT to <a href="#construct" class="sectionRef"></a></li>
+                <li>Remove historical notes on rdf:langString datatype from <a href="#func-datatype" class="sectionRef"></a></li>
+                <li>Remove inconsistencies between the definitions of the set functions</li>
+                <li>Introduce a function called multiplicity to replace card[Ω](μ) in <a href="#BasicGraphPattern" class="sectionRef"></a></li>
+                <li>Update to Media Type language instead of MIME Type language</li>
+                <li>Clarify that aggregation returns a single partial function in <a href="#sparqlGroupAggregate" class="sectionRef"></a></li>
+                <li>Update Filter Evaluation language to reference more functional forms in <a href="#evaluation" class="sectionRef"></a></li>
+                <li>Use PREFIX instead of @prefix</li>
+                <li>Clarify definition of the Sum set function in <a href="#aggSum" class="sectionRef"></a></li>
+                <li>Improve definition of Group operator in <a href="#aggregateAlgebra" class="sectionRef"></a></li>
+                <li>Move definitions of Flatten and Card to <a href="#setFunctions" class="sectionRef"></a></li>
+                <li>Improve definitions in <a href="#initDefinitions" class="sectionRef"></a></li>
+                <li>Fix algorithm for translation SELECT expressions <a href="#sparqlSelectExpressions" class="sectionRef"></a></li>
+                <li>Clarify the use of ToList in algebra expressions in <a href="#sparqlQuery" class="sectionRef"></a></li>
+            </ul>
+        </li>
+        <li>
+            Errata:
             <ul>
               <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-1">editorial-query-1</a>: Missing right parenthesis in <a href="#defn_evalGraph">Evaluation of Graph definition</a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-2">editorial-query-2</a>: Missing space in <a href="#defn_algJoin">Join definition</a></li>
@@ -11825,29 +11858,6 @@ _:x rdf:type xsd:decimal .
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-23">errata-query-23</a>: Fix inconsistenties between <a href="#defn_aggMin">MIN</a> and <a href="#defn_aggMax">MAX</a></li>
             </ul>
         </li>
-        <li>Define RDFterm-equal using an actual function signature in <a href="#func-RDFterm-equal" class="sectionRef"></a></li>
-        <li>Remove concepts of plain and simple literals, in favor of explicit mentions of xsd:string</li>
-        <li>Improve wording of blank nodes in <a href="#templatesWithBNodes" class="sectionRef"></a></li>
-        <li>Improve display on mobile</li>
-        <li>Update grammar for quoted triples and triple functions in <a href="#sparqlGrammar" class="sectionRef"></a></li>
-        <li>Move RDFterm-equal and sameTerm to <a href="#func-rdfTerms" class="sectionRef"></a></li>
-        <li>Migrate XML Schema references to 1.1</li>
-        <li>Update references to XPath from 2.0 to 3.1</li>
-        <li>Add functions on quoted triples to <a href="#func-quoted-triples" class="sectionRef"></a></li>
-        <li>Add note on deduplication of triples produced by CONSTRUCT to <a href="#construct" class="sectionRef"></a></li>
-        <li>Remove historical notes on rdf:langString datatype from <a href="#func-datatype" class="sectionRef"></a></li>
-        <li>Remove inconsistencies between the definitions of the set functions</li>
-        <li>Introduce a function called multiplicity to replace card[Ω](μ) in <a href="#BasicGraphPattern" class="sectionRef"></a></li>
-        <li>Update to Media Type language instead of MIME Type language</li>
-        <li>Clarify that aggregation returns a single partial function in <a href="#sparqlGroupAggregate" class="sectionRef"></a></li>
-        <li>Update Filter Evaluation language to reference more functional forms in <a href="#evaluation" class="sectionRef"></a></li>
-        <li>Use PREFIX instead of @prefix</li>
-        <li>Clarify definition of the Sum set function in <a href="#aggSum" class="sectionRef"></a></li>
-        <li>Improve definition of Group operator in <a href="#aggregateAlgebra" class="sectionRef"></a></li>
-        <li>Move definitions of Flatten and Card to <a href="#setFunctions" class="sectionRef"></a></li>
-        <li>Improve definitions in <a href="#initDefinitions" class="sectionRef"></a></li>
-        <li>Fix algorithm for translation SELECT expressions <a href="#sparqlSelectExpressions" class="sectionRef"></a></li>
-        <li>Clarify the use of ToList in algebra expressions in <a href="#sparqlQuery" class="sectionRef"></a></li>
       </ul>
     </section>
     
