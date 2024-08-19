@@ -10457,6 +10457,12 @@ _:x rdf:type xsd:decimal .
           <li>The expression argument of an aggregate function can not contain an aggregate function.</li>
           <li>Only custom aggregate functions use the <code>DISTINCT</code> keyword
             in a <a href="#rFunctionCall">function call</a>.</li>
+          <li>A <a href="#rReifier">reifier</a> or
+            <a href="#rAnnotationBlockPath">annotation syntax</a>
+            is only permitted after a triple when the property position is
+            a simple path (IRI, the keyword <code>a</code> or a variable),
+            and not for other path expressions.
+          </li>
         </ol>
         <!-- GRAMMAR -->
         <div class="grammarTable">
@@ -11236,7 +11242,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[111]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rAnnotationBlockPath">AnnotationBlockPath</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><span class="token">'{|'</span> <a href="#rPropertyListPath">PropertyListPath</a> <span class="token">'|}'</span></code></td>
+                <td><code class="gRuleBody"><span class="token">'{|'</span> <a href="#rPropertyListPathNotEmpty">PropertyListPathNotEmpty</a> <span class="token">'|}'</span></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -11250,7 +11256,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[113]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rAnnotationBlock">AnnotationBlock</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><span class="token">'{|'</span> <a href="#rPropertyList">PropertyList</a> <span class="token">'|}'</span></code></td>
+                <td><code class="gRuleBody"><span class="token">'{|'</span> <a href="#rPropertyListNotEmpty">PropertyListNotEmpty</a> <span class="token">'|}'</span></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
