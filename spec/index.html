@@ -7406,8 +7406,8 @@ WHERE {
         </section>
 
         <!-- QT -->
-        <section id="func-triple-terms">
-          <h4>Functions on Triple Terms</h4>
+        <section id="func-reified-triples">
+          <h4>Functions on Reified Triples</h4>
           <section id="func-triple">
             <h5>TRIPLE</h5>
             <pre class="prototype nohighlight">
@@ -7439,7 +7439,7 @@ class="name">obj</span>)
             <p>
               As a shorthand notation, the <code>TRIPLE</code> function 
               can also be written in the form of a
-              <a href="#rExprQuotedTriple">triple term expression</a>
+              <a href="#rExprTripleTerm">triple term expression</a>
               using <code>&lt;&lt;(</code> and <code>)&gt;&gt;</code>.  There is a
               syntax limitation to this shorthand form: the three elements of
               the triple term expression can only be variables and directly
@@ -7449,18 +7449,24 @@ class="name">obj</span>)
             </p>
             <pre class="query nohighlight">
               PREFIX : &lt;http://example/&gt;
+              PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
               SELECT ?s ?date {
-                  ?s ?p ?o
-                  BIND( &lt;&lt;( ?s ?p ?o )&gt;&gt; AS ?qt )
-                  ?qt :tripleAdded ?date
+                  ?s ?p ?o .
+                  BIND( &lt;&lt;( ?s ?p ?o )&gt;&gt; AS ?tt )
+                  :myreifier rdf:reifies ?tt .
+                  :myreifier :tripleAdded ?date .
               }
             </pre>
             <pre class="query nohighlight">
               PREFIX : &lt;http://example/&gt;
+              PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
               SELECT ?s ?date {
-                  ?s ?p ?o
-                  BIND( TRIPLE(?s, ?p, ?o) AS ?qt )
-                  ?qt :tripleAdded ?date
+                  ?s ?p ?o .
+                  BIND( TRIPLE(?s, ?p, ?o) AS ?tt )
+                  :myreifier rdf:reifies ?tt .
+                  :myreifier :tripleAdded ?date .
               }
             </pre>
           </section>
@@ -11805,10 +11811,10 @@ _:x rdf:type xsd:decimal .
             Normative changes:
             <ul>
                 <li>Remove concepts of plain and simple literals, in favor of explicit mentions of xsd:string</li>
-                <li>Update grammar for triple terms and triple functions in <a href="#sparqlGrammar" class="sectionRef"></a></li>
+                <li>Update grammar for reified triples and triple functions in <a href="#sparqlGrammar" class="sectionRef"></a></li>
                 <li>Migrate XML Schema references to 1.1</li>
                 <li>Update references to XPath from 2.0 to 3.1</li>
-                <li>Add functions on triple terms to <a href="#func-triple-terms" class="sectionRef"></a></li>
+                <li>Add functions on reified triples to <a href="#func-reified-triples" class="sectionRef"></a></li>
             </ul>
         </li>
         <li>
