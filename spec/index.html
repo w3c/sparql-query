@@ -3124,9 +3124,9 @@ WHERE {
         predicate and object. Many RDF data stores hold multiple RDF graphs and record information
         about each graph, allowing an application to make queries that involve information from more
         than one graph.</p>
-      <p>A SPARQL query is executed against an <em>RDF Dataset</em> which represents a collection of
+      <p>A SPARQL query is executed against an <a data-cite="RDF12-CONCEPTS#dfn-rdf-dataset">RDF Dataset</a> [[RDF12-CONCEPTS]] which represents a collection of
         graphs. An RDF Dataset comprises one graph, the default graph, which does not have a name, and
-        zero or more named graphs, where each named graph is identified by an IRI. A SPARQL query can
+        zero or more named graphs, where each named graph is identified by an IRI or a blank node. A SPARQL query can
         match different parts of the query pattern against different graphs as described in section
         <a href="#queryDataset">13.3 Querying the Dataset</a>.</p>
       <p>An RDF Dataset may contain zero named graphs; an RDF Dataset always contains one default
@@ -3138,7 +3138,7 @@ WHERE {
         active graph one of all of the named graphs in the dataset for part of the query.</p>
       <section id="exampleDatasets">
         <h3>Examples of RDF Datasets</h3>
-        <p>The definition of RDF Dataset does not restrict the relationships of named and default
+        <p>The <a data-cite="RDF12-CONCEPTS#dfn-rdf-dataset">definition of RDF Dataset</a> [[RDF12-CONCEPTS]] does not restrict the relationships of named and default
           graphs. Information can be repeated in different graphs; relationships between graphs can be
           exposed. Two useful arrangements are:</p>
         <ul>
@@ -7882,23 +7882,16 @@ WHERE {
         abstract query is then evaluated on an RDF dataset.</p>
       <section id="initDefinitions">
         <h3>Initial Definitions</h3>
-        <section id="sparqlDataset">
-          <h4>RDF Dataset</h4>
-          <div class="defn">
-            <p><b>Definition: <span id="defn_RDFDataset">RDF Dataset</span></b></p>
-            <p>An RDF dataset is a set:<br>
-              { G, (&lt;u<sub>1</sub>&gt;, G<sub>1</sub>), (&lt;u<sub>2</sub>&gt;, G<sub>2</sub>), . .
-              . (&lt;u<sub>n</sub>&gt;, G<sub>n</sub>) }<br>
-              where G and each G<sub>i</sub> are graphs, and each &lt;u<sub>i</sub>&gt; is an IRI. Each
-              &lt;u<sub>i</sub>&gt; is distinct.</p>
-            <p>G is called the default graph. (&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) are called named
-              graphs.</p>
-          </div>
+        <section id="activeGraph">
+          <h4>Active Graph</h4>
           <div class="defn">
             <p><b>Definition: <span id="defn_ActiveGraph">Active Graph</span></b></p>
             <p>The <b>active graph</b> is the graph from the dataset used for basic graph pattern
               matching.</p>
           </div>
+        </section>
+        <section id="rdfDatasetMerge">
+          <h4>RDF Dataset Merge</h4>
           <div class="defn">
             <div id="defn_RDFDatasetMerge">
               <b>Definition: RDF Dataset Merge</b>
@@ -8062,7 +8055,7 @@ WHERE {
             <ul>
               <li>E is a <a href="#sparqlAlgebra">SPARQL algebra</a> expression
               </li>
-              <li>DS is an <a href="#defn_RDFDataset">RDF Dataset</a>
+              <li>DS is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-dataset">RDF Dataset</a> [[RDF12-CONCEPTS]]
               </li>
               <li>QF is a <a href="#QueryForms">query form</a>
               </li>
