@@ -7886,16 +7886,23 @@ WHERE {
         abstract query is then evaluated on an RDF dataset.</p>
       <section id="initDefinitions">
         <h3>Initial Definitions</h3>
-        <section id="activeGraph">
-          <h4>Active Graph</h4>
+        <section id="sparqlDataset">
+          <h4>RDF Dataset</h4>
+          <div>
+            <p>The concept of an <a data-cite="RDF12-CONCEPTS#dfn-rdf-dataset">RDF Dataset</a> is defined in [[RDF12-CONCEPTS]].</p>
+            <p>For the following definitions, we capture each RDF dataset as a set:<br>
+              { G, (&lt;u<sub>1</sub>&gt;, G<sub>1</sub>), (&lt;u<sub>2</sub>&gt;, G<sub>2</sub>), . .
+              . (&lt;u<sub>n</sub>&gt;, G<sub>n</sub>) }<br>
+              where G and each G<sub>i</sub> are graphs, and each &lt;u<sub>i</sub>&gt; is an IRI. Each
+              &lt;u<sub>i</sub>&gt; is distinct.</p>
+            <p>G is called the default graph. (&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) are called named
+              graphs.</p>
+          </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_ActiveGraph">Active Graph</span></b></p>
             <p>The <b>active graph</b> is the graph from the dataset used for basic graph pattern
               matching.</p>
           </div>
-        </section>
-        <section id="rdfDatasetMerge">
-          <h4>RDF Dataset Merge</h4>
           <div class="defn">
             <div id="defn_RDFDatasetMerge">
               <b>Definition: RDF Dataset Merge</b>
