@@ -3149,25 +3149,20 @@ WHERE {
         <div class="exampleGroup">
           <b>Example 1:</b>
           <pre class="data nohighlight">
-# <b>Default graph</b>
 PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
 
 &lt;http://example.org/bob&gt;    dc:publisher  "Bob" .
 &lt;http://example.org/alice&gt;  dc:publisher  "Alice" .
-          </pre>
-          <pre class="data nohighlight">
-# <b>Named graph: http://example.org/bob</b>
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
-_:a foaf:name "Bob" .
-_:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
-          </pre>
-          <pre class="data nohighlight">
-# <b>Named graph: http://example.org/alice</b>
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+GRAPH &lt;http://example.org/bob&gt; {
+    _:a foaf:name "Bob" .
+    _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
+}
 
-_:a foaf:name "Alice" .
-_:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
+GRAPH &lt;http://example.org/alice&gt; {
+    _:a foaf:name "Alice" .
+    _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
+}
           </pre>
         </div>
         <p>In this example, the default graph contains the names of the publishers of two named
@@ -3184,7 +3179,6 @@ _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .
         </p>
         <div class="exampleGroup">
           <pre class="data nohighlight">
-# <b>Default graph</b>
 PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:x foaf:name "Bob" .
@@ -3192,20 +3186,16 @@ _:x foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
 
 _:y foaf:name "Alice" .
 _:y foaf:mbox &lt;mailto:alice@work.example.org&gt; .
-          </pre>
-          <pre class="data nohighlight">
-# <b>Named graph: http://example.org/bob</b>
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 
-_:a foaf:name "Bob" .
-_:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
-          </pre>
-          <pre class="data nohighlight">
-# <b>Named graph: http://example.org/alice</b>
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+GRAPH &lt;http://example.org/bob&gt; {
+    _:a foaf:name "Bob" .
+    _:a foaf:mbox &lt;mailto:bob@oldcorp.example.org&gt; .
+}
 
-_:a foaf:name "Alice" .
-_:a foaf:mbox &lt;<a href="mailto:alice@work.example">mailto:alice@work.example</a>&gt; .
+GRAPH &lt;http://example.org/alice&gt; {
+    _:a foaf:name "Alice" .
+    _:a foaf:mbox &lt;mailto:alice@work.example&gt; .
+}
           </pre>
           <p>In an RDF merge, blank nodes in the merged graph are not shared with blank nodes from
             the graphs being merged.</p>
