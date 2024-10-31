@@ -7893,33 +7893,6 @@ WHERE {
             <p>The <b>active graph</b> is the graph from the dataset used for basic graph pattern
               matching.</p>
           </div>
-          <div class="defn">
-            <div id="defn_RDFDatasetMerge">
-              <b>Definition: RDF Dataset Merge</b>
-            </div>
-            <p>Let DS1 = { G1, (&lt;u1<sub>1</sub>&gt;, G1<sub>1</sub>), (&lt;u1<sub>2</sub>&gt;,
-              G1<sub>2</sub>), . . . (&lt;u1<sub>n</sub>&gt;, G1<sub>n</sub>) },<br>
-              and DS2 = { G2, (&lt;u2<sub>1</sub>&gt;, G2<sub>1</sub>), (&lt;u2<sub>2</sub>&gt;,
-              G2<sub>2</sub>), . . . (&lt;u2<sub>m</sub>&gt;, G2<sub>m</sub>) }</p>
-            <p>then we define the RDF Dataset Merge of DS1 and DS2 to be:<br>
-              DS={ G, (&lt;u<sub>1</sub>&gt;, G<sub>1</sub>), (&lt;u<sub>2</sub>&gt;, G<sub>2</sub>), .
-              . . (&lt;u<sub>k</sub>&gt;, G<sub>k</sub>) }<br>
-              where:</p>
-            <p>Write N1 for { &lt;u1<sub>j</sub>&gt; j = 1 to n }<br>
-              Write N2 for { &lt;u2<sub>j</sub>&gt; j = 1 to m }<br></p>
-            <ul>
-              <li>G is the <a data-cite="RDF12-SEMANTICS#dfn-merge">merge</a> of G1 and G2
-              </li>
-              <li>(&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) where &lt;u<sub>i</sub>&gt; is in N1 but not
-                in N2</li>
-              <li>(&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) where &lt;u<sub>i</sub>&gt; is in N2 but not
-                in N1</li>
-              <li>(&lt;u<sub>i</sub>&gt;, G<sub>i</sub>) where &lt;u<sub>i</sub>&gt; is equal to
-                &lt;u<sub>j</sub>&gt; in N1 and equal to &lt;u<sub>k</sub>&gt; in N2 and G<sub>i</sub>
-                is the <a data-cite="RDF12-SEMANTICS#dfn-merge">merge</a> of G1<sub>j</sub> and G2<sub>k</sub>
-              </li>
-            </ul>
-          </div>
         </section>
         <section id="sparqlQueryVariables">
           <h4>Query Variables</h4>
