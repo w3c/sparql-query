@@ -331,9 +331,6 @@ span.cancast:hover { background-color: #ffa;
       div.exampleHeader { font-weight: bold;
                           margin: 4px}
 
-      em.rfc2119 { text-transform: lowercase;
-                   font-variant: small-caps;
-                   font-style: normal; }
     @media (max-width: 850px) {
         table th, table td { font-size: 12px; padding: 3px 4px;}
         .result table tr td:nth-child(2n), .result table  tr th:nth-child(2n) { overflow-wrap: anywhere; min-width: 90px; }
@@ -6311,8 +6308,7 @@ WHERE {
             <p>If the function is passed an IRI, it returns the IRI unchanged.</p>
             <p>Passing any RDF term other than a literal with datatype <code>xsd:string</code> or an IRI is an
               error.</p>
-            <p>An implementation <em class="rfc2119" title="Keyword in RFC 2119 context">MAY</em>
-              normalize the IRI.</p>
+            <p>An implementation MAY normalize the IRI.</p>
             <p>Examples:</p>
             <div class="result">
               <table>
@@ -7524,9 +7520,7 @@ class="name">obj</span>)
           <section id="func-md5">
             <h5>MD5</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">MD5</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the MD5 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
-              digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
-              case.</p>
+            <p>Returns the MD5 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex digits SHOULD be in lower case.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7541,9 +7535,7 @@ class="name">obj</span>)
           <section id="func-sha1">
             <h5>SHA1</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">SHA1</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the SHA1 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
-              digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
-              case.</p>
+            <p>Returns the SHA1 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex digits SHOULD be in lower case.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7558,9 +7550,7 @@ class="name">obj</span>)
           <section id="func-sha256">
             <h5>SHA256</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">SHA256</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the SHA256 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
-              digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
-              case.</p>
+            <p>Returns the SHA256 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex digits SHOULD be in lower case.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7576,9 +7566,7 @@ class="name">obj</span>)
           <section id="func-sha384">
             <h5>SHA384</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">SHA384</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the SHA384 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
-              digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
-              case.</p>
+            <p>Returns the SHA384 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex digits SHOULD be in lower case.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7594,9 +7582,7 @@ class="name">obj</span>)
           <section id="func-sha512">
             <h5>SHA512</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">SHA512</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">arg</span>)</pre>
-            <p>Returns the SHA512 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex
-              digits <em class="rfc2119" title="Keyword in RFC 2119 context">SHOULD</em> be in lower
-              case.</p>
+            <p>Returns the SHA512 checksum, as a hex digit string, calculated on the lexical form of the <code>xsd:string</code>. Hex digits SHOULD be in lower case.</p>
             <div class="result">
               <table>
                 <tbody>
