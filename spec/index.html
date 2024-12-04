@@ -6145,10 +6145,10 @@ WHERE {
           <section id="func-str">
             <h5>STR</h5>
             <pre class="prototype nohighlight">
-<span class="return">xsd:string</span>  <span class="operator">STR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
+<span class="return">xsd:string</span>  <span class="operator">STR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">literal</span>)
 <span class="return">xsd:string</span>  <span class="operator">STR</span> (<span class="type"><span class="type IRI">IRI</span></span> <span class="name">rsrc</span>)
             </pre>
-            <p>Returns the <span class="type lexicalForm">lexical form</span> of <code>ltrl</code> (a
+            <p>Returns the <span class="type lexicalForm">lexical form</span> of <code>literal</code> (a
               <span class="type literal">literal</span>); returns the codepoint representation of
               <code>rsrc</code> (an <span class="type IRI">IRI</span>). This is useful for examining
               parts of an IRI, for instance, the host-name.</p>
@@ -6238,16 +6238,203 @@ WHERE {
                 </div>
               </div>
             </div>
+
+            <p>
+              Function examples:
+            </p>
+            <div class="result">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Expression</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>LANG("abc"@en)</code></td>
+                    <td><code>"en"</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>LANG("abc"@en--ltr)</code></td>
+                    <td><code>"en"</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>LANG("abc")</code></td>
+                    <td><code>""</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>LANG(1)</code></td>
+                    <td><code>""</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>LANG(&lt;http://example/&gt;)</code></td>
+                    <td><code>error</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </section>
+
+          <section id="func-langdir">
+            <h5>LANGDIR</h5>
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">LANGDIR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
+            </pre>
+            <p>
+              If the argument is a literal,
+              the function <code>LANGDIR</code> returns the
+              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
+              of the literal with datatype <code>rdf:dirLangString</code>.
+              Otherwise, the function returns the empty string.
+            </p>
+            <div class="result">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Expression</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>LANGDIR("abc"@en--ltr)</code></td>
+                    <td><code>"ltr"</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>LANGDIR("abc"@en)</code></td>
+                    <td><code>""</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>LANGDIR("abc")</code></td>
+                    <td><code>""</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>LANGDIR(1)</code></td>
+                    <td><code>""</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>LANGDIR(&lt;http://example/&gt;)</code></td>
+                    <td><code>error</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="func-haslang">
+            <h5>hasLANG</h5>
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">hasLANG</span> (<span class="type">RDF term</span> <span class="name">term</span>)
+            </pre>
+            <p>
+              The function `hasLANG` returns <code>true</code> if the
+              argument is a literal with a language
+              tag. Otherwise, the function returns false.
+            </p>
+            <p>If the argument is a literal, the function is equivalent to
+              testing for the datatype of the literal being either
+              `rdf:langString` or `rdf:dirLangString`.
+            </p>
+             <div class="result">
+               <table>
+                 <thead>
+                   <tr>
+                     <th>Expression</th>
+                     <th>Result</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr>
+                     <td><code>hasLANG("abc"@en)</code></td>
+                     <td><code>true</code></td>
+                   </tr>
+                   <tr>
+                     <td><code>hasLANG("abc@"en--ltr)</code></td>
+                     <td><code>true</code></td>
+                   </tr>
+                   <tr>
+                     <td><code>hasLANG("تصميم المواقع"@ar--rtl)</code></td>
+                     <td><code>true</code></td>
+                   </tr>
+                   <tr>
+                     <td><code>hasLANG(1)</code></td>
+                     <td><code>false</code></td>
+                   </tr>
+                   <tr>
+                     <td><code>hasLANG(&lt;http://example/&gt;)</code></td>
+                     <td><code>false</code></td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+          </section>
+
+          <section id="func-haslangdir">
+            <h5>hasLANGDIR</h5>
+            <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">hasLANGDIR</span> (<span class="type">RDF term</span> <span class="name">term</span>)
+            </pre>
+            <p>
+              The function `hasLANGDIR` returns <code>true</code> if the
+              argument is a literal with a language
+              tag. Otherwise, the function returns false.
+            </p>
+            <p>If the argument is a literal, the function is equivalent to
+              testing for the datatype of the literal being
+              `rdf:dirLangString`.
+            </p>
+             <div class="result">
+               <table>
+                 <thead>
+                   <tr>
+                     <th>Expression</th>
+                     <th>Result</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr>
+                     <td><code>hasLANGDIR("abc"@en)</code></td>
+                     <td><code>false</code></td>
+                   </tr>
+                   <tr>
+                     <td><code>hasLANGDIR("abc@"en--ltr)</code></td>
+                     <td><code>true</code></td>
+                   </tr>
+                   <tr>
+                     <td><code>hasLANGDIR("تصميم المواقع"@ar--rtl)</code></td>
+                     <td><code>true</code></td>
+                   </tr>
+                   <tr>
+                     <td><code>hasLANGDIR(1)</code></td>
+                     <td><code>false</code></td>
+                   </tr>
+                   <tr>
+                     <td><code>hasLANGDIR(&lt;http://example/&gt;)</code></td>
+                     <td><code>false</code></td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+          </section>
+
           <section id="func-datatype">
             <h5>DATATYPE</h5>
             <pre class="prototype nohighlight"> <span class="return"><span class="type IRI">iri</span></span>  <span class="operator">DATATYPE</span> (<span class="type"><span class="type">literal</span></span> <span class="name">literal</span>)
             </pre>
             <p>Returns the <span class="type datatypeIRI">datatype IRI</span> of a
               <code>literal</code>.</p>
-            <p class="note">
-                The datatype of a literal with a <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> is <code>rdf:langString</code>.
-            </p>
+            <div class="note">
+              <p>
+                The datatype of a literal with a
+                <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> 
+                has a datatype of <code>rdf:langString</code>.
+              </p>
+              <p>
+                The datatype of a literal with a
+                <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> 
+                and a
+                <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
+                has a datatype of <code>rdf:dirLangString</code>.
+              </p>
+            </div>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
@@ -6336,13 +6523,24 @@ WHERE {
             <p>This functionality is compatible with the <a href="#templatesWithBNodes">treatment of
                 blank nodes in SPARQL CONSTRUCT templates</a>.</p>
           </section>
+
           <section id="func-strdt">
             <h5>STRDT</h5>
             <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRDT</span>(<span class="type">xsd:string</span> lexicalForm, <span class="type">IRI</span> datatypeIRI)</pre>
-            <p>The <code>STRDT</code> function constructs a literal with lexical form and type as
-              specified by the arguments.</p>
+            <p>The <code>STRDT</code> function constructs a literal with
+              <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
+              and 
+              <a data-cite="RDF12-CONCEPTS#dfn-datatype">datatype</a>
+              as specified by the arguments.
+            </p>
             <div class="result">
               <table>
+                <thead>
+                  <tr>
+                    <th>Expression</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
                     <td><code>STRDT("123", xsd:integer)</code></td>
@@ -6355,23 +6553,106 @@ WHERE {
                 </tbody>
               </table>
             </div>
+            <div class="note">
+                `STRDT` should not be called with datatype argument
+                `rdf:dirString` or `rdf:dirLangString. Function `STRLANG`
+                or `STRLANGDIR` should be used.
+            </div>
           </section>
+
           <section id="func-strlang">
             <h5>STRLANG</h5>
             <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRLANG</span>(<span class="type">xsd:string</span> lexicalForm, <span class="type">xsd:string</span> langTag)</pre>
-            <p>The <code>STRLANG</code> function constructs a literal with lexical form and language
-              tag as specified by the arguments.</p>
+            <p>The <code>STRLANG</code> function constructs a literal with
+              <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
+              and
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+              as specified by the arguments.
+              as specified by the arguments.
+            </p>
+            <p>
+              The argument `langTag` must not be an empty string.
+            </p>
             <div class="result">
               <table>
+                <thead>
+                  <tr>
+                    <th>Expression</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
-                    <td><code>STRLANG("chat", "en")</code></td>
-                    <td>"chat"@en</td>
+                    <td><code>STRLANG("chat", "fr")</code></td>
+                    <td>"chat"@fr</td>
                   </tr>
-                </tbody>
-              </table>
-            </div>
+                  <tr>
+                    <td><code>STRLANG("abc", "")</code></td>
+                    <td style="text-align: center"><em>error</em></td>
+                </tr>
+                <tr>
+                  <td><code>STRLANG(123, "en")</code></td>
+                  <td style="text-align: center"><em>error</em></td>
+                </tr>
+              </tbody>
+            </table>
           </section>
+
+          <section id="func-strlangdir">
+            <h5>STRLANGDIR</h5>
+            <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRLANGDIR</span>(<span class="type">xsd:string</span> lexicalForm, <span class="type">xsd:string</span> langTag, <span class="type">xsd:string</span> baseDirection)</pre>
+            <p>
+              The <code>STRLANG</code> function constructs a literal with 
+               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>, 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> and
+              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a> 
+              as specified by the arguments.
+            </p>
+            <p>
+              The argument `langTag` must not be an empty string. 
+              The argument `baseDirection` must be either `"ltr"` or `"rtl"`.
+            </p>
+            <div class="result">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Expression</th>
+                    <th>Result</th>
+                  </tr>
+                </thead> 
+                <tbody>
+                <tr>
+                  <td><code>STRLANGDIR("abc", "en", "ltr")</code></td>
+                  <td><code>"abc"@en--ltr</code></td>
+                </tr>
+                <tr>
+                  <td><code>STRLANGDIR("abc", "en", "LTR")</code></td>
+                  <td style="text-align: center"><em>error</em></td>
+                </tr>
+                  <tr>
+                    <td><code>STRLANGDIR("قطة", "ar", "rtl")</code></td>
+                    <td>"قطة"@ar--rlt</td>
+                  </tr>
+                <tr>
+                  <td><code>STRLANGDIR("abc", "en", "")</code></td>
+                  <td style="text-align: center"><em>error</em></td>
+                </tr>
+                <tr>
+                  <td><code>STRLANGDIR("abc", "", "ltr")</code></td>
+                  <td style="text-align: center"><em>error</em></td>
+                </tr>
+                <tr>
+                  <td><code>STRLANGDIR(123, "", "ltr")</code></td>
+                  <td style="text-align: center"><em>error</em></td>
+                </tr>
+                <tr>
+                  <td><code>STRLANGDIR(&lt;x:uri&gt;, "en", "ltr")</code></td>
+                  <td style="text-align: center"><em>error</em></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
           <section id="func-uuid">
             <h5>UUID</h5>
             <pre class="prototype nohighlight"><span class="return">iri</span>  <span class="operator">UUID</span>()</pre>
@@ -6415,7 +6696,7 @@ WHERE {
               <h6>String arguments</h6>
               <p>Certain functions (e.g., <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>)
                 take a <code>string literal</code> as an argument and accept a literal with datatype <code>xsd:string</code>, or a literal with a
-                language tag. They then act on the lexical form
+                language tag. They then act on the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
                 of the literal.</p>
               <p>The term <code>string literal</code> is used in the function descriptions for this.
                 Use of any other RDF term will cause a call to the function to raise an error.</p>
@@ -6431,9 +6712,27 @@ WHERE {
                 functions raises an error.</p>
               <p>Compatibility of two arguments is defined as:</p>
               <ul>
-                <li>The arguments are literals with datatype <code>xsd:string</code></li>
-                <li>The arguments are literals with identical language tags</li>
-                <li>The first argument is a literal with a language tag and the second argument is a literal with datatype <code>xsd:string</code></li>
+                <li>
+                  The arguments are literals with datatype <code>xsd:string</code>
+                </li>
+                <li>
+                  The arguments are literals with datatype <code>rdf:langString</code>
+                  and the same <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tags</a>
+                </li>
+                <li>
+                  The arguments are literals with datatype <code>rdf:dirLangString</code>
+                  and the same 
+                  <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+                  and <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
+                </li>
+                <li>
+                  The first argument is a literal with datatype <code>rdf:langString</code> 
+                  and the second argument is a literal with datatype <code>xsd:string</code>
+                </li>
+                <li>
+                  The first argument is a literal with datatype <code>rdf:dirLangString</code>,
+                  and the second argument has datatype <code>xsd:string</code>
+                </li>
               </ul>
               <div class="result">
                 <table>
@@ -6470,8 +6769,23 @@ WHERE {
                     </tr>
                     <tr>
                       <td>"abc"</td>
+                      <td>"b"@en--ltr</td>
+                      <td>no</td>
+                    </tr>
+                    <tr>
+                      <td>"abc"@en--ltr</td>
+                      <td>"b"@en--ltr</td>
+                      <td>yes</td>
+                    </tr>
+                    <tr>
+                      <td>"abc"@en--ltr</td>
                       <td>"b"@en</td>
                       <td>no</td>
+                    </tr>
+                    <tr>
+                      <td>"abc"@en--ltr</td>
+                      <td>"z"</td>
+                      <td>yes</td>
                     </tr>
                   </tbody>
                 </table>
@@ -6485,7 +6799,11 @@ WHERE {
             <section id="string-literal-return-type">
               <h6>String Literal Return Type</h6>
               <p>Functions that return a string literal do so with the string literal of the same
-                kind as the first argument (literal with datatype <code>xsd:string</code>, literal with the same language tag).
+                kind as the first argument (literal with datatype <code>xsd:string</code>, literal 
+                with the same 
+                <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> 
+                and optional
+                <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>).
                 This includes <a href="#func-substr">SUBSTR</a>, <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.
               </p>
               <p>The function <a href="#func-concat">CONCAT</a> returns a string literal based on the
@@ -6498,7 +6816,8 @@ WHERE {
             <p>The <code>strlen</code> function corresponds to the XPath
               <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
               function and returns an
-              <code>xsd:integer</code> equal to the length in characters of the lexical form of the
+              <code>xsd:integer</code> equal to the length in characters of the 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> of the
               literal.</p>
             <div class="result">
               <table>
@@ -6528,8 +6847,10 @@ WHERE {
             <p>The <code>substr</code> function corresponds to the XPath 
               <a data-cite="XPATH-FUNCTIONS-31#func-substring">fn:substring</a> function and returns a literal of the
               same kind (literal with datatype <code>xsd:string</code>, literal with the same language tag)
-              as the <code>source</code> input parameter but with a lexical form derived from
-              the substring of the lexical form of the source.</p>
+              as the <code>source</code> input parameter but with a 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> 
+              derived from the substring of the lexical form of the source.
+            </p>
             <p>The arguments <code>startingLoc</code> and <code>length</code> may be derived types of
               xsd:integer.</p>
             <p>The index of the first character in a strings is 1.</p>
@@ -11862,10 +12183,11 @@ _:x rdf:type xsd:decimal .
                 <li>Remove concepts of plain and simple literals, in favor of explicit mentions of xsd:string</li>
                 <li>Update grammar for triple terms, reifiers, reified triples, annotation syntax, and triple term functions
                   in <a href="#sparqlGrammar" class="sectionRef"></a></li>
-                <li>Update grammar for initial text direction syntax and functions in <a href="#sparqlGrammar" class="sectionRef"></a></li>
+                <li>Update grammar for literal base direction syntax and functions in <a href="#sparqlGrammar" class="sectionRef"></a></li>
                 <li>Migrate XML Schema references to 1.1</li>
                 <li>Update references to XPath from 2.0 to 3.1</li>
                 <li>Add functions on triple terms to <a href="#func-triple-terms" class="sectionRef"></a></li>
+                <li>Add functions related to base direction and language tag `LANGDIR`, `hasLANG`, hasLANGDIR, `STRLANGDIR`</li>
             </ul>
         </li>
         <li>
