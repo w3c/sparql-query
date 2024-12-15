@@ -7596,15 +7596,23 @@ class="name">obj</span>)
       </section>
       <section id="FunctionMapping">
         <h3>XPath Constructor Functions</h3>
-        <p>SPARQL imports a subset of the XPath constructor functions defined in [[[XPATH-FUNCTIONS-31]]]
-          [[XPATH-FUNCTIONS-31]] in section <a data-cite="XPATH-FUNCTIONS-31#casting-from-primitive-to-primitive">17.1 Casting
-            from primitive types to primitive types</a>. SPARQL constructors include all of the XPath
-          constructors for the <a href="#operandDataTypes">SPARQL operand datatypes</a> plus the
-          <a href="#operandDataTypes">additional datatypes</a> imposed by the RDF data model. Casting
-          in SPARQL is performed by calling a constructor function for the target type on an operand of
-          the source type.</p>
-        <p>XPath defines only the casts from one XML Schema datatype to another. The remaining cast
-          is defined as follows:</p>
+        <p>
+          SPARQL imports a subset of the XPath constructor functions defined in
+          [[[XPATH-FUNCTIONS-31]]] [[XPATH-FUNCTIONS-31]] in
+          section 
+          <a data-cite="XPATH-FUNCTIONS-31#casting-from-primitive-to-primitive"
+          >17.1 Casting from primitive types to primitive types</a>.
+          SPARQL constructors include all of the XPath constructors for
+          the <a href="#operandDataTypes">SPARQL operand datatypes</a> plus
+          the <a href="#operandDataTypes">additional datatypes</a> imposed by
+          the RDF data model. Casting in SPARQL is performed by calling a
+          constructor function for the target type on an operand of the source
+          type.
+        </p>
+        <p>
+          XPath defines only the casts from one XML Schema datatype to another. The remaining cast
+          is defined as follows:
+        </p>
         <ul>
           <li>Casting an <span class="IRI type">IRI</span> to an <code>xsd:string</code> produces a
             <span class="IRI literal">literal</span> with a lexical value of the codepoints
