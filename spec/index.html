@@ -6281,10 +6281,11 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">LANGDIR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
             </pre>
             <p>
-              If the argument is a literal,
+              If the argument is a literal with <code>rdf:dirLangString</code> 
+              as its datatype IRI,
               the function <code>LANGDIR</code> returns the
               <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
-              of the literal with datatype <code>rdf:dirLangString</code>.
+              of this literal.
               Otherwise, the function returns the empty string.
             </p>
             <div class="result">
