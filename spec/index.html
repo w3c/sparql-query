@@ -6374,8 +6374,8 @@ WHERE {
             </pre>
             <p>
               The function `hasLANGDIR` returns <code>true</code> if the
-              argument is a literal with a language tag and a base direction.
-              Otherwise, the function returns <code>false</code>.
+              argument is a literal with a language
+              tag. Otherwise, the function returns false.
             </p>
             <p>If the argument is a literal, the function is equivalent to
               testing for the datatype of the literal being
@@ -6571,7 +6571,8 @@ WHERE {
               as specified by the arguments.
             </p>
             <p>
-              The argument `langTag` must not be an empty string.
+              The argument `langTag` MUST not be an empty string and SHOULD be a
+              a valid <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
             </p>
             <div class="result">
               <table>
@@ -6609,8 +6610,9 @@ WHERE {
               as specified by the arguments.
             </p>
             <p>
-              The argument `langTag` must not be an empty string. 
-              The argument `baseDirection` must be either `"ltr"` or `"rtl"`.
+              The argument `langTag` MUST not be an empty string and SHOULD be a
+              a valid <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
+              The argument `baseDirection` MUST be either `"ltr"` or `"rtl"`.
             </p>
             <div class="result">
               <table>
