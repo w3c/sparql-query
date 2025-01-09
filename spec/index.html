@@ -10386,7 +10386,7 @@ eval(D(G), Slice(L, start, length)) = Slice(eval(D(G), L), start, length)
                 <blockquote>
                 Any variable that is assigned to in the graph pattern of `EXISTS`/`NOT EXISTS` must not be in-scope.
                 This applies to `BIND`, variables introduced by `AS` in a `SELECT` clause, variables in a `VALUES`
-                clause, and variables intrucded by `AS` in `GROUP BY`.
+                clause, and variables introduced by `AS` in `GROUP BY`.
               </blockquote>
               <p>Extend the "in-scope" rules to include the variables in-scope from the current row:</p>
               <table style="border-collapse: collapse; border-color: #000000; border-spacing:5px; border-width: 1px">
@@ -10397,14 +10397,14 @@ eval(D(G), Slice(L, start, length)) = Slice(eval(D(G), L), start, length)
                   </tr>
                   <tr>
                     <td>`EXISTS` and `NOT EXISTS` filters </td>
-                    <td><code>v</code> is in-scope if it is in-scope for pattern to which the `FILTER` is applied.
+                    <td><code>v</code> is in-scope if it is in-scope for the pattern to which the `FILTER` is applied.
                     </td>
                   </tr>
                 </tbody>
               </table>
               <p class="note">
                 This restriction means that <a href="#defn_valuesinsertion">values inserted</a>
-                do not conflict with values assigned to varibales with the pattern.
+                do not conflict with values assigned to variables with the pattern.
               </p>
             </section>
 
@@ -10417,7 +10417,7 @@ eval(D(G), Slice(L, start, length)) = Slice(eval(D(G), L), start, length)
                 algebra expression of a query.
               </p>
               <p>
-                Renaming these variables does not change the results of evalauting
+                Renaming these variables does not change the results of evaluating
                 the project expresssion.
               </p>
               <div class="defn">
@@ -10439,7 +10439,7 @@ F(v) = v if v is not in PV</pre>
                 </pre>
                 <p>
                   The Projection Expression Variable Remapping yields an algrebra expression that
-                  evalautes to the same results as the Project argument. No variable of `ProjectMap(Project(A, PV))`
+                  evaluates to the same results as the Project argument. No variable of `ProjectMap(Project(A, PV))`
                   that is not in `PV` is mentioned anywhere else in the algebra expression for the query.
                 </p>
               </div>
@@ -10449,15 +10449,16 @@ F(v) = v if v is not in PV</pre>
               <div class="defn">
                 <b>Definition: <span id="defn_varrename" name="defn_varrename">Variable Remapping</span></b>
                 <p>
-                  For any algebra expression `X`, define the Variable Remapping `PrjMap(X)`of algebra expression `X`:
+                  For any algebra expression `X`, define the Variable Remapping `PrjMap(X)` 
+                  of algebra expression `X`:
                 </p>
                   <pre>PrjMap(X) = replace all project operations Project(P, PV) 
-                with ProjectMap(P,PV) for each projection in X.</pre>
+                with ProjectMap(P, PV) for each projection in X.</pre>
               </div>
               <p>
                 The outcome of `PrjMap` is independent of the order of replacement
                 (e.g. bottom-up or top-down).
-                Replacements may happen several times, depending on recusive order
+                Replacements may happen several times, depending on recursive order
                 but each time a replacement is made, the variable not used anywhere else.
               </p>
         
