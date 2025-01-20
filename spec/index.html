@@ -6196,11 +6196,14 @@ WHERE {
             <h5>LANG</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">LANG</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
             </pre>
-            <p>Returns the <span class="type langTag">language tag</span> of <code>ltrl</code>, if it
-              has one. It returns <code>""</code> if 
-              <code>ltrl</code> has no <span class="type langTag">language tag</span>. 
-              Note that the RDF data model does not include
-              literals with an empty <span class="type langTag">language tag</span>.</p>
+            <p>
+              Returns the <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+              of `ltrl`, if it has one. 
+              It returns an empty string if `ltrl` has no 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
+              Note that the RDF data model does not include literals with an empty 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
+            </p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
@@ -6210,8 +6213,7 @@ _:a  foaf:name       "Roberto"@es.
 _:a  foaf:mbox       &lt;mailto:bob@work.example&gt; .
               </pre>
               <div class="queryGroup">
-                <p>This query finds the Spanish <code>foaf:name</code> and
-                  <code>foaf:mbox</code>:</p>
+                <p>This query finds the Spanish `foaf:name` and `foaf:mbox`:</p>
                 <pre class="query nohighlight">
 PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
 SELECT ?name ?mbox
@@ -6281,12 +6283,12 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">LANGDIR</span> (<span class="type"><span class="type literal">literal</span></span> <span class="name">ltrl</span>)
             </pre>
             <p>
-              If the argument is a literal with <code>rdf:dirLangString</code> 
-              as its datatype IRI,
-              the function <code>LANGDIR</code> returns the
-              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
-              of this literal.
-              Otherwise, the function returns the empty string.
+              Returns the <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
+              of `ltrl`, if it has one. 
+              It returns an empty string if `ltrl` has no
+              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>.
+              Note that the RDF data model does not include literals with an empty 
+              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>.
             </p>
             <div class="result">
               <table>
@@ -6327,9 +6329,9 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">hasLANG</span> (<span class="type">RDF term</span> <span class="name">term</span>)
             </pre>
             <p>
-              The function `hasLANG` returns <code>true</code> if the
-              argument is a literal with a language
-              tag. Otherwise, the function returns <code>false</code>.
+              Returns `true` if the RDF term argument is a literal with a 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
+              Otherwise, the function returns `false`.
             </p>
             <p>If the argument is a literal, the function is equivalent to
               testing for the datatype of the literal being either
@@ -6374,9 +6376,9 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">xsd:string</span>  <span class="operator">hasLANGDIR</span> (<span class="type">RDF term</span> <span class="name">term</span>)
             </pre>
             <p>
-              The function `hasLANGDIR` returns <code>true</code> if the
-              argument is a literal with a language tag and a base direction.
-              Otherwise, the function returns <code>false</code>.
+              Returns `true` if the RDF term argument is a literal with a 
+              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>.
+              Otherwise, the function returns `false`.
             </p>
             <p>If the argument is a literal, the function is equivalent to
               testing for the datatype of the literal being
@@ -6420,17 +6422,20 @@ WHERE {
             <h5>DATATYPE</h5>
             <pre class="prototype nohighlight"> <span class="return"><span class="type IRI">iri</span></span>  <span class="operator">DATATYPE</span> (<span class="type"><span class="type">literal</span></span> <span class="name">literal</span>)
             </pre>
-            <p>Returns the <span class="type datatypeIRI">datatype IRI</span> of
-              the given literal.</p>
+            <p>
+              Returns the <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a> of the given literal.
+            </p>
             <div class="note">
               <p>
-                The datatype IRI of a literal with a
+                The <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>
+                of a literal with a
                 <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
                 and <em>no</em> <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
                 is <code>rdf:langString</code>.
               </p>
               <p>
-                The datatype IRI of a literal with a
+                 The <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>
+                of a literal with a
                 <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> 
                 and a
                 <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
@@ -6569,8 +6574,9 @@ WHERE {
             <p>The <code>STRLANG</code> function constructs a literal with
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
               and
-              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
-              as specified by the arguments.
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>,
+              as specified by the arguments, 
+              and a datatype IRI of `rdf:langString`.
             </p>
             <p>
               The argument `langTag` MUST not be an empty string and SHOULD be a
@@ -6608,11 +6614,11 @@ WHERE {
               The <code>STRLANGDIR</code> function constructs a literal with 
                <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>, 
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> and
-              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a> 
-              as specified by the arguments.
+              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>, 
+              as specified by the arguments, and a  datatype IRI of `rdf:dirLangString`.
             </p>
             <p>
-              The argument `langTag` MUST not be an empty string and SHOULD be a
+              The argument `langTag` MUST NOT be an empty string and SHOULD be a
               a valid <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
               The argument `baseDirection` MUST be either `"ltr"` or `"rtl"`.
             </p>
@@ -6660,7 +6666,7 @@ WHERE {
           <section id="func-uuid">
             <h5>UUID</h5>
             <pre class="prototype nohighlight"><span class="return">iri</span>  <span class="operator">UUID</span>()</pre>
-            <p>Return a fresh IRI from the [[[RFC4122]]]. Each call of <code>UUID()</code> returns a
+            <p>Returns a fresh IRI from the [[[RFC4122]]]. Each call of <code>UUID()</code> returns a
               different UUID. It must not be the "nil" UUID (all zeroes). The variant and version of
               the UUID is implementation dependent.</p>
             <div class="result">
@@ -6677,7 +6683,7 @@ WHERE {
           <section id="func-struuid">
             <h5>STRUUID</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class="operator">STRUUID</span>()</pre>
-            <p>Return a string that is the scheme-specific part of UUID. That is, as a literal with datatype <code>xsd:string</code>,
+            <p>Returns a string that is the scheme-specific part of UUID. That is, as a literal with datatype <code>xsd:string</code>,
               the result of generating a UUID, converting to a literal with datatype <code>xsd:string</code> and removing the
               initial <code>urn:uuid:</code>.</p>
             <div class="result">
@@ -7275,11 +7281,15 @@ WHERE {
             <h5>langMATCHES</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">langMatches</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">language-tag</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">language-range</span>)
             </pre>
-            <p>Returns <code>true</code> if <code>language-tag</code> (first argument) matches
-              <code>language-range</code> (second argument) per the basic filtering scheme defined in
+
+            <p>Returns `true` if the <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+              (first argument) matches <code>language-range</code> (second argument).
+              Otherwise, the function returns `false`.
+              Matching is performed according to the basic filtering scheme defined in
               [[RFC4647]] section 3.3.1. <code>language-range</code> is a basic language range per
               [[[RFC4647]]] [[RFC4647]] section 2.1. A <code>language-range</code> of "*" matches any
-              non-empty <code>language-tag</code> string.</p>
+              non-empty <code>language-tag</code> string. Otherwise, the function returns `false`.
+            </p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 PREFIX dc:       &lt;http://purl.org/dc/elements/1.1/&gt;
@@ -12184,14 +12194,19 @@ _:x rdf:type xsd:decimal .
         <li>
             Normative changes:
             <ul>
-                <li>Remove concepts of plain and simple literals, in favor of explicit mentions of xsd:string</li>
+                <li>Remove concepts of plain and simple literals, in favor of explicit mentions of `xsd:string`</li>
                 <li>Update grammar for triple terms, reifiers, reified triples, annotation syntax, and triple term functions
                   in <a href="#sparqlGrammar" class="sectionRef"></a></li>
-                <li>Update grammar for literal base direction syntax and functions in <a href="#sparqlGrammar" class="sectionRef"></a></li>
+                <li>Update grammar for literal <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a> syntax</li>
                 <li>Migrate XML Schema references to 1.1</li>
                 <li>Update references to XPath from 2.0 to 3.1</li>
-                <li>Add functions on triple terms to <a href="#func-triple-terms" class="sectionRef"></a></li>
-                <li>Add functions related to base direction and language tag `LANGDIR`, `hasLANG`, hasLANGDIR, `STRLANGDIR`</li>
+                <li>Add functions related to <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> to
+                  <a href="#func-triple-terms" class="sectionRef"></a>:
+                  `TRIPLE`, `isTRIPLE`, `SUBJECT`, `PREDICATE`, `OBJECT`.</li>
+                <li>Add functions related to 
+                  <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> and
+                  <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>:
+                  `LANGDIR`, `hasLANG`, hasLANGDIR, and `STRLANGDIR`</li>
             </ul>
         </li>
         <li>
