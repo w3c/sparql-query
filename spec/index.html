@@ -566,10 +566,16 @@ span.cancast:hover { background-color: #ffa;
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
             </li>
             <li>
+              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
+            </li>
+            <li>
               <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>
             </li>
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>
+            </li>
+            <li>
+              <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
             </li>
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>
@@ -6704,128 +6710,127 @@ WHERE {
             </div>
           </section>
         </section>
-        <section id="func-strings">
+
+        <section id="func-string">
           <h4>Functions on Strings</h4>
-          <section id="idp1887976">
-            <h5>Strings in SPARQL Functions</h5>
-            <section id="func-string">
-              <h6>String arguments</h6>
-              <p>Certain functions (e.g., <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>)
-                take a <code>string literal</code> as an argument and accept a literal with datatype <code>xsd:string</code>, or a literal with a
-                language tag. They then act on the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
-                of the literal.</p>
-              <p>The term <code>string literal</code> is used in the function descriptions for this.
-                Use of any other RDF term will cause a call to the function to raise an error.</p>
-            </section>
-            <section id="func-arg-compatibility">
-              <h6>Argument Compatibility Rules</h6>
-              <p>The functions <a href="#func-strstarts">STRSTARTS</a>, 
-                <a href="#func-strends">STRENDS</a>,
-                <a href="#func-contains">CONTAINS</a>, 
-                <a href="#func-strbefore">STRBEFORE</a> and 
-                <a href="#func-strafter">STRAFTER</a> take two
-                arguments. These arguments must be compatible otherwise invocation of one of these
-                functions raises an error.</p>
-              <p>Compatibility of two arguments is defined as:</p>
-              <ul>
-                <li>
-                  The arguments are literals with datatype <code>xsd:string</code>
-                </li>
-                <li>
-                  The arguments are literals with datatype <code>rdf:langString</code>
-                  and the same <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tags</a>
-                </li>
-                <li>
-                  The arguments are literals with datatype <code>rdf:dirLangString</code>
-                  and the same 
-                  <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
-                  and <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
-                </li>
-                <li>
-                  The first argument is a literal with datatype <code>rdf:langString</code> 
-                  and the second argument is a literal with datatype <code>xsd:string</code>
-                </li>
-                <li>
-                  The first argument is a literal with datatype <code>rdf:dirLangString</code>,
-                  and the second argument has datatype <code>xsd:string</code>
-                </li>
-              </ul>
-              <div class="result">
-                <table>
-                  <tbody>
-                    <tr>
-                      <th>Argument1</th>
-                      <th>Argument2</th>
-                      <th>Compatible?</th>
-                    </tr>
-                    <tr>
-                      <td>"abc"</td>
-                      <td>"b"</td>
-                      <td>yes</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"@en</td>
-                      <td>"b"</td>
-                      <td>yes</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"@en</td>
-                      <td>"b"@en</td>
-                      <td>yes</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"@fr</td>
-                      <td>"b"@ja</td>
-                      <td>no</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"</td>
-                      <td>"b"@ja</td>
-                      <td>no</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"</td>
-                      <td>"b"@en--ltr</td>
-                      <td>no</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"@en--ltr</td>
-                      <td>"b"@en--ltr</td>
-                      <td>yes</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"@en--ltr</td>
-                      <td>"b"@en</td>
-                      <td>no</td>
-                    </tr>
-                    <tr>
-                      <td>"abc"@en--ltr</td>
-                      <td>"z"</td>
-                      <td>yes</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p class="note">
-                <code>"abc"</code> is a                 
-                <a data-cite="RDF12-CONCEPTS#dfn-simple-literal">simple literal</a>
-                syntactic shorthand for <code>"abc"^^xsd:string</code>.
-              </p>
-            </section>
-            <section id="string-literal-return-type">
-              <h6>String Literal Return Type</h6>
-              <p>Functions that return a string literal do so with the string literal of the same
-                kind as the first argument (literal with datatype <code>xsd:string</code>, literal 
-                with the same 
-                <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> 
-                and optional
-                <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>).
-                This includes <a href="#func-substr">SUBSTR</a>, <a href="#func-strbefore">STRBEFORE</a> and <a href="#func-strafter">STRAFTER</a>.
-              </p>
-              <p>The function <a href="#func-concat">CONCAT</a> returns a string literal based on the
-                details of all its arguments.</p>
-            </section>
-          </section>
+          <p>Certain functions (e.g., <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>)
+            take a <dfn>string literal</dfn> 
+            as an argument. A string literal is one of
+          </p>
+          <ul>
+            <li>a literal with datatype <code>xsd:string</code></li>
+            <li>a literal with datatype <code>rdf:langString</code> and
+              with <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a></li>
+            <li>a literal with datatype <code>rdf:langString</code> and 
+              with both a <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+              and a <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a></li>
+          </ul>
+          <p>Use of any other RDF term will cause a call to the function to raise an error.</p>
+          <p class="note">
+            <code>"abc"</code> is a                 
+            <a data-cite="RDF12-CONCEPTS#dfn-simple-literal">simple literal</a>
+            syntactic shorthand for <code>"abc"^^xsd:string</code>.
+          </p>
+
+          <span id="string-literal-return-type"></span>
+          <p>The functions <a href="#func-substr">SUBSTR</a>, 
+            <a href="#func-strbefore">STRBEFORE</a>,
+            <a href="#func-strafter">STRAFTER</a>,
+            and <a href="#func-replace">REPLACE</a> return a <a>string literal</a> of the same
+            kind as their first argument.
+          </p>
+
+          <span id="func-arg-compatibility"></span>
+          <p>The functions <a href="#func-strstarts">STRSTARTS</a>, 
+            <a href="#func-strends">STRENDS</a>,
+            <a href="#func-contains">CONTAINS</a>, 
+            <a href="#func-strbefore">STRBEFORE</a>,
+            <a href="#func-strafter">STRAFTER</a> and 
+            <a href="#func-concat">CONCAT</a>
+            take two or more arguments. These arguments must be <dfn>argument compatible</dfn>; otherwise, invocation of the
+            function raises an error.</p>
+
+          <p>Two <a>string literal</a> arguments are <a>argument compatible</a> if:
+          <ul>
+            <li>
+              The arguments are literals with datatype <code>xsd:string</code>
+            </li>
+            <li>
+              The arguments are literals with datatype <code>rdf:langString</code>
+              and have the same <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+            </li>
+            <li>
+              The arguments are literals with datatype <code>rdf:dirLangString</code>
+              and have the same 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+              and the same <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
+            </li>
+            <li>
+              The first argument is a literal with datatype <code>rdf:langString</code> 
+              and the second argument is a literal with datatype <code>xsd:string</code>
+            </li>
+            <li>
+              The first argument is a literal with datatype <code>rdf:dirLangString</code>,
+              and the second argument has datatype <code>xsd:string</code>
+            </li>
+          </ul>
+          <div class="result">
+            <table>
+              <tbody>
+                <tr>
+                  <th>Argument1</th>
+                  <th>Argument2</th>
+                  <th>Compatible?</th>
+                </tr>
+                <tr>
+                  <td>"abc"</td>
+                  <td>"b"</td>
+                  <td>yes</td>
+                </tr>
+                <tr>
+                  <td>"abc"@en</td>
+                  <td>"b"</td>
+                  <td>yes</td>
+                </tr>
+                <tr>
+                  <td>"abc"@en</td>
+                  <td>"b"@en</td>
+                  <td>yes</td>
+                </tr>
+                <tr>
+                  <td>"abc"@fr</td>
+                  <td>"b"@ja</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <td>"abc"</td>
+                  <td>"b"@ja</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <td>"abc"</td>
+                  <td>"b"@en--ltr</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <td>"abc"@en--ltr</td>
+                  <td>"b"@en--ltr</td>
+                  <td>yes</td>
+                </tr>
+                <tr>
+                  <td>"abc"@en--ltr</td>
+                  <td>"b"@en</td>
+                  <td>no</td>
+                </tr>
+                <tr>
+                  <td>"abc"@en--ltr</td>
+                  <td>"z"</td>
+                  <td>yes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
           <section id="func-strlen">
             <h5>STRLEN</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:integer</span>  <span class="operator">STRLEN</span>(<span class="type">string literal</span> str)</pre>
@@ -6834,7 +6839,8 @@ WHERE {
               function and returns an
               <code>xsd:integer</code> equal to the length in characters of the 
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> of the
-              literal.</p>
+              literal.
+            </p>
             <div class="result">
               <table>
                 <tbody>
@@ -6844,6 +6850,10 @@ WHERE {
                   </tr>
                   <tr>
                     <td><code>strlen("chat"@en)</code></td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td><code>strlen("chat"@en--ltr)</code></td>
                     <td>4</td>
                   </tr>
                   <tr>
@@ -6862,14 +6872,16 @@ WHERE {
             </pre>
             <p>The <code>substr</code> function corresponds to the XPath 
               <a data-cite="XPATH-FUNCTIONS-31#func-substring">fn:substring</a> function and returns a literal of the
-              same kind (literal with datatype <code>xsd:string</code>, literal with the same language tag)
+              same kind (literal with datatype <code>xsd:string</code>, literal with the same language tag,
+              literal with the same language tag and base direction)
               as the <code>source</code> input parameter but with a 
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> 
               derived from the substring of the lexical form of the source.
             </p>
             <p>The arguments <code>startingLoc</code> and <code>length</code> may be derived types of
-              xsd:integer.</p>
-            <p>The index of the first character in a strings is 1.</p>
+              xsd:integer.
+            </p>
+            <p>The index of the first character in a string is 1.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -6906,8 +6918,9 @@ WHERE {
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">UCASE</span>(<span class="type">string literal</span> str)</pre>
             <p>The <code>UCASE</code> function corresponds to the XPath 
               <a data-cite="XPATH-FUNCTIONS-31#func-upper-case">fn:upper-case</a>
-              function. It returns a string literal
-              whose lexical form is the upper case of the lexcial form of the argument.</p>
+              function. It returns a <a>string literal</a>
+              whose lexical form is the upper case of the lexical form of the argument.
+            </p>
             <div class="result">
               <table>
                 <tbody>
@@ -6916,8 +6929,12 @@ WHERE {
                     <td>"FOO"</td>
                   </tr>
                   <tr>
-                    <td><code>ucase("foo"@en)</code></td>
+                    <td><code>ucase("Foo"@en)</code></td>
                     <td>"FOO"@en</td>
+                  </tr>
+                  <tr>
+                    <td><code>ucase("foo"@en--ltr)</code></td>
+                    <td>"FOO"@en--ltr</td>
                   </tr>
                   <tr>
                     <td><code>ucase("foo"^^xsd:string)</code></td>
@@ -6932,7 +6949,8 @@ WHERE {
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">LCASE</span>(<span class="type">string literal</span> str)</pre>
             <p>The <code>LCASE</code> function corresponds to the XPath 
               <a data-cite="XPATH-FUNCTIONS-31#func-lower-case">fn:lower-case</a> function.
-              It returns a string literal whose lexical form is the lower case of the lexcial form of the argument.</p>
+              It returns a string literal whose lexical form is the lower case of the lexical form of the argument.
+            </p>
             <div class="result">
               <table>
                 <tbody>
@@ -6941,8 +6959,11 @@ WHERE {
                     <td>"bar"</td>
                   </tr>
                   <tr>
-                    <td><code>lcase("BAR"@en)</code></td>
+                    <td><code>lcase("Bar"@en)</code></td>
                     <td>"bar"@en</td>
+                  </tr>
+                    <td><code>lcase("BAR"@en--ltr)</code></td>
+                    <td>"bar"@en--ltr</td>
                   </tr>
                   <tr>
                     <td><code>lcase("BAR"^^xsd:string)</code></td>
@@ -6955,18 +6976,24 @@ WHERE {
           <section id="func-strstarts">
             <h5>STRSTARTS</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">STRSTARTS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>STRSTARTS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-starts-with">fn:starts-with</a> function. The arguments must be
-              <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
-              raised.</p>
+            <p>The <code>STRSTARTS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-starts-with">fn:starts-with</a> function.
+              The arguments must be <a>argument compatible</a>,
+              otherwise an error is raised.
+            </p>
             <p>For such input pairs, the function returns true if the lexical form of
               <code>arg1</code> starts with the lexical form of <code>arg2</code>, otherwise it returns
-              false.</p>
+              false.
+            </p>
             <div class="result">
               <table>
                 <tbody>
                   <tr>
                     <td><code>strStarts("foobar", "foo")</code></td>
                     <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>strStarts("foobar", "abc")</code></td>
+                    <td>false</td>
                   </tr>
                   <tr>
                     <td><code>strStarts("foobar"@en, "foo"@en)</code></td>
@@ -6992,6 +7019,10 @@ WHERE {
                     <td><code>strStarts("foobar"@en, "foo"^^xsd:string)</code></td>
                     <td>true</td>
                   </tr>
+                  <tr>
+                    <td><code>strStarts("foobar", "foo"@en)</code></td>
+                    <td><i>error</i></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -6999,18 +7030,24 @@ WHERE {
           <section id="func-strends">
             <h5>STRENDS</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">STRENDS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>STRENDS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-ends-with">fn:ends-with</a> function. The arguments must be
-              <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
-              raised.</p>
+            <p>The <code>STRENDS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-ends-with">fn:ends-with</a> function.
+              The arguments must be <a>argument compatible</a>,
+              otherwise an error is raised.
+            </p>
             <p>For such input pairs, the function returns true if the lexical form of
               <code>arg1</code> ends with the lexical form of <code>arg2</code>, otherwise it returns
-              false.</p>
+              false.
+            </p>
             <div class="result">
               <table>
                 <tbody>
                   <tr>
                     <td><code>strEnds("foobar", "bar")</code></td>
                     <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>strEnds("foobar", "abc")</code></td>
+                    <td>false</td>
                   </tr>
                   <tr>
                     <td><code>strEnds("foobar"@en, "bar"@en)</code></td>
@@ -7036,6 +7073,10 @@ WHERE {
                     <td><code>strEnds("foobar"@en, "bar"^^xsd:string)</code></td>
                     <td>true</td>
                   </tr>
+                  <tr>
+                    <td><code>strEnds("foobar"@en, "bar"@en)</code></td>
+                    <td><i>error</i></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7043,7 +7084,10 @@ WHERE {
           <section id="func-contains">
             <h5>CONTAINS</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">CONTAINS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>CONTAINS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-contains">fn:contains</a>. The arguments must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is raised.</p>
+            <p>The <code>CONTAINS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-contains">fn:contains</a>.
+              The arguments must be <a>argument compatible</a>,
+              otherwise an error is raised.
+            </p>
             <div class="result">
               <table>
                 <tbody>
@@ -7075,6 +7119,10 @@ WHERE {
                     <td><code>contains("foobar"@en, "bar"^^xsd:string)</code></td>
                     <td>true</td>
                   </tr>
+                  <tr>
+                    <td><code>contains("foobar", "bar"@en)</code></td>
+                    <td><i>error</i></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7082,9 +7130,10 @@ WHERE {
           <section id="func-strbefore">
             <h5>STRBEFORE</h5>
             <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRBEFORE</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>STRBEFORE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-substring-before">fn:substring-before</a> function. The arguments
-              must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
-              raised.</p>
+            <p>The <code>STRBEFORE</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-substring-before">fn:substring-before</a> function.
+              The arguments must be <a>argument compatible</a>,
+              otherwise an error is raised.
+            </p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
               the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
@@ -7092,45 +7141,46 @@ WHERE {
               form of <code>arg1</code> that precedes the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the empty string.</p>
-            <p>If there is no such occurrence, an empty literal with datatype <code>xsd:string</code> is returned.</p>
+            <p>If there is no such occurrence, an empty literal with datatype <code>xsd:string</code> is returned.
+            </p>
             <div class="result">
               <table>
                 <tbody>
                   <tr>
-                    <td>strbefore("abc","b")</td>
-                    <td>"a"</td>
+                    <td>`strBefore("abc","b")`</td>
+                    <td>`"a"`</td>
                   </tr>
                   <tr>
-                    <td>strbefore("abc"@en,"bc")</td>
-                    <td>"a"@en</td>
+                    <td>`strBefore("abc"@en,"bc")`</td>
+                    <td>`"a"@en`</td>
                   </tr>
                   <tr>
-                    <td>strbefore("abc"@en,"b"@cy)</td>
-                    <td>error</td>
+                    <td>`strBefore("abc"@en,"b"@cy)`</td>
+                    <td><i>error</i></td>
                   </tr>
                   <tr>
-                    <td>strbefore("abc"^^xsd:string,"")</td>
-                    <td>""^^xsd:string</td>
+                    <td>`strBefore("abc"^^xsd:string,"")`</td>
+                    <td>`""^^xsd:string`</td>
                   </tr>
                   <tr>
-                    <td>strbefore("abc","xyz")</td>
-                    <td>""</td>
+                    <td>`strBefore("abc","xyz")`</td>
+                    <td>`""`</td>
                   </tr>
                   <tr>
-                    <td>strbefore("abc"@en, "z"@en)</td>
-                    <td>""</td>
+                    <td>`strBefore("abc"@en, "z"@en)`</td>
+                    <td>`""`</td>
                   </tr>
                   <tr>
-                    <td>strbefore("abc"@en, "z")</td>
-                    <td>""</td>
+                    <td>`strBefore("abc"@en, "z")`</td>
+                    <td>`""`</td>
                   </tr>
                   <tr>
-                    <td>strbefore("abc"@en, ""@en)</td>
-                    <td>""@en</td>
+                    <td>`strBefore("abc"@en, ""@en)`</td>
+                    <td>`""@en`</td>
                   </tr>
                   <tr>
-                    <td>strbefore("abc"@en, "")</td>
-                    <td>""@en</td>
+                    <td>`strBefore("abc"@en, "")`</td>
+                    <td>`""@en`</td>
                   </tr>
                 </tbody>
               </table>
@@ -7139,9 +7189,10 @@ WHERE {
           <section id="func-strafter">
             <h5>STRAFTER</h5>
             <pre class="prototype nohighlight"><span class="return">literal</span>  <span class="operator">STRAFTER</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
-            <p>The <code>STRAFTER</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-substring-after">fn:substring-after</a> function. The arguments
-              must be <a href="#func-arg-compatibility">argument compatible</a> otherwise an error is
-              raised.</p>
+            <p>The <code>STRAFTER</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-substring-after">fn:substring-after</a> function.
+              The arguments must be <a>argument compatible</a>,
+              otherwise an error is raised.
+            </p>
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
               the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
@@ -7155,66 +7206,40 @@ WHERE {
               <table>
                 <tbody>
                   <tr>
-                    <td>strafter("abc","b")</td>
-                    <td>"c"</td>
+                    <td>`strAfter("abc","b")`</td>
+                    <td>`"c"</td>
                   </tr>
                   <tr>
-                    <td>strafter("abc"@en,"ab")</td>
-                    <td>"c"@en</td>
+                    <td>`strAfter("abc"@en,"ab")`</td>
+                    <td>`"c"@en`</td>
                   </tr>
                   <tr>
-                    <td>strafter("abc"@en,"b"@cy)</td>
-                    <td>error</td>
+                    <td>`strAfter("abc"@en,"b"@cy)`</td>
+                    <td><i>error</i></td>
                   </tr>
                   <tr>
-                    <td>strafter("abc"^^xsd:string,"")</td>
-                    <td>"abc"^^xsd:string</td>
+                    <td>`strAfter("abc"^^xsd:string,"")`</td>
+                    <td>`"abc"^^xsd:string`</td>
                   </tr>
                   <tr>
-                    <td>strafter("abc","xyz")</td>
-                    <td>""</td>
+                    <td>`strAfter("abc","xyz")`</td>
+                    <td>`""`</td>
                   </tr>
                   <tr>
-                    <td>strafter("abc"@en, "z"@en)</td>
-                    <td>""</td>
+                    <td>`strAfter("abc"@en, "z"@en)`</td>
+                    <td>`""`</td>
                   </tr>
                   <tr>
-                    <td>strafter("abc"@en, "z")</td>
-                    <td>""</td>
+                    <td>`strAfter("abc"@en, "z")`</td>
+                    <td>`""`</td>
                   </tr>
                   <tr>
-                    <td>strafter("abc"@en, ""@en)</td>
-                    <td>"abc"@en</td>
+                    <td>`strAfter("abc"@en, ""@en)`</td>
+                    <td>`"abc"@en`</td>
                   </tr>
                   <tr>
-                    <td>strafter("abc"@en, "")</td>
-                    <td>"abc"@en</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          <section id="func-encode">
-            <h5>ENCODE_FOR_URI</h5>
-            <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class="operator">ENCODE_FOR_URI</span>(<span class="type">string literal</span> ltrl)</pre>
-            <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a
-              literal with datatype <code>xsd:string</code> with the lexical form obtained from the lexical form of its input after
-              translating reserved characters according to the <a data-cite="XPATH-FUNCTIONS-31#func-encode-for-uri">fn:encode-for-uri</a>
-              function.</p>
-            <div class="result">
-              <table>
-                <tbody>
-                  <tr>
-                    <td><code>encode_for_uri("Los Angeles")</code></td>
-                    <td><code>"Los%20Angeles"</code></td>
-                  </tr>
-                  <tr>
-                    <td><code>encode_for_uri("Los Angeles"@en)</code></td>
-                    <td><code>"Los%20Angeles"</code></td>
-                  </tr>
-                  <tr>
-                    <td><code>encode_for_uri("Los Angeles"^^xsd:string)</code></td>
-                    <td><code>"Los%20Angeles"</code></td>
+                    <td>`strAfter("abc"@en, "")`</td>
+                    <td>`"abc"@en`</td>
                   </tr>
                 </tbody>
               </table>
@@ -7223,26 +7248,33 @@ WHERE {
           <section id="func-concat">
             <h5>CONCAT</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">CONCAT</span>(<span class="type">string literal</span>, ..., <span class="type">string literal</span>)</pre>
-
-            <p>The <code>CONCAT</code> function takes zero or more arguments.</p>
+            <p>The <code>CONCAT</code> function takes zero or more arguments.
+              The arguments must be pair-wise <a>argument compatible</a>,
+              otherwise an error is raised.
+            </p>
             <p>
-              If zero arguments are given, the result is an empty string literal
-              without language tag.
+              If zero arguments are given, the result is an empty string of datatype `xsd:string`.
             </p>
             <p>
               If one argument is given, the result is that argument value.
             </p>
             <p>
-              If two or more arguments are given, the function returns a string
-              literal such that the
+              If two or more arguments are given, the function returns a
+              <a>string literal</a> such that the
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> 
               of the resulting string literal is obtained by concatenating the
               lexical forms of the arguments of the function using the
               <a data-cite="XPATH-FUNCTIONS-31#func-concat">fn:concat</a> function.
-              If all input literals are literals with the same language tag,
+              If all input literals are literals with the same 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+              and same <a>base direction</a>
               then the returned string literal is a literal with that language
-              tag.  Otherwise, the returned literal is a literal with
-              datatype <code>xsd:string</code> and no language tag.
+              tag and base direction.
+              If  all input literals are literals with the same 
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>,
+              but not all the same <a>base direction</a>,
+              the returned literal is a literal with that language tag and no
+              base direction.
             </p>
             <div class="result">
               <table>
@@ -7435,6 +7467,32 @@ WHERE {
                   <tr>
                     <td>replace("abab", "B.", "Z","i")</td>
                     <td>"aZb"</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section id="func-encode">
+            <h5>ENCODE_FOR_URI</h5>
+            <pre class="prototype nohighlight"><span class="return">xsd:string</span>  <span class="operator">ENCODE_FOR_URI</span>(<span class="type">string literal</span> ltrl)</pre>
+            <p>The <code>ENCODE_FOR_URI</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-encode-for-uri">fn:encode-for-uri</a> function. It returns a
+              literal with datatype <code>xsd:string</code> with the lexical form obtained from the lexical form of its input after
+              translating reserved characters according to the <a data-cite="XPATH-FUNCTIONS-31#func-encode-for-uri">fn:encode-for-uri</a>
+              function.</p>
+            <div class="result">
+              <table>
+                <tbody>
+                  <tr>
+                    <td><code>encode_for_uri("Los Angeles")</code></td>
+                    <td><code>"Los%20Angeles"</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>encode_for_uri("Los Angeles"@en)</code></td>
+                    <td><code>"Los%20Angeles"</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>encode_for_uri("Los Angeles"^^xsd:string)</code></td>
+                    <td><code>"Los%20Angeles"</code></td>
                   </tr>
                 </tbody>
               </table>
