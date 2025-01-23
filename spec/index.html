@@ -5674,15 +5674,30 @@ class="expression">expression, ....</span>)
             <pre class="prototype nohighlight">
               <span class="return">xsd:boolean</span> <span class="operator" style="text-transform: none;">RDFterm-equal</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)
             </pre>
-            <p>This function cannot be used directly in expressions. The purpose of this function is to define the semantics of the "=" operator when applied to two RDF terms that do not fall into any of the other, more concrete cases covered in the operator mapping table in Section&nbsp;<a href="#OperatorMapping" class="sectionRef"></a>.</p>
+
+            <p>This function cannot be used directly in expressions. The purpose
+              of this function is to define the semantics of the "=" operator when applied to
+              two RDF terms that do not fall into any of the other, more concrete cases
+              covered in the operator mapping table in Section
+              <a href="#OperatorMapping" class="sectionRef"></a>.
+            </p>
+
             <p>The function is defined as follows:</p>
             <ul>
-                <li>Returns TRUE if <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms, as defined below.</li>
-                <li>Produces a type error if <code>term1</code> and <code>term2</code> are both literals having the
-              same <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>; this datatype IRI is <em>not</em> in the
-              set of <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>; and the
-              <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical forms</a> of the two literals are different from one another.</li>
+
+                <li>Returns TRUE if <code>term1</code> and <code>term2</code>
+                  are <em>equal</em> RDF terms, as defined below.</li>
+
+                <li>Produces a type error if <code>term1</code> and <code>term2</code> are both
+                  literals having the same 
+                  <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>; 
+                  this datatype IRI is <em>not</em> in the set of
+                  <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>;
+                  and the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical forms</a> 
+                  of the two literals are different from one another.</li>
+
                 <li>Returns FALSE otherwise.</li>
+
             </ul>
             <p>
               <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms if any of the following is
