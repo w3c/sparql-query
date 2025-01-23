@@ -4657,11 +4657,17 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         </ul>
         <p>The following terms identify additional types used in SPARQL value tests:</p>
         <ul>
-          <li><span class="type numeric">numeric</span> denotes <code>literals</code> with
-            datatypes <code>xsd:integer</code>, <code>xsd:decimal</code>, <code>xsd:float</code>, and
-            <code>xsd:double</code>.</li>
-          <li><span class="type RDFterm">RDF term</span> denotes the types <code>IRI</code>,
-            <code>literal</code>, and <code>blank node</code>.</li>
+          <li><span class="type numeric">numeric</span> denotes
+            <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
+            with datatypes <code>xsd:integer</code>, <code>xsd:decimal</code>, <code>xsd:float</code>, or
+            <code>xsd:double</code>.
+          </li>
+          <li><span class="type RDFterm">RDF term</span> denotes the types
+            <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>,
+            <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>,
+            <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>, or
+            <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>.
+          </li>
           <li><span class="type variable">variable</span> denotes a SPARQL variable.</li>
         </ul>
         <p>The following types are derived from <span class="type numeric">numeric</span> types and
