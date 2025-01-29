@@ -347,7 +347,7 @@ span.cancast:hover { background-color: #ffa;
       <h2>Abstract</h2>
       <p>
         RDF is a directed, labeled graph data model for representing information in the
-        Web. This specification defines the syntax and semantics of the SPARQL query language for
+        Web. This specification defines the syntax and semantics of the SPARQL Query Language for
         RDF. SPARQL can be used to express queries across diverse data sources, whether the data is
         stored natively as RDF or viewed as RDF via middleware. SPARQL contains capabilities for
         querying required and optional graph patterns along with their conjunctions and
@@ -374,11 +374,11 @@ span.cancast:hover { background-color: #ffa;
         RDF is a directed, labeled graph data model for representing information in the Web. RDF is
         often used to represent, among other things, personal information, social networks, metadata
         about digital artifacts, as well as to provide a means of integration over disparate sources of
-        information. This specification defines the syntax and semantics of the SPARQL query language
+        information. This specification defines the syntax and semantics of the SPARQL Query Language
         for RDF.
       </p>
       <p>
-        The SPARQL query language for RDF is designed to meet the use cases and
+        The SPARQL Query Language for RDF is designed to meet the use cases and
         requirements identified by the RDF Data Access Working Group in [[RDF-DAWG-UC]],
         the SPARQL 1.1 Working Group in [[SPARQL-FEATURES]], and the RDF-star Working Group.
       </p>
@@ -390,7 +390,7 @@ span.cancast:hover { background-color: #ffa;
         </p>
         <p>
           This section of the document, <a href="#introduction">section 1</a>, introduces the SPARQL
-          query language specification. It presents the organization of this specification document and
+          Query Language specification. It presents the organization of this specification document and
           the conventions used throughout the specification.
         </p>
         <p>
@@ -5364,7 +5364,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       </section>
       <section id="SparqlOps">
         <h3>Function Definitions</h3>
-        <p>This section defines the operators and functions introduced by the SPARQL Query language.
+        <p>This section defines the operators and functions introduced by the SPARQL query language.
           The examples show the behavior of the operators as invoked by the appropriate grammatical
           constructs.</p>
         <section id="func-forms">
@@ -10510,30 +10510,49 @@ _:x rdf:type xsd:decimal .
       <h2>SPARQL Grammar</h2>
       <p>The SPARQL grammar covers both SPARQL Query and [[[SPARQL11-UPDATE]]].</p>
       <section id="queryString">
-        <h3>SPARQL Request String</h3>
+        <h3>SPARQL String</h3>
         <p>
-          A <dfn data-lt="SPARQLRequestString">SPARQL Request String</dfn> is
-          a <a>SPARQL Query String</a> or <a>SPARQL Update String</a> and is a Unicode character string
-          (c.f. section 6.1 String concepts of [[CHARMOD]]) in the language defined by the following
-          grammar.</p>
+          <span id="defn_SPARQLRequestString"></span>
+          A <dfn>SPARQL string</dfn> is an
+          <a data-cite="RDF12-CONCEPTS#dfn-rdf-string">RDF string</a> that
+          conforms to the grammar given in this section.
+        </p>
+        <p class="note">
+          An <a data-cite="RDF12-CONCEPTS#dfn-rdf-string">RDF string</a> is
+          a sequence of 
+          <a data-cite="I18N-GLOSSARY#dfn-code-point" class="lint-ignore">Unicode code points</a>
+          which are <a data-cite="I18N-GLOSSARY#dfn-scalar-value" class="lint-ignore">Unicode scalar values</a>.
+          Unicode scalar values do not include the
+          <a data-cite="I18N-GLOSSARY#dfn-surrogate" class="lint-ignore">surrogate code points</a>.
+        </p>
         <p>
-          A <dfn data-lt="SPARQLQueryString">SPARQL Query String</dfn> starts
-          at the <a href="#rQueryUnit">QueryUnit</a> production.</p>
+          <span id="defn_SPARQLQueryString"></span>
+          A <dfn>SPARQL query string</dfn> is a
+          <a>SPARQL string</a> that conforms to the grammar starting at 
+          the <a href="#rQueryUnit">QueryUnit</a> production.
+        </p>
         <p>
-          A <dfn data-lt="SPARQLUpdateString">SPARQL Update String</dfn> starts
-          at the <a href="#rUpdateUnit">UpdateUnit</a> production.</p>
-        <p>For compatibility with future versions of Unicode, the characters in this string may
+          <span id="defn_SPARQLUpdateString"></span>
+          A <dfn>SPARQL update string</dfn> is a 
+          <a>SPARQL string</a> that conforms to the grammar starting at 
+          the <a href="#rUpdateUnit">UpdateUnit</a> production.
+        </p>
+        <p>
+          For compatibility with future versions of Unicode, the characters in this string may
           include Unicode codepoints that are unassigned as of the date of this publication (see
           [[[UAX31]]] [[UAX31]] section 4 Pattern Syntax). For productions with excluded character
           classes (for example <code>[^&lt;&gt;'{}|^`]</code>), the characters are excluded from the
-          range <code>#x0 - #x10FFFF</code>.</p>
+          range <code>#x0 - #x10FFFF</code>.
+        </p>
       </section>
 
       <section id="codepointEscape">
         <h3>Codepoint Escape Sequences</h3>
-        <p>A SPARQL Query String is processed for codepoint escape sequences before parsing by the
+        <p>
+          A <a>SPARQL string</a> is processed for codepoint escape sequences before parsing by the
           grammar defined in EBNF below. The codepoint escape sequences for a SPARQL query string
-          are:</p>
+          are:
+        </p>
         <span class="doc-ref" id="table68"></span>
         <table title="Codepoint escapes">
           <colgroup>
@@ -10551,7 +10570,9 @@ _:x rdf:type xsd:decimal .
                 <a href="#HEX">HEX</a> <a href="#HEX">HEX</a>
               </td>
               <td>A Unicode code point in the range U+0 to U+FFFF inclusive corresponding to the
-                encoded hexadecimal value.</td>
+                encoded hexadecimal value, excluding U+D800 to U+DFFF, the 
+                <a data-cite="I18N-GLOSSARY#dfn-surrogate">surrogate code points</a>.
+              </td>
             </tr>
             <tr>
               <td>
@@ -10559,7 +10580,9 @@ _:x rdf:type xsd:decimal .
                 <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a> <a href="#HEX">HEX</a>
               </td>
               <td>A Unicode code point in the range U+0 to U+10FFFF inclusive corresponding to the
-                encoded hexadecimal value.</td>
+                encoded hexadecimal value, excluding U+D800 to U+DFFF, the 
+                <a data-cite="I18N-GLOSSARY#dfn-surrogate">surrogate code points</a>.
+                
             </tr>
           </tbody>
         </table>
@@ -10572,13 +10595,16 @@ _:x rdf:type xsd:decimal .
           &lt;ab\u00E9xy&gt;        # Codepoint 00E9 is Latin small e with acute - é
           \u03B1:a            # Codepoint x03B1 is Greek small alpha - α
           a\u003Ab            # a:b -- codepoint x3A is colon</pre>
-        <p>Codepoint escape sequences can appear anywhere in the query string. They are processed
+        <p>
+          Codepoint escape sequences can appear anywhere in the query string. They are processed
           before parsing based on the grammar rules and so may be replaced by codepoints with
-          significance in the grammar, such as "<code>:</code>" marking a prefixed name.</p>
+          significance in the grammar, such as "<code>:</code>" marking a prefixed name.
+        </p>
         <p>These escape sequences are not included in the grammar below. Only escape sequences for
           characters that would be legal at that point in the grammar may be given. For example, the
           variable "<code>?x\u0020y</code>" is not legal (<code>\u0020</code> is a space and is not
-          permitted in a variable name).</p>
+          permitted in a variable name).
+        </p>
       </section>
       <section id="whitespace">
         <h3>White Space</h3>
@@ -10626,22 +10652,22 @@ _:x rdf:type xsd:decimal .
           <li><code><a href="#rDeleteData">DELETE DATA</a></code></li>
           <li>a <code><a href="#rDeleteClause">DeleteClause</a></code></li>
         </ul>
-        <p>in a <a data-cite="SPARQL11-UPDATE#terminology">SPARQL Update
+        <p>in a <a data-cite="SPARQL11-UPDATE#terminology">SPARQL update
             request</a>.
         </p>
         <p>
           <a data-cite="RDF12-CONCEPTS#dfn-blank-node-identifier">Blank node identifiers</a>
-          are scoped to the <a>SPARQL Request String</a> in which they occur.
+          are scoped to the <a>SPARQL string</a> in which they occur.
           Different uses of the same blank node identifier in a request
           string refer to the same blank node. Fresh blank nodes are generated for each request;
           blank nodes can not be referenced by identifier across requests.</p>
         <p>The same blank node identifier can not be used in:</p>
         <ul>
           <li>two separate basic graph patterns in a SPARQL Query</li>
-          <li>two <code><a href="#rModify">WHERE</a></code> clauses within a single SPARQL Update
+          <li>two <code><a href="#rModify">WHERE</a></code> clauses within a single SPARQL update
             request</li>
           <li>two <code><a href="#rInsertData">INSERT DATA</a></code> operations within a single
-            SPARQL Update request</li>
+            SPARQL update request</li>
         </ul>
         <p>Note that the same blank node identifier can occur in different
           <a href="#rQuadPattern">QuadPattern</a> clauses in a [[[SPARQL11-UPDATE]]] request.</p>
@@ -10720,8 +10746,8 @@ _:x rdf:type xsd:decimal .
           <li>Escape sequences are case sensitive.</li>
           <li>When tokenizing the input and choosing grammar rules, the longest match is chosen.</li>
           <li>The SPARQL grammar is LL(1) when the rules with uppercased names are used as terminals.</li>
-          <li>There are two entry points into the grammar: <code>QueryUnit</code> for SPARQL queries,
-            and <code>UpdateUnit</code> for SPARQL Update requests.</li>
+          <li>There are two entry points into the grammar: <code>QueryUnit</code> for the SPARQL query language
+            and <code>UpdateUnit</code> for the SPARQL update language.</li>
           <li>In signed numbers, no white space is allowed between the sign and the number.
             The <code><a href="#rAdditiveExpression">AdditiveExpression</a></code> grammar rule allows for this by
             covering the two cases of an expression followed by a signed number. These 
@@ -12123,7 +12149,7 @@ _:x rdf:type xsd:decimal .
     <section id="conformance">
       <h2>Conformance</h2>
       <p>See Section <a href="#grammar">19 SPARQL Grammar</a> regarding conformance of 
-        <a>SPARQL Query strings</a>, and section 
+        <a>SPARQL query strings</a>, and section 
         <a href="#QueryForms">16 Query Forms</a> for conformance of query results. 
         See section <a href="#mediaType">22. Internet Media Type</a> for conformance 
         to the application/sparql-query media type.</p>
