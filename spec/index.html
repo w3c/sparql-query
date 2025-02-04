@@ -50,26 +50,6 @@
     </script>
 
     <style>
-      /* @import url("local.css"); */
-      /* Inlined to make preview work */
-
-/* CSS For SPARQL Query */
-
-/* In-progress working draft artifacts - to be removed eventually */
-  .issue	{ background-color: #fdd;
-                  font-size: 88% ; }
-  .add		{ background-color: #7fff7f }
-  .remove	{ background-color: #ff7f7f }
-ul.issue	{}
-  .issueBlock	{ margin: 1em 1em 1em 2.5em ; /* Top Right Bottom Left */
-                  padding: 1ex;
-	          /*overflow: auto;*/
-                  page-break-inside: avoid ; }
-  .issueTopic	{ font-weight: bold ; }
-
- .todo		{ font-size: 80% ; color: #444 ; }
-p.todo		{}
-
 .wgNote	{ border: 0.2em solid red;
       padding: 0.5em ;
       margin: 1em 1em 1em 2em ; }
@@ -81,18 +61,16 @@ p.todo		{}
            margin-top: 0.1ex ; margin-bottom: 0.1ex ;
          }
 
-/* Misc WD stuff */
-span.cvs-id     {color: gray; font-size:80%; display: block; }
 
 /* == General Tag Treatment == */
-pre		 { margin: 1em 4em 1em 2.5em ; /* Top Right Bottom Left */
+pre		           { margin: 1em 4em 1em 2.5em ; /* Top Right Bottom Left */
                    padding: 1ex;
-	           /*overflow: auto;*/
+                   /*overflow: auto;*/
                    page-break-inside: avoid ; }
 
 /* Tables */
-table, td	{ text-align: left; }
-td, th   { border-style: solid;
+table, td	      { text-align: left; }
+td, th          { border-style: solid;
                   border-width: 1px;
                   border-color: black;
                   border-bottom-color: gray;
@@ -128,7 +106,6 @@ pre.prototype	{ background-color:#f7f8ff;
                   background-color: #F0F8F8 ; }
 div.defn p	{ margin-top: 1ex ; margin-bottom: 1.5ex ;}
 div.defn ul	{ margin-top: 1ex ; margin-bottom: 1.5ex ; }
-@media print	{ .defn { margin: 1em 1em 1em 1em ; } }
 span.definedTerm	{font-weight: bold;}
 
 div.grammarExtract
@@ -138,14 +115,6 @@ div.grammarExtract
                   page-break-inside: avoid ;
                   background-color: #F8F8F8 ;
                   width: fit-content; }
-
-pre.codeBlock  { font-family:monospace ; page-break-inside: avoid ; 
-                 margin: 0 ;
-	         margin-right: 2ex ;
-                 border: thin solid #888888; }
-
-
-
 
 /* Examples */
 pre.data	{ border: thin solid #88AA88;
@@ -277,24 +246,6 @@ span.cancast:hover { background-color: #ffa;
 .SPARQLoperator	{ background-color: #FFFFbf; /* yellow */
           }
 
-.owlnonterminal {
-    font-weight: bold;
-    font-family: sans-serif;
-    font-size: 95%;
-}
-.owlgrammar {
-    margin-top: 1ex;
-    margin-bottom: 1ex;
-    padding-left: 1ex;
-    padding-right: 1ex;
-    padding-top: 1ex;
-    padding-bottom: 0.6ex;
-    border: 1px dashed #2f6fab;
-    font-family: monospace;
-}
-
-
-
       /* ReSpec */
       dfn { font-style: normal ; }
       /* ReSpec */
@@ -303,14 +254,6 @@ span.cancast:hover { background-color: #ffa;
 
       div.constraint,
       div.issue,
-      div.notice     { margin-left: 2em; }
-
-      ol.enumar      { list-style-type: decimal; }
-      ol.enumla      { list-style-type: lower-alpha; }
-      ol.enumlr      { list-style-type: lower-roman; }
-      ol.enumua      { list-style-type: upper-alpha; }
-      ol.enumur      { list-style-type: upper-roman; }
-
 
       div.exampleInner pre { margin-left: 1em;
                              margin-top: 0em; margin-bottom: 0em}
@@ -328,7 +271,9 @@ span.cancast:hover { background-color: #ffa;
       div.exampleHeader { font-weight: bold;
                           margin: 4px}
 
-    @media (max-width: 850px) {
+      @media print	{ .defn { margin: 1em 1em 1em 1em ; } }
+
+      @media (max-width: 850px) {
         table th, table td { font-size: 12px; padding: 3px 4px;}
         .result table tr td:nth-child(2n), .result table  tr th:nth-child(2n) { overflow-wrap: anywhere; min-width: 90px; }
         div.result { overflow-x: scroll; width: fit-content; max-width: 100%; }
@@ -8031,7 +7976,7 @@ class="name">obj</span>)
             int = <a data-cite="XMLSCHEMA11-2#dt-integer">xsd:integer</a><br>
             dT = <a data-cite="XMLSCHEMA11-2#dt-dateTime">xsd:dateTime</a><br>
             str = <a data-cite="XMLSCHEMA11-2#dt-string">xsd:string</a><br>
-            <span class="rdfDM">IRI</span> = <span class="type IRI">IRI</span></p>
+            IRI = <a data-cite="RDF12-CONCEPTS#iri">IRI</a>
         </blockquote>
         <table title="Casting table" class="casting" 
                style="border-spacing: 1px; border-width:1px">
@@ -8178,7 +8123,7 @@ class="name">obj</span>)
                                                                                         "Cast boolean to boolean? Yes">Y</span></td>
             </tr>
             <tr>
-              <th><span class="cancast rdfDM" title="IRI">IRI</span></th>
+              <th><span class="cancast" title="IRI">IRI</span></th>
               <td class="castY" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
                                                                                         "Cast IRI to string? Yes">Y</span></td>
               <td class="castN" style="vertical-align: middle; text-align: center;"><span class="cancast rdfDM" title=
