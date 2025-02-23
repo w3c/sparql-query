@@ -511,7 +511,8 @@ span.cancast:hover { background-color: #ffa;
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
             </li>
             <li>
-              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>
+              <!-- Resolve clash with i18-glossery --> 
+              <a data-cite="RDF12-CONCEPTS#dfn-base-direction" class="lint-ignore">base direction</a> 
             </li>
             <li>
               <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>
@@ -5669,6 +5670,94 @@ class="expression">expression, ....</span>)
         </section>
         <section id="func-rdfTerms">
           <h4>Functions on RDF Terms</h4>
+
+          <section id="func-sameTerm">
+            <h5>sameTerm</h5>
+            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">sameTerm</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)</pre>
+            <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
+              defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
+
+            <p class="ednote" style="background-color: #EEE">
+              Finalize when  
+              <a href="https://github.com/w3c/rdf-concepts/issues/154">RDF Concepts issue 154</a>
+              has been resolved.
+            </p>
+
+            <p>
+              <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms 
+              if any of the following is true:</p>
+            <ul>
+              <li>
+                <span class="name">term1</span> is an <span class="IRI type">IRI</span> 
+                and <span class="name">term2</span> is an <span class="IRI type">IRI</span>
+                such that these two <span class="IRI type">IRIs</span> are equal as per 
+                the notion of <a data-cite="RDF12-CONCEPTS#dfn-iri-equality">IRI equality</a> of
+                [[RDF12-CONCEPTS]].
+              </li>
+              <li>
+                <span class="name">term1</span> is a <span class="literal type">literal</span> and
+                <span class="name">term2</span> is a <span class="literal type">literal</span> such
+                that these two <span class="literal type">literals</span> are equal as per the
+                notion of
+                <a data-cite="RDF12-CONCEPTS#dfn-literal-term-equality">Literal term equality</a>
+                of [[RDF12-CONCEPTS]].
+              </li>
+              <li>
+                <span class="name">term1</span> and <span class="name">term2</span> are the same
+                <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>
+              </li>
+              <li>
+                <span class="name">term1</span> and <span class="name">term2</span> are both
+                <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> and the
+                <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a>,
+                <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a>, and
+                <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> components are pair-wise the same term.
+              </li>
+            </ul>
+            
+            <div class="result">
+              <table>
+                <tbody>
+                  <tr>
+                    <td><code>sameTerm(&lt;http://example/&gt;, &lt;http://example/&gt;)</code></td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameTerm(&lt;http://example/&gt;, &lt;https://example/&gt;)</code></td>
+                    <td>false</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameTerm("abc", "abc")</code></td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameTerm("abc"@en, "abc")</code></td>
+                    <td>false</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameTerm("abc"@en, "abc"@EN)</code></td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameTerm("abc"@en--rtl, "abc"@en)</code></td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameTerm(2, 2.0)</code></td>
+                    <td>false</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameTerm(2, "2"^^xsd:integer)</code></td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameTerm(2, "02"^^xsd:integer)</code></td>
+                    <td>false</td>
+                  </tr>
+              </table>
+            </div>
+
+          </section>
           <section id="func-RDFterm-equal">
             <h5>RDFterm-equal</h5>
             <pre class="prototype nohighlight">
@@ -5682,51 +5771,117 @@ class="expression">expression, ....</span>)
               <a href="#OperatorMapping" class="sectionRef"></a>.
             </p>
 
-            <p>The function is defined as follows:</p>
-            <ul>
+            <p class="ednote" style="background-color: #EEE">
+              This will be renamed <code>sameValue</code></p>
 
-                <li>Returns TRUE if <code>term1</code> and <code>term2</code>
-                  are <em>equal</em> RDF terms, as defined below.</li>
+            <ol>
+              <li>If one or both arguments are known to be ill-typed, 
+                then produce a type error.
+              </li>
+              <li>Returns TRUE if <code>term1</code> and <code>term2</code>
+                are <em>equal</em> RDF terms, as defined below.
+              </li>
+              <li>If the SPARQL processor can determine the values of both terms
+                and it can determine the values are equal, then return TRUE.
+              </li>
+              <li>If the SPARQL processor can determine that the values of the terms
+                can not be equal, the return FALSE.</li>
+            </ol>
 
-                <li>Produces a type error if <code>term1</code> and <code>term2</code> are both
-                  literals having the same 
-                  <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>; 
-                  this datatype IRI is <em>not</em> in the set of
-                  <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>;
-                  and the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical forms</a> 
-                  of the two literals are different from one another.</li>
+            <div class="ednote" style="background-color: #EEE" >
+              <p>If the function is to become callable as 
+                <em>`sameValue(term1, term2)`</em>, add a rule 
+                that if there is an
+                <a href="#OperatorMapping">operation mapping</a> for "="
+                for the arguments, an implementation MUST return the same boolean value
+                from <em>`sameValue(term1, term2)`</em>.
+              </p>
+            </div>
+            <div class="ednote" style="background-color: #EEE" >
+              <p>
+                The treatment of `NaN` can not be consistent with both "same term means same value" 
+                and "`fn:numeric-equal(NaN, NaN)` is false". So it is an arbitrary choice with
+                arguments for all three possible choices.
+                For pattern matching, `"NaN"^^xsd:double` must match itself and
+                `"NaN"^^xsd:double` does not pattern match `"NaN"^^xsd:float`.
+              </p>
+              <p>
+                The operator mapping for `=` goes to `fn:numeric-compare` which is false.
+                The `sameValue` result could be made an error (or false) as a special case.
+              </p>
+              <p>
+                `"NaN"^^xsd:double = "NaN"^^xsd:float` is also handled by the
+                operator mapping and is false &ndash; `xsd:float` is promoted to `xsd:double`.
+                A reading of IEEE 754 is that `"NaN"^^xsd:double` and `"NaN"^^xsd:float`
+                are the same term also suggests that `sameValue` is true.
+              </p>
+              <p>
+                <b>Proposal 1</b>: follow "sameTerm means sameValue" and `sameValue("NaN"^^xsd:double, "NaN"^^xsd:double)`
+                and `sameValue("NaN"^^xsd:float, "NaN"^^xsd:float)` are <i>true</i>s.
+                <br/>
+                <b>Proposal 2</b>: 
+                follow "there is one NaN" so `sameValue("NaN"^^xsd:double, "NaN"^^xsd:float)` is <i>true</i>.
+              </p>
+              <p>
+                Ref</i>: <a href="https://www.w3.org/TR/xmlschema11-2/#dt-specialvalue">XSD schema 1.1 special values</a>
+                "are members of the datatype's ·value space·. ". It is not clear whether "special value" literals
+                added to the value spaces of `xsd:double` and `xsd:float` are "the same" literals.
+              <p>
+                <i>Ref</i>: <a href="https://en.wikipedia.org/wiki/IEEE_754#Special_values">(wikipedia) IEEE_754 Special Values</a>
+                <i>IEEE 754 specifies a special value called "Not a Number" (NaN)</i>.
+                suggests they are the same.
+                </p>
+            </div>
 
-                <li>Returns FALSE otherwise.</li>
+            <div id="sameValue-ill-typed" class="note">
+              <p>A literal is 
+                <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>
+                if the datatype is one handled by the SPARQL processor and
+                the lexical form is not in
+                <a data-cite="RDF12-CONCEPTS#dfn-lexical-space">the lexical space</a>
+                of the datatype.
+              </p>
+              <p>
+                The function `RDFterm-equal` returns true or false in cases where
+                the SPARQL processor can determine that the values of the
+                arguments are equal or are not equal. If the SPARQL processor
+                can not be sure, it returns `error`.
+              </p>
+            </div>
+            <div id="sameValue-NaN" class="note">
+              <p>
+                The <a href="#OperatorMapping">Operator Mapping</a> for "`=`""
+                is the function
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">fn:numeric-equal`</a>
+                which returns `false` when comparing arguments involving `NaN`.
+                However, `sameTerm("NaN"^^xsd:double, "NaN"^^xsd:double)` is true;
+                `sameValue` treats "NaN" as the "same value".
+                `sameTerm("NaN"^^xsd:double, "NaN"^^xsd:float)` is `true`.
+              </p>
+            </div>
 
-            </ul>
-            <p>
-              <code>term1</code> and <code>term2</code> are <em>equal</em> RDF terms if any of the following is
-              true:</p>
-            <ul>
-              <li>
-                <span class="name">term1</span> is an <span class="IRI type">IRI</span> and <span class="name">term2</span> is an <span class="IRI type">IRI</span>
-                such that these two <span class="IRI type">IRIs</span> are equal as per the notion of <a data-cite="RDF12-CONCEPTS#dfn-iri-equality">IRI equality</a> of
-                [[RDF12-CONCEPTS]].
-              </li>
-              <li>
-                <span class="name">term1</span> is a <span class="literal type">literal</span> and
-                <span class="name">term2</span> is a <span class="literal type">literal</span> such that
-                these two <span class="literal type">literals</span> are equal as per the notion of <a data-cite="RDF12-CONCEPTS#dfn-literal-term-equality">Literal term equality</a> of
-                [[RDF12-CONCEPTS]].
-              </li>
-              <li>
-                <span class="name">term1</span> is a <span class="literal type">literal</span> and
-                <span class="name">term2</span> is a <span class="literal type">literal</span>
-                such that the <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>
-                of each of these two literals is in the set of
-                <a data-cite="RDF12-CONCEPTS#dfn-recognized-datatype-iri">recognized datatype IRIs</a>
-                and both literals have the same <a data-cite="RDF12-CONCEPTS#dfn-literal-value">literal value</a>.
-              </li>
-              <li>
-                <span class="name">term1</span> and <span class="name">term2</span> are the same
-                <span class="bnode type">blank node</span>.
-              </li>
-            </ul>
+            <div class="ednote" style="background-color: #EEE">
+              <p>
+              @@ Describe error as extension
+              </p>
+              <p>
+                Possible examples:
+                `sameValue("abc"^^xsd:string, "IV"^^ex:romanNumeral)`
+                <br/>
+                A processor providing only the datatypes required by this spec
+                returns `error` because it can not know that `ex:romanNumeral`
+                is a number.
+              </p>
+              <p>
+                sameValue("32"^^x:meters, "3200"^^x:centimeters)
+              </p>
+              <p>
+                sameValue("abc"^^xsd:integer, "123"^^xsd:integer) -- `error` by (1)
+                argument 1 is
+                <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>.
+              </p>
+            </div>
+
             <p id="func-RDFterm-equal-note1" class="note">
               An extended implementation may support additional datatypes for literals. An
               implementation processing a query that tests for equivalence of literals with non-recognized datatypes
@@ -5734,198 +5889,48 @@ class="expression">expression, ....</span>)
               is unable to determine whether or not the values of the compared literals are equivalent. For example, an
               unextended implementation will produce an error when testing either <span class="queryExcerpt"><code>"iiii"^^my:romanNumeral =
                   "iv"^^my:romanNumeral</code></span> or <span class="queryExcerpt"><code>"iiii"^^my:romanNumeral !=
-                  "iv"^^my:romanNumeral</code></span>.</p>
-            <div class="exampleGroup">
-              <pre class="data nohighlight">
-PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
+                  "iv"^^my:romanNumeral</code></span>.
+            </p>
 
-_:a  foaf:name       "Alice".
-_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
-
-_:b  foaf:name       "Ms A.".
-_:b  foaf:mbox       &lt;mailto:alice@work.example&gt; .
-              </pre>
-              <div class="queryGroup">
-                <p>This query finds the people who have multiple <code>foaf:name</code> triples:</p>
-                <pre class="query nohighlight">
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-SELECT ?name1 ?name2
-WHERE {
-    ?x foaf:name  ?name1 ;
-       foaf:mbox  ?mbox1 .
-    ?y foaf:name  ?name2 ;
-       foaf:mbox  ?mbox2 .
-    FILTER (?mbox1 = ?mbox2 &amp;& ?name1 != ?name2)
-}</pre>
-                <p>Query result:</p>
-                <div class="result">
-                  <table class="resultTable">
-                    <tbody>
-                      <tr>
-                        <th>name1</th>
-                        <th>name2</th>
-                      </tr>
-                      <tr>
-                        <td>"Alice"</td>
-                        <td>"Ms A."</td>
-                      </tr>
-                      <tr>
-                        <td>"Ms A."</td>
-                        <td>"Alice"</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+            <p>Examples:</p>
+            <div class="result">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>RDFterm-equal</th>
+                    <th>Results</th>
+                  </tr>
+                  <tr>
+                    <td><code>sameValue(2, +2)</code></td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameValue(2.0, 2)</code></td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>&nbsp;</code></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><code>sameValue(4, "iv"^^my:romanNumeral)</code></td>
+                    <td>error or extension</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameValue("NaN"^^xsd:double, "NaN"^^xsd:double)</code></td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>sameValue("NaN"^^xsd:double, "NaN"^^xsd:float)</code></td>
+                    <td>true</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p>In this query for documents that were annotated at a specific date and time (New
-              Year's Day 2005, measures in timezone +00:00), the RDF terms are not the same, but have
-              equivalent values according to their datatype:</p>
-            <div class="exampleGroup">
-              <pre class="data nohighlight">
-PREFIX a:          &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
-PREFIX dc:         &lt;http://purl.org/dc/elements/1.1/&gt;
 
-_:b   a:annotates   &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
-_:b   dc:date       "2004-12-31T19:00:00-05:00"^^&lt;http://www.w3.org/2001/XMLSchema#dateTime&gt; .</pre>
-              <div class="queryGroup">
-                <pre class="query nohighlight">
-PREFIX a:      &lt;http://www.w3.org/2000/10/annotation-ns#&gt;
-PREFIX dc:     &lt;http://purl.org/dc/elements/1.1/&gt;
-PREFIX xsd:    &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
-SELECT ?annotates
-WHERE {
-    ?annot  a:annotates  ?annotates .
-    ?annot  dc:date      ?date .
-    FILTER ( ?date = xsd:dateTime("2005-01-01T00:00:00Z") ) 
-}
-                </pre>
-                <div class="result">
-                  <table class="resultTable">
-                    <tbody>
-                      <tr>
-                        <th>annotates</th>
-                      </tr>
-                      <tr>
-                        <td>&lt;http://www.w3.org/TR/rdf-sparql-query/&gt;</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
           </section>
-          <section id="func-sameTerm">
-            <h5>sameTerm</h5>
-            <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">sameTerm</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)</pre>
-            <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
-              defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
-            <div class="exampleGroup">
-              <pre class="data nohighlight">
-PREFIX foaf:       &lt;http://xmlns.com/foaf/0.1/&gt;
 
-_:a  foaf:name       "Alice".
-_:a  foaf:mbox       &lt;mailto:alice@work.example&gt; .
-
-_:b  foaf:name       "Ms A.".
-_:b  foaf:mbox       &lt;mailto:alice@work.example&gt; .
-              </pre>
-              <div class="queryGroup">
-                <p>This query finds the people who have multiple <code>foaf:name</code> triples:</p>
-                <pre class="query nohighlight">
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-SELECT ?name1 ?name2
-WHERE {
-    ?x foaf:name  ?name1 ;
-       foaf:mbox  ?mbox1 .
-    ?y foaf:name  ?name2 ;
-       foaf:mbox  ?mbox2 .
-    FILTER (sameTerm(?mbox1, ?mbox2) &amp;& !sameTerm(?name1, ?name2))
-}
-                </pre>
-                <p>Query result:</p>
-                <div class="result">
-                  <table class="resultTable">
-                    <tbody>
-                      <tr>
-                        <th>name1</th>
-                        <th>name2</th>
-                      </tr>
-                      <tr>
-                        <td>"Alice"</td>
-                        <td>"Ms A."</td>
-                      </tr>
-                      <tr>
-                        <td>"Ms A."</td>
-                        <td>"Alice"</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <p>Unlike <span class="operator">RDFterm-equal</span>, <span class="operator">sameTerm</span> can be used to test for non-equivalent <span class="type typedLiteral">typed literals</span> with unsupported datatypes:</p>
-            <div class="exampleGroup">
-              <pre class="data nohighlight">
-PREFIX :          &lt;http://example.org/WMterms#&gt;
-PREFIX t:         &lt;http://example.org/types#&gt;
-
-_:c1  :label        "Container 1" .
-_:c1  :weight       "100"^^t:kilos .
-_:c1  :displacement  "100"^^t:liters .
-
-_:c2  :label        "Container 2" .
-_:c2  :weight       "100"^^t:kilos .
-_:c2  :displacement  "85"^^t:liters .
-
-_:c3  :label        "Container 3" .
-_:c3  :weight       "85"^^t:kilos .
-_:c3  :displacement  "85"^^t:liters .
-              </pre>
-              <div class="queryGroup">
-                <pre class="query nohighlight">
-PREFIX  :      &lt;http://example.org/WMterms#&gt;
-PREFIX  t:     &lt;http://example.org/types#&gt;
-
-SELECT ?aLabel1 ?bLabel
-WHERE { 
-   ?a  :label        ?aLabel .
-   ?a  :weight       ?aWeight .
-   ?a  :displacement ?aDisp .
-
-   ?b  :label        ?bLabel .
-   ?b  :weight       ?bWeight .
-   ?b  :displacement ?bDisp .
-
-   FILTER ( sameTerm(?aWeight, ?bWeight) &amp;& !sameTerm(?aDisp, ?bDisp)) 
-}
-                </pre>
-                <div class="result">
-                  <table class="resultTable">
-                    <tbody>
-                      <tr>
-                        <th>aLabel</th>
-                        <th>bLabel</th>
-                      </tr>
-                      <tr>
-                        <td>"Container 1"</td>
-                        <td>"Container 2"</td>
-                      </tr>
-                      <tr>
-                        <td>"Container 2"</td>
-                        <td>"Container 1"</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <p>The test for boxes with the same weight may also be done with the '=' operator
-              (<a href="#func-RDFterm-equal" class="SPARQLoperator">RDFterm-equal</a>) as the test for
-              <code>"100"^^t:kilos = "85"^^t:kilos</code> will result in an error, eliminating that
-              potential solution.</p>
-          </section>
           <section id="func-isIRI">
             <h5>isIRI</h5>
             <pre class="prototype nohighlight">
@@ -5978,6 +5983,7 @@ WHERE {
               </div>
             </div>
           </section>
+
           <section id="func-isBlank">
             <h5>isBLANK</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">isBLANK</span> (<span class="type"><span class="type">RDF term</span></span> <span class="name">term</span>)</pre>
@@ -7227,12 +7233,12 @@ WHERE {
               <a data-cite="XPATH-FUNCTIONS-31#func-concat">fn:concat</a> function.
               If all input literals are literals with the same 
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
-              and same <a>base direction</a>
+              and same <a class="lint-ignore">base direction</a>
               then the returned string literal is a literal with that language
               tag and base direction.
               If  all input literals are literals with the same 
               <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>,
-              but not all the same <a>base direction</a>,
+              but not all the same <a class="lint-ignore">base direction</a>,
               the returned literal is a literal with that language tag and no
               base direction.
             </p>
@@ -12255,7 +12261,7 @@ _:x rdf:type xsd:decimal .
                   <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>:
                   `LANGDIR`, `hasLANG`, hasLANGDIR, and `STRLANGDIR`</li>
                 <li>Define parser input as being an 
-                  <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF string</a>. 
+                  <a data-cite="RDF12-CONCEPTS#dfn-rdf-string">RDF string</a>. 
                   Exclude Unicode surrogates from Unicode escape sequences.</li>
                 <li>Remove concepts of plain and simple literals, in favor of explicit mentions of `xsd:string`</li>
                 <li>Migrate XML Schema references to 1.1</li>
