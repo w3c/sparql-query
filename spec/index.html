@@ -5672,19 +5672,19 @@ class="expression">expression, ....</span>)
           <h4>Functions on RDF Terms</h4>
 
           <section id="func-sameTerm">
-            <h5>SameTerm</h5>
+            <h5>sameTerm</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">sameTerm</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)</pre>
             <p>Returns TRUE if <code>term1</code> and <code>term2</code> are the same RDF term as
               defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
             <p>
-              |term1| and |term2| are 
-              <a data-cite="RDF12-CONCEPTS#dfn-rdf-term-equality">equal RDF terms</a>
+              |term1| and |term2| are the
+              <a data-cite="RDF12-CONCEPTS#dfn-rdf-term-equality">same RDF terms</a>
               if one of the following is true:
             </p>
             <ul>
               <li><code>term1</code> and <code>term2</code> are 
-                <a data-cite="RDF12-CONCEPTS#iri">IRIs</a> that are 
-                <a data-cite="RDF12-CONCEPTS#dfn-iri-equality">equal as IRIs</a>.
+                <a data-cite="RDF12-CONCEPTS#iri">IRIs</a> that are the
+                <a data-cite="RDF12-CONCEPTS#dfn-iri-equality">same as IRIs</a>.
               </li>
               <li><code>term1</code> and <code>term2</code> are 
                 <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a> that are 
@@ -5729,7 +5729,7 @@ class="expression">expression, ....</span>)
                   </tr>
                   <tr>
                     <td><code>sameTerm("abc"@en--rtl, "abc"@en)</code></td>
-                    <td>true</td>
+                    <td>false</td>
                   </tr>
                   <tr>
                     <td><code>sameTerm(2, 2.0)</code></td>
@@ -5749,7 +5749,7 @@ class="expression">expression, ....</span>)
           </section>
           <section id="func-sameValue">
             <span id="func-RDFterm-equal"><!-- obsolete id --></span>
-            <h5>SameValue</h5>
+            <h5>sameValue</h5>
             <pre class="prototype nohighlight">
               <span class="return">xsd:boolean</span> <span class="operator" style="text-transform: none;">sameValue</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)
             </pre>
@@ -5761,31 +5761,37 @@ class="expression">expression, ....</span>)
               <a href="#OperatorMapping" class="sectionRef"></a>.
             </p>
 
+            <p class="ednote" style="background-color: #EEE">
+              Revise for triple terms.
+              <br/>
+              Consider adding non-literal `=` to operator mapping table.
+            </p>
+
+            <p>The result of this function is determined by going through the following steps.</p>
             <ol>
-              <li>If one or both arguments are known to be ill-typed, 
+              <li>If <code>term1</code> and <code>term2</code> are
+                <a data-cite="RDF12-CONCEPTS#dfn-rdf-term-equality">equal RDF terms</a>,
+                the return TRUE.
+              </li>
+              <li>If both arguments are literals,
+                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
+                and one or both arguments are known to be ill-typed, 
                 then produce a type error.
               </li>
-              <li>Returns TRUE if <code>term1</code> and <code>term2</code> are
-                <a data-cite="RDF12-CONCEPTS#dfn-rdf-term-equality">equal RDF terms</a>.
+              <li>If <code>term1</code> and <code>term2</code> both 
+                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
+                and the SPARQL processor can determine the values are equal,
+                then return TRUE.
               </li>
-              <li>If the SPARQL processor can determine the values of both terms
-                and it can determine the values are equal, then return TRUE.
+              <li>If <code>term1</code> and <code>term2</code> both 
+                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
+                and the SPARQL processor can determine the values can not be equal,
+                then return FALSE.
               </li>
-              <li>If the SPARQL processor can determine that the values of the terms
-                can not be equal, the return FALSE.
+              <li>Otherwise, return FALSE.
               </li>
             </ol>
-
-            <div class="ednote" style="background-color: #EEE" >
-              <p>If the function is to become callable as 
-                <em>`sameValue(term1, term2)`</em>, add a rule 
-                that if there is an
-                <a href="#OperatorMapping">operation mapping</a> for "="
-                for the arguments, an implementation MUST return the same boolean value
-                from <em>`sameValue(term1, term2)`</em>.
-              </p>
-            </div>
-            <div class="ednote" style="background-color: #EEE" >
+            <div class="ednote" style="background-color: #EEE">
               <p>
                 The treatment of `NaN` can not be consistent with both "same term means same value" 
                 and "`fn:numeric-equal(NaN, NaN)` is false". So it is an arbitrary choice with
@@ -5824,23 +5830,23 @@ class="expression">expression, ....</span>)
             <div id="sameValue-ill-typed" class="note">
               <p>A literal is 
                 <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>
-                if the datatype is one handled by the SPARQL processor and
-                the lexical form is not in
-                <a data-cite="RDF12-CONCEPTS#dfn-lexical-space">the lexical space</a>
+                if its datatype is handled by the SPARQL processor and
+                its lexical form is not in the
+                <a data-cite="RDF12-CONCEPTS#dfn-lexical-space">lexical space</a>
                 of the datatype.
               </p>
               <p>
-                The function `sameValue` returns true or false in cases where
-                the SPARQL processor can determine that the values of the
-                arguments are equal or are not equal. If the SPARQL processor
-                can not be sure, it returns `error`.
+                If the two arguments are literals, the function `sameValue` 
+                returns `true` or `false` in cases where the SPARQL processor
+                can determine that the values of these literals are equal or are not equal. 
+                If the SPARQL processor can not be sure, it returns `error`.
               </p>
             </div>
             <div id="sameValue-NaN" class="note">
               <p>
-                The <a href="#OperatorMapping">Operator Mapping</a> for "`=`""
+                The <a href="#OperatorMapping">Operator Mapping</a> for "`=`"
                 is the function
-                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">fn:numeric-equal`</a>
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">`fn:numeric-equal`</a>
                 which returns `false` when comparing arguments involving `NaN`.
                 However, `sameTerm("NaN"^^xsd:double, "NaN"^^xsd:double)` is true;
                 `sameValue` treats "NaN" as the "same value".
@@ -12257,7 +12263,7 @@ _:x rdf:type xsd:decimal .
         <li>
             Editorial changes:
             <ul>
-                <li>Give a actual function signature to <a href="#func-sameValue" class="sectionRef"></a></li>
+                <li>Give an actual function signature to <a href="#func-sameValue" class="sectionRef"></a></li>
                 <li>Improve wording of blank nodes in <a href="#templatesWithBNodes" class="sectionRef"></a></li>
                 <li>Improve display on mobile</li>
                 <li>Move `sameValue` (was `RDFterm-equal`) and `sameTerm` to <a href="#func-rdfTerms" class="sectionRef"></a></li>
