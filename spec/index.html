@@ -243,8 +243,7 @@ table.casting	{ font-size: x-small; }
 span.cancast:hover { background-color: #ffa;
                      color: black; }
 
-.SPARQLoperator	{ background-color: #FFFFbf; /* yellow */
-          }
+.SPARQLoperator	{ font-weight: 600; }
 
       /* ReSpec */
       dfn { font-style: normal ; }
@@ -4665,6 +4664,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         <p>SPARQL language extensions may treat additional types as being derived from XML schema
           datatypes.</p>
       </section>
+
       <section id="evaluation">
         <h3>Filter Evaluation</h3>
         <p>SPARQL provides a subset of the functions and operators defined by 
@@ -4826,6 +4826,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             with a datatype of <code>xsd:boolean</code> and a lexical value of "false".</p>
         </section>
       </section>
+
       <section id="OperatorMapping">
         <h3>Operator Mapping</h3>
         <p>The SPARQL grammar identifies a set of operators 
@@ -4925,7 +4926,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <th colspan="5" class="subHeading" scope="col">Logical Connectives</th>
             </tr>
             <tr>
-              <th>
+              <th><span id="logical-or-operator"/>
                 <a href="#rConditionalOrExpression" title="ConditionalOrExpression">A <span class="FAOTtoken">||</span> B</a>
               </th>
               <td>
@@ -4934,7 +4935,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>
                 xsd:boolean <a href="#ebv-arg">(EBV)</a>
               </td>
-              <td class="sparqlOp">
+              <td class="sparqlOp"><span id="logical-and-operator"/>
                 <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(A, B)
               </td>
               <td>xsd:boolean</td>
@@ -5275,32 +5276,91 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <th colspan="5" class="subHeading" scope="col">SPARQL Tests</th>
             </tr>
             <tr>
-              <th>
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a>
-              </th>
-              <td><span class="type RDFterm">RDF term</span></td>
-              <td><span class="type RDFterm">RDF term</span></td>
-              <td class="xpathOp">
-                <a href="#func-sameValue" class="SPARQLoperator">sameValue</a>(A, B)
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a></span></td>
+              <td>
+                <a href="#func-sameTerm">sameTerm</a>(A, B)
               </td>
               <td>xsd:boolean</td>
             </tr>
             <tr>
-              <th>
-                <a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a>
-              </th>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank Node</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank Node</a></span></td>
+              <td>
+                <a href="#func-sameTerm">sameTerm</a>(A, B)
+              </td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td>
+                ( A.subject = B.subject ) <a href="#logical-and-operator" class="SPARQLoperator">&&</a><br/>
+                ( A.predicate = B.predicate ) <a href="#logical-and-operator" class="SPARQLoperator">&&</a><br/>
+                ( A.object = B.object )
+              </td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a></span></td>
+              <td><a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a href="#func-sameTerm">sameTerm</a>(A, B))</td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank Node</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-blank-node">Blank Node</a></span></td>
+              <td>
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a href="#func-sameTerm">sameTerm</a>(A, B)
+              </td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td>
+                ( A.subject != B.subject ) <a href="#logical-or-operator" class="SPARQLoperator">||</a><br/>
+                ( A.predicate != B.predicate ) <a href="#logical-or-operator" class="SPARQLoperator">||</a><br/>
+                ( A.object != B.object )
+              </td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">=</span> B</a></th>
               <td><span class="type RDFterm">RDF term</span></td>
               <td><span class="type RDFterm">RDF term</span></td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a href="#func-sameValue" class="SPARQLoperator">sameValue</a>(A, B))
+                <a href="#func-sameValue">sameValue</a>(A, B)
+              </td> 
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">!=</span> B</a></th>
+              <td><span class="type RDFterm">RDF term</span></td>
+              <td><span class="type RDFterm">RDF term</span></td>
+              <td class="xpathOp">
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a href="#func-sameValue">sameValue</a>(A, B))
               </td>
               <td>xsd:boolean</td>
             </tr>
           </tbody>
         </table>
-        <div id="ebv-arg"></div>xsd:boolean function arguments marked with "(EBV)" are
+        <p>
+        <span id="ebv-arg"></span>xsd:boolean function arguments marked with "(EBV)" are
         coerced to xsd:boolean by evaluating the <a href="#ebv">effective boolean value of that
           argument.</a>
+        </p>
+        <p>
+          Operators <span class="SPARQLoperator">=</span> and <span class="SPARQLoperator">!=</span> applied to 
+          <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>
+          apply the operator to each of the components.
+        </p>
         <section id="operatorExtensibility">
           <h4>Operator Extensibility</h4>
           <p>SPARQL language extensions may provide additional associations between operators and
@@ -5314,6 +5374,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
                 BY</code></a> clause.</p>
         </section>
       </section>
+
       <section id="SparqlOps">
         <h3>Function Definitions</h3>
         <p>This section defines the operators and functions introduced by the SPARQL query language.
@@ -5678,7 +5739,7 @@ class="expression">expression, ....</span>)
               defined in [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]; returns FALSE otherwise.</p>
             <p>
               |term1| and |term2| are the
-              <a data-cite="RDF12-CONCEPTS#dfn-rdf-term-equality">same RDF terms</a>
+              <a data-cite="RDF12-CONCEPTS#dfn-rdf-term-equality">same RDF term</a>
               if one of the following is true:
             </p>
             <ul>
@@ -5756,77 +5817,61 @@ class="expression">expression, ....</span>)
 
             <p>This function cannot be used directly in expressions. The purpose
               of this function is to define the semantics of the "=" operator when applied to
-              two RDF terms that do not fall into any of the other, more concrete cases
+              two RDF terms that do not fall into the concrete cases
               covered in the operator mapping table in Section
               <a href="#OperatorMapping" class="sectionRef"></a>.
             </p>
 
-            <p class="ednote" style="background-color: #EEE">
-              Revise for triple terms.
-              <br/>
-              Consider adding non-literal `=` to operator mapping table.
-            </p>
-
             <p>The result of this function is determined by going through the following steps.</p>
+
             <ol>
               <li>If <code>term1</code> and <code>term2</code> are
                 <a data-cite="RDF12-CONCEPTS#dfn-rdf-term-equality">equal RDF terms</a>,
-                the return TRUE.
-              </li>
-              <li>If both arguments are literals,
-                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
-                and one or both arguments are known to be ill-typed, 
-                then produce a type error.
-              </li>
-              <li>If <code>term1</code> and <code>term2</code> both 
-                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
-                and the SPARQL processor can determine the values are equal,
                 then return TRUE.
               </li>
-              <li>If <code>term1</code> and <code>term2</code> both 
+              <li>If <code>term1</code> or <code>term2</code> is an
+                <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a> or a
+                <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>
+                then return FALSE.
+              <li>If <code>term1</code> and <code>term2</code> are both
+                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
+                and one or both of these literals has a datatype that is
+                not handled by the SPARQL processor,
+                then produce a type error.
+              </li>
+              <li>If <code>term1</code> and <code>term2</code> are both
+                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
+                and one or both of these literals are known to be
+                <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>,
+                then produce a type error.
+              </li>
+              <li>
+                `"NaN"^^xsd:double` and `"NaN"^^xsd:float` are considered to 
+                represent the same value.
+                If <code>term1</code> and <code>term2</code> are
+                both "NaN" for either xsd:double or xsd:float, then 
+                return TRUE.
+              </li>
+              <li>If <code>term1</code> and <code>term2</code> are both 
+                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
+                and the SPARQL processor can determine that their the values are equal,
+                then return TRUE.
+              </li>
+              <li>If <code>term1</code> and <code>term2</code> are both 
                 <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
                 and the SPARQL processor can determine the values can not be equal,
                 then return FALSE.
               </li>
-              <li>Otherwise, return FALSE.
+              <li>
+                If <code>term1</code> and <code>term2</code> are both 
+                <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>,
+                apply the function `sameValue` pair-wise to each of the components.
+                Return TRUE if each component pair returns TRUE;
+                produce a type error if any component pair produces an error;
+                otherwise return FALSE.
               </li>
+              <li>Otherwise, return FALSE.</li>
             </ol>
-            <div class="ednote" style="background-color: #EEE">
-              <p>
-                The treatment of `NaN` can not be consistent with both "same term means same value" 
-                and "`fn:numeric-equal(NaN, NaN)` is false". So it is an arbitrary choice with
-                arguments for all three possible choices.
-                For pattern matching, `"NaN"^^xsd:double` must match itself and
-                `"NaN"^^xsd:double` does not pattern match `"NaN"^^xsd:float`.
-              </p>
-              <p>
-                The operator mapping for `=` goes to `fn:numeric-compare` which is false.
-                The `sameValue` result could be made an error (or false) as a special case.
-              </p>
-              <p>
-                `"NaN"^^xsd:double = "NaN"^^xsd:float` is also handled by the
-                operator mapping and is false &ndash; `xsd:float` is promoted to `xsd:double`.
-                A reading of IEEE 754 is that `"NaN"^^xsd:double` and `"NaN"^^xsd:float`
-                are the same term also suggests that `sameValue` is true.
-              </p>
-              <p>
-                <b>Proposal 1</b>: follow "sameTerm means sameValue" and `sameValue("NaN"^^xsd:double, "NaN"^^xsd:double)`
-                and `sameValue("NaN"^^xsd:float, "NaN"^^xsd:float)` are <i>true</i>s.
-                <br/>
-                <b>Proposal 2</b>: 
-                follow "there is one NaN" so `sameValue("NaN"^^xsd:double, "NaN"^^xsd:float)` is <i>true</i>.
-              </p>
-              <p>
-                Ref</i>: <a href="https://www.w3.org/TR/xmlschema11-2/#dt-specialvalue">XSD schema 1.1 special values</a>
-                "are members of the datatype's ·value space·. ". It is not clear whether "special value" literals
-                added to the value spaces of `xsd:double` and `xsd:float` are "the same" literals.
-              <p>
-                <i>Ref</i>: <a href="https://en.wikipedia.org/wiki/IEEE_754#Special_values">(wikipedia) IEEE_754 Special Values</a>
-                <i>IEEE 754 specifies a special value called "Not a Number" (NaN)</i>.
-                suggests they are the same.
-                </p>
-            </div>
-
             <div id="sameValue-ill-typed" class="note">
               <p>A literal is 
                 <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>
@@ -5847,31 +5892,19 @@ class="expression">expression, ....</span>)
                 The <a href="#OperatorMapping">Operator Mapping</a> for "`=`"
                 is the function
                 <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">`fn:numeric-equal`</a>
-                which returns `false` when comparing arguments involving `NaN`.
-                However, `sameTerm("NaN"^^xsd:double, "NaN"^^xsd:double)` is true;
-                `sameValue` treats "NaN" as the "same value".
-                `sameTerm("NaN"^^xsd:double, "NaN"^^xsd:float)` is `true`.
+                which is defined to return `false` when comparing arguments involving `NaN`.
+                However, `sameTerm("NaN"^^xsd:double, "NaN"^^xsd:double)` is true.
+                The function `sameValue` defines `sameValue("NaN"^^xsd:double, "NaN"^^xsd:double)`
+                to be true because the arguments are the same element of the value space.
               </p>
-            </div>
-            <div id="sameValue-old-name" class="note">
-              <p>This function was previously called `RDFterm-equal`.</p>
-            </div>
-
-            <div class="ednote" style="background-color: #EEE">
               <p>
-                A SPARQL processor may support datatypes beyond those required.
-                Suppose `ex:romanNumeral` is the datatype IRI
-                <a href="https://en.wikipedia.org/wiki/Roman_numerals">roman numerals</a>
-                which are integer numbers. The SPARQL processor may then be able
-                to detemine if two literals have the same value, for example,
-                `sameValue(4, "IV"^^ex:romanNumeral)` can then return `true`
-                because argument bot represent the value 4.
-                For `sameValue("abc"^^xsd:string, "IV"^^ex:romanNumeral)`
-                can return `false` because `xsd:string` and `ex:romanNumeral`
-                have different value spaces so the arguments can not be the same value.
+                `sameValue` treats the values of `"NaN"^^xsd:double` and `"NaN"^^xsd:float` as being
+                the same. `sameValue("NaN"^^xsd:double, "NaN"^^xsd:float)` is `true`.
               </p>
             </div>
-
+            <p id="sameValue-zeros" class="note">
+              For xsd:double and xsd:float, `+0`, `-0` and `0` are same value.
+            </p>
             <p id="func-sameValue-note1" class="note">
               An extended implementation may support additional datatypes for literals. An
               implementation processing a query that tests for equivalence of literals with non-recognized datatypes
@@ -5891,22 +5924,6 @@ class="expression">expression, ....</span>)
                     <th>Results</th>
                   </tr>
                   <tr>
-                    <td><code>sameValue(2, +2)</code></td>
-                    <td>true</td>
-                  </tr>
-                  <tr>
-                    <td><code>sameValue(2.0, 2)</code></td>
-                    <td>true</td>
-                  </tr>
-                  <tr>
-                    <td><code>sameValue(2, "2")</code></td>
-                    <td>false</td>
-                  </tr>
-                  <tr>
-                    <td><code>sameValue(4, "iv"^^my:romanNumeral)</code></td>
-                    <td>error, or true by extension</td>
-                  </tr>
-                  <tr>
                     <td><code>sameValue(1e10, "NaN"^^xsd:double)</code></td>
                     <td>false</td>
                   </tr>
@@ -5918,9 +5935,16 @@ class="expression">expression, ....</span>)
                     <td><code>sameValue("NaN"^^xsd:double, "NaN"^^xsd:float)</code></td>
                     <td>true</td>
                   </tr>
+                  <tr>
+                    <td><code>sameValue( &lt;&lt(:s :p 123)&gt;&gt , &lt;&lt(:s :p 123.0)&gt;&gt )</td>
+                    <td>true</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
+            <p id="sameValue-old-name" class="note">
+              This function was called `RDFterm-equal` up until SPARQL 1.1.
+            </p>
           </section>
 
           <section id="func-isIRI">
