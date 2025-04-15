@@ -1,0 +1,519 @@
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX sparql:  <http://www.w3.org/ns/sparql#>
+PREFIX dc:      <http://purl.org/dc/terms/>
+PREFIX owl:     <http://www.w3.org/2002/07/owl#>
+
+<http://www.w3.org/ns/sparql#> a owl:Ontology ;
+     dc:date "2025-06-30" ;
+     dc:description "Terms used by SPARQL 1.2" ;
+     owl:versionInfo ""
+     .
+
+##
+
+sparql:Function rdf:type rdfs:Class .
+sparql:Operator rdf:type rdfs:Class .
+sparql:FunctionalForm rdf:type rdfs:Class .
+sparql:Aggregate rdf:type rdfs:Class .
+
+## Operators
+
+sparql:plus rdf:type sparql:Operator ;
+    dc:description "This operator adds two numeric expressions and returns their sum." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:subtract rdf:type sparql:Operator ;
+    dc:description "This operator subtracts the second numeric expression from the first and returns the result." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:multiple rdf:type sparql:Operator ;
+    dc:description "This operator multiplies two numeric expressions and returns the product." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:divide rdf:type sparql:Operator ;
+    dc:description "This operator divides the first numeric expression by the second and returns the result." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:unary-minus rdf:type sparql:Operator ;
+    dc:description "This unary operator returns the negation of a numeric expression." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:unary-plus rdf:type sparql:Operator ;
+    dc:description "This unary operator returns the numeric expression unchanged, acting primarily as a syntactic indicator." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:equals rdf:type sparql:Operator ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+   
+sparql:not-equals rdf:type sparql:Operator ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+   
+sparql:greaterThan rdf:type sparql:Operator ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+   
+sparql:lessThat rdf:type sparql:Operator ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+   
+sparql:greaterThanOrEquals rdf:type sparql:Operator ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+   
+sparql:lessThanOrEquals rdf:type sparql:Operator ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:operator-and rdf:type sparql:Operator ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:operator-or rdf:type sparql:Operator ;
+   dc:description "";
+   rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+   .
+
+sparql:operator-not rdf:type sparql:Operator ;
+   dc:description "";
+   rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+   .
+
+# Section: Functional Forms
+
+sparql:bound rdf:type sparql:FunctionalForm ;
+    dc:description "This form checks whether a variable is bound (assigned a value) in the current solution." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-bound> ;
+    .
+
+sparql:if rdf:type sparql:FunctionalForm ;
+    dc:description "This conditional form evaluates a test expression and returns one of two provided expressions based on the boolean outcome of the test." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-if> ;
+    .
+
+sparql:coalesce rdf:type sparql:FunctionalForm ;
+    dc:description "This form returns the first non-error, non-unbound value from a sequence of expressions." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-coalesce> ;
+    .
+
+sparql:filter-exists rdf:type sparql:FunctionalForm ;
+    dc:description "This form tests whether a given pattern exists for each solution." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-filter-exists> ;
+    .
+
+sparql:filter-not-exists rdf:type sparql:FunctionalForm ;
+    dc:description "This form tests whether a given pattern does not exist for each solution." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-filter-not-exists> ;
+    .
+
+sparql:logical-or rdf:type sparql:FunctionalForm ;
+    dc:description "This form computes the logical OR of two boolean expressions." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-or> ;
+    .
+
+sparql:logical-and rdf:type sparql:FunctionalForm ;
+    dc:description "This form computes the logical AND of two boolean expressions." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-and> ;
+    .
+
+sparql:in rdf:type sparql:FunctionalForm ;
+    dc:description "This form checks whether a given value matches any value from a list of expressions." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-in> ;
+    .
+
+sparql:not-in rdf:type sparql:FunctionalForm ;
+    dc:description "This form returns true if the value is not found, or false if the value is found, in the list of expressions." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-not-in> ;
+    .
+
+# Section: Functions on RDF Terms
+
+sparql:sameTerm rdf:type sparql:Function ;
+    dc:description "This function checks whether two RDF terms are the same in the strict sense, including their lexical forms, datatypes, and language tags for literals." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-sameTerm> ;
+    .
+
+sparql:sameValue rdf:type sparql:Function ;
+    dc:description "This function compares two RDF terms for equivalent RDF values, potentially considering numeric type equivalencies and other canonical forms beyond strict term identity." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-sameValue> ;
+    .
+
+# Deprecated: RDFterm-equal
+
+sparql:RDFterm-equal rdf:type sparql:Function ;
+    dc:description "Deprecated" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql11-query/#func-RDFterm-equal> ;
+    .
+
+sparql:isIRI rdf:type sparql:Function ;
+    dc:description "This function returns true if the provided term is an IRI, and false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-isIRI> ;
+    .
+
+sparql:isURI rdf:type sparql:Function ;
+    dc:description "This function returns true if the provided term is an IRI, and false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-isIRI> ;
+    .
+
+sparql:isBlank rdf:type sparql:Function ;
+    dc:description "This function returns true if the provided term is a blank node, and false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-isBlank> ;
+    .
+
+sparql:isLiteral rdf:type sparql:Function ;
+    dc:description "This function returns true if the provided term is an RDF literal, and false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-isLiteral> ;
+    .
+
+sparql:isNumeric rdf:type sparql:Function ;
+    dc:description "This function returns true if the provided term is a numeric literal (e.g., xsd:integer, xsd:decimal, xsd:float, or xsd:double), and false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-isNumeric> ;
+    .
+
+sparql:str rdf:type sparql:Function ;
+    dc:description "This function returns the lexical form of an RDF term, which for IRIs is the IRI string, and for literals is the lexical representation." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-str> ;
+    .
+
+sparql:lang rdf:type sparql:Function ;
+    dc:description "This function returns the language tag of a literal, or an empty string if no language tag is present or the term is not a literal." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-lang> ;
+    .
+
+sparql:langdir rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-langdir> ;
+    .
+
+sparql:haslang rdf:type sparql:Function ;
+    dc:description "This function returns true if the given RDF literal has a specified language, matching the literal’s language tag. It returns false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-haslang> ;
+    .
+
+sparql:haslangdir rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-haslangdir> ;
+    .
+
+sparql:datatype rdf:type sparql:Function ;
+    dc:description "This function returns the datatype IRI of a literal term." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-datatype> ;
+    .
+
+sparql:iri rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-iri> ;
+    .
+
+sparql:uri rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-uri> ;
+    .
+
+sparql:bnode rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-bnode> ;
+    .
+
+sparql:strdt rdf:type sparql:Function ;
+    dc:description "This function creates a typed literal from a string and a datatype IRI, returning an RDF literal with the specified lexical form and datatype." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strdt> ;
+    .
+
+sparql:strlang rdf:type sparql:Function ;
+    dc:description "This function creates an RDF literal with the specified lexical form and language tag." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strlang> ;
+    .
+
+sparql:strlangdir rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strlangdir> ;
+    .
+
+sparql:uuid rdf:type sparql:Function ;
+    dc:description "This function generates a new version 4 UUID as an IRI." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-uuid> ;
+    .
+
+sparql:struuid rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-struuid> ;
+    .
+
+# Section: Functions on strings
+
+sparql:strlen rdf:type sparql:Function ;
+    dc:description "This function returns the length of the lexical form of a string literal, measured in characters." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strlen> ;
+    .
+
+sparql:substr rdf:type sparql:Function ;
+    dc:description "This function returns the substring of the given string starting at a specified position and optionally limited to a given length." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-substr> ;
+    .
+
+sparql:ucase rdf:type sparql:Function ;
+    dc:description "This function transforms all alphabetic characters in the input string to uppercase, following Unicode case-folding conventions" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-ucase> ;
+    .
+
+sparql:lcase rdf:type sparql:Function ;
+    dc:description "This function transforms all alphabetic characters in the input string to lowercase, according to Unicode case-folding rules." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-lcase> ;
+    .
+
+sparql:strstarts rdf:type sparql:Function ;
+    dc:description "This function returns true if the first string argument begins with the second string argument, and false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strstarts> ;
+    .
+
+sparql:strends rdf:type sparql:Function ;
+    dc:description "This function returns true if the first string argument ends with the second string argument, and false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strends> ;
+    .
+
+sparql:contains rdf:type sparql:Function ;
+    dc:description "This function returns true if the first string argument contains the second string argument as a substring, and false otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-contains> ;
+    .
+
+sparql:strbefore rdf:type sparql:Function ;
+    dc:description "This function returns the substring of the first argument that precedes the first occurrence of the second argument." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strbefore> ;
+    .
+
+sparql:strafter rdf:type sparql:Function ;
+    dc:description "This function returns the substring of the first argument that follows the first occurrence of the second argument." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strafter> ;
+    .
+
+sparql:concat rdf:type sparql:Function ;
+    dc:description "This function concatenates two or more string literals into one continuous string." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-concat> ;
+    .
+
+sparql:langMatches rdf:type sparql:Function ;
+    dc:description "This function checks whether a given language tag matches a specified language range." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-langMatches> ;
+    .
+
+sparql:regex rdf:type sparql:Function ;
+    dc:description "This function tests whether a string matches a regular expression pattern, optionally with a specified flag (e.g., i for case-insensitive)." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-regex> ;
+    .
+
+sparql:replace rdf:type sparql:Function ;
+    dc:description "This function performs a regular expression search-and-replace on a string, returning the modified string." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-replace> ;
+    .
+
+sparql:encode rdf:type sparql:Function ;
+    dc:description "This function encodes a string using a specified method (e.g., URI-encoding), returning the encoded version." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-encode> ;
+    .
+
+# Section: Functions on numbers
+
+sparql:abs rdf:type sparql:Function ;
+    dc:description "This function returns the absolute value of a numeric argument." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-abs> ;
+    .
+
+sparql:round rdf:type sparql:Function ;
+    dc:description "This function rounds a numeric argument to the nearest integer." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-round> ;
+    .
+
+sparql:ceil rdf:type sparql:Function ;
+    dc:description "This function returns the smallest integer greater than or equal to the numeric argument." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-ceil> ;
+    .
+
+sparql:floor rdf:type sparql:Function ;
+    dc:description "This function returns the greatest integer less than or equal to the numeric argument." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-floor> ;
+    .
+
+sparql:rand rdf:type sparql:Function ;
+    dc:description "This function returns a random number between 0 and 1." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-rand> ;
+    .
+
+# Section: Functions on datetimes
+
+sparql:now rdf:type sparql:Function ;
+    dc:description "This function returns the current dateTime (with or without a timezone) at the moment of query execution." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-now> ;
+    .
+
+sparql:year rdf:type sparql:Function ;
+    dc:description "This function returns the year component of an xsd:dateTime or xsd:date." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-year> ;
+    .
+
+sparql:month rdf:type sparql:Function ;
+    dc:description "This function returns the month component of an xsd:dateTime or xsd:date." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-month> ;
+    .
+
+sparql:day rdf:type sparql:Function ;
+    dc:description "This function returns the day component of an xsd:dateTime or xsd:date." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-day> ;
+    .
+
+sparql:hours rdf:type sparql:Function ;
+    dc:description "This function returns the hour component (0–23) of an xsd:dateTime value." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-hours> ;
+    .
+
+sparql:minutes rdf:type sparql:Function ;
+    dc:description "This function returns the minute component (0–59) of an xsd:dateTime value." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-minutes> ;
+    .
+
+sparql:seconds rdf:type sparql:Function ;
+    dc:description "This function returns the second component (0–60, including leap seconds) of an xsd:dateTime value." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-seconds> ;
+    .
+
+sparql:timezone rdf:type sparql:Function ;
+    dc:description "This function returns the timezone component as a dayTimeDuration for an xsd:dateTime value with a specified time zone, or an empty value if none." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-timezone> ;
+    .
+
+sparql:tz rdf:type sparql:Function ;
+    dc:description "This function returns the timezone component as a string in ISO 8601 format if present in the xsd:dateTime value, or an empty string otherwise." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-tz> ;
+    .
+
+# Section: Functions on triple terms
+
+sparql:triple rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-triple> ;
+    .
+
+sparql:subject rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-subject> ;
+    .
+
+sparql:predicate rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-predicate> ;
+    .
+
+sparql:object rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-object> ;
+    .
+
+sparql:isTriple rdf:type sparql:Function ;
+    dc:description "" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-isTriple> ;
+    .
+
+# Section: Hash functions
+
+sparql:md5 rdf:type sparql:Function ;
+    dc:description "This function computes the MD5 hash of the lexical form of a string, returning a hexadecimal string representation of the hash." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-md5> ;
+    .
+
+sparql:sha1 rdf:type sparql:Function ;
+    dc:description "This function computes the SHA-1 hash of the lexical form of a string, returning a hexadecimal string representation of the result." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-sha1> ;
+    .
+
+sparql:sha256 rdf:type sparql:Function ;
+    dc:description "This function computes the SHA-256 hash of the lexical form of a string, returning the resulting hash as a hexadecimal string." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-sha256> ;
+    .
+
+sparql:sha384 rdf:type sparql:Function ;
+    dc:description "This function computes the SHA-384 hash of the lexical form of a string, returning the resulting hexadecimal string." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-sha384> ;
+    .
+
+sparql:sha512 rdf:type sparql:Function ;
+    dc:description "This function computes the SHA-512 hash of the lexical form of a string, returning the result as a hexadecimal string." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-sha512> ;
+    .
+
+# Aggregate functions
+
+sparql:agg-count rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-count-distinct rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-sum rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-sum-distinct rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-min rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-max-distinct rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-avg rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-avg-distinct rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-sample rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-sample-distinct rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-group-concat rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-group-concat-distinct rdf:type sparql:Aggregate ;
+    dc:description "";
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
