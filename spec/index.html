@@ -4687,7 +4687,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <a href="#func-if">IF</a>, <a href="#func-in">IN</a>, <a href="#func-not-in">NOT IN</a>, 
             <a href="#func-logical-or">logical-or</a> (<code>||</code>),
             <a href="#func-logical-and">logical-and</a> (<code>&amp;&</code>),
-            <a href="#func-filter-exists">NOT EXISTS</a>, and <a href="#func-filter-exists">EXISTS</a>,
+            <a href="#func-filter-not-exists">NOT EXISTS</a>, and <a href="#func-filter-exists">EXISTS</a>,
             all functions operate on RDF Terms and will produce a type error if any
             arguments are unbound.
           </li>
@@ -5548,6 +5548,7 @@ class="expression">expression, ....</span>)
             </div>
           </section>
           <section id="func-filter-exists">
+            <span id="func-filter-not-exists"></span>
             <h5>NOT EXISTS and EXISTS</h5>
             <p>There is a filter operator <code>EXISTS</code> that takes a graph pattern.
               <code>EXISTS</code> returns <code>true</code>/<code>false</code> depending on whether the
@@ -5948,6 +5949,7 @@ class="expression">expression, ....</span>)
           </section>
 
           <section id="func-isIRI">
+            <span id="func-isURI"></span>
             <h5>isIRI</h5>
             <pre class="prototype nohighlight">
 <span class="return">xsd:boolean</span>  <span class="operator">isIRI</span> (<span class="type">RDF term</span> <span class="name">term</span>)
@@ -6480,6 +6482,7 @@ WHERE {
             </div>
           </section>
           <section id="func-iri">
+            <span id=""func-uri"></span>
             <h5>IRI</h5>
             <pre class="prototype nohighlight">
               <span class="return">iri</span>  <span class="operator">IRI</span>(<span class="type">xsd:string</span>)
@@ -7580,7 +7583,7 @@ WHERE {
               </table>
             </div>
           </section>
-          <section id="idp2130040">
+          <section id="func-rand">
             <h5>RAND</h5>
             <pre class="prototype nohighlight"> <span class="return">xsd:double</span>  <span class="operator">RAND</span> ( )</pre>
             <p>Returns a pseudo-random number between 0 (inclusive) and 1.0e0 (exclusive). Different
@@ -7879,7 +7882,7 @@ class="name">obj</span>)
             </p>
           </section>
 
-          <section>
+          <section id="func-isTriple">
             <h5>isTRIPLE</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">isTRIPLE</span> (<span class="type RDFterm">RDF term</span> <span class="name">term</span>)</pre>
             <p>
@@ -8739,7 +8742,8 @@ WHERE {
               from group, then <a href="#sparqlAddFilters">apply them to the whole translated group
                 graph pattern</a>.</p>
             <p>In this step, we also translate graph patterns within <code>FILTER</code> expressions
-              <a href="#func-filter-exists"><code>EXISTS</code> and <code>NOT EXISTS</code></a>.</p>
+              <a href="#func-filter-exists"><code>EXISTS</code></a> and 
+              <a href="#func-filter-not-exists"><code>NOT EXISTS</code></a>.</p>
 
             <pre class="code nohighlightBlock">
 Let FS := empty set
