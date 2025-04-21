@@ -197,7 +197,7 @@ sparql:lang rdf:type sparql:Function ;
     .
 
 sparql:langdir rdf:type sparql:Function ;
-    rdfs:comment "This function returns the base direction of a literal. " ;
+    rdfs:comment "This function returns the initial text direction of a literal." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-langdir> ;
     .
 
@@ -207,7 +207,7 @@ sparql:haslang rdf:type sparql:Function ;
     .
 
 sparql:haslangdir rdf:type sparql:Function ;
-    rdfs:comment "THis fun ction rutrns true if the given RDF literal has an initial base direction." ;
+    rdfs:comment "This function returns true if the given RDF literal has an initial text direction." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-haslangdir> ;
     .
 
@@ -405,27 +405,27 @@ sparql:tz rdf:type sparql:Function ;
 # Section: Functions on triple terms
 
 sparql:triple rdf:type sparql:Function ;
-    rdfs:comment "
+    rdfs:comment "This function constructs a triple term." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-triple> ;
     .
 
 sparql:subject rdf:type sparql:Function ;
-    rdfs:comment "
+    rdfs:comment "This function returns the subject of a triple term." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-subject> ;
     .
 
 sparql:predicate rdf:type sparql:Function ;
-    rdfs:comment "
+    rdfs:comment "This function returns the predicate of a triple term." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-predicate> ;
     .
 
 sparql:object rdf:type sparql:Function ;
-    rdfs:comment "
+    rdfs:comment "This function returns the object of a triple term." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-object> ;
     .
 
 sparql:isTriple rdf:type sparql:Function ;
-    rdfs:comment "
+    rdfs:comment "This function returns true if the argument is a triple term, and false otherwise." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-isTriple> ;
     .
 
@@ -464,7 +464,7 @@ sparql:agg-count rdf:type sparql:Aggregate ;
     .
 
 sparql:agg-count-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "Aggregate function COUNT with DISTINCT" ;" ;
+    rdfs:comment "Aggregate function COUNT with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
