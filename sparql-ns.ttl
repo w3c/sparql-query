@@ -6,10 +6,10 @@ PREFIX dc:      <http://purl.org/dc/terms/>
 PREFIX owl:     <http://www.w3.org/2002/07/owl#>
 
 <http://www.w3.org/ns/sparql#> a owl:Ontology ;
-     dc:date "2025-06-30" ;
-     rdfs:comment "Terms used by SPARQL 1.2" ;
-     owl:versionInfo ""
-     .
+    dc:date "2025-06-30" ;
+    rdfs:comment "Terms used by SPARQL 1.2" ;
+    owl:versionInfo "1.2"
+    .
 
 ##
 
@@ -51,49 +51,49 @@ sparql:unary-plus rdf:type sparql:Operator ;
     .
 
 sparql:equals rdf:type sparql:Operator ;
-    rdfs:comment "";
+    rdfs:comment "This operator compares two expressions for equality.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
 sparql:not-equals rdf:type sparql:Operator ;
-    rdfs:comment "";
+    rdfs:comment "This operator tests two expressions for inequality.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
 sparql:greaterThan rdf:type sparql:Operator ;
-    rdfs:comment "";
+    rdfs:comment "This operator tests whether the first RDF term is greater than the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
 sparql:lessThat rdf:type sparql:Operator ;
-    rdfs:comment "";
+    rdfs:comment "This operator tests whether the first RDF term is less than the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
 sparql:greaterThanOrEquals rdf:type sparql:Operator ;
-    rdfs:comment "";
+    rdfs:comment "This operator tests whether the first RDF term is greater or equal to the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
 sparql:lessThanOrEquals rdf:type sparql:Operator ;
-    rdfs:comment "";
+    rdfs:comment "This operator tests whether the first RDF term is less than or equal to the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:operator-and rdf:type sparql:Operator ;
-    rdfs:comment "";
+    rdfs:comment "This operator calculates the logical 'and' of two RDF terms" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:operator-or rdf:type sparql:Operator ;
-   rdfs:comment "";
-   rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-   .
+    rdfs:comment "This operator calculates the logical 'or' of two RDF terms" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
 
 sparql:operator-not rdf:type sparql:Operator ;
-   rdfs:comment "";
-   rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-   .
+    rdfs:comment "This operator calculates the logical 'not' of two RDF terms" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
 
 # Section: Functional Forms
 
@@ -197,17 +197,17 @@ sparql:lang rdf:type sparql:Function ;
     .
 
 sparql:langdir rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "This function returns the base direction of a literal. " ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-langdir> ;
     .
 
 sparql:haslang rdf:type sparql:Function ;
-    rdfs:comment "This function returns true if the given RDF literal has a specified language, matching the literal’s language tag. It returns false otherwise." ;
+    rdfs:comment "This function returns true if the given RDF literal has a specified language, matching the literal’s language tag." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-haslang> ;
     .
 
 sparql:haslangdir rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "THis fun ction rutrns true if the given RDF literal has an initial base direction." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-haslangdir> ;
     .
 
@@ -217,17 +217,17 @@ sparql:datatype rdf:type sparql:Function ;
     .
 
 sparql:iri rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "This function returns an IRI with the given string." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-iri> ;
     .
 
 sparql:uri rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "This function returns an IRI with the given string." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-uri> ;
     .
 
 sparql:bnode rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "This function returns a blank node." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-bnode> ;
     .
 
@@ -242,17 +242,17 @@ sparql:strlang rdf:type sparql:Function ;
     .
 
 sparql:strlangdir rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "This function creates an RDF literal with language tag and initial text direction." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-strlangdir> ;
     .
 
 sparql:uuid rdf:type sparql:Function ;
-    rdfs:comment "This function generates a new version 4 UUID as an IRI." ;
+    rdfs:comment "This function generates a UUID as an IRI." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-uuid> ;
     .
 
 sparql:struuid rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "This function generates a UUID as a string." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-struuid> ;
     .
 
@@ -405,27 +405,27 @@ sparql:tz rdf:type sparql:Function ;
 # Section: Functions on triple terms
 
 sparql:triple rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-triple> ;
     .
 
 sparql:subject rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-subject> ;
     .
 
 sparql:predicate rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-predicate> ;
     .
 
 sparql:object rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-object> ;
     .
 
 sparql:isTriple rdf:type sparql:Function ;
-    rdfs:comment "" ;
+    rdfs:comment "
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-isTriple> ;
     .
 
@@ -459,61 +459,71 @@ sparql:sha512 rdf:type sparql:Function ;
 # Aggregate functions
 
 sparql:agg-count rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function COUNT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-count-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function COUNT with DISTINCT" ;" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-sum rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function SUM" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-sum-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function SUM with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-min rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function MIN" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-min-distinct rdf:type sparql:Aggregate ;
+    rdfs:comment "Aggregate function MIN with DISTINCT" ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    .
+
+sparql:agg-max rdf:type sparql:Aggregate ;
+    rdfs:comment "Aggregate function MAX" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-max-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function MAX with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-avg rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function AVG" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-avg-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function AVG with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-sample rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function SAMPLE" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-sample-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function SAMPLE with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-group-concat rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function GROUP_CONCAT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:agg-group-concat-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "";
+    rdfs:comment "Aggregate function GROUP_CONCAT with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
