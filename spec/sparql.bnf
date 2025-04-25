@@ -1,9 +1,11 @@
 QueryUnit                 ::= Query 
 Query                     ::= Prologue ( SelectQuery | ConstructQuery | DescribeQuery | AskQuery ) ValuesClause
 UpdateUnit                ::= Update 
-Prologue                  ::= ( BaseDecl | PrefixDecl )*
+Prologue                  ::= ( BaseDecl | PrefixDecl | VersionDecl )*
 BaseDecl                  ::= 'BASE' IRIREF
 PrefixDecl                ::= 'PREFIX' PNAME_NS IRIREF
+VersionDecl               ::= 'VERSION' VersionSpecifier
+VersionSpecifier          ::= STRING_LITERAL1 | STRING_LITERAL2
 SelectQuery               ::= SelectClause DatasetClause* WhereClause SolutionModifier
 SubSelect                 ::= SelectClause WhereClause SolutionModifier ValuesClause
 SelectClause              ::= 'SELECT' ( 'DISTINCT' | 'REDUCED' )? ( ( Var | ( '(' Expression 'AS' Var ')' ) )+ | '*' )
