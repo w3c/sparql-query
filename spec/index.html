@@ -9908,14 +9908,6 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <a href="#defn_Multiplicity">multiplicity</a>( μ | Ψ )</p>
         </div>
         <div class="defn">
-          <div id="defn_algToMultiset">
-            <b>Definition: ToMultiset</b>
-          </div>
-          <p>ToMultiset turns a sequence into a multiset with the same elements and multiplicities as
-            the sequence. The order of the sequence has no effect on the resulting multiset, and
-            duplicates are preserved.</p>
-        </div>
-        <div class="defn">
           <p><b>Definition: <span id="defn_exists">Exists</span></b></p>
           <p>exists(pattern) is a function that returns true if the pattern
             <a href="#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
@@ -10421,7 +10413,7 @@ eval(D(G), Extend(P, var, expr)) = Extend(eval(D(G), P), var, expr)
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalToMultiSet">Evaluation of ToMultiSet</span></b></p>
-            <pre class="code nohighlight">eval(D(G), ToMultiSet(L)) = ToMultiSet(eval(D), M))</pre>
+            <pre class="code nohighlight">eval(D(G), ToMultiSet(L)) = ToMultiSet(eval(D(G), L))</pre>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalSlice">Evaluation of Slice</span></b></p>
