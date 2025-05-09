@@ -10074,13 +10074,13 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               functions are in fact sequences. The name is retained due to the commonality with SQL
               Set Functions, which operate over multisets.</p>
             <p>The set functions defined in this document are
-              <a href="#defn_aggCount">Count</a>,
-              <a href="#defn_aggSum">Sum</a>,
-              <a href="#defn_aggMin">Min</a>,
-              <a href="#defn_aggMax">Max</a>,
-              <a href="#defn_aggAvg">Avg</a>,
-              <a href="#defn_aggGroupConcat">GroupConcat</a>, and
-              <a href="#defn_aggSample">Sample</a>
+              <a href="#defn_aggCount" class="aggFct">Count</a>,
+              <a href="#defn_aggSum" class="aggFct">Sum</a>,
+              <a href="#defn_aggMin" class="aggFct">Min</a>,
+              <a href="#defn_aggMax" class="aggFct">Max</a>,
+              <a href="#defn_aggAvg" class="aggFct">Avg</a>,
+              <a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>, and
+              <a href="#defn_aggSample" class="aggFct">Sample</a>
               — corresponding to the aggregates <code>COUNT</code>,
               <code>SUM</code>, <code>MIN</code>, <code>MAX</code>, <code>AVG</code>,
               <code>GROUP_CONCAT</code>, and <code>SAMPLE</code>. Definitions may be found in the
@@ -10120,27 +10120,27 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
 
           <section id="aggCount">
             <h5>Count</h5>
-            <p>Count is a SPARQL set function which counts the number of times a given expression
+            <p><a href="#defn_aggCount" class="aggFct">Count</a> is a SPARQL set function which counts the number of times a given expression
               has a bound, non-error value within the aggregate group.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggCount">Count</span></b></p>
-              <pre class="code nohighlight">xsd:integer <a href="#defn_aggCount">Count</a>(sequence <var>S</var>)</pre>
-              <p><a href="#defn_aggCount">Count</a>(<var>S</var>) = <a href="#defn_Card">Card</a>(<var>L'</var>),</p>
+              <pre class="code nohighlight">xsd:integer <a href="#defn_aggCount" class="aggFct">Count</a>(sequence <var>S</var>)</pre>
+              <p><a href="#defn_aggCount" class="aggFct">Count</a>(<var>S</var>) = <a href="#defn_Card">Card</a>(<var>L'</var>),</p>
               <p>where <var>L'</var> is the list <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 with all error elements removed.</p>
             </div>
           </section>
           <section id="aggSum">
             <h5>Sum</h5>
-            <p><a href="#defn_aggSum">Sum</a> is a SPARQL set function that returns the numeric value obtained by summing
+            <p><a href="#defn_aggSum" class="aggFct">Sum</a> is a SPARQL set function that returns the numeric value obtained by summing
               the values within the aggregate group. Type promotion happens as per the op:numeric-add
               function, applied transitively, (see definition below) so the value of SUM(?x), in an
               aggregate group where ?x has values 1 (integer), 2.0e0 (float), and 3.0 (decimal) will
               be 6.0 (float).</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
-              <pre class="code nohighlight">numeric <a href="#defn_aggSum">Sum</a>(sequence <var>S</var>)</pre>
-              <p><a href="#defn_aggSum">Sum</a>(<var>S</var>) = <var>SumList</var>(<var>L</var>),</p>
+              <pre class="code nohighlight">numeric <a href="#defn_aggSum" class="aggFct">Sum</a>(sequence <var>S</var>)</pre>
+              <p><a href="#defn_aggSum" class="aggFct">Sum</a>(<var>S</var>) = <var>SumList</var>(<var>L</var>),</p>
               <p>where <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>) and
                 <var>SumList</var>(<var>L</var>) is defined recursively as follows.</p>
               <ul>
@@ -10156,37 +10156,37 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 <var>L</var>, and <var>L</var><sub>2..n</sub> is <var>L</var>
                 without its first element.</p>
             </div>
-            <p>In this way, <a href="#defn_aggSum">Sum</a>( [(1), (2), (3)] ) = <var>SumList</var>( (1, 2, 3) ) =
+            <p>In this way, <a href="#defn_aggSum" class="aggFct">Sum</a>( [(1), (2), (3)] ) = <var>SumList</var>( (1, 2, 3) ) =
               op:numeric-add(1, op:numeric-add(2, op:numeric-add(3, 0))).</p>
           </section>
           <section id="aggAvg">
             <h5>Avg</h5>
-            <div id="defn_algAvg"></div>The <a href="#defn_aggAvg">Avg</a> set function calculates the
+            <div id="defn_algAvg"></div>The <a href="#defn_aggAvg" class="aggFct">Avg</a> set function calculates the
             average value for an expression over a group. It is defined in terms of Sum and Count.
             <div class="defn">
               <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
-              <pre class="code nohighlight">numeric <a href="#defn_aggAvg">Avg</a>(sequence <var>S</var>)</pre>
+              <pre class="code nohighlight">numeric <a href="#defn_aggAvg" class="aggFct">Avg</a>(sequence <var>S</var>)</pre>
               <p>If <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>) = 0,
-                then <a href="#defn_aggAvg">Avg</a>(<var>S</var>) = "0"^^<code>xsd:integer</code>.</p>
+                then <a href="#defn_aggAvg" class="aggFct">Avg</a>(<var>S</var>) = "0"^^<code>xsd:integer</code>.</p>
               <p>If <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>) &gt; 0,
-                then <a href="#defn_aggAvg">Avg</a>(<var>S</var>) =
-                <var><a href="#defn_aggSum">Sum</a></var>(<var>S</var>) /
-                <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>).</p>
+                then <a href="#defn_aggAvg" class="aggFct">Avg</a>(<var>S</var>) =
+                <var><a href="#defn_aggSum" class="aggFct">Sum</a></var>(<var>S</var>) /
+                <var><a href="#defn_aggCount" class="aggFct">Count</a></var>(<var>S</var>).</p>
             </div>
-            <p>For example, <a href="#defn_aggAvg">Avg</a>([(1), (2), (3)]) =
+            <p>For example, <a href="#defn_aggAvg" class="aggFct">Avg</a>([(1), (2), (3)]) =
               <a href="#defn_aggSum">Sum</a>([(1), (2), (3)])/<a href="#defn_aggCount">Count</a>([(1), (2), (3)])
               = 6/3 = 2.</p>
           </section>
           <section id="aggMin">
             <h5>Min</h5>
-            <p><a href="#defn_aggMin">Min</a> is a SPARQL set function that returns the minimum value from a group
+            <p><a href="#defn_aggMin" class="aggFct">Min</a> is a SPARQL set function that returns the minimum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
-              <pre class="code nohighlight">term <a href="#defn_aggMin">Min</a>(sequence <var>S</var>)</pre>
-              <p><a href="#defn_aggMin">Min</a>(<var>S</var>) = <var>MinList</var>(<var>L</var>),</p>
+              <pre class="code nohighlight">term <a href="#defn_aggMin" class="aggFct">Min</a>(sequence <var>S</var>)</pre>
+              <p><a href="#defn_aggMin" class="aggFct">Min</a>(<var>S</var>) = <var>MinList</var>(<var>L</var>),</p>
               <p>where <var>L</var> is the list of values obtained by
                 <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 and then ordered as per the <code>ORDER BY ASC</code> clause,
@@ -10203,14 +10203,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </section>
           <section id="aggMax">
             <h5>Max</h5>
-            <p><a href="#defn_aggMax">Max</a> is a SPARQL set function that returns the maximum value from a group
+            <p><a href="#defn_aggMax" class="aggFct">Max</a> is a SPARQL set function that returns the maximum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
-              <pre class="code nohighlight">term <a href="#defn_aggMax">Max</a>(sequence <var>S</var>)</pre>
-              <p><a href="#defn_aggMax">Max</a>(<var>S</var>) = <var>MaxList</var>(<var>L</var>),</p>
+              <pre class="code nohighlight">term <a href="#defn_aggMax" class="aggFct">Max</a>(sequence <var>S</var>)</pre>
+              <p><a href="#defn_aggMax" class="aggFct">Max</a>(<var>S</var>) = <var>MaxList</var>(<var>L</var>),</p>
               <p>where <var>L</var> is the list of values obtained by
                 <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 and then ordered as per the <code>ORDER BY DESC</code> clause,
@@ -10227,13 +10227,13 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </section>
           <section id="aggGroupConcat">
             <h5>GroupConcat</h5>
-            <p><a href="#defn_aggGroupConcat">GroupConcat</a> is a set function which performs a string concatenation across the
+            <p><a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a> is a set function which performs a string concatenation across the
               values of an expression with a group. The order of the strings is not specified. The
               separator character used in the concatenation may be given with the scalar argument
               SEPARATOR.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
-              <pre class="code nohighlight">literal <a href="#defn_aggGroupConcat">GroupConcat</a>(sequence <var>S</var>, function <var>scalarvals</var>)</pre>
+              <pre class="code nohighlight">literal <a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>(sequence <var>S</var>, function <var>scalarvals</var>)</pre>
               <p>If the <var>scalarvals</var> argument is absent from <code>GROUP_CONCAT</code>,
                 then <var>scalarvals</var> is taken to be the empty function.</p>
               <p>Let <var>sep</var> be a string that is defined as follows.</p>
@@ -10243,7 +10243,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 <li>If <var>scalarvals</var> is undefined for the argument "separator",
                   then <var>sep</var> is the "space" character (i.e., unicode codepoint U+0020).</li>
               </ul>
-              <p><a href="#defn_aggGroupConcat">GroupConcat</a>(<var>S</var>, <var>scalarvals</var>) =
+              <p><a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>(<var>S</var>, <var>scalarvals</var>) =
                 <var>GCList</var>(<var>L</var>, <var>sep</var>),</p>
               <p>where <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 and <var>GCList</var>(<var>L</var>, <var>sep</var>)
@@ -10262,169 +10262,167 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 <var>L</var>, and <var>L</var><sub>2..n</sub> is <var>L</var>
                 without its first element.</p>
             </div>
-            <p>For example, <a href="#defn_aggGroupConcat">GroupConcat</a>([("a"), ("b"), ("c")], {"separator" → "."})
+            <p>For example, <a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>([("a"), ("b"), ("c")], {"separator" → "."})
               = <var>GCList</var>( ("a", "b", "c"), "." )
               = "a.b.c".</p>
           </section>
           <section id="aggSample">
             <h5>Sample</h5>
-            <p><a href="#defn_aggSample">Sample</a> is a set function which returns an arbitrary value from the sequence passed
+            <p><a href="#defn_aggSample" class="aggFct">Sample</a> is a set function which returns an arbitrary value from the sequence passed
               to it.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
-              <pre class="code nohighlight">RDFTerm <a href="#defn_aggSample">Sample</a>(sequence <var>S</var>)</pre>
+              <pre class="code nohighlight">RDFTerm <a href="#defn_aggSample" class="aggFct">Sample</a>(sequence <var>S</var>)</pre>
               <p>If <a href="#defn_Card">Card</a>(<var>S</var>) = 0, then
-                <a href="#defn_aggSample">Sample</a>(<var>S</var>) = error.</p>
+                <a href="#defn_aggSample" class="aggFct">Sample</a>(<var>S</var>) = error.</p>
               <p>If <a href="#defn_Card">Card</a>(<var>S</var>) &gt; 0, then
-                <a href="#defn_aggSample">Sample</a>(<var>S</var>) = <var>v</var>, where <var>v</var>
+                <a href="#defn_aggSample" class="aggFct">Sample</a>(<var>S</var>) = <var>v</var>, where <var>v</var>
                 in <a href="#defn_Flatten">Flatten</a>(<var>S</var>).</p>
             </div>
-            <p>For example, given <a href="#defn_aggSample">Sample</a>([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
-              values. Note that the <a href="#defn_aggSample">Sample</a> function is not required to be deterministic for a given input. The
+            <p>For example, given <a href="#defn_aggSample" class="aggFct">Sample</a>([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
+              values. Note that the <a href="#defn_aggSample" class="aggFct">Sample</a> function is not required to be deterministic for a given input. The
               only restriction is that the output value must be present in the input sequence.</p>
           </section>
         </section>
         <section id="sparqlAlgebraEval">
           <h3>Evaluation Semantics</h3>
-          <p>We define eval(D(G), algebra expression) as the evaluation of an algebra expression with
-            respect to a dataset D having active graph G. The active graph is initially the default
-            graph.</p>
-          <pre class="box">
-D : a dataset
-D(G) : D a dataset with active graph G (the one patterns match against)
-D[i] : The graph with IRI i in dataset D
-P, P1, P2 : graph patterns
-L : a solution sequence
-F : an expression
-          </pre>
+          <p id="defn_eval">We define <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|) as the evaluation of an algebra expression |A| with
+            respect to a <a href="#sparqlDataset">dataset</a> |D| having <a href="#defn_ActiveGraph">active graph</a> |G|. The active graph is initially the default
+            graph of |D|. Further symbols and notation used in the following definitions are:</p>
+          <ul>
+            <li>|D|[|i|] : Denotes the graph with IRI |i| in dataset |D|</li>
+            <li>|P|, <var>P<sub>1</sub></var>, <var>P<sub>2</sub></var> : graph patterns</li>
+            <li>|L| : a solution sequence</li>
+            <li>|F| : an expression</li>
+          </ul>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalBasicGraphPattern">Evaluation of a Basic Graph Pattern</span></b></p>
-            <pre class="code nohighlight">eval(D(G), BGP) = multiset of solution mappings</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), |BGP| ) = multiset of solution mappings</p>
             <p>See section <a href="#BasicGraphPattern">Basic Graph Patterns</a></p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalPropertyPathPattern">Evaluation of a Property Path Pattern</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Path(X, path, Y)) = multiset of solution mappings</pre>
-            <p>See section <a href="#defn_PropertyPathExpr">Property Path Expresions</a></p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Path(|X|, |path|, |Y|) ) = multiset of solution mappings</p>
+            <p>See section <a href="#defn_PropertyPathExpr">Property Path Expressions</a></p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Filter(F, P)) = Filter(F, eval(D(G),P), D(G))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Filter(|F|, |P|) ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |D|(|G|) )</p>
           </div>
           <p>'substitute' is a filter function in support of the evaluation of 
             <a href="#func-filter-exists"><code>EXISTS</code>
               and <code>NOT EXISTS</code></a> forms which were translated to <code>exists</code>.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_substitute">Substitute</span></b></p>
-            <p>Let μ be a solution mapping.</p>
+            <p>Let <var>μ</var> be a solution mapping.</p>
             <blockquote>
-              <p>substitute(<i>pattern</i>, μ) = the pattern formed by replacing every occurrence of
-                a variable v in <i>pattern</i> by μ(v) for each v in dom(μ)</p>
+              <p>substitute(|pattern|, <var>μ</var>) = the pattern formed by replacing every occurrence of
+                a variable |v| in |pattern| by <var>μ</var>(|v|) for each |v| in dom(<var>μ</var>)</p>
             </blockquote>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalExists">Evaluation of Exists</span></b></p>
-            <p>Let μ be the current solution mapping for a filter and P a graph pattern:</p>
+            <p>Let <var>μ</var> be the current solution mapping for a filter and |P| a graph pattern:</p>
             <blockquote>
-              The value exists(P), given D(G) is true if and only if eval(D(G), substitute(P, μ)) is
+              The value exists(|P|), given |D|(|G|) is true if and only if <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), substitute(|P|, <var>μ</var>)) is
               a non-empty sequence.
             </blockquote>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalJoin">Evaluation of Join</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Join(P1, P2)) = Join(eval(D(G), P1), eval(D(G), P2))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Join(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>) ) = <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalLeftJoin">Evaluation of LeftJoin</span></b></p>
-            <pre class="code nohighlight">
-eval(D(G), LeftJoin(P1, P2, F)) = LeftJoin(eval(D(G), P1), eval(D(G), P2), F)
-            </pre>
+            <p>
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), LeftJoin(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|) ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>), |F| )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalUnion">Evaluation of Union</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Union(P1,P2)) = Union(eval(D(G), P1), eval(D(G), P2))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Union(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>) ) = <a href="#defn_algUnion" class="algFct">Union</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalGraph">Evaluation of Graph</span></b></p>
             <pre class="code nohighlight">
-if IRI is a graph name in D
-    eval(D(G), Graph(IRI,P)) = eval(D(D[IRI]), P)
+if <var>IRI</var> is a graph name in <var>D</var>
+    <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>IRI</var>,<var>P</var>) ) = <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>D</var>[<var>IRI</var>]), <var>P</var> )
             </pre>
             <pre class="code nohighlight">
-              if IRI is not a graph name in D
-                  eval(D(G), Graph(IRI,P)) = the empty multiset
+              if <var>IRI</var> is not a graph name in <var>D</var>
+                  <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>IRI</var>,<var>P</var>) ) = the empty multiset
             </pre>
             <pre class="code nohighlight">
-eval(D(G), Graph(var,P)) =
-    Let R be the empty multiset
-    foreach IRI i in D
-        R := Union(R, Join( eval(D(D[i]), P) , Ω(?var-&gt;i) ) )
-    the result is R
+<a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>var</var>,<var>P</var>) ) =
+    Let <var>R</var> be the empty multiset
+    foreach IRI <var>i</var> in <var>D</var>
+        <var>R</var> := <a href="#defn_algUnion" class="algFct">Union</a>(<var>R</var>, <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(<var>D</var>(<var>D</var>[<var>i</var>]), <var>P</var>) , Ω(<var>var</var>-&gt;<var>i</var>) ) )
+    the result is <var>R</var>
             </pre>
           </div>
-          <p>The evaluation of graph uses the SPARQL algebra union operator. The multiplicity of a
-            solution mapping is the sum of the multiplicities of that solution mapping in each join
+          <p>The evaluation of graph uses the <a href="#defn_algUnion" class="algFct">Union</a> operator. The multiplicity of a
+            solution mapping is the sum of the multiplicities of that solution mapping in each <a href="#defn_algJoin" class="algFct">Join</a>
             operation.</p>
           <div class="defn">
             <div id="defn_evalGroup">
               <b>Definition: Evaluation of Group</b>
             </div>
-            <p>eval(D(G), Group(exprlist, P)) = Group(exprlist, eval(D(G), P))</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Group(|exprlist|, |P|) ) = <a href="#defn_algGroup" class="algFct">Group</a>( |exprlist|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|) )</p>
           </div>
           <div class="defn">
             <div id="defn_evalAggregation">
               <b>Definition: Evaluation of Aggregation</b>
             </div>
-            <p>eval(D(G), Aggregation(exprlist, func, scalarvals, Grp)) = Aggregation(exprlist, func,
-              scalarvals, eval(D(G), Grp))</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Aggregation(|exprlist|, |func|, |scalarvals|, |Grp|) ) = <a href="#defn_algAggregation" class="algFct">Aggregation</a>( |exprlist|, |func|,
+              |scalarvals|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |Grp|) )</p>
           </div>
           <div class="defn">
             <div id="defn_evalAggregateJoin">
               <b>Definition: Evaluation of AggregateJoin</b>
             </div>
-            <p>eval(D(G), AggregateJoin(A<sub>1</sub>, ..., A<sub>n</sub>)) =
-              AggregateJoin(eval(D(G), A<sub>1</sub>), ..., eval(D(G), A<sub>n</sub>))</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), AggregateJoin(<var>A<sub>1</sub></var>, ..., <var>A<sub>n</sub></var>) ) =
+              <a href="#defn_algAggregateJoin" class="algFct">AggregateJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>1</sub></var>), ..., <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>n</sub></var>) )</p>
           </div>
-          <p>Note that if eval(D(G), A<sub>i</sub>) is an error, it is ignored.</p>
+          <p>Note that if <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>i</sub></var>) is an error, it is ignored.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalExtend">Evaluation of Extend</span></b></p>
-            <pre class="code nohighlight">
-eval(D(G), Extend(P, var, expr)) = Extend(eval(D(G), P), var, expr)
-            </pre>
+            <p>
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Extend(|P|, |var|, |expr|) ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |var|, |expr| )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalList">Evaluation of ToList</span></b></p>
-            <pre class="code nohighlight">eval(D(G), ToList(P)) = ToList(eval(D(G), P))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), ToList(|P|) ) = <a href="#defn_algToList" class="algFct">ToList</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalDistinct">Evaluation of Distinct</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Distinct(L)) = Distinct(eval(D(G), L))
-            </pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Distinct(|L|) ) = <a href="#defn_algDistinct" class="algFct">Distinct</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalReduced">Evaluation of Reduced</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Reduced(L)) = Reduced(eval(D(G), L))
-            </pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Reduced(|L|) ) = <a href="#defn_algReduced" class="algFct">Reduced</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalProject">Evaluation of Project</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Project(L, vars)) = Project(eval(D(G), L), vars)
-            </pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Project(|L|, |vars|) ) = <a href="#defn_algProject" class="algFct">Project</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |vars| )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalOrderBy">Evaluation of OrderBy</span></b></p>
-            <pre class="code nohighlight">eval(D(G), OrderBy(L, condition)) = OrderBy(eval(D(G), L), condition)
-            </pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), OrderBy(|L|, |condition|) ) = <a href="#defn_algOrderBy" class="algFct">OrderBy</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |condition| )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalToMultiSet">Evaluation of ToMultiSet</span></b></p>
-            <pre class="code nohighlight">eval(D(G), ToMultiSet(L)) = ToMultiSet(eval(D(G), L))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), ToMultiSet(|L|) ) = <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalSlice">Evaluation of Slice</span></b></p>
-            <pre class="code nohighlight">
-eval(D(G), Slice(L, start, length)) = Slice(eval(D(G), L), start, length)
-            </pre>
+            <p>
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Slice(|L|, |start|, |length|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |start|, |length| )
+            </p>
           </div>
         </section>
         <section id="sparqlBGPExtend">
