@@ -9835,7 +9835,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           every other solution mapping so <code>P MINUS {}</code> would otherwise be empty for any
           pattern <code>P</code>.</p>
         <div class="defn">
-          <p><b>Definition: <span id="defn_algExtend">Extend</span></b></p>
+          <p><b>Definition: <span id="defn_algExtend">Extend</span><span id="defn_extend"><!-- obsolete id --></span></b></p>
           <p>Let <var>μ</var> be a solution mapping, <var>Ω</var> a multiset of solution mappings, <var>var</var> a variable
             and <var>expr</var> be an <a href="#expressions">expression</a>, then we define:</p>
           <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> ∪ { (<var>var</var>, <var>value</var>) | <var>var</var> not in dom(<var>μ</var>) and <var>value</var> = <var>expr</var>(<var>μ</var>) }</p>
@@ -9854,14 +9854,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> )</p>
         </div>
         <div class="defn">
-          <p><b>Definition: <span id="defn_algOrderBy">OrderBy</span></b></p>
+          <p><b>Definition: <span id="defn_algOrderBy">OrderBy</span><span id="defn_algOrdered"><!-- obsolete id --></span></b></p>
           <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
           <p><a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, condition) = [ <var>μ</var> | <var>μ</var> in <var>Ψ</var> and the sequence satisfies the ordering condition]</p>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, condition) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ψ</var> )</p>
         </div>
         <div class="defn">
-          <p><b>Definition: <span id="defn_algProject">Project</span></b></p>
+          <p><b>Definition: <span id="defn_algProject">Project</span><span id="defn_algProjection"><!-- obsolete id --></span></b></p>
           <p>Let <var>Ψ</var> be a sequence of solution mappings and <var>PV</var> a set of variables.</p>
           <p>For mapping <var>μ</var>, write Proj(<var>μ</var>, <var>PV</var>) to be the restriction of <var>μ</var> to variables in <var>PV</var>.</p>
           <p><a href="#defn_algProject" class="algFct">Project</a>(<var>Ψ</var>, <var>PV</var>) = [ Proj(<var>μ</var>, <var>PV</var>) | <var>μ</var> in <var>Ψ</var> ]</p>
