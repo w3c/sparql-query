@@ -30,7 +30,7 @@ sparql:subtract rdf:type sparql:Operator ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:multiple rdf:type sparql:Operator ;
+sparql:multiply rdf:type sparql:Operator ;
     rdfs:comment "This operator multiplies two numeric expressions and returns the product." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
