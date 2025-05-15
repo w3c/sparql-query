@@ -65,7 +65,7 @@ sparql:greaterThan rdf:type sparql:Operator ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:lessThat rdf:type sparql:Operator ;
+sparql:lessThan rdf:type sparql:Operator ;
     rdfs:comment "This operator tests whether the first RDF term is less than the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
