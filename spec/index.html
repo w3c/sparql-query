@@ -8374,10 +8374,10 @@ WHERE {
             <p>A <span class="definedTerm">solution sequence modifier</span> is one of:</p>
             <ul>
               <li>
-                <a href="#defn_algOrdered">Order By</a> modifier: put the solutions in order
+                <a href="#defn_algOrderBy">Order By</a> modifier: put the solutions in order
               </li>
               <li>
-                <a href="#defn_algProjection">Projection</a> modifier: choose certain variables
+                <a href="#defn_algProject">Projection</a> modifier: choose certain variables
               </li>
               <li>
                 <a href="#defn_algDistinct">Distinct</a> modifier: ensure solutions in the sequence
@@ -9759,11 +9759,11 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           described above.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algFilter">Filter</span></b></p>
-          <p>Let Ω be a multiset of solution mappings and expr be an expression. We define:</p>
-          <p>Filter(expr, Ω) = { μ | μ in Ω and expr(μ) is an expression that has an
+          <p>Let <var>Ω</var> be a multiset of solution mappings and <var>expr</var> be an expression. We define:</p>
+          <p><a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>) = { <var>μ</var> | <var>μ</var> in <var>Ω</var> and <var>expr</var>(<var>μ</var>) is an expression that has an
             effective boolean value of true }</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Filter(expr, Ω) )
-            = <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω )</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>) )
+            = <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> )</p>
           <blockquote>
             Note that evaluating an <code>exists(pattern)</code> expression uses the dataset and
             active graph, D(G). See the <a href="#defn_evalFilter">evaluation of filter</a>.
@@ -9771,141 +9771,137 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algJoin">Join</span></b></p>
-          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
-          <p>Join(Ω<sub>1</sub>, Ω<sub>2</sub>) = { merge(μ<sub>1</sub>, μ<sub>2</sub>) |
-            μ<sub>1</sub> in Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub>, and μ<sub>1</sub> and
-            μ<sub>2</sub> are compatible }</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Join(Ω<sub>1</sub>, Ω<sub>2</sub>) ) =<br>
-            &nbsp;&nbsp;&nbsp; for each merge(μ<sub>1</sub>, μ<sub>2</sub>), μ<sub>1</sub> in
-            Ω<sub>1</sub> and μ<sub>2</sub> in Ω<sub>2</sub> such that μ = merge(μ<sub>1</sub>,
-            μ<sub>2</sub>),<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum over (μ<sub>1</sub>, μ<sub>2</sub>),
-            <a href="#defn_Multiplicity">multiplicity</a>( μ<sub>1</sub> | Ω<sub>1</sub> ) * <a href="#defn_Multiplicity">multiplicity</a>( μ<sub>2</sub> | Ω<sub>2</sub> )</p>
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings. We define:</p>
+          <p><a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>) = { merge(<var>μ<sub>1</sub></var>, <var>μ<sub>2</sub></var>) |
+            <var>μ<sub>1</sub></var> in <var>Ω<sub>1</sub></var> and <var>μ<sub>2</sub></var> in <var>Ω<sub>2</sub></var>, and <var>μ<sub>1</sub></var> and
+            <var>μ<sub>2</sub></var> are <a href="#defn_algCompatibleMapping">compatible</a> }</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>) ) =<br>
+            &nbsp;&nbsp;&nbsp; for each merge(<var>μ<sub>1</sub></var>, <var>μ<sub>2</sub></var>), <var>μ<sub>1</sub></var> in
+            <var>Ω<sub>1</sub></var> and <var>μ<sub>2</sub></var> in <var>Ω<sub>2</sub></var> such that <var>μ</var> = merge(<var>μ<sub>1</sub></var>,
+            <var>μ<sub>2</sub></var>),<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum over (<var>μ<sub>1</sub></var>, <var>μ<sub>2</sub></var>),
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ<sub>1</sub></var> | <var>Ω<sub>1</sub></var> ) * <a href="#defn_Multiplicity">multiplicity</a>( <var>μ<sub>2</sub></var> | <var>Ω<sub>2</sub></var> )</p>
         </div>
-        <p>It is possible that a solution mapping μ in a Join can arise in different solution
-          mappings, μ<sub>1</sub> and μ<sub>2</sub> in the multisets being joined. The multiplicity
-          of&nbsp; μ is the sum of the multiplicities from all possibilities.</p>
+        <p>It is possible that a solution mapping <var>μ</var> in a Join can arise in different solution
+          mappings, <var>μ<sub>1</sub></var> and <var>μ<sub>2</sub></var> in the multisets being joined. The multiplicity
+          of <var>μ</var> is the sum of the multiplicities from all possibilities.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algDiff">Diff</span></b></p>
-          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings and <var>expr</var> be an
             expression. We define:</p>
-          <p>Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = { μ | μ in Ω<sub>1</sub> such that ∀ μ′ in
-            Ω<sub>2</sub>, either μ and μ′ are not compatible or μ and μ' are compatible and
-            expr(merge(μ, μ')) does not have an effective boolean value of true }</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω<sub>1</sub> )</p>
+          <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> such that ∀ <var>μ'</var> in
+            <var>Ω<sub>2</sub></var>, either <var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a> or <var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
+            <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an effective boolean value of true }</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>1</sub></var> )</p>
         </div>
-        <p>The evaluation of expr(merge(μ, μ')) does not have an effective boolean
+        <p>The evaluation of <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an effective boolean
           value of true if it evaluates to false or if it raises an error.</p>
-        <p>Diff is used internally for the definition of LeftJoin.</p>
+        <p><a href="#defn_algDiff" class="algFct">Diff</a> is used internally for the definition of <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algLeftJoin">LeftJoin</span></b></p>
-          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings and expr be an
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings and <var>expr</var> be an
             expression. We define:</p>
-          <p>LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) = Filter(expr, Join(Ω<sub>1</sub>,
-            Ω<sub>2</sub>)) ∪ Diff(Ω<sub>1</sub>, Ω<sub>2</sub>, expr)</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | LeftJoin(Ω<sub>1</sub>, Ω<sub>2</sub>, expr) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Filter(expr,Join(Ω<sub>1</sub>, Ω<sub>2</sub>)) ) +
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Diff(Ω<sub>1</sub>, Ω<sub>2</sub>,
-            expr) )</p>
+          <p><a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>,
+            <var>Ω<sub>2</sub></var>)) ∪ <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>)) ) +
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>,
+            <var>expr</var>) )</p>
         </div>
 
         <div class="defn">
           <p><b>Definition: <span id="defn_algUnion">Union</span></b></p>
-          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
-          <p>Union(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> or μ in Ω<sub>2</sub>
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings. We define:</p>
+          <p><a href="#defn_algUnion" class="algFct">Union</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> or <var>μ</var> in <var>Ω<sub>2</sub></var>
             }</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Union(Ω<sub>1</sub>, Ω<sub>2</sub>) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω<sub>1</sub> ) +
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω<sub>2</sub> )</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algUnion" class="algFct">Union</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>1</sub></var> ) +
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>2</sub></var> )</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algMinus">Minus</span></b></p>
-          <p>Let Ω<sub>1</sub> and Ω<sub>2</sub> be multisets of solution mappings. We define:</p>
-          <p>Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) = { μ | μ in Ω<sub>1</sub> . ∀ μ' in
-            Ω<sub>2</sub>, either μ and μ' are not compatible or dom(μ) and dom(μ') are disjoint
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings. We define:</p>
+          <p><a href="#defn_algMinus" class="algFct">Minus</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> . ∀ <var>μ'</var> in
+            <var>Ω<sub>2</sub></var>, either <var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a> or dom(<var>μ</var>) and dom(<var>μ'</var>) are disjoint
             }</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω<sub>1</sub> )</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algMinus" class="algFct">Minus</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>1</sub></var> )</p>
         </div>
-        <p>The additional restriction on dom(μ) and dom(μ') is added because otherwise if there is
-          a solution mapping in Ω<sub>2</sub> that has no variables in common with the solution
-          mappings of Ω<sub>1</sub>, then Minus(Ω<sub>1</sub>, Ω<sub>2</sub>) would be empty,
-          regardless of the rest of Ω<sub>2</sub>. The empty solution mapping is compatible with
+        <p>The additional restriction on dom(<var>μ</var>) and dom(<var>μ'</var>) is added because otherwise if there is
+          a solution mapping in <var>Ω<sub>2</sub></var> that has no variables in common with the solution
+          mappings of <var>Ω<sub>1</sub></var>, then <a href="#defn_algMinus" class="algFct">Minus</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>) would be empty,
+          regardless of the rest of <var>Ω<sub>2</sub></var>. The empty solution mapping is compatible with
           every other solution mapping so <code>P MINUS {}</code> would otherwise be empty for any
           pattern <code>P</code>.</p>
         <div class="defn">
-          <p><b>Definition: <span id="defn_extend">Extend</span></b></p>
-          <p>Let μ be a solution mapping, Ω a multiset of solution mappings, <i>var</i> a variable
-            and <i>expr</i> be an <a href="#expressions">expression</a>, then we define:</p>
-          <p>Extend(μ, var, expr) = μ ∪ { (var,value) | var not in dom(μ) and value = expr(μ) }</p>
-          <p>Extend(μ, var, expr) = μ if var not in dom(μ) and expr(μ) is an error</p>
-          <p>Extend is undefined when var in dom(μ).</p>
-          <p>Extend(Ω, var, expr) = { Extend(μ, var, expr) | μ in Ω }</p>
+          <p><b>Definition: <span id="defn_algExtend">Extend</span><span id="defn_extend"><!-- obsolete id --></span></b></p>
+          <p>Let <var>μ</var> be a solution mapping, <var>Ω</var> a multiset of solution mappings, <var>var</var> a variable
+            and <var>expr</var> be an <a href="#expressions">expression</a>, then we define:</p>
+          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> ∪ { (<var>var</var>, <var>value</var>) | <var>var</var> not in dom(<var>μ</var>) and <var>value</var> = <var>expr</var>(<var>μ</var>) }</p>
+          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> if <var>var</var> not in dom(<var>μ</var>) and expr(<var>μ</var>) is an error</p>
+          <p><a href="#defn_algExtend" class="algFct">Extend</a> is undefined if <var>var</var> in dom(<var>μ</var>).</p>
+          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>) = { <a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) | <var>μ</var> in <var>Ω</var> }</p>
         </div>
-        <p>Write [ x | C ] for a sequence of elements where C is a condition on x.</p>
+        <p>Write [ <var>x</var> | <var>C</var> ] for a sequence of elements where <var>C</var> is a condition on <var>x</var>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algToList">ToList</span></b></p>
-          <p>Let Ω be a multiset of solution mappings. We define:</p>
-          <p>ToList(Ω) = a sequence of mappings μ in Ω in any order, with
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω ) occurrences of
-            μ</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | ToList(Ω) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ω )</p>
+          <p>Let <var>Ω</var> be a multiset of solution mappings. We define:</p>
+          <p><a href="#defn_algToList" class="algFct">ToList</a>(<var>Ω</var>) = a sequence of mappings <var>μ</var> in <var>Ω</var> in any order, with
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> ) occurrences of
+            <var>μ</var></p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algToList" class="algFct">ToList</a>(<var>Ω</var>) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> )</p>
         </div>
         <div class="defn">
-          <p><b>Definition: <span id="defn_algOrdered">OrderBy</span></b></p>
-          <p>Let Ψ be a sequence of solution mappings. We define:</p>
-          <div id="defn_algOrderBy">
-            OrderBy
-          </div>(Ψ, condition) = [ μ | μ in Ψ and the sequence satisfies the ordering condition]
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | OrderBy(Ψ, condition) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ψ )</p>
+          <p><b>Definition: <span id="defn_algOrderBy">OrderBy</span><span id="defn_algOrdered"><!-- obsolete id --></span></b></p>
+          <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
+          <p><a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, condition) = [ <var>μ</var> | <var>μ</var> in <var>Ψ</var> and the sequence satisfies the ordering condition]</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, condition) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ψ</var> )</p>
         </div>
         <div class="defn">
-          <p><b>Definition: <span id="defn_algProjection">Project</span></b></p>
-          <p>Let Ψ be a sequence of solution mappings and PV a set of variables.</p>
-          <p>For mapping μ, write Proj(μ, PV) to be the restriction of μ to variables in PV.</p>
-          <p>Project(Ψ, PV) = [ Proj(μ, PV) | μ in Ψ ]</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Project(Ψ, PV) ) =
-            sum( <a href="#defn_Multiplicity">multiplicity</a>( ν | Ψ ) | ν in Ψ such that ν = Proj(μ, PV))</p>
-          <p>The order of Project(Ψ, PV) must preserve any ordering given by OrderBy.</p>
+          <p><b>Definition: <span id="defn_algProject">Project</span><span id="defn_algProjection"><!-- obsolete id --></span></b></p>
+          <p>Let <var>Ψ</var> be a sequence of solution mappings and <var>PV</var> a set of variables.</p>
+          <p>For mapping <var>μ</var>, write Proj(<var>μ</var>, <var>PV</var>) to be the restriction of <var>μ</var> to variables in <var>PV</var>.</p>
+          <p><a href="#defn_algProject" class="algFct">Project</a>(<var>Ψ</var>, <var>PV</var>) = [ Proj(<var>μ</var>, <var>PV</var>) | <var>μ</var> in <var>Ψ</var> ]</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algProject" class="algFct">Project</a>(<var>Ψ</var>, <var>PV</var>) ) =
+            sum( <a href="#defn_Multiplicity">multiplicity</a>( <var>μ'</var> | <var>Ψ</var> ) | <var>μ'</var> in <var>Ψ</var> such that <var>μ'</var> = Proj(<var>μ</var>, <var>PV</var>) )</p>
+          <p>The order of <a href="#defn_algProject" class="algFct">Project</a>(<var>Ψ</var>, <var>PV</var>) must preserve any ordering given by <a href="#defn_algOrderBy" class="algFct">OrderBy</a>.</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algDistinct">Distinct</span></b></p>
-          <p>Let Ψ be a sequence of solution mappings. We define:</p>
-          <p>Distinct(Ψ) = [ μ | μ in Ψ ]</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Distinct(Ψ) ) = 1
-            for every μ ∈ Distinct(Ψ)</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Distinct(Ψ) ) = 0
-            for every μ ∉ Distinct(Ψ)</p>
-          <p>The order of Distinct(Ψ) must preserve any ordering given by OrderBy.</p>
+          <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
+          <p><a href="#defn_algDistinct" class="algFct">Distinct</a>(<var>Ψ</var>) = [ <var>μ</var> | <var>μ</var> in <var>Ψ</var> ]</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDistinct" class="algFct">Distinct</a>(<var>Ψ</var>) ) = 1
+            for every <var>μ</var> ∈ <a href="#defn_algDistinct" class="algFct">Distinct</a>(<var>Ψ</var>)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDistinct" class="algFct">Distinct</a>(<var>Ψ</var>) ) = 0
+            for every <var>μ</var> ∉ <a href="#defn_algDistinct" class="algFct">Distinct</a>(<var>Ψ</var>)</p>
+          <p>The order of <a href="#defn_algDistinct" class="algFct">Distinct</a>(<var>Ψ</var>) must preserve any ordering given by <a href="#defn_algOrderBy" class="algFct">OrderBy</a>.</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algReduced">Reduced</span></b></p>
-          <p>Let Ψ be a sequence of solution mappings. We define:</p>
-          <p>Reduced(Ψ) = [ μ | μ in Ψ ]</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Reduced(Ψ) ) is
-            between 1 and <a href="#defn_Multiplicity">multiplicity</a>( μ | Ψ )
-            for every μ ∈ Reduced(Ψ)</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Reduced(Ψ) ) = 0
-            for every μ ∉ Reduced(Ψ)</p>
-          <p>The order of Reduced(Ψ) must preserve any ordering given by OrderBy.</p>
+          <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
+          <p><a href="#defn_algReduced" class="algFct">Reduced</a>(<var>Ψ</var>) = [ <var>μ</var> | <var>μ</var> in <var>Ψ</var> ]</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algReduced" class="algFct">Reduced</a>(<var>Ψ</var>) ) is
+            between 1 and <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ψ</var> )
+            for every <var>μ</var> ∈ <a href="#defn_algReduced" class="algFct">Reduced</a>(<var>Ψ</var>)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algReduced" class="algFct">Reduced</a>(<var>Ψ</var>) ) = 0
+            for every <var>μ</var> ∉ <a href="#defn_algReduced" class="algFct">Reduced</a>(<var>Ψ</var>)</p>
+          <p>The order of <a href="#defn_algReduced" class="algFct">Reduced</a>(<var>Ψ</var>) must preserve any ordering given by <a href="#defn_algOrderBy" class="algFct">OrderBy</a>.</p>
         </div>
-        <p>The Reduced solution sequence modifier does not guarantee a defined multiplicity.</p>
+        <p>The <a href="#defn_algReduced" class="algFct">Reduced</a> solution sequence modifier does not guarantee a defined multiplicity.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algSlice">Slice</span></b></p>
-          <p>Let Ψ be a sequence of solution mappings. We define:</p>
-          <div id="defn_algOrderBy2">
-            Slice
-          </div>(Ψ, start, length)[i] = Ψ[start+i] for i = 0 to (length-1)
+          <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, <var>start</var>, <var>length</var>)[<var>i</var>] = <var>Ψ</var>[<var>start</var>+<var>i</var>] for <var>i</var> = 0 to (<var>length</var>-1)</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algToMultiSet">ToMultiSet</span></b></p>
-          <p>Let Ψ be a solution sequence. We define:</p>
-          <p>ToMultiSet(Ψ) = { μ | μ in Ψ }</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( μ | ToMultiSet(Ψ) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( μ | Ψ )</p>
+          <p>Let <var>Ψ</var> be a solution sequence. We define:</p>
+          <p><a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>(<var>Ψ</var>) = { <var>μ</var> | <var>μ</var> in <var>Ψ</var> }</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>(<var>Ψ</var>) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ψ</var> )</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_exists">Exists</span></b></p>
@@ -9916,15 +9912,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </div>
         <section id="aggregateAlgebra">
           <h4>Aggregate Algebra</h4>
-          <p>Group is a function which groups a solution sequence into multiple solutions, based on
+          <p><a href="#defn_algGroup" class="algFct">Group</a> is a function which groups a solution sequence into multiple solutions, based on
             some attribute of the solutions.</p>
           <div class="defn">
             <div id="defn_algGroup">
               <b>Definition: Group</b>
             </div>
-            <p>Group evaluates a list of expressions against a solution sequence <var>Ψ</var>, producing a
+            <p><a href="#defn_algGroup" class="algFct">Group</a> evaluates a list of expressions against a solution sequence <var>Ψ</var>, producing a
               partial function from keys to solution sequences.</p>
-            <p>Group(<var>exprlist</var>, <var>Ψ</var>) = {
+            <p><a href="#defn_algGroup" class="algFct">Group</a>(<var>exprlist</var>, <var>Ψ</var>) = {
               <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ</var>)
               → [ <var>μ'</var> | <var>μ'</var> in <var>Ψ</var> such that
               <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ'</var>) and
@@ -9947,10 +9943,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_ListEval">ListEval</span></b></p>
-            <p>ListEval((expr<sub>1</sub>, ..., expr<sub>n</sub>), μ) returns a list
-              (e<sub>1</sub>, ..., e<sub>n</sub>), where e<sub>i</sub> = expr<sub>i</sub>(μ) or
+            <p><a href="#defn_ListEval">ListEval</a>((<var>expr<sub>1</sub></var>, ..., <var>expr<sub><var>n</var></sub></var>), <var>μ</var>) returns a list
+              (<var>e<sub>1</sub></var>, ..., <var>e<sub><var>n</var></sub></var>), where <var>e<sub><var>i</var></sub></var> = <var>expr<sub><var>i</var></sub></var>(<var>μ</var>) or
               error.</p>
-            <p>ListEval retains errors resulting from the evaluation of the list elements.</p>
+            <p><a href="#defn_ListEval">ListEval</a> retains errors resulting from the evaluation of the list elements.</p>
           </div>
           <p>Note that, although the result of <a href="#defn_ListEval">ListEval</a>
             may contain errors, and errors may be used
@@ -9959,67 +9955,67 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>Note also that the result of <a href="#defn_ListEval">ListEval</a>((unbound), <var>μ</var>)
             is the list (error), as the evaluation of an unbound expression is an
             error.</p>
-          <p>Aggregation, a function which calculates a scalar value as an output of the aggregate
+          <p><a href="#defn_algAggregation" class="algFct">Aggregation</a>, a function which calculates a scalar value as an output of the aggregate
             expression. It is used in the SELECT clause, the HAVING evaluation process, and in ORDER
-            BY (where required). Aggregation calculates aggregated values over groups of solutions,
+            BY (where required). <a href="#defn_algAggregation" class="algFct">Aggregation</a> calculates aggregated values over groups of solutions,
             using set functions.</p>
           <div class="defn">
             <div id="defn_algAggregation">
               <b>Definition: Aggregation</b>
             </div>
-            <p>Let <i>exprlist</i> be a list of expressions or `*`; <i>func</i>, a set function;
-              <i>scalarvals</i>, a partial function (possibly with an empty domain) passed from the aggregate
-              in the query; and { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
-              key<sub>m</sub>→Ψ<sub>m</sub> }, a partial function from keys to
+            <p>Let <var>exprlist</var> be a list of expressions or `*`; <var>func</var>, a set function;
+              <var>scalarvals</var>, a partial function (possibly with an empty domain) passed from the aggregate
+              in the query; and { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
+              <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> }, a partial function from keys to
               solution sequences as produced by the grouping step.</p>
-            <p>Aggregation applies the set function `func` to the given set and produces a
+            <p><a href="#defn_algAggregation" class="algFct">Aggregation</a> applies the set function <var>func</var> to the given set and produces a
               single value for each key and a group of solutions for that key.</p>
-            <p>Aggregation(exprlist, func, scalarvals, { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
-              key<sub>m</sub>→Ψ<sub>m</sub> } )<br>
-              &nbsp;&nbsp;&nbsp;= { (key, F(Ψ)) | key → Ψ in { key<sub>1</sub>→Ψ<sub>1</sub>, ...,
-              key<sub>m</sub>→Ψ<sub>m</sub> } }</p>
+            <p><a href="#defn_algAggregation" class="algFct">Aggregation</a>(<var>exprlist</var>, <var>func</var>, <var>scalarvals</var>, { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
+              <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> } )<br>
+              &nbsp;&nbsp;&nbsp;= { (<var>key</var>, <var>F</var>(<var>Ψ</var>)) | <var>key</var> → <var>Ψ</var> in { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
+              <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> } }</p>
             <p>where<br>
-              &nbsp;&nbsp;M(<var>Ψ</var>) = [ <a href="#defn_ListEval">ListEval</a>(exprlist, <var>μ</var>) | <var>μ</var> in <var>Ψ</var> ]<br>
-              &nbsp;&nbsp;F(Ψ) = func(M(Ψ), scalarvals), for non-<code>DISTINCT</code><br>
-              &nbsp;&nbsp;F(Ψ) = func(Dedup(M(Ψ)), scalarvals), for <code>DISTINCT</code></p>
-            <p>with Dedup(M(Ψ)) being an order-preserving, duplicate-free version of the sequence M(Ψ); that is, Dedup(M(Ψ)) is a sequence of lists that has the following four properties
+              &nbsp;&nbsp;M(<var>Ψ</var>) = [ <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ</var>) | <var>μ</var> in <var>Ψ</var> ]<br>
+              &nbsp;&nbsp;F(<var>Ψ</var>) = <var>func</var>(M(<var>Ψ</var>), <var>scalarvals</var>), for non-<code>DISTINCT</code><br>
+              &nbsp;&nbsp;F(<var>Ψ</var>) = <var>func</var>(Dedup(M(<var>Ψ</var>)), <var>scalarvals</var>), for <code>DISTINCT</code></p>
+            <p>with Dedup(M(<var>Ψ</var>)) being an order-preserving, duplicate-free version of the sequence M(<var>Ψ</var>); that is, Dedup(M(<var>Ψ</var>)) is a sequence of lists that has the following four properties
               (where each such list in this sequence may contain RDF terms and
               errors, as it is produced by the <a href="#defn_ListEval">ListEval</a> function).</p>
             <ol>
-              <li>For every list&nbsp;<var>L</var> in M(Ψ) there exists a
-                list&nbsp;<var>L'</var> in Dedup(M(Ψ)) such that <var>L</var>
+              <li>For every list&nbsp;<var>L</var> in M(<var>Ψ</var>) there exists a
+                list&nbsp;<var>L'</var> in Dedup(M(<var>Ψ</var>)) such that <var>L</var>
                 and <var>L'</var> are the same,
-                where two lists <var>L</var> and <var>L'</var> from M(Ψ) are
+                where two lists <var>L</var> and <var>L'</var> from M(<var>Ψ</var>) are
                 considered the same as specified in the definition of the
                 <a href="#defn_algGroup">Group operator</a>.</li>
-              <li>For every list&nbsp;<var>L</var> in Dedup(M(Ψ)) there exists
-                a list&nbsp;<var>L'</var> in M(Ψ) such that <var>L</var> and
+              <li>For every list&nbsp;<var>L</var> in Dedup(M(<var>Ψ</var>)) there exists
+                a list&nbsp;<var>L'</var> in M(<var>Ψ</var>) such that <var>L</var> and
                 <var>L'</var> are the same.</li>
-              <li>Dedup(M(Ψ)) is free of duplicates. That is, the list at the |i|-th position in Dedup(M(Ψ)) is not the same list as the list at the |j|-th position in Dedup(M(Ψ)) for every two natural numbers |i| and |j| such that |i| &ne; |j|.</li>
-              <li>For any two lists <var>L<sub>1</sub></var> and <var>L<sub>2</sub></var> in Dedup(M(Ψ)), the relative order of their first occurrences in M(Ψ) is preserved in Dedup(M(Ψ)). That is, if <var>i<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>i<sub>2</sub></var>, then <var>j<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>j<sub>2</sub></var>, where
+              <li>Dedup(M(<var>Ψ</var>)) is free of duplicates. That is, the list at the |i|-th position in Dedup(M(<var>Ψ</var>)) is not the same list as the list at the |j|-th position in Dedup(M(<var>Ψ</var>)) for every two natural numbers |i| and |j| such that |i| &ne; |j|.</li>
+              <li>For any two lists <var>L<sub>1</sub></var> and <var>L<sub>2</sub></var> in Dedup(M(<var>Ψ</var>)), the relative order of their first occurrences in M(<var>Ψ</var>) is preserved in Dedup(M(<var>Ψ</var>)). That is, if <var>i<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>i<sub>2</sub></var>, then <var>j<sub>1</sub></var>&nbsp;&lt;&nbsp;<var>j<sub>2</sub></var>, where
                 <ul>
-                  <li><var>i<sub>1</sub></var> is the smallest natural number such that <var>L<sub>1</sub></var> is at the <var>i<sub>1</sub></var>-th position in M(Ψ),</li>
-                  <li><var>i<sub>2</sub></var> is the smallest natural number such that <var>L<sub>2</sub></var> is at the <var>i<sub>2</sub></var>-th position in M(Ψ),</li>
-                  <li><var>j<sub>1</sub></var> is the position of <var>L<sub>1</sub></var> in Dedup(M(Ψ)), and</li>
-                  <li><var>j<sub>2</sub></var> is the position of <var>L<sub>2</sub></var> in Dedup(M(Ψ)).</li>
+                  <li><var>i<sub>1</sub></var> is the smallest natural number such that <var>L<sub>1</sub></var> is at the <var>i<sub>1</sub></var>-th position in M(<var>Ψ</var>),</li>
+                  <li><var>i<sub>2</sub></var> is the smallest natural number such that <var>L<sub>2</sub></var> is at the <var>i<sub>2</sub></var>-th position in M(<var>Ψ</var>),</li>
+                  <li><var>j<sub>1</sub></var> is the position of <var>L<sub>1</sub></var> in Dedup(M(<var>Ψ</var>)), and</li>
+                  <li><var>j<sub>2</sub></var> is the position of <var>L<sub>2</sub></var> in Dedup(M(<var>Ψ</var>)).</li>
                 </ul>
               </li>
             </ol>
 
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
-              <code>*</code>, then F(Ψ) is the cardinality of the group solution sequence,
-              i.e., F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(Ψ),
-              or F(Ψ)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<a href="#defn_algDistinct">Distinct</a>(Ψ))
+              <code>*</code>, then F(<var>Ψ</var>) is the cardinality of the group solution sequence,
+              i.e., F(<var>Ψ</var>)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<var>Ψ</var>),
+              or F(<var>Ψ</var>)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<a href="#defn_algDistinct">Distinct</a>(<var>Ψ</var>))
               if the <code>DISTINCT</code> keyword is present.</p>
           </div>
-          <p><i>scalarvals</i> are used to pass values to the underlying set function, bypassing
+          <p><var>scalarvals</var> are used to pass values to the underlying set function, bypassing
             the mechanics of the grouping. For example, the aggregate expression
-            <code>GROUP_CONCAT(?x ; separator="|")</code> has a scalarvals argument of { "separator"
+            <code>GROUP_CONCAT(?x ; separator="|")</code> has a <var>scalarvals</var> argument of { "separator"
             → "|" }.</p>
           <p>All aggregates may have the <code>DISTINCT</code> keyword as the first token in their
-            argument list. If this keyword is present, then first argument to func is Dedup(M(Ψ)).</p>
+            argument list. If this keyword is present, then first argument to |func| is Dedup(M(<var>Ψ</var>)).</p>
           <p>Example</p>
-          <p>Given a solution sequence Ψ with the following values:</p>
+          <p>Given a solution sequence <var>Ψ</var> with the following values:</p>
           <table>
             <tbody>
               <tr>
@@ -10029,19 +10025,19 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 <td>?z</td>
               </tr>
               <tr>
-                <td>μ<sub>1</sub></td>
+                <td><var>μ<sub>1</sub></var></td>
                 <td>1</td>
                 <td>2</td>
                 <td>3</td>
               </tr>
               <tr>
-                <td>μ<sub>2</sub></td>
+                <td><var>μ<sub>2</sub></var></td>
                 <td>1</td>
                 <td>3</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>μ<sub>3</sub></td>
+                <td><var>μ<sub>3</sub></var></td>
                 <td>2</td>
                 <td>5</td>
                 <td>6</td>
@@ -10050,24 +10046,26 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </table>
           <p>And the query expression SELECT (ex:agg(?y, ?z) AS ?agg) WHERE { ?x ?y ?z } GROUP BY
             ?x.</p>
-          <p>We produce G = Group((?x), Ψ) = { (1) → [μ<sub>1</sub>, μ<sub>2</sub>], (2) →
-          [μ<sub>3</sub>] }</p>
-          <p>And so Aggregation((?y, ?z), ex:agg, {}, G) =<br>
+          <p>We produce <var>G</var> = <a href="#defn_algGroup" class="algFct">Group</a>((?x), <var>Ψ</var>) = { (1) → [<var>μ<sub>1</sub></var>, <var>μ<sub>2</sub></var>], (2) →
+          [<var>μ<sub>3</sub></var>] }</p>
+          <p>And so <a href="#defn_algAggregation" class="algFct">Aggregation</a>((?y, ?z), ex:agg, {}, <var>G</var>) =<br>
             { ((1), eg:agg([(2, 3), (3, 4)], {})), ((2), eg:agg([(5, 6)], {})) }.</p>
           <div class="defn">
-            <p><b>Definition: AggregateJoin</b></p>
-            <p>Let S<sub>1</sub>, ..., S<sub>n</sub> be a list of sets, where each set
-              S<sub>i</sub> contains key to (aggregated) value maps as produced by Aggregate.</p>
-            <p>Let K = { key | key in dom(S<sub>j</sub>) for some 1 &le; j &le; n } be the set of
+            <div id="defn_algAggregateJoin">
+              <b>Definition: AggregateJoin</b>
+            </div>
+            <p>Let <var>S<sub>1</sub></var>, ..., <var>S<sub>|n|</sub></var> be a list of sets, where each set
+              <var>S<sub>i</sub></var> contains key to (aggregated) value maps as produced by <a href="#defn_algAggregation" class="algFct">Aggregation</a>.</p>
+            <p>Let |K| = { |key| | |key| in dom(<var>S<sub>|j|</sub></var>) for some 1 &le; |j| &le; |n| } be the set of
               keys, then<br>
-              AggregateJoin(S<sub>1</sub>, ..., S<sub>n</sub>) = { agg<sub>1</sub>→val<sub>1</sub>,
-              ..., agg<sub>n</sub>→val<sub>n</sub> | key in K and key→val<sub>i</sub> in
-              S<sub>i</sub> for each 1 &le; i &le; n }</p>
+              <a href="#defn_algAggregateJoin" class="algFct">AggregateJoin</a>(<var>S<sub>1</sub></var>, ..., <var>S<sub>|n|</sub></var>) = { <var>agg<sub>1</sub></var>→<var>val<sub>1</sub></var>,
+              ..., <var>agg<sub>|n|</sub></var>→<var>val<sub>|n|</sub></var> | |key| in |K| and |key|→<var>val<sub>|i|</sub></var> in
+              <var>S<sub>|i|</sub><var> for each 1 &le; |i| &le; |n| }</p>
           </div>
           <section id="setFunctions">
             <h5>Set Functions</h5>
             <p>The set functions which underlie SPARQL aggregates all have a common signature:
-              SetFunc(S), or SetFunc(S, scalarvals) where S is a sequence of lists, and scalarvals is
+              SetFunc(|S|), or SetFunc(|S|, |scalarvals|) where |S| is a sequence of lists, and |scalarvals| is
               one or more scalar values that are passed to the set function indirectly via the ( ...
               ; key=value ) syntax for aggregates in the SPARQL grammar. The only use of this that is
               supported by the built-in aggregates in SPARQL Query 1.1 is <code>GROUP_CONCAT</code>,
@@ -10075,8 +10073,15 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <p>Note that the name "Set Function" is somewhat historical — the arguments to set
               functions are in fact sequences. The name is retained due to the commonality with SQL
               Set Functions, which operate over multisets.</p>
-            <p>The set functions defined in this document are Count, Sum, Min, Max, Avg,
-              GroupConcat, and Sample — corresponding to the aggregates <code>COUNT</code>,
+            <p>The set functions defined in this document are
+              <a href="#defn_aggCount" class="aggFct">Count</a>,
+              <a href="#defn_aggSum" class="aggFct">Sum</a>,
+              <a href="#defn_aggMin" class="aggFct">Min</a>,
+              <a href="#defn_aggMax" class="aggFct">Max</a>,
+              <a href="#defn_aggAvg" class="aggFct">Avg</a>,
+              <a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>, and
+              <a href="#defn_aggSample" class="aggFct">Sample</a>
+              — corresponding to the aggregates <code>COUNT</code>,
               <code>SUM</code>, <code>MIN</code>, <code>MAX</code>, <code>AVG</code>,
               <code>GROUP_CONCAT</code>, and <code>SAMPLE</code>. Definitions may be found in the
               following sections. Systems may choose to expand this set using local extensions, using
@@ -10099,7 +10104,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 <var>L<sub><var>m</var></sub></var>]
                 where, for every <var>i</var> &in; {1, ..., <var>m</var>},
                 <var>L<sub><var>i</var></sub></var> is a list.</p>
-              <p>Flatten(<var>S</var>) is the list
+              <p><a href="#defn_Flatten">Flatten</a>(<var>S</var>) is the list
                 ( <var>x</var> | <var>L</var> in <var>S</var> and
                 <var>x</var> in <var>L</var> ).</p>
             </div>
@@ -10109,33 +10114,33 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               context).
             <div class="defn">
               <p><b>Definition: <span id="defn_Card">Card</span></b></p>
-              <p>Given a sequence or a list |L|, Card(|L|) is the cardinality of |L|.</p>
+              <p>Given a sequence or a list |L|, <a href="#defn_Card">Card</a>(|L|) is the cardinality of |L|.</p>
             </div>
           </section>
 
           <section id="aggCount">
             <h5>Count</h5>
-            <p>Count is a SPARQL set function which counts the number of times a given expression
+            <p><a href="#defn_aggCount" class="aggFct">Count</a> is a SPARQL set function which counts the number of times a given expression
               has a bound, non-error value within the aggregate group.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggCount">Count</span></b></p>
-              <pre class="code nohighlight">xsd:integer <var>Count</var>(sequence <var>S</var>)</pre>
-              <p><var>Count</var>(<var>S</var>) = <a href="#defn_Card">Card</a>(<var>L'</var>),</p>
+              <pre class="code nohighlight">xsd:integer <a href="#defn_aggCount" class="aggFct">Count</a>(sequence <var>S</var>)</pre>
+              <p><a href="#defn_aggCount" class="aggFct">Count</a>(<var>S</var>) = <a href="#defn_Card">Card</a>(<var>L'</var>),</p>
               <p>where <var>L'</var> is the list <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 with all error elements removed.</p>
             </div>
           </section>
           <section id="aggSum">
             <h5>Sum</h5>
-            <p>Sum is a SPARQL set function that returns the numeric value obtained by summing
+            <p><a href="#defn_aggSum" class="aggFct">Sum</a> is a SPARQL set function that returns the numeric value obtained by summing
               the values within the aggregate group. Type promotion happens as per the op:numeric-add
               function, applied transitively, (see definition below) so the value of SUM(?x), in an
               aggregate group where ?x has values 1 (integer), 2.0e0 (float), and 3.0 (decimal) will
               be 6.0 (float).</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSum">Sum</span></b></p>
-              <pre class="code nohighlight">numeric <var>Sum</var>(sequence <var>S</var>)</pre>
-              <p><var>Sum</var>(<var>S</var>) = <var>SumList</var>(<var>L</var>),</p>
+              <pre class="code nohighlight">numeric <a href="#defn_aggSum" class="aggFct">Sum</a>(sequence <var>S</var>)</pre>
+              <p><a href="#defn_aggSum" class="aggFct">Sum</a>(<var>S</var>) = <var>SumList</var>(<var>L</var>),</p>
               <p>where <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>) and
                 <var>SumList</var>(<var>L</var>) is defined recursively as follows.</p>
               <ul>
@@ -10151,37 +10156,37 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 <var>L</var>, and <var>L</var><sub>2..n</sub> is <var>L</var>
                 without its first element.</p>
             </div>
-            <p>In this way, <var>Sum</var>( [(1), (2), (3)] ) = <var>SumList</var>( (1, 2, 3) ) =
+            <p>In this way, <a href="#defn_aggSum" class="aggFct">Sum</a>( [(1), (2), (3)] ) = <var>SumList</var>( (1, 2, 3) ) =
               op:numeric-add(1, op:numeric-add(2, op:numeric-add(3, 0))).</p>
           </section>
           <section id="aggAvg">
             <h5>Avg</h5>
-            <div id="defn_algAvg"></div>The Avg set function calculates the
+            <div id="defn_algAvg"></div>The <a href="#defn_aggAvg" class="aggFct">Avg</a> set function calculates the
             average value for an expression over a group. It is defined in terms of Sum and Count.
             <div class="defn">
               <p><b>Definition: <span id="defn_aggAvg">Avg</span></b></p>
-              <pre class="code nohighlight">numeric <var>Avg</var>(sequence <var>S</var>)</pre>
+              <pre class="code nohighlight">numeric <a href="#defn_aggAvg" class="aggFct">Avg</a>(sequence <var>S</var>)</pre>
               <p>If <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>) = 0,
-                then <var>Avg</var>(<var>S</var>) = "0"^^<code>xsd:integer</code>.</p>
+                then <a href="#defn_aggAvg" class="aggFct">Avg</a>(<var>S</var>) = "0"^^<code>xsd:integer</code>.</p>
               <p>If <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>) &gt; 0,
-                then <var>Avg</var>(<var>S</var>) =
-                <var><a href="#defn_aggSum">Sum</a></var>(<var>S</var>) /
-                <var><a href="#defn_aggCount">Count</a></var>(<var>S</var>).</p>
+                then <a href="#defn_aggAvg" class="aggFct">Avg</a>(<var>S</var>) =
+                <var><a href="#defn_aggSum" class="aggFct">Sum</a></var>(<var>S</var>) /
+                <var><a href="#defn_aggCount" class="aggFct">Count</a></var>(<var>S</var>).</p>
             </div>
-            <p>For example, <var>Avg</var>([(1), (2), (3)]) =
-              <var>Sum</var>([(1), (2), (3)])/<var>Count</var>([(1), (2), (3)])
+            <p>For example, <a href="#defn_aggAvg" class="aggFct">Avg</a>([(1), (2), (3)]) =
+              <a href="#defn_aggSum">Sum</a>([(1), (2), (3)])/<a href="#defn_aggCount">Count</a>([(1), (2), (3)])
               = 6/3 = 2.</p>
           </section>
           <section id="aggMin">
             <h5>Min</h5>
-            <p>Min is a SPARQL set function that returns the minimum value from a group
+            <p><a href="#defn_aggMin" class="aggFct">Min</a> is a SPARQL set function that returns the minimum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
-              <pre class="code nohighlight">term <var>Min</var>(sequence <var>S</var>)</pre>
-              <p><var>Min</var>(<var>S</var>) = <var>MinList</var>(<var>L</var>),</p>
+              <pre class="code nohighlight">term <a href="#defn_aggMin" class="aggFct">Min</a>(sequence <var>S</var>)</pre>
+              <p><a href="#defn_aggMin" class="aggFct">Min</a>(<var>S</var>) = <var>MinList</var>(<var>L</var>),</p>
               <p>where <var>L</var> is the list of values obtained by
                 <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 and then ordered as per the <code>ORDER BY ASC</code> clause,
@@ -10198,14 +10203,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </section>
           <section id="aggMax">
             <h5>Max</h5>
-            <p>Max is a SPARQL set function that returns the maximum value from a group
+            <p><a href="#defn_aggMax" class="aggFct">Max</a> is a SPARQL set function that returns the maximum value from a group
               respectively.</p>
             <p>It makes use of the SPARQL ORDER BY ordering definition, to allow ordering over
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
-              <pre class="code nohighlight">term <var>Max</var>(sequence <var>S</var>)</pre>
-              <p><var>Max</var>(<var>S</var>) = <var>MaxList</var>(<var>L</var>),</p>
+              <pre class="code nohighlight">term <a href="#defn_aggMax" class="aggFct">Max</a>(sequence <var>S</var>)</pre>
+              <p><a href="#defn_aggMax" class="aggFct">Max</a>(<var>S</var>) = <var>MaxList</var>(<var>L</var>),</p>
               <p>where <var>L</var> is the list of values obtained by
                 <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 and then ordered as per the <code>ORDER BY DESC</code> clause,
@@ -10222,13 +10227,13 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </section>
           <section id="aggGroupConcat">
             <h5>GroupConcat</h5>
-            <p>GroupConcat is a set function which performs a string concatenation across the
+            <p><a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a> is a set function which performs a string concatenation across the
               values of an expression with a group. The order of the strings is not specified. The
               separator character used in the concatenation may be given with the scalar argument
               SEPARATOR.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
-              <pre class="code nohighlight">literal <var>GroupConcat</var>(sequence <var>S</var>, function <var>scalarvals</var>)</pre>
+              <pre class="code nohighlight">literal <a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>(sequence <var>S</var>, function <var>scalarvals</var>)</pre>
               <p>If the <var>scalarvals</var> argument is absent from <code>GROUP_CONCAT</code>,
                 then <var>scalarvals</var> is taken to be the empty function.</p>
               <p>Let <var>sep</var> be a string that is defined as follows.</p>
@@ -10238,7 +10243,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 <li>If <var>scalarvals</var> is undefined for the argument "separator",
                   then <var>sep</var> is the "space" character (i.e., unicode codepoint U+0020).</li>
               </ul>
-              <p><var>GroupConcat</var>(<var>S</var>, <var>scalarvals</var>) =
+              <p><a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>(<var>S</var>, <var>scalarvals</var>) =
                 <var>GCList</var>(<var>L</var>, <var>sep</var>),</p>
               <p>where <var>L</var> = <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
                 and <var>GCList</var>(<var>L</var>, <var>sep</var>)
@@ -10257,169 +10262,167 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 <var>L</var>, and <var>L</var><sub>2..n</sub> is <var>L</var>
                 without its first element.</p>
             </div>
-            <p>For example, <var>GroupConcat</var>([("a"), ("b"), ("c")], {"separator" → "."})
+            <p>For example, <a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>([("a"), ("b"), ("c")], {"separator" → "."})
               = <var>GCList</var>( ("a", "b", "c"), "." )
               = "a.b.c".</p>
           </section>
           <section id="aggSample">
             <h5>Sample</h5>
-            <p>Sample is a set function which returns an arbitrary value from the sequence passed
+            <p><a href="#defn_aggSample" class="aggFct">Sample</a> is a set function which returns an arbitrary value from the sequence passed
               to it.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
-              <pre class="code nohighlight">RDFTerm <var>Sample</var>(sequence <var>S</var>)</pre>
+              <pre class="code nohighlight">RDFTerm <a href="#defn_aggSample" class="aggFct">Sample</a>(sequence <var>S</var>)</pre>
               <p>If <a href="#defn_Card">Card</a>(<var>S</var>) = 0, then
-                <var>Sample</var>(<var>S</var>) = error.</p>
+                <a href="#defn_aggSample" class="aggFct">Sample</a>(<var>S</var>) = error.</p>
               <p>If <a href="#defn_Card">Card</a>(<var>S</var>) &gt; 0, then
-                <var>Sample</var>(<var>S</var>) = <var>v</var>, where <var>v</var>
+                <a href="#defn_aggSample" class="aggFct">Sample</a>(<var>S</var>) = <var>v</var>, where <var>v</var>
                 in <a href="#defn_Flatten">Flatten</a>(<var>S</var>).</p>
             </div>
-            <p>For example, given <var>Sample</var>([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
-              values. Note that the <var>Sample</var> function is not required to be deterministic for a given input. The
+            <p>For example, given <a href="#defn_aggSample" class="aggFct">Sample</a>([("a"), ("b"), ("c")]), "a", "b", and "c" are all valid return
+              values. Note that the <a href="#defn_aggSample" class="aggFct">Sample</a> function is not required to be deterministic for a given input. The
               only restriction is that the output value must be present in the input sequence.</p>
           </section>
         </section>
         <section id="sparqlAlgebraEval">
           <h3>Evaluation Semantics</h3>
-          <p>We define eval(D(G), algebra expression) as the evaluation of an algebra expression with
-            respect to a dataset D having active graph G. The active graph is initially the default
-            graph.</p>
-          <pre class="box">
-D : a dataset
-D(G) : D a dataset with active graph G (the one patterns match against)
-D[i] : The graph with IRI i in dataset D
-P, P1, P2 : graph patterns
-L : a solution sequence
-F : an expression
-          </pre>
+          <p id="defn_eval">We define <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|) as the evaluation of an algebra expression |A| with
+            respect to a <a href="#sparqlDataset">dataset</a> |D| having <a href="#defn_ActiveGraph">active graph</a> |G|. The active graph is initially the default
+            graph of |D|. Further symbols and notation used in the following definitions are:</p>
+          <ul>
+            <li>|D|[|i|] : Denotes the graph with IRI |i| in dataset |D|</li>
+            <li>|P|, <var>P<sub>1</sub></var>, <var>P<sub>2</sub></var> : graph patterns</li>
+            <li>|L| : a solution sequence</li>
+            <li>|F| : an expression</li>
+          </ul>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalBasicGraphPattern">Evaluation of a Basic Graph Pattern</span></b></p>
-            <pre class="code nohighlight">eval(D(G), BGP) = multiset of solution mappings</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), |BGP| ) = multiset of solution mappings</p>
             <p>See section <a href="#BasicGraphPattern">Basic Graph Patterns</a></p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalPropertyPathPattern">Evaluation of a Property Path Pattern</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Path(X, path, Y)) = multiset of solution mappings</pre>
-            <p>See section <a href="#defn_PropertyPathExpr">Property Path Expresions</a></p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Path(|X|, |path|, |Y|) ) = multiset of solution mappings</p>
+            <p>See section <a href="#defn_PropertyPathExpr">Property Path Expressions</a></p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Filter(F, P)) = Filter(F, eval(D(G),P), D(G))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Filter(|F|, |P|) ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |D|(|G|) )</p>
           </div>
           <p>'substitute' is a filter function in support of the evaluation of 
             <a href="#func-filter-exists"><code>EXISTS</code>
               and <code>NOT EXISTS</code></a> forms which were translated to <code>exists</code>.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_substitute">Substitute</span></b></p>
-            <p>Let μ be a solution mapping.</p>
+            <p>Let <var>μ</var> be a solution mapping.</p>
             <blockquote>
-              <p>substitute(<i>pattern</i>, μ) = the pattern formed by replacing every occurrence of
-                a variable v in <i>pattern</i> by μ(v) for each v in dom(μ)</p>
+              <p>substitute(|pattern|, <var>μ</var>) = the pattern formed by replacing every occurrence of
+                a variable |v| in |pattern| by <var>μ</var>(|v|) for each |v| in dom(<var>μ</var>)</p>
             </blockquote>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalExists">Evaluation of Exists</span></b></p>
-            <p>Let μ be the current solution mapping for a filter and P a graph pattern:</p>
+            <p>Let <var>μ</var> be the current solution mapping for a filter and |P| a graph pattern:</p>
             <blockquote>
-              The value exists(P), given D(G) is true if and only if eval(D(G), substitute(P, μ)) is
+              The value exists(|P|), given |D|(|G|) is true if and only if <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), substitute(|P|, <var>μ</var>)) is
               a non-empty sequence.
             </blockquote>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalJoin">Evaluation of Join</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Join(P1, P2)) = Join(eval(D(G), P1), eval(D(G), P2))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Join(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>) ) = <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalLeftJoin">Evaluation of LeftJoin</span></b></p>
-            <pre class="code nohighlight">
-eval(D(G), LeftJoin(P1, P2, F)) = LeftJoin(eval(D(G), P1), eval(D(G), P2), F)
-            </pre>
+            <p>
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), LeftJoin(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|) ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>), |F| )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalUnion">Evaluation of Union</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Union(P1,P2)) = Union(eval(D(G), P1), eval(D(G), P2))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Union(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>) ) = <a href="#defn_algUnion" class="algFct">Union</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalGraph">Evaluation of Graph</span></b></p>
             <pre class="code nohighlight">
-if IRI is a graph name in D
-    eval(D(G), Graph(IRI,P)) = eval(D(D[IRI]), P)
+if <var>IRI</var> is a graph name in <var>D</var>
+    <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>IRI</var>,<var>P</var>) ) = <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>D</var>[<var>IRI</var>]), <var>P</var> )
             </pre>
             <pre class="code nohighlight">
-              if IRI is not a graph name in D
-                  eval(D(G), Graph(IRI,P)) = the empty multiset
+              if <var>IRI</var> is not a graph name in <var>D</var>
+                  <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>IRI</var>,<var>P</var>) ) = the empty multiset
             </pre>
             <pre class="code nohighlight">
-eval(D(G), Graph(var,P)) =
-    Let R be the empty multiset
-    foreach IRI i in D
-        R := Union(R, Join( eval(D(D[i]), P) , Ω(?var-&gt;i) ) )
-    the result is R
+<a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>var</var>,<var>P</var>) ) =
+    Let <var>R</var> be the empty multiset
+    foreach IRI <var>i</var> in <var>D</var>
+        <var>R</var> := <a href="#defn_algUnion" class="algFct">Union</a>(<var>R</var>, <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(<var>D</var>(<var>D</var>[<var>i</var>]), <var>P</var>) , Ω(<var>var</var>-&gt;<var>i</var>) ) )
+    the result is <var>R</var>
             </pre>
           </div>
-          <p>The evaluation of graph uses the SPARQL algebra union operator. The multiplicity of a
-            solution mapping is the sum of the multiplicities of that solution mapping in each join
+          <p>The evaluation of graph uses the <a href="#defn_algUnion" class="algFct">Union</a> operator. The multiplicity of a
+            solution mapping is the sum of the multiplicities of that solution mapping in each <a href="#defn_algJoin" class="algFct">Join</a>
             operation.</p>
           <div class="defn">
             <div id="defn_evalGroup">
               <b>Definition: Evaluation of Group</b>
             </div>
-            <p>eval(D(G), Group(exprlist, P)) = Group(exprlist, eval(D(G), P))</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Group(|exprlist|, |P|) ) = <a href="#defn_algGroup" class="algFct">Group</a>( |exprlist|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|) )</p>
           </div>
           <div class="defn">
             <div id="defn_evalAggregation">
               <b>Definition: Evaluation of Aggregation</b>
             </div>
-            <p>eval(D(G), Aggregation(exprlist, func, scalarvals, Grp)) = Aggregation(exprlist, func,
-              scalarvals, eval(D(G), Grp))</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Aggregation(|exprlist|, |func|, |scalarvals|, |Grp|) ) = <a href="#defn_algAggregation" class="algFct">Aggregation</a>( |exprlist|, |func|,
+              |scalarvals|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |Grp|) )</p>
           </div>
           <div class="defn">
             <div id="defn_evalAggregateJoin">
               <b>Definition: Evaluation of AggregateJoin</b>
             </div>
-            <p>eval(D(G), AggregateJoin(A<sub>1</sub>, ..., A<sub>n</sub>)) =
-              AggregateJoin(eval(D(G), A<sub>1</sub>), ..., eval(D(G), A<sub>n</sub>))</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), AggregateJoin(<var>A<sub>1</sub></var>, ..., <var>A<sub>n</sub></var>) ) =
+              <a href="#defn_algAggregateJoin" class="algFct">AggregateJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>1</sub></var>), ..., <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>n</sub></var>) )</p>
           </div>
-          <p>Note that if eval(D(G), A<sub>i</sub>) is an error, it is ignored.</p>
+          <p>Note that if <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>i</sub></var>) is an error, it is ignored.</p>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalExtend">Evaluation of Extend</span></b></p>
-            <pre class="code nohighlight">
-eval(D(G), Extend(P, var, expr)) = Extend(eval(D(G), P), var, expr)
-            </pre>
+            <p>
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Extend(|P|, |var|, |expr|) ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |var|, |expr| )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalList">Evaluation of ToList</span></b></p>
-            <pre class="code nohighlight">eval(D(G), ToList(P)) = ToList(eval(D(G), P))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), ToList(|P|) ) = <a href="#defn_algToList" class="algFct">ToList</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalDistinct">Evaluation of Distinct</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Distinct(L)) = Distinct(eval(D(G), L))
-            </pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Distinct(|L|) ) = <a href="#defn_algDistinct" class="algFct">Distinct</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalReduced">Evaluation of Reduced</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Reduced(L)) = Reduced(eval(D(G), L))
-            </pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Reduced(|L|) ) = <a href="#defn_algReduced" class="algFct">Reduced</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalProject">Evaluation of Project</span></b></p>
-            <pre class="code nohighlight">eval(D(G), Project(L, vars)) = Project(eval(D(G), L), vars)
-            </pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Project(|L|, |vars|) ) = <a href="#defn_algProject" class="algFct">Project</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |vars| )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalOrderBy">Evaluation of OrderBy</span></b></p>
-            <pre class="code nohighlight">eval(D(G), OrderBy(L, condition)) = OrderBy(eval(D(G), L), condition)
-            </pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), OrderBy(|L|, |condition|) ) = <a href="#defn_algOrderBy" class="algFct">OrderBy</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |condition| )
+            </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalToMultiSet">Evaluation of ToMultiSet</span></b></p>
-            <pre class="code nohighlight">eval(D(G), ToMultiSet(L)) = ToMultiSet(eval(D(G), L))</pre>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), ToMultiSet(|L|) ) = <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalSlice">Evaluation of Slice</span></b></p>
-            <pre class="code nohighlight">
-eval(D(G), Slice(L, start, length)) = Slice(eval(D(G), L), start, length)
-            </pre>
+            <p>
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Slice(|L|, |start|, |length|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |start|, |length| )
+            </p>
           </div>
         </section>
         <section id="sparqlBGPExtend">
