@@ -107,6 +107,7 @@ pre.prototype	{ background-color:#f7f8ff;
 div.defn p	{ margin-top: 1ex ; margin-bottom: 1.5ex ;}
 div.defn ul	{ margin-top: 1ex ; margin-bottom: 1.5ex ; }
 span.definedTerm	{font-weight: bold;}
+div.indentedFormula { margin-left: 5ex ; margin-top: 2mm ; margin-bottom: 2mm ; }
 
 div.grammarExtract
                 { border: thin solid #888888;
@@ -9448,8 +9449,6 @@ The set PV is used later for projection.
         <p>Write <var>Ω<sub>0</sub></var> for the multiset consisting of exactly the empty mapping
           <var>μ<sub>0</sub></var>, with multiplicity 1. This is the join identity.</p>
         <p>Write <var>μ</var>(<var>x</var>) for the solution mapping variable <var>x</var> to RDF term <var>t</var> : { (<var>x</var>, <var>t</var>) }.</p>
-        <p>Write <var>Ω</var>(<var>x</var>) for the multiset consisting of exactly <var>μ</var>(<var>?x</var>-&gt;<var>t</var>), that is, <code>{ { (x, t) } }</code>
-          with multiplicity 1.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algCompatibleMapping">Compatible Mappings</span></b></p>
           <p>Two solution mappings μ<sub>1</sub> and μ<sub>2</sub> are compatible if, for every
@@ -10288,9 +10287,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <h3>Evaluation Semantics</h3>
           <p id="defn_eval">We define <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|) as the evaluation of an algebra expression |A| with
             respect to a <a href="#sparqlDataset">dataset</a> |D| having <a href="#defn_ActiveGraph">active graph</a> |G|. The active graph is initially the default
-            graph of |D|. Further symbols and notation used in the following definitions are:</p>
+            graph of |D|. Further symbols used in the following definitions are:</p>
           <ul>
-            <li>|D|[|i|] : Denotes the graph with IRI |i| in dataset |D|</li>
             <li>|P|, <var>P<sub>1</sub></var>, <var>P<sub>2</sub></var> : graph patterns</li>
             <li>|L| : a solution sequence</li>
             <li>|F| : an expression</li>
@@ -10344,25 +10342,46 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalGraph">Evaluation of Graph</span></b></p>
-            <pre class="code nohighlight">
-if <var>IRI</var> is a graph name in <var>D</var>
-    <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>IRI</var>,<var>P</var>) ) = <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>D</var>[<var>IRI</var>]), <var>P</var> )
-            </pre>
-            <pre class="code nohighlight">
-              if <var>IRI</var> is not a graph name in <var>D</var>
-                  <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>IRI</var>,<var>P</var>) ) = the empty multiset
-            </pre>
-            <pre class="code nohighlight">
-<a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G</var>), Graph(<var>var</var>,<var>P</var>) ) =
-    Let <var>R</var> be the empty multiset
-    foreach IRI <var>i</var> in <var>D</var>
-        <var>R</var> := <a href="#defn_algUnion" class="algFct">Union</a>(<var>R</var>, <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(<var>D</var>(<var>D</var>[<var>i</var>]), <var>P</var>) , Ω(<var>var</var>-&gt;<var>i</var>) ) )
-    the result is <var>R</var>
-            </pre>
+            <p>For every |x| that is
+              an <a data-cite="RDF12-CONCEPTS#dfn-IRI">IRI</a> or
+              a <a href="#defn_QueryVariable">variable</a>,
+              <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Graph(|x|, |P|) )
+              is defined as follows:</p>
+            <ul>
+              <li>If |x| is an IRI
+                that is a <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> in |D|,
+                <div class="indentedFormula">
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Graph(|x|, |P|) )
+                  =
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(<var>G<sub>|x|</sub></var>), |P| ),
+                </div>
+                where <var>G<sub>|x|</sub></var> is the RDF graph of the named graph with name |x| in |D|.
+              </li>
+              <li>If |x| is an IRI
+                that is not a <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> in |D|,
+                <div class="indentedFormula">
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Graph(|x|, |P|) )
+                  is the empty multiset.
+                </div>
+              </li>
+              <li>If |x| is a variable,
+                <div class="indentedFormula">
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Graph(|x|, |P|) )
+                  =
+                  <var>Ω</var>,
+                </div>
+                where <var>Ω</var> is the multiset of solution mappings produced by the following algorithm:
+                <pre class="code nohighlight" style="font-family: sans-serif;">
+<var>Ω</var> := the empty multiset
+foreach <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> <var>gn</var> in <var>D</var>
+    <var>G'</var> := the RDF graph of the named graph with name <var>gn</var> in <var>D</var>
+    <var>Ω'</var> := <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G'</var>), <var>P</var> )
+    <var>Ω</var> := <a href="#defn_algUnion" class="algFct">Union</a>( <var>Ω</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω'</var>, <var>μ</var>) ), where <var>μ</var> = {<var>x</var> → <var>gn</var>}
+the result is <var>Ω</var>
+                </pre>
+              </li>
+            </ul>
           </div>
-          <p>The evaluation of graph uses the <a href="#defn_algUnion" class="algFct">Union</a> operator. The multiplicity of a
-            solution mapping is the sum of the multiplicities of that solution mapping in each <a href="#defn_algJoin" class="algFct">Join</a>
-            operation.</p>
           <div class="defn">
             <div id="defn_evalGroup">
               <b>Definition: Evaluation of Group</b>
