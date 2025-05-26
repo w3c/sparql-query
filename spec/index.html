@@ -8441,6 +8441,7 @@ WHERE {
           <li>
             A sequence of <a href="#defn_sparqlSolutionMapping">solution mappings</a>
             is an algebraic query expression.</li>
+<div class="issue" data-number="231">Do we really need both of the previous two points?</div>
           <li id="defn_absPath">
             <a href="#defn_absPath" class="absOp">Path</a>(|x|, |ppe|, |y|)
             is an algebraic query expression if
@@ -8502,6 +8503,10 @@ WHERE {
             |grp| is an algebraic query expression of the form <a href="#defn_absGroup" class="absOp">Group</a>(<var>exprlist'</var>, |A|) where
             <var>exprlist'</var> is a sequence of <a href="#expressions">expressions</a> and
             |A| is an algebraic query expression.</li>
+<div class="issue" data-number="230">
+  <a href="#defn_absGroup" class="absOp">Group</a> and <a href="#defn_absAggregation" class="absOp">Aggregation</a>
+  should not be independent operators but, instead, should be integrated into the definition of
+  <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>.</div>
           <li id="defn_absAggregateJoin">
             <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>(<var>A<sub>1</sub></var>, ..., <var>A<sub>|n|</sub></var>)
             is an algebraic query expression if
@@ -8515,6 +8520,7 @@ WHERE {
             is an algebraic query expression if
             |A| is an algebraic query expression and
             |condition| is an ordering condition.</li>
+<div class="issue" data-number="229">The term "ordering condition" should link to some definition of this notion.</div>
           <li id="defn_absProject">
             <a href="#defn_absProject" class="absOp">Project</a>(|A|, |PV|)
             is an algebraic query expression if
@@ -9025,6 +9031,14 @@ For each form FILTER(expr) in the group graph pattern
                 </tr>
               </tbody>
             </table>
+<div class="issue" data-number="226">
+  I assume that the translation rules in this table are meant to be applied recursively,
+  but the section doesn't say anything about that. In particular, for the
+  "|x| <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>) |y|"
+  case: <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> in the resulting translation
+  may still be arbitrary algebraic property path expressions and, thus,
+  the translation should be applied again for each of the two resulting property path patterns
+  (i.e., for "|x| <var>ppe<sub>1</sub></var> |var|" and for "|var| <var>ppe<sub>2</sub></var> |y|").</div>
             <p>Examples of the whole path translation process (<code>?_V</code> is a fresh
               variable):</p>
             <div class="algExample">
@@ -10443,6 +10457,9 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <li>|L| : a solution sequence</li>
             <li>|F| : an expression</li>
           </ul>
+<div class="issue" data-number="225">
+  The definitions in this section do not cover the cases in which
+  |A| is a sequence or a multiset of solution mappings.</div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalBasicGraphPattern">Evaluation of a Basic Graph Pattern</span></b></p>
             <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), |BGP| ) = multiset of solution mappings</p>
