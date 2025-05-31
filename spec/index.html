@@ -10373,7 +10373,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
                 where <var>Ω</var> is the multiset of solution mappings produced by the following algorithm:
                 <pre class="code nohighlight" style="font-family: sans-serif;">
 <var>Ω</var> := the empty multiset
-foreach <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> <var>gn</var> in <var>D</var>
+foreach <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> <var>gn</var> in <var>D</var> (recall that a graph name may be an IRI or a blank node)
     <var>G'</var> := the RDF graph of the named graph with name <var>gn</var> in <var>D</var>
     <var>Ω'</var> := <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G'</var>), <var>P</var> )
     <var>Ω</var> := <a href="#defn_algUnion" class="algFct">Union</a>( <var>Ω</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω'</var>, <var>μ</var>) ), where <var>μ</var> = {<var>x</var> → <var>gn</var>}
