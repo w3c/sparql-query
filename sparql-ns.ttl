@@ -14,73 +14,72 @@ PREFIX owl:     <http://www.w3.org/2002/07/owl#>
 ##
 
 sparql:Function rdf:type rdfs:Class .
-sparql:Operator rdf:type rdfs:Class .
 sparql:FunctionalForm rdf:type rdfs:Class .
 sparql:Aggregate rdf:type rdfs:Class .
 
 ## Operators
 
-sparql:plus rdf:type sparql:Function, sparql:Operator ;
+sparql:plus rdf:type sparql:Function ;
     rdfs:comment "This operator adds two numeric expressions and returns their sum." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:subtract rdf:type sparql:Function, sparql:Operator ;
+sparql:subtract rdf:type sparql:Function ;
     rdfs:comment "This operator subtracts the second numeric expression from the first and returns the result." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:multiply rdf:type sparql:Function, sparql:Operator ;
+sparql:multiply rdf:type sparql:Function ;
     rdfs:comment "This operator multiplies two numeric expressions and returns the product." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:divide rdf:type sparql:Function, sparql:Operator ;
+sparql:divide rdf:type sparql:Function ;
     rdfs:comment "This operator divides the first numeric expression by the second and returns the result." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:unary-minus rdf:type sparql:Function, sparql:Operator ;
+sparql:unary-minus rdf:type sparql:Function ;
     rdfs:comment "This unary operator returns the negation of a numeric expression." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:unary-plus rdf:type sparql:Function, sparql:Operator ;
+sparql:unary-plus rdf:type sparql:Function ;
     rdfs:comment "This unary operator returns the numeric expression unchanged, acting primarily as a syntactic indicator." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:equals rdf:type sparql:Function, sparql:Operator ;
+sparql:equals rdf:type sparql:Function ;
     rdfs:comment "This operator compares two expressions for equality.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:not-equals rdf:type sparql:Function, sparql:Operator ;
+sparql:not-equals rdf:type sparql:Function ;
     rdfs:comment "This operator tests two expressions for inequality.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:greaterThan rdf:type sparql:Function, sparql:Operator ;
+sparql:greaterThan rdf:type sparql:Function ;
     rdfs:comment "This operator tests whether the first RDF term is greater than the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:lessThan rdf:type sparql:Function, sparql:Operator ;
+sparql:lessThan rdf:type sparql:Function ;
     rdfs:comment "This operator tests whether the first RDF term is less than the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:greaterThanOrEqual rdf:type sparql:Function, sparql:Operator ;
+sparql:greaterThanOrEqual rdf:type sparql:Function ;
     rdfs:comment "This operator tests whether the first RDF term is greater or equal to the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:lessThanOrEqual rdf:type sparql:Function, sparql:Operator ;
+sparql:lessThanOrEqual rdf:type sparql:Function ;
     rdfs:comment "This operator tests whether the first RDF term is less than or equal to the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
     
-sparql:logical-not rdf:type sparql:Functional, sparql:Operator ;
+sparql:logical-not rdf:type sparql:Functional ;
     rdfs:comment "This form computes the logical NOT of a boolean expression." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-and> ;
     .
@@ -112,12 +111,12 @@ sparql:filter-not-exists rdf:type sparql:FunctionalForm ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-filter-not-exists> ;
     .
 
-sparql:logical-or rdf:type sparql:FunctionalForm, sparql:Operator ;
+sparql:logical-or rdf:type sparql:FunctionalForm ;
     rdfs:comment "This form computes the logical OR of two boolean expressions." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-or> ;
     .
 
-sparql:logical-and rdf:type sparql:FunctionalForm, sparql:Operator ;
+sparql:logical-and rdf:type sparql:FunctionalForm ;
     rdfs:comment "This form computes the logical AND of two boolean expressions." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-and> ;
     .
