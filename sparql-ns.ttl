@@ -59,22 +59,22 @@ sparql:not-equals rdf:type sparql:Function ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:greaterThan rdf:type sparql:Function ;
+sparql:greater-than rdf:type sparql:Function ;
     rdfs:comment "This operator tests whether the first RDF term is greater than the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:lessThan rdf:type sparql:Function ;
+sparql:less-than rdf:type sparql:Function ;
     rdfs:comment "This operator tests whether the first RDF term is less than the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:greaterThanOrEqual rdf:type sparql:Function ;
+sparql:greater-than-or-equal rdf:type sparql:Function ;
     rdfs:comment "This operator tests whether the first RDF term is greater or equal to the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
    
-sparql:lessThanOrEqual rdf:type sparql:Function ;
+sparql:less-than-or-equal rdf:type sparql:Function ;
     rdfs:comment "This operator tests whether the first RDF term is less than or equal to the second RDF term.";
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
@@ -190,12 +190,12 @@ sparql:langdir rdf:type sparql:Function ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-langdir> ;
     .
 
-sparql:haslang rdf:type sparql:Function ;
+sparql:hasLang rdf:type sparql:Function ;
     rdfs:comment "This function returns true if the given RDF literal has a specified language, matching the literal’s language tag." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-haslang> ;
     .
 
-sparql:haslangdir rdf:type sparql:Function ;
+sparql:hasLangdir rdf:type sparql:Function ;
     rdfs:comment "This function returns true if the given RDF literal has an initial text direction." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-haslangdir> ;
     .
