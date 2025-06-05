@@ -1365,6 +1365,28 @@ _:b0  :p        "v" .
           </pre>
         </section>
       </section>
+      <section id="syntaxVersionAnnouncement">
+        <h3>Version Announcement</h3>
+        <p>To cope with the language evolution of SPARQL,
+          the <a href="#rVersionDecl"><code>VERSION</code></a> directive can be used.
+          When writing SPARQL queries with new features such as
+          <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>
+          or <a href="#func-triple-terms">functions on triple terms</a>,
+          authors MAY announce the use of the new syntax forms using these directives.
+        </p>
+        <pre class="query nohighlight">
+              VERSION "1.2"
+              PREFIX : &lt;http://example/&gt;
+              PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+
+              SELECT ?s ?date {
+                  ?s ?p ?o .
+                  BIND( &lt;&lt;( ?s ?p ?o )&gt;&gt; AS ?tt )
+                  :myreifier rdf:reifies ?tt .
+                  :myreifier :tripleAdded ?date .
+              }
+</pre>
+      </section>
     </section>
     <section id="GraphPattern">
       <h2>Graph Patterns</h2>
@@ -7814,6 +7836,7 @@ class="name">obj</span>)
               can be used with arbitrary expressions.
             </p>
             <pre class="query nohighlight">
+              VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
               PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
@@ -7825,6 +7848,7 @@ class="name">obj</span>)
               }
             </pre>
             <pre class="query nohighlight">
+              VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
               PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
@@ -12285,7 +12309,7 @@ _:x rdf:type xsd:decimal .
                   <a href="#func-triple-terms" class="sectionRef"></a>:
                   `TRIPLE`, `isTRIPLE`, `SUBJECT`, `PREDICATE`, `OBJECT`</li>
                 <li>Update grammar for literal <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a> syntax</li>
-                <li>Update grammar for VERSION declaration</li>
+                <li>Update grammar for VERSION declaration and a <a href="#syntaxVersionAnnouncement" class="sectionRef">new section</a> to describe its usage</li>
                 <li>Add functions related to 
                   <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> and
                   <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>:
