@@ -8440,8 +8440,9 @@ WHERE {
             is an algebraic query expression.</li>
           <li>
             A sequence of <a href="#defn_sparqlSolutionMapping">solution mappings</a>
-            is an algebraic query expression.</li>
+            is an algebraic query expression.
 <div class="issue" data-number="231">Do we really need both of the previous two points?</div>
+            </li>
           <li id="defn_absPath">
             <a href="#defn_absPath" class="absOp">Path</a>(|x|, |ppe|, |y|)
             is an algebraic query expression if
@@ -8502,11 +8503,12 @@ WHERE {
             |scalarvals| is a partial function (which may be the empty function, i.e., with an empty domain), and
             |grp| is an algebraic query expression of the form <a href="#defn_absGroup" class="absOp">Group</a>(<var>exprlist'</var>, |A|) where
             <var>exprlist'</var> is a sequence of <a href="#expressions">expressions</a> and
-            |A| is an algebraic query expression.</li>
+            |A| is an algebraic query expression.
 <div class="issue" data-number="230">
   <a href="#defn_absGroup" class="absOp">Group</a> and <a href="#defn_absAggregation" class="absOp">Aggregation</a>
   should not be independent operators but, instead, should be integrated into the definition of
   <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>.</div>
+            </li>
           <li id="defn_absAggregateJoin">
             <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>(<var>A<sub>1</sub></var>, ..., <var>A<sub>|n|</sub></var>)
             is an algebraic query expression if
@@ -8519,8 +8521,9 @@ WHERE {
             <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|A|, |condition|)
             is an algebraic query expression if
             |A| is an algebraic query expression and
-            |condition| is an ordering condition.</li>
+            |condition| is an ordering condition.
 <div class="issue" data-number="229">The term "ordering condition" should link to some definition of this notion.</div>
+            </li>
           <li id="defn_absProject">
             <a href="#defn_absProject" class="absOp">Project</a>(|A|, |PV|)
             is an algebraic query expression if
