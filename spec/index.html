@@ -8446,6 +8446,171 @@ WHERE {
             one query level in the tree.</p>
         </section>
       </section>
+      <section id="algebraicSyntax">
+        <h3>Algebraic Syntax</h3>
+        <p>To define the evaluation semantics of a SPARQL query,
+          the abstract syntax tree of the SPARQL query string
+          (as defined by the <a href="#sparqlGrammar">SPARQL grammar</a>)
+          is first translated into a syntax that resembles the
+          <a href="#sparqlAlgebra">SPARQL algebra</a>.
+          This section defines the expressions that can be formed in this algebraic syntax,
+          and the translation of SPARQL query strings into this algebraic syntax is then defined
+          in Section&nbsp;<a href="#sparqlQuery" class="sectionRef"></a>.</p>
+        <p id="defn_AlgebraicQueryExpression">An
+          <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>
+          is defined recursively as follows:</p>
+        <ul>
+          <li>
+            A <a href="#defn_BasicGraphPattern">basic graph pattern</a>
+            is an algebraic query expression.</li>
+          <li>
+            A multiset of <a href="#defn_sparqlSolutionMapping">solution mappings</a>
+            is an algebraic query expression.</li>
+          <li>
+            A sequence of <a href="#defn_sparqlSolutionMapping">solution mappings</a>
+            is an algebraic query expression.
+<div class="issue" data-number="231">Do we really need both of the previous two points?</div>
+            </li>
+          <li id="defn_absPath">
+            <a href="#defn_absPath" class="absOp">Path</a>(|x|, |ppe|, |y|)
+            is an algebraic query expression if
+            |ppe| is an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>,
+            |x| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> or a <a href="#defn_QueryVariable">variable</a>, and
+            |y| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> or a <a href="#defn_QueryVariable">variable</a>.</li>
+          <li id="defn_absUnion">
+            <a href="#defn_absUnion" class="absOp">Union</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>)
+            is an algebraic query expression if
+            <var>A<sub>1</sub></var> and <var>A<sub>2</sub></var> are algebraic query expressions.</li>
+          <li id="defn_absJoin">
+            <a href="#defn_absJoin" class="absOp">Join</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>)
+            is an algebraic query expression if
+            <var>A<sub>1</sub></var> and <var>A<sub>2</sub></var> are algebraic query expressions.</li>
+          <li id="defn_absMinus">
+            <a href="#defn_absMinus" class="absOp">Minus</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>)
+            is an algebraic query expression if
+            <var>A<sub>1</sub></var> and <var>A<sub>2</sub></var> are algebraic query expressions.</li>
+          <li id="defn_absLeftJoin">
+            <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>, |expr|)
+            is an algebraic query expression if
+            <var>A<sub>1</sub></var> and <var>A<sub>2</sub></var> are algebraic query expressions and
+            |expr| is an <a href="#expressions">expression</a>.</li>
+          <li id="defn_absFilter">
+            <a href="#defn_absFilter" class="absOp">Filter</a>(|expr|, |A|)
+            is an algebraic query expression if
+            |expr| is an <a href="#expressions">expression</a> and
+            |A| is an algebraic query expression.</li>
+          <li id="defn_absExtend">
+            <a href="#defn_absExtend" class="absOp">Extend</a>(|A|, |var|, |expr|)
+            is an algebraic query expression if
+            |A| is an algebraic query expression,
+            |var| is a <a href="#defn_QueryVariable">variable</a>, and
+            |expr| is an <a href="#expressions">expression</a>.</li>
+          <li id="defn_absGraph">
+            <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |A|)
+            is an algebraic query expression if
+            |x| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a> or a <a href="#defn_QueryVariable">variable</a> and
+            |A| is an algebraic query expression.</li>
+          <li id="defn_absToMultiset">
+            <a href="#defn_absToMultiset" class="absOp">ToMultiset</a>(|A|)
+            is an algebraic query expression if
+            |A| is an algebraic query expression.</li>
+          <li id="defn_absToList">
+            <a href="#defn_absToList" class="absOp">ToList</a>(|A|)
+            is an algebraic query expression if
+            |A| is an algebraic query expression.</li>
+          <li id="defn_absGroup">
+            <a href="#defn_absGroup" class="absOp">Group</a>(|exprlist|, |A|)
+            is an algebraic query expression if
+            |exprlist| is a nonempty sequence of <a href="#expressions">expressions</a> and
+            |A| is an algebraic query expression.</li>
+          <li id="defn_absAggregation">
+            <a href="#defn_absAggregation" class="absOp">Aggregation</a>(|exprlist|, |func|, |scalarvals|, |grp|)
+            is an algebraic query expression if
+            |exprlist| is a nonempty sequence of <a href="#expressions">expressions</a> or the asterisk character (*),
+            |func| is a <a href="#setFunctions">set function</a>,
+            |scalarvals| is a partial function (which may be the empty function, i.e., with an empty domain), and
+            |grp| is an algebraic query expression of the form <a href="#defn_absGroup" class="absOp">Group</a>(<var>exprlist'</var>, |A|) where
+            <var>exprlist'</var> is a sequence of <a href="#expressions">expressions</a> and
+            |A| is an algebraic query expression.
+<div class="issue" data-number="230">
+  <a href="#defn_absGroup" class="absOp">Group</a> and <a href="#defn_absAggregation" class="absOp">Aggregation</a>
+  should not be independent operators but, instead, should be integrated into the definition of
+  <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>.</div>
+            </li>
+          <li id="defn_absAggregateJoin">
+            <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>(<var>A<sub>1</sub></var>, ..., <var>A<sub>|n|</sub></var>)
+            is an algebraic query expression if
+            <var>A<sub>1</sub></var>, ..., <var>A<sub>|n|</sub></var> is
+            a non-empty sequence of algebraic query expressions (i.e., |n| &geq; 1)
+            such that every expression <var>A<sub>|i|</sub></var> in this sequence
+            is of the form <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>exprlist<sub>|i|</sub></var>, <var>func<sub>|i|</sub></var>, <var>scalarvals<sub>|i|</sub></var>, <var>grp<sub>|i|</sub></var>)
+            that is captured by <a href="#defn_absAggregation">the previous point</a>.</li>
+          <li id="defn_absOrderBy">
+            <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|A|, |condition|)
+            is an algebraic query expression if
+            |A| is an algebraic query expression and
+            |condition| is an ordering condition.
+<div class="issue" data-number="229">The term "ordering condition" should link to some definition of this notion.</div>
+            </li>
+          <li id="defn_absProject">
+            <a href="#defn_absProject" class="absOp">Project</a>(|A|, |PV|)
+            is an algebraic query expression if
+            |A| is an algebraic query expression and
+            |PV| is a set of <a href="#defn_QueryVariable">variables</a>.</li>
+          <li id="defn_absDistinct">
+            <a href="#defn_absDistinct" class="absOp">Distinct</a>(|A|)
+            is an algebraic query expression if
+            |A| is an algebraic query expression.</li>
+          <li id="defn_absReduced">
+            <a href="#defn_absReduced" class="absOp">Reduced</a>(|A|)
+            is an algebraic query expression if
+            |A| is an algebraic query expression.</li>
+          <li id="defn_absSlice">
+            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |start|, |length|)
+            is an algebraic query expression if
+            |A| is an algebraic query expression and
+            |start| and |length| are integers.</li>
+        </ul>
+        <p id="defn_AlgebraicPropertyPathExpression">The notion of an
+          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>,
+          as used in the previous definition,
+          is defined recursively as follows:</p>
+        <ul>
+          <li id="defn_ppeLink">
+            <a href="#defn_ppeLink" class="ppeOp">link</a>(|iri|)
+            is an algebraic property path expression if
+            |iri| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>.</li>
+          <li id="defn_ppeNPS">
+            <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(|I|)
+            is an algebraic property path expression if
+            |I| is a nonempty set of <a data-cite="RDF12-CONCEPTS#dfn-iri">IRIs</a>.
+            NPS is an acronym for <em>negated property set</em>.</i>
+          <li id="defn_ppeSeq">
+            <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>)
+            is an algebraic property path expression if
+            <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> are algebraic property path expressions.</li>
+          <li id="defn_ppeAlt">
+            <a href="#defn_ppeAlt" class="ppeOp">alt</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>)
+            is an algebraic property path expression if
+            <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> are algebraic property path expressions.</li>
+          <li id="defn_ppeInv">
+            <a href="#defn_ppeInv" class="ppeOp">inv</a>(|ppe|)
+            is an algebraic property path expression if
+            |ppe| is an algebraic property path expression.</li>
+          <li id="defn_ppeZeroOrOnePath">
+            <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(|ppe|)
+            is an algebraic property path expression if
+            |ppe| is an algebraic property path expression.</li>
+          <li id="defn_ppeZeroOrMorePath">
+            <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(|ppe|)
+            is an algebraic property path expression if
+            |ppe| is an algebraic property path expression.</li>
+          <li id="defn_ppeOneOrMorePath">
+            <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(|ppe|)
+            is an algebraic property path expression if
+            |ppe| is an algebraic property path expression.</li>
+        </ul>
+      </section>
       <section id="sparqlQuery">
         <h3>Translation to the SPARQL Algebra</h3>
         <p>This section defines the process of converting graph patterns and solution modifiers in a
@@ -8783,9 +8948,10 @@ For each form FILTER(expr) in the group graph pattern
           </section>
           <section id="sparqlTranslatePathExpressions">
             <h5>Translate Property Path Expressions</h5>
-            <p>The following table gives the translation of property paths expressions from SPARQL
-              syntax to terms in the SPARQL algebra. This applies to all elements of a property path
-              expression recursively.</p>
+            <p>The following table gives the translation
+              of <a href="#defn_PropertyPathExpr">property path expressions</a> in SPARQL query strings
+              into <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>.
+              This applies to all elements of a <a href="#defn_PropertyPathExpr">property path expression</a> recursively.</p>
             <p>The <a href="#sparqlTranslatePathPatterns">next step after this one</a> translates
               certain forms to triple patterns, and these are converted later to basic graph patterns
               by adjacency (without intervening group pattern delimiters 
@@ -8794,114 +8960,116 @@ For each form FILTER(expr) in the group graph pattern
               patterns and these are aggregated into basic graph patterns.</p>
             <p>Notes:</p>
             <ul>
-              <li>The order of forms IRI and ^IRI in negated property sets is not relevant.</li>
-            </ul>
-            <p>We introduce the following symbols:</p>
-            <ul>
-              <li>link</li>
-              <li>inv</li>
-              <li>alt</li>
-              <li>seq</li>
-              <li>ZeroOrMorePath</li>
-              <li>OneOrMorePath</li>
-              <li>ZeroOrOnePath</li>
-              <li>NPS (for NegatedPropertySet)</li>
+              <li>The order of forms IRI and ^IRI in a negated property set (NPS) is not relevant.</li>
             </ul>
             <table style="border-collapse: collapse; border-color: #000000; border-spacing: 5px; border-width: 1px">
               <tbody>
                 <tr>
-                  <th>Syntax Form (path)</th>
-                  <th>Algebra (path)</th>
+                  <th><a href="#defn_PropertyPathExpr">Syntax Form</a> (path)</th>
+                  <th><a href="#defn_AlgebraicPropertyPathExpression">Algebraic Form</a> (path)</th>
                 </tr>
                 <tr>
                   <td><code>iri</code></td>
-                  <td><code>link(iri)</code></td>
+                  <td><code><a href="#defn_ppeLink" class="ppeOp">link</a>(iri)</code></td>
                 </tr>
                 <tr>
                   <td><code>^path</code></td>
-                  <td><code>inv(path)</code></td>
+                  <td><code><a href="#defn_ppeInv" class="ppeOp">inv</a>(path)</code></td>
                 </tr>
                 <tr>
                   <td><code>!(:iri<sub>1</sub>|...|:iri<sub>n</sub>)</code></td>
-                  <td><code>NPS({:iri<sub>1</sub> ... :iri<sub>n</sub>})</code></td>
+                  <td><code><a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>1</sub> ... :iri<sub>n</sub>})</code></td>
                 </tr>
                 <tr>
                   <td><code>!(^:iri<sub>1</sub>|...|^:iri<sub>n</sub>)</code></td>
-                  <td><code>inv(NPS({:iri<sub>1</sub> ... :iri<sub>n</sub>}))</code></td>
+                  <td><code><a href="#defn_ppeInv" class="ppeOp">inv</a>( <a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>1</sub> ... :iri<sub>n</sub>}) )</code></td>
                 </tr>
                 <tr>
                   <td>
                     <code>!(:iri<sub>1</sub>|...|:iri<sub>i</sub>|^:iri<sub>i+1</sub>|...|^:iri<sub>m</sub>)</code>&nbsp;</td>
-                  <td><code>alt(NPS({:iri<sub>1</sub> ...:iri<sub>i</sub>}),<br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;inv(NPS({:iri<sub>i+1</sub>, ..., :iri<sub>m</sub>}))
+                  <td><code><a href="#defn_ppeAlt" class="ppeOp">alt</a>( <a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>1</sub> ...:iri<sub>i</sub>}),<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;<a href="#defn_ppeInv" class="ppeOp">inv</a>(<a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>i+1</sub>, ..., :iri<sub>m</sub>}))
                       )</code></td>
                 </tr>
                 <tr>
                   <td><code>path1 / path2</code></td>
-                  <td><code>seq(path1, path2)</code></td>
+                  <td><code><a href="#defn_ppeSeq" class="ppeOp">seq</a>(path1, path2)</code></td>
                 </tr>
                 <tr>
                   <td><code>path1 | path2</code></td>
-                  <td><code>alt(path1, path2)</code></td>
+                  <td><code><a href="#defn_ppeAlt" class="ppeOp">alt</a>(path1, path2)</code></td>
                 </tr>
                 <tr>
                   <td><code>path*</code></td>
-                  <td><code>ZeroOrMorePath(path)</code></td>
+                  <td><code><a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(path)</code></td>
                 </tr>
                 <tr>
                   <td><code>path+</code></td>
-                  <td><code>OneOrMorePath(path)</code></td>
+                  <td><code><a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(path)</code></td>
                 </tr>
                 <tr>
                   <td><code>path?</code></td>
-                  <td><code>ZeroOrOnePath(path)</code></td>
+                  <td><code><a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(path)</code></td>
                 </tr>
               </tbody>
             </table>
           </section>
           <section id="sparqlTranslatePathPatterns">
             <h5>Translate Property Path Patterns</h5>
-            <p>The previous step translated <a href="#defn_PropertyPathExpr">property path
-                expressions</a>. This step translates <a href="#defn_PropertyPathPattern">property path
-                patterns</a>, which are a subject end point, property path expression and object end
-              point, into triple patterns or wraps in a general algebra operation for path
-              evaluation.</p>
+            <p>The previous step translated <a href="#defn_PropertyPathExpr">property path expressions</a>.
+              This step translates <a href="#defn_PropertyPathPattern">property path patterns</a>,
+              which are a subject end point, a property path expression, and an object end
+              point.
+              This step assumes that the property path expression
+              of the property path pattern is already given in the form of an
+              <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
+              The result of this step may be triple patterns and
+              <a href="#defn_AlgebraicQueryExpression">algebraic query expressions</a>
+              of the form <a href="#defn_absPath" class="absOp">Path</a>(...).</p>
             <p>Notes:</p>
             <ul>
-              <li>X and Y are RDF terms or variables.</li>
-              <li>?V is a fresh variable.</li>
-              <li>P and Q are path expressions.</li>
+              <li>|x| and |y| are <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF terms</a> or <a href="#defn_QueryVariable">variables</a>.</li>
+              <li>|var| is a fresh <a href="#defn_QueryVariable">variable</a>.</li>
+              <li>|ppe|, <var>ppe<sub>1</sub></var>, and <var>ppe<sub>2</sub></var> are <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>.</li>
               <li>These are only applied to property path patterns, not within property path
                 expressions.</li>
               <li>Translations earlier in the table are applied in preference to the last
                 translation.</li>
               <li>The final translation simply wraps any remaining property path expression to use a
-                common form <code>Path(...)</code>.</li>
+                common form <a href="#defn_absPath" class="absOp">Path</a>(...).</li>
             </ul>
             <table style="border-collapse: collapse; border-color: #000000; border-spacing: 5px; border-width: 1px">
               <tbody>
                 <tr>
-                  <th>Algebra (path)</th>
+                  <th><a href="#defn_AlgebraicPropertyPathExpression">Algebraic Form</a> (path)</th>
                   <th>Translation</th>
                 </tr>
                 <tr>
-                  <td><code>X link(iri) Y</code></td>
-                  <td><code>X iri Y</code></td>
+                  <td>|x| <a href="#defn_ppeLink" class="ppeOp">link</a>(|iri|) |y|</td>
+                  <td>|x| |iri| |y|</td>
                 </tr>
                 <tr>
-                  <td><code>X inv(iri) Y</code></td>
-                  <td><code>Y iri X</code></td>
+                  <td>|x| <a href="#defn_ppeInv" class="ppeOp">inv</a>(|iri|) |y|</td>
+                  <td>|y| |iri| |x|</td>
                 </tr>
                 <tr>
-                  <td><code>X seq(P, Q) Y</code></td>
-                  <td><code>X P ?V . ?V Q Y</code></td>
+                  <td>|x| <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>) |y|</td>
+                  <td>|x| <var>ppe<sub>1</sub></var> |var| . |var| <var>ppe<sub>2</sub></var> |y|</td>
                 </tr>
                 <tr>
-                  <td><code>X P Y</code></td>
-                  <td><code>Path(X, P, Y)</code></td>
+                  <td>|x| |ppe| |y|</td>
+                  <td><a href="#defn_absPath" class="absOp">Path</a>(|x|, |ppe|, |y|)</td>
                 </tr>
               </tbody>
             </table>
+<div class="issue" data-number="226">
+  I assume that the translation rules in this table are meant to be applied recursively,
+  but the section doesn't say anything about that. In particular, for the
+  "|x| <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>) |y|"
+  case: <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> in the resulting translation
+  may still be arbitrary algebraic property path expressions and, thus,
+  the translation should be applied again for each of the two resulting property path patterns
+  (i.e., for "|x| <var>ppe<sub>1</sub></var> |var|" and for "|var| <var>ppe<sub>2</sub></var> |y|").</div>
             <p>Examples of the whole path translation process (<code>?_V</code> is a fresh
               variable):</p>
             <div class="algExample">
@@ -8918,7 +9086,7 @@ For each form FILTER(expr) in the group graph pattern
                 ?s :p* ?o
               </div>
               <div class="algExample2">
-                Path(?s, ZeroOrMorePath(link(:p)), ?o)
+                <a href="#defn_absPath" class="absOp">Path</a>(?s, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeLink" class="ppeOp">link</a>(:p)), ?o)
               </div>
             </div>
             <div class="algExample">
@@ -8926,7 +9094,7 @@ For each form FILTER(expr) in the group graph pattern
                 :list rdf:rest*/rdf:first ?member
               </div>
               <div class="algExample2">
-                Path(:list, ZeroOrMorePath(link(rdf:rest)), ?_V) .<br>
+                <a href="#defn_absPath" class="absOp">Path</a>(:list, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeLink" class="ppeOp">link</a>(rdf:rest)), ?_V) .<br>
                 ?_V rdf:first ?member
               </div>
             </div>
@@ -10317,6 +10485,9 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <li>|L| : a solution sequence</li>
             <li>|F| : an expression</li>
           </ul>
+<div class="issue" data-number="225">
+  The definitions in this section do not cover the cases in which
+  |A| is a sequence or a multiset of solution mappings.</div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalBasicGraphPattern">Evaluation of a Basic Graph Pattern</span></b></p>
             <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), |BGP| ) = multiset of solution mappings</p>
