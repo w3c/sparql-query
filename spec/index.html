@@ -8423,8 +8423,11 @@ WHERE {
       </section>
       <section id="algebraicSyntax">
         <h3>Algebraic Syntax</h3>
-        <p>To define the evaluation semantics of SPARQL query strings
-          these strings are first translated into a more abstract, algebraic syntax.
+        <p>To define the evaluation semantics of a SPARQL query,
+          the abstract syntax tree of the SPARQL query string
+          (as defined by the <a href="#sparqlGrammar">SPARQL grammar</a>)
+          is first translated into a syntax that resembles the
+          <a href="#sparqlAlgebra">SPARQL algebra</a>.
           This section defines the expressions that can be formed in this algebraic syntax,
           and the translation of SPARQL query strings into this algebraic syntax is then defined
           in Section&nbsp;<a href="#sparqlQuery" class="sectionRef"></a>.</p>
