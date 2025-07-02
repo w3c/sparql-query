@@ -12227,56 +12227,56 @@ _:x rdf:type xsd:decimal .
                 <td><code>[168]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDOUBLE">DOUBLE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">[0-9]+ '.' [0-9]* <a href="#rEXPONENT">EXPONENT</a> | '.' ([0-9])+ <a href="#rEXPONENT">EXPONENT</a> | ([0-9])+ <a href="#rEXPONENT">EXPONENT</a></code></td>
+                <td><code class="gRuleBody">( ([0-9]+ ('.'[0-9]*)? ) | ( '.' ([0-9])+ ) ) <a href="#rEXPONENT">EXPONENT</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
                 <td><code>[169]&nbsp;&nbsp;</code></td>
+                <td><code><span class="doc-ref" id="rEXPONENT">EXPONENT</span></code></td>
+                <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+                <td><code class="gRuleBody">[eE] [+-]? [0-9]+</code></td>
+              </tr>
+
+              <tr style="vertical-align: baseline">
+                <td><code>[170]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rINTEGER_POSITIVE">INTEGER_POSITIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'+'</span> <a href="#rINTEGER">INTEGER</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[170]&nbsp;&nbsp;</code></td>
+                <td><code>[171]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDECIMAL_POSITIVE">DECIMAL_POSITIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'+'</span> <a href="#rDECIMAL">DECIMAL</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[171]&nbsp;&nbsp;</code></td>
+                <td><code>[172]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDOUBLE_POSITIVE">DOUBLE_POSITIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'+'</span> <a href="#rDOUBLE">DOUBLE</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[172]&nbsp;&nbsp;</code></td>
+                <td><code>[173]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rINTEGER_NEGATIVE">INTEGER_NEGATIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'-'</span> <a href="#rINTEGER">INTEGER</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[173]&nbsp;&nbsp;</code></td>
+                <td><code>[174]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDECIMAL_NEGATIVE">DECIMAL_NEGATIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'-'</span> <a href="#rDECIMAL">DECIMAL</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[174]&nbsp;&nbsp;</code></td>
+                <td><code>[175]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDOUBLE_NEGATIVE">DOUBLE_NEGATIVE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><span class="token">'-'</span> <a href="#rDOUBLE">DOUBLE</a></code></td>
-              </tr>
-
-              <tr style="vertical-align: baseline">
-                <td><code>[175]&nbsp;&nbsp;</code></td>
-                <td><code><span class="doc-ref" id="rEXPONENT">EXPONENT</span></code></td>
-                <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">[eE] [+-]? [0-9]+</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
