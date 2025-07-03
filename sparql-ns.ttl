@@ -11,6 +11,23 @@ PREFIX owl:     <http://www.w3.org/2002/07/owl#>
     owl:versionInfo "1.2"
     .
 
+## Versions
+
+sparql:version-1.2
+    rdfs:label "1.2" ;
+    rdfs:comment "SPARQL 1.2"
+    .
+
+sparql:version-1.2-basic
+    rdfs:label "1.2-basic" ;
+    rdfs:comment "SPARQL 1.2-basic"
+    .
+
+sparql:version-1.1
+    rdfs:label "1.1" ;
+    rdfs:comment "SPARQL 1.1"
+    .
+
 ##
 
 sparql:Function rdf:type rdfs:Class .
