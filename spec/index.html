@@ -10477,7 +10477,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         </section>
         <section id="sparqlAlgebraEval">
           <h3>Evaluation Semantics</h3>
-          <p id="defn_eval">We define <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|) as the evaluation of an algebra expression |A| with
+          <p id="defn_eval">We define <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|) as the evaluation of an <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a> |A| with
             respect to a <a href="#sparqlDataset">dataset</a> |D| having <a href="#defn_ActiveGraph">active graph</a> |G|. The active graph is initially the default
             graph of |D|. Further symbols used in the following definitions are:</p>
           <ul>
@@ -10495,12 +10495,12 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalPropertyPathPattern">Evaluation of a Property Path Pattern</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Path(|X|, |path|, |Y|) ) = multiset of solution mappings</p>
-            <p>See section <a href="#defn_PropertyPathExpr">Property Path Expressions</a></p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absPath" class="absOp">Path</a>(|X|, |path|, |Y|) ) = multiset of solution mappings</p>
+            <p>See section <a href="#PropertyPathPatterns">Property Path Patterns</a></p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Filter(|F|, |P|) ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |D|(|G|) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absFilter" class="absOp">Filter</a>(|F|, |P|) ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |D|(|G|) )</p>
           </div>
           <p>'substitute' is a filter function in support of the evaluation of 
             <a href="#func-filter-exists"><code>EXISTS</code>
@@ -10523,30 +10523,30 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalJoin">Evaluation of Join</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Join(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>) ) = <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absJoin" class="absOp">Join</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>) ) = <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalLeftJoin">Evaluation of LeftJoin</span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), LeftJoin(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|) ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>), |F| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|) ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>), |F| )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalUnion">Evaluation of Union</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Union(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>) ) = <a href="#defn_algUnion" class="algFct">Union</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absUnion" class="absOp">Union</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>) ) = <a href="#defn_algUnion" class="algFct">Union</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalGraph">Evaluation of Graph</span></b></p>
             <p>For every |x| that is
               an <a data-cite="RDF12-CONCEPTS#dfn-IRI">IRI</a> or
               a <a href="#defn_QueryVariable">variable</a>,
-              <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Graph(|x|, |P|) )
+              <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|) )
               is defined as follows:</p>
             <ul>
               <li>If |x| is an IRI
                 that is a <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> in |D|,
                 <div class="indentedFormula">
-                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Graph(|x|, |P|) )
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|) )
                   =
                   <a href="#defn_eval" class="evalFct">eval</a>( |D|(<var>G<sub>|x|</sub></var>), |P| ),
                 </div>
@@ -10555,13 +10555,13 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
               <li>If |x| is an IRI
                 that is not a <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> in |D|,
                 <div class="indentedFormula">
-                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Graph(|x|, |P|) )
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|) )
                   is the empty multiset.
                 </div>
               </li>
               <li>If |x| is a variable,
                 <div class="indentedFormula">
-                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Graph(|x|, |P|) )
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|) )
                   =
                   <var>Ω</var>,
                 </div>
@@ -10581,61 +10581,61 @@ the result is <var>Ω</var>
             <div id="defn_evalGroup">
               <b>Definition: Evaluation of Group</b>
             </div>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Group(|exprlist|, |P|) ) = <a href="#defn_algGroup" class="algFct">Group</a>( |exprlist|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGroup" class="absOp">Group</a>(|exprlist|, |P|) ) = <a href="#defn_algGroup" class="algFct">Group</a>( |exprlist|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|) )</p>
           </div>
           <div class="defn">
             <div id="defn_evalAggregation">
               <b>Definition: Evaluation of Aggregation</b>
             </div>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Aggregation(|exprlist|, |func|, |scalarvals|, |Grp|) ) = <a href="#defn_algAggregation" class="algFct">Aggregation</a>( |exprlist|, |func|,
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absAggregation" class="absOp">Aggregation</a>(|exprlist|, |func|, |scalarvals|, |Grp|) ) = <a href="#defn_algAggregation" class="algFct">Aggregation</a>( |exprlist|, |func|,
               |scalarvals|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |Grp|) )</p>
           </div>
           <div class="defn">
             <div id="defn_evalAggregateJoin">
               <b>Definition: Evaluation of AggregateJoin</b>
             </div>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), AggregateJoin(<var>A<sub>1</sub></var>, ..., <var>A<sub>n</sub></var>) ) =
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>(<var>A<sub>1</sub></var>, ..., <var>A<sub>n</sub></var>) ) =
               <a href="#defn_algAggregateJoin" class="algFct">AggregateJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>1</sub></var>), ..., <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>n</sub></var>) )</p>
           </div>
           <p>Note that if <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>i</sub></var>) is an error, it is ignored.</p>
           <div class="defn">
-            <p><b>Definition: <span id="defn_evalExtend">Evaluation of Extend</span></b></p>
+            <p><b>Definition: <span id="defn_evalExtend">Evaluation of <a href="#defn_absExtend" class="absOp">Extend</a></span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Extend(|P|, |var|, |expr|) ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |var|, |expr| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absExtend" class="absOp">Extend</a>(|P|, |var|, |expr|) ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |var|, |expr| )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalList">Evaluation of ToList</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), ToList(|P|) ) = <a href="#defn_algToList" class="algFct">ToList</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absToList" class="absOp">ToList</a>(|P|) ) = <a href="#defn_algToList" class="algFct">ToList</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalDistinct">Evaluation of Distinct</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Distinct(|L|) ) = <a href="#defn_algDistinct" class="algFct">Distinct</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absDistinct" class="absOp">Distinct</a>(|L|) ) = <a href="#defn_algDistinct" class="algFct">Distinct</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalReduced">Evaluation of Reduced</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Reduced(|L|) ) = <a href="#defn_algReduced" class="algFct">Reduced</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absReduced" class="absOp">Reduced</a>(|L|) ) = <a href="#defn_algReduced" class="algFct">Reduced</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalProject">Evaluation of Project</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Project(|L|, |vars|) ) = <a href="#defn_algProject" class="algFct">Project</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |vars| )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absProject" class="absOp">Project</a>(|L|, |vars|) ) = <a href="#defn_algProject" class="algFct">Project</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |vars| )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalOrderBy">Evaluation of OrderBy</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), OrderBy(|L|, |condition|) ) = <a href="#defn_algOrderBy" class="algFct">OrderBy</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |condition| )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|L|, |condition|) ) = <a href="#defn_algOrderBy" class="algFct">OrderBy</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |condition| )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalToMultiSet">Evaluation of ToMultiSet</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), ToMultiSet(|L|) ) = <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absToMultiset" class="absOp">ToMultiset</a>(|L|) ) = <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalSlice">Evaluation of Slice</span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), Slice(|L|, |start|, |length|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |start|, |length| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |start|, |length|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |start|, |length| )
             </p>
           </div>
         </section>
