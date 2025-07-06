@@ -9293,8 +9293,8 @@ Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var
             <div class="algExample2">
               <a href="#defn_absExtend" class="absOp">Extend</a>(<br>
               &nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>( <br>
-              &nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>( |Z|, BGP(?s :p ?v)),<br>
-              &nbsp;&nbsp;&nbsp;&nbsp; |Z|),<br>
+              &nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>( {}, BGP(?s :p ?v)),<br>
+              &nbsp;&nbsp;&nbsp;&nbsp; {}),<br>
               &nbsp;&nbsp; ?v2, 2*?v<br>
               )
             </div>
@@ -9369,7 +9369,7 @@ Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var
 
 <pre class="code nohighlight">Let <var>A</var> := the empty sequence
 Let <var>Q</var> := the query level being evaluated
-Let <var>P</var> := the algebra translation of the GroupGraphPattern of the query level
+Let <var>P</var> := algebraic query expression <a href="#convertGraphPattern">produced</a> for the GroupGraphPattern of the query level
 Let <var>E</var> := [], a list of pairs of the form (variable, expression)
 
 If <var>Q</var> contains GROUP BY exprlist
@@ -9415,7 +9415,7 @@ For each variable <var>V</var> appearing outside of an aggregate
               SELECT clause are not visible to the HAVING clause.</p>
             <pre class="code nohighlight">
 Let <var>Q</var> := the query level being evaluated
-Let <var>P</var> := the algebra translation of the query level so far
+Let <var>P</var> := the algebraic query expression produced for the query level so far
 
 For each HAVING(<var>E</var>) in <var>Q</var>
     <var>P</var> := <a href="#defn_absFilter" class="absOp">Filter</a>(<var>E</var>, <var>P</var>)
@@ -9428,7 +9428,7 @@ For each HAVING(<var>E</var>) in <var>Q</var>
             <p>If the query has a trailing VALUES clause:</p>
 
 <pre class="code nohighlight">
-Let <var>P</var> := the algebra translation of the query level so far
+Let <var>P</var> := the algebraic query expression produced for the query level so far
 <var>P</var> := <a href="#defn_absJoin" class="absOp">Join</a>(<var>P</var>, <a href="#defn_absToMultiset" class="absOp">ToMultiset</a>(<var>data</var>))
   where <var>data</var> is a solution sequence derived from the VALUES clause
 </pre>
@@ -9447,7 +9447,7 @@ Let <var>P</var> := the algebra translation of the query level so far
 </pre>
 
 <pre class="code nohighlight">
-Let <var>X</var> := algebra from earlier steps
+Let <var>X</var> := algebraic query expression from earlier steps
 Let <var>VS</var> := set of all variables visible in the pattern,
            so restricted by sub-SELECT projected variables and GROUP BY variables.
            Not visible: only in filter, exists/not exists, masked by a subselect, 
