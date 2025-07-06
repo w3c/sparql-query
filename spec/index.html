@@ -9167,6 +9167,10 @@ Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var
               BGP( ?s :p1 ?v1 . ?s :p2 ?v2 )
             </div>
           </div>
+<div class="issue" data-number="246">
+  The example above does not include the version of the resulting expression
+  before the simplification step. The same is true for several other examples
+  below. The examples should be consistent in this regard.</div>
           <p>Example: group consisting of a union of two basic graph patterns:</p>
           <div class="algExample">
             <div class="algExample1">
@@ -9286,6 +9290,11 @@ Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var
           </div>
           <p>Example: Pattern involving BIND, with a 
             <a href="#sparqlSimplification">simplification</a> step:</p>
+<div class="issue" data-number="246">
+  The following example uses <code>{}</code> to represent the empty BGP in the
+  first version of the resulting expression (the one before the simplification
+  step), whereas the previous examples above are using |Z| instead. The
+  examples should be consistent in this regard.</div>
           <div class="algExample">
             <div class="algExample1">
               { ?s :p ?v . {} BIND (2*?v AS ?v2) }
@@ -9366,6 +9375,8 @@ Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var
               The transformation for query levels that use any aggregates is given
               below:
             </p>
+<div class="issue" data-number="247">
+  There are a few minor issues in the following algorithm.</div>
 
 <pre class="code nohighlight">Let <var>A</var> := the empty sequence
 Let <var>Q</var> := the query level being evaluated
@@ -9551,6 +9562,8 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
                 <p>|length| defaults to (size(|M|)-|start|).</p>
               </blockquote>
             </blockquote>
+<div class="issue" data-number="248">
+  The definition of this translation step is formally incorrect.</div>
           </section>
           <section id="sparqlAlgebraOutcome">
             <h5>Final Algebraic Query Expression</h5>
