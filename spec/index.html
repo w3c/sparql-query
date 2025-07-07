@@ -9133,7 +9133,7 @@ End</pre>
           <section id="sparqlSimplification">
             <h5>Simplification step</h5>
             <p>Some groups of one graph pattern become <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, |A|), where |Z| is the empty
-              basic graph pattern (which is the empty set). These can be replaced by |A|. The empty graph
+              basic graph pattern (which is the empty set). These are replaced by |A|. The empty graph
               pattern |Z| is the identity for join:</p>
             <pre class="code nohighlight">
 Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>Z</var>, <var>A</var>) by <var>A</var>
@@ -9383,12 +9383,12 @@ Let <var>Q</var> := the query level being evaluated
 Let <var>P</var> := algebraic query expression <a href="#convertGraphPattern">produced</a> for the GroupGraphPattern of the query level
 Let <var>E</var> := [], a list of pairs of the form (variable, expression)
 
-If <var>Q</var> contains GROUP BY exprlist
-   Let <var>Grp</var> := <a href="#defn_absGroup" class="absOp">Group</a>(exprlist, <a href="#defn_absToList" class="absOp">ToList</a>(<var>P</var>))
+If <var>Q</var> contains GROUP BY <var>exprlist</var>
+   Let <var>Grp</var> := <a href="#defn_absGroup" class="absOp">Group</a>(<var>exprlist</var>, <a href="#defn_absToList" class="absOp">ToList</a>(<var>P</var>))
 Else If <var>Q</var> contains an aggregate in SELECT, HAVING, ORDER BY
    Let <var>Grp</var> := <a href="#defn_absGroup" class="absOp">Group</a>((1), <a href="#defn_absToList" class="absOp">ToList</a>(<var>P</var>))
 Else
-   skip the rest of the aggregate step
+   skip the rest of the Aggregates step
    End
 
 Global <var>i</var> := 1   # Initially 1 for each query processed
