@@ -8924,28 +8924,6 @@ WHERE {
             <p>Expand abbreviations for IRIs and triple patterns given in 
               <a href="#sparqlSyntax">section 4</a>.</p>
           </section>
-          <section id="sparqlCollectFilters">
-            <h5>Collect <code>FILTER</code> Elements</h5>
-            <p><code>FILTER</code> expressions apply to the whole group graph pattern in which they
-              appear. The algebra operators to perform filtering are added to the group after
-              translation of each group element. We collect the filters together here and remove them
-              from group, then <a href="#sparqlAddFilters">apply them to the whole translated group
-                graph pattern</a>.</p>
-            <p>In this step, we also translate graph patterns within <code>FILTER</code> expressions
-              <a href="#func-filter-exists"><code>EXISTS</code></a> and 
-              <a href="#func-filter-not-exists"><code>NOT EXISTS</code></a>.</p>
-
-            <pre class="code nohighlightBlock">
-Let FS := empty set
-For each form FILTER(expr) in the group graph pattern
-    In expr, replace NOT EXISTS{P} with fn:not(<a href="#defn_evalExists">exists(translate(P)))</a> 
-    In expr, replace EXISTS{P} with <a href="#defn_evalExists">exists(translate(P))</a>
-    FS := FS ∪ {expr}
-    End
-</pre>
-            <p>The set of filter expressions <code>FS</code> is <a href="#sparqlAddFilters">used
-                later</a>.</p>
-          </section>
           <section id="sparqlTranslatePathExpressions">
             <h5>Translate Property Path Expressions</h5>
             <p>The following table gives the translation
@@ -9137,15 +9115,18 @@ If the form is GRAPH IRI GroupGraphPattern
 If the form is GRAPH Var GroupGraphPattern
     The result is Graph(Var, Translate(GroupGraphPattern))
 </pre>
-
             <blockquote>
-              <p>If the form is <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>:</p>
+              <p>If the form is <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code> with child <code>P</code>:</p> 
+            </blockquote>
+<pre class="code nohighlightBlock">The result is Translate(P).</pre>
+            <blockquote>
+              <p>If the form is <code><a href="#rGroupGraphPatternSub">GroupGraphPatternSub</a></code>:</p>
             </blockquote>
 <pre class="code nohighlightBlock">
-Let FS := the empty set
+Let FS := the empty sequence
 Let G := the empty pattern, a basic graph pattern which is the empty set.
 
-For each element E in the sequence of elements in the GroupGraphPattern
+For each element E in the sequence of elements that are the GroupGraphPattern's TriplesBlock children and the children of its other children, in order:
 
     If E is of the form OPTIONAL{P} 
         Let A := Translate(P)
@@ -9160,6 +9141,12 @@ For each element E in the sequence of elements in the GroupGraphPattern
         G := Minus(G, Translate(P))
         End
 
+    If E is of the form FILTER(expr)
+        In expr, replace NOT EXISTS{P} with fn:not(exists(translate(P))) 
+        In expr, replace EXISTS{P} with exists(translate(P))
+        FS := FS + expr
+        End
+
     If E is of the form BIND(expr AS var)
         G := Extend(G, var, expr)
         End
@@ -9171,6 +9158,11 @@ For each element E in the sequence of elements in the GroupGraphPattern
 
    End
    
+If FS is not empty
+    Let X := Conjunction of expressions in FS
+    G := Filter(X, G)
+    End
+
 The result is G.
             </pre>
             <blockquote>
@@ -9189,17 +9181,6 @@ The result is G.
               <p>If the form is <a href="#rSubSelect">SubSelect</a></p>
             </blockquote>
             <pre class="code nohighlightBlock">The result is ToMultiset(Translate(SubSelect))</pre>
-          </section>
-          <section id="sparqlAddFilters">
-            <h5>Filters of Group</h5>
-            <p>After the group has been translated, the filter expressions are added so they wil
-              apply to the whole of the rest of the group:</p>
-            <pre class="code nohighlightBlock">
-If FS is not empty
-    Let G := output of preceding step
-    Let X := Conjunction of expressions in FS
-    G := Filter(X, G)
-End</pre>
           </section>
           <section id="sparqlSimplification">
             <h5>Simplification step</h5>
