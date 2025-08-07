@@ -10679,7 +10679,7 @@ the result is <var>Ω</var>
               </table>
               <div class="note">
                 <p>
-                  This restriction means that <a href="#defn_valuesinsertion">values inserted</a>
+                  This restriction means that inserted values
                   do not conflict with values assigned to variables within the pattern.
                 </p>
                 <p>
@@ -10702,13 +10702,14 @@ the result is <var>Ω</var>
               <div class="defn">
                 <b>Definition: <span id="defn_projmap">Projection Expression Variable Remapping</span></b>
                 <p>
-                  For a projection algebra operation #sparqlProjection `Project(A, PV)` acting on algreg express `A` and with set of variables `PV`, define
-                  a partial mapping `F` from
-                  `<a href="#sparqlQueryVariables">V</a>`,
-                  the set of all variables, to `V` where:
+                  For a <a href="#sparqlProjection">projection algebra operation</a>
+		              `Project(A, PV)` acting on algebra expression `A` and with set of variables `PV`,
+		              define a mapping `F` from `V`,
+		              <a href="#sparqlQueryVariables">the set of all variables</a>,
+                  to `V` where:
                 </p>
-                <pre>F(v) = v1 if v is in PV, where v1 is a fresh variable
-F(v) = v if v is not in PV</pre>
+                <pre>F(v) = v1 if v is not in PV, where v1 is a fresh variable
+F(v) = v if v is in PV</pre>
                 <p>
                 Define the Projection Expression Variable Remapping `ProjectMap(P, PV)`
                 </p>
@@ -10726,15 +10727,15 @@ F(v) = v if v is not in PV</pre>
               <div class="defn">
                 <b>Definition: <span id="defn_varrename">Variable Remapping</span></b>
                 <p>
-                  For any algebra expression `X`, define the Variable Remapping `PrjMap(X)` 
+                  For any algebra expression `X`, define the Variable Remapping `PrjMap(X)`
                   of algebra expression `X`:
                 </p>
                   <pre>PrjMap(X) = replace all project operations Project(P, PV) 
-                with ProjectMap(P, PV) for each projection in X.</pre>
+                with ProjectMap(Project(A, PV), PV) for each projection in X.</pre>
               </div>
               <p>
                 The outcome of `PrjMap` is independent of the order of replacement
-                (e.g. bottom-up or top-down).
+                (whether "bottom-up" or "top-down") order.
                 Replacements may happen several times, depending on recursive order
                 but each time a replacement is made, the variable not used anywhere else.
               </p>
@@ -10767,6 +10768,7 @@ F(v) = v if v is not in PV</pre>
                     being the current binding of the enclosing filter.
                   </p>
                 </div>
+                <p class="ednote">Need to define `BindingInScope`</p>
               </div>
 
               <div class="defn">
@@ -10775,13 +10777,14 @@ F(v) = v if v is not in PV</pre>
                   <p>
                     During <a href="#sparqlQuery">translation to the SPARQL algebra</a>
                   </p>
+                  <p class="ednote">Define putting in the `BindingInScope` operator</p>
                   <pre>
-Replace each occurence of `Y` in X where `Y` is one of
+Replace each occurence of Y where Y is one of
           <a href="#sparqlTranslateBasicGraphPatterns">Basic Graph Pattern</a>,
-          <a href="#sparqlTranslatePathExpressions">Property Path Expression</a>,
-          <a href="#sparqlTranslateGraphPatterns">`Graph(Var, pattern)`</a>,
+          <a href="#sparqlTranslatePathPatterns">Property Path Patterns</a>,
+          <a href="#sparqlTranslateGraphPatterns">Graph(Var, pattern)</a>,
           <a href="#https://www.w3.org/TR/sparql12-query/#sparqlTranslateGraphPatterns">Inline Data</a>
-          with `join(Y, BindingInScope())`.</pre>
+      with join(Y, BindingInScope()).</pre>
                 </div>
                 <div class="note">
                   c.f. section <a href="#sparqlTranslateGraphPatterns">Translate Graph Patterns</a>
@@ -10803,18 +10806,18 @@ Replace each occurence of `Y` in X where `Y` is one of
               </p>
               <div class="defn">
                 <div>
-                  <b>Definition: <span id="defn_valuesinsertion">Values Insertion</span></b>
+                  <b>Definition: <span id="defn_insertvalues">Insert Values</span></b>
                   <p>
-                    Define the Values Insertion function `ValuesInsert(X, μ)`
+                    Define the function `InsertValues(X, μ)`
                   </p>
                   <pre>Let Table(μ) = { μ } and multiplicity( μ | Table(μ) = { μ } ) = 1
 
-Replace each occurence of `Y` in X where `Y` is one of
+Replace each occurence of Y in X where Y is one of
           <a href="#sparqlTranslateBasicGraphPatterns">Basic Graph Pattern</a>,
-          <a href="#sparqlTranslatePathExpressions">Property Path Expression</a>,
-          <a href="#sparqlTranslateGraphPatterns">`Graph(Var, pattern)`</a>,
+          <a href="#sparqlTranslatePathPatterns">Property Path Patterns</a>,
+          <a href="#sparqlTranslateGraphPatterns">Graph(Var, pattern)</a>,
           <a href="#https://www.w3.org/TR/sparql12-query/#sparqlTranslateGraphPatterns">Inline Data</a>
-with `join(Y, Table(μ))`.</pre>
+      with join(Y, Table(μ)).</pre>
 
                 </div>
               </div>
@@ -10828,8 +10831,11 @@ with `join(Y, Table(μ))`.</pre>
                   Let `μ` be the current solution mapping for a filter, and `X` a graph pattern,
                       define the Evaluation of Exists `exists(X)`
                 </p>
+                <p class="ednote">
+                   @@ Set up the current row for `BindingdInScope`.
+                </p>
                 <pre>exists(X) = true 
-              if eval( D(G), ValuesInScope(PrjMap(X)), μ)
+              if eval( D(G), μ)
                  is a non-empty solution sequence.
 exists(X) = false otherwise</pre>
               </div>
