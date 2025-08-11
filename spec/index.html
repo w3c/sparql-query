@@ -8617,13 +8617,14 @@ WHERE {
         <span id="sparqlQuery"><!-- obsolete id --></span>
         <h3>Translation to the Algebraic Syntax</h3>
         <p>This section defines the process of converting graph patterns and solution modifiers in a
-          SPARQL query string into an <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>. The process described converts one
+          SPARQL query string into an <a href="#defn_AlgebraicQueryExpression">algebraic
+          query expression</a>. The process described converts one
           level of query nesting, as formed by subqueries using the nested <code>SELECT</code> syntax and
           is applied recursively on subqueries. Each level consists of graph pattern matching and
           filtering, followed by the application of solution modifiers.</p>
         <p>The SPARQL query string is parsed and the abbreviations for IRIs and triple patterns given
-          in Section&nbsp;<a href="#sparqlSyntax" class="sectionRef"></a> are applied. At this point the abstract syntax tree
-          is composed of:</p>
+          in Section&nbsp;<a href="#sparqlSyntax" class="sectionRef"></a> are applied.
+          At this point, the abstract syntax tree is composed of the following:</p>
         <table class="plain">
           <tbody>
             <tr>
@@ -8708,12 +8709,13 @@ WHERE {
         </table>
         <section id="variableScope">
           <h4>Variable Scope</h4>
-          <p>We define a variable to be <i>in-scope</i> if there is a way for a variable to be in the
-            domain of a solution mapping at that point in the evaluation of the <a href="#defn_AlgebraicQueryExpression">algebraic expression</a> for the
-            query. The definition below provides a way of determining this from the abstract syntax tree of a
-            query.</p>
+          <p>We define a variable to be <i>in-scope</i> if there is a way for the variable to be in the
+            domain of a solution mapping at that point in the evaluation of the
+            <a href="#defn_AlgebraicQueryExpression">algebraic expression</a> of the
+            query. The definition below provides a way of determining this from the
+            abstract syntax tree of a query.</p>
           <p>Note that a subquery with a projection can hide variables; use of a variable in
-            <code>FILTER</code>, or in <code>MINUS</code> does not cause a variable to be in-scope
+            <code>FILTER</code>, or in <code>MINUS</code> does not cause the variable to be in-scope
             outside of those forms.</p>
           <p>Let <b>P</b>, <b>P1</b>, <b>P2</b> be graph patterns and <b>E</b>,
             <b>E1</b>,...<b>En</b> be expressions. A variable <code>v</code> is in-scope if:</p>
@@ -8792,9 +8794,12 @@ WHERE {
         </section>
         <section id="convertGraphPattern">
           <h4>Converting Graph Patterns</h4>
-          <p>This section describes the process for translating a SPARQL graph pattern into an <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>. This process is applied to the group graph pattern (the unit between
-            <code>{...}</code> delimiters) forming the <code>WHERE</code> clause of a query, and
-            recursively to each syntactic element within the group graph pattern. The result of the
+          <p>This section describes the process for translating a SPARQL graph pattern into an
+            <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>. This
+            process is applied to the group graph pattern (the unit between brace
+            ("<code>{&nbsp}</code>") delimiters) forming the <code>WHERE</code> clause of a
+            query, and recursively to each syntactic element within the group graph pattern.
+            The result of the
             translation is an <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>.</p>
           <p>In summary, the steps are applied as follows:</p>
           <ul>
@@ -9134,9 +9139,10 @@ End</pre>
           </section>
           <section id="sparqlSimplification">
             <h5>Simplification step</h5>
-            <p>Some groups of one graph pattern become <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, |A|), where |Z| is the empty
-              basic graph pattern (which is the empty set). These are replaced by |A|. The empty graph
-              pattern |Z| is the identity for join:</p>
+            <p>Some groups of one graph pattern become <a href="#defn_absJoin"
+              class="absOp">Join</a>(|Z|, |A|), where |Z| is the empty basic graph
+              pattern (which is the empty set). These are replaced by |A|. The empty
+              graph pattern |Z| is the identity for join:</p>
             <pre class="code nohighlight">
 Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>Z</var>, <var>A</var>) by <var>A</var>
 Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var>) by <var>A</var>
@@ -9417,7 +9423,8 @@ For each variable <var>V</var> appearing outside of an aggregate
 <var>P</var> := <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>(<var>A</var>)
 </pre>
             <p>
-              The list <var>E</var> will be used when translating SELECT expressions in Section&nbsp;<a href="#sparqlSelectExpressions" class="sectionRef"></a>.
+              The list <var>E</var> will be used when translating SELECT expressions in
+              Section&nbsp;<a href="#sparqlSelectExpressions" class="sectionRef"></a>.
             </p>
           </section>
           <section id="sparqlHavingClause">
