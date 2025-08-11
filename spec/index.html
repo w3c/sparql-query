@@ -8457,7 +8457,7 @@ WHERE {
           <a href="#sparqlAlgebra">SPARQL algebra</a>.
           This section defines the expressions that can be formed in this algebraic syntax,
           and the translation of SPARQL query strings into this algebraic syntax is then defined
-          in Section&nbsp;<a href="#sparqlQuery" class="sectionRef"></a>.</p>
+          in Section&nbsp;<a href="#translation" class="sectionRef"></a>.</p>
         <p id="defn_AlgebraicQueryExpression">An
           <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>
           is defined recursively as follows:</p>
@@ -8613,16 +8613,18 @@ WHERE {
             |ppe| is an algebraic property path expression.</li>
         </ul>
       </section>
-      <section id="sparqlQuery">
-        <h3>Translation to the SPARQL Algebra</h3>
+      <section id="translation">
+        <span id="sparqlQuery"><!-- obsolete id --></span>
+        <h3>Translation to the Algebraic Syntax</h3>
         <p>This section defines the process of converting graph patterns and solution modifiers in a
-          SPARQL query string into a SPARQL algebra expression. The process described converts one
+          SPARQL query string into an <a href="#defn_AlgebraicQueryExpression">algebraic
+          query expression</a>. The process described converts one
           level of query nesting, as formed by subqueries using the nested <code>SELECT</code> syntax and
           is applied recursively on subqueries. Each level consists of graph pattern matching and
           filtering, followed by the application of solution modifiers.</p>
         <p>The SPARQL query string is parsed and the abbreviations for IRIs and triple patterns given
-          in <a href="#sparqlSyntax">section 4</a> are applied. At this point the abstract syntax tree
-          is composed of:</p>
+          in Section&nbsp;<a href="#sparqlSyntax" class="sectionRef"></a> are applied.
+          At this point, the abstract syntax tree is composed of the following:</p>
         <table class="plain">
           <tbody>
             <tr>
@@ -8705,85 +8707,15 @@ WHERE {
             </tr>
           </tbody>
         </table>
-        <p>The result of converting such an abstract syntax tree is a SPARQL query that uses the
-          following symbols in the SPARQL algebra:</p>
-        <table class="plain">
-          <tbody>
-            <tr>
-              <th>Graph Pattern</th>
-              <th>Solution Modifiers</th>
-              <th>Property Path</th>
-            </tr>
-            <tr>
-              <td>BGP</td>
-              <td>ToList</td>
-              <td>PredicatePath</td>
-            </tr>
-            <tr>
-              <td>Join</td>
-              <td>OrderBy</td>
-              <td>InversePath</td>
-            </tr>
-            <tr>
-              <td>LeftJoin</td>
-              <td>Project</td>
-              <td>SequencePath</td>
-            </tr>
-            <tr>
-              <td>Filter</td>
-              <td>Distinct</td>
-              <td>AlernativePath</td>
-            </tr>
-            <tr>
-              <td>Union</td>
-              <td>Reduced</td>
-              <td>ZeroOrMorePath</td>
-            </tr>
-            <tr>
-              <td>Graph</td>
-              <td>Slice</td>
-              <td>OneOrMorePath</td>
-            </tr>
-            <tr>
-              <td>Extend</td>
-              <td>ToMultiSet</td>
-              <td>ZeroOrOnePath</td>
-            </tr>
-            <tr>
-              <td>Minus</td>
-              <td>&nbsp;</td>
-              <td>NegatedPropertySet</td>
-            </tr>
-            <tr>
-              <td>Group</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>Aggregation</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>AggregateJoin</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-          </tbody>
-        </table>
-        <p><i>Slice</i> is the combination of OFFSET and LIMIT.</p>
-        <p><i>ToList</i> is used where conversion from the results of graph pattern matching to
-          sequences occurs.</p>
-        <p><i>ToMultiSet</i> is used where conversion from a solution sequence to a multiset
-          occurs.</p>
         <section id="variableScope">
           <h4>Variable Scope</h4>
-          <p>We define a variable to be <i>in-scope</i> if there is a way for a variable to be in the
-            domain of a solution mapping at that point in the execution of the SPARQL algebra for the
-            query. The definition below provides a way of determing this from the abstract syntax of a
-            query.</p>
+          <p>We define a variable to be <i>in-scope</i> if there is a way for the variable to be in the
+            domain of a solution mapping at that point in the evaluation of the
+            <a href="#defn_AlgebraicQueryExpression">algebraic expression</a> of the
+            query. The definition below provides a way of determining this from the
+            abstract syntax tree of a query.</p>
           <p>Note that a subquery with a projection can hide variables; use of a variable in
-            <code>FILTER</code>, or in <code>MINUS</code> does not cause a variable to be in-scope
+            <code>FILTER</code>, or in <code>MINUS</code> does not cause the variable to be in-scope
             outside of those forms.</p>
           <p>Let <b>P</b>, <b>P1</b>, <b>P2</b> be graph patterns and <b>E</b>,
             <b>E1</b>,...<b>En</b> be expressions. A variable <code>v</code> is in-scope if:</p>
@@ -8862,11 +8794,13 @@ WHERE {
         </section>
         <section id="convertGraphPattern">
           <h4>Converting Graph Patterns</h4>
-          <p>This section describes the process for translating a SPARQL graph pattern into a SPARQL
-            algebra expression. This process is applied to the group graph pattern (the unit between
-            <code>{...}</code> delimiters) forming the <code>WHERE</code> clause of a query, and
-            recursively to each syntactic element within the group graph pattern. The result of the
-            translation is a SPARQL algebra expression.</p>
+          <p>This section describes the process for translating a SPARQL graph pattern into an
+            <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>. This
+            process is applied to the group graph pattern (the unit between brace
+            ("<code>{&nbsp}</code>") delimiters) forming the <code>WHERE</code> clause of a
+            query, and recursively to each syntactic element within the group graph pattern.
+            The result of the
+            translation is an <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>.</p>
           <p>In summary, the steps are applied as follows:</p>
           <ul>
             <li>
@@ -8894,14 +8828,14 @@ WHERE {
               <a href="#sparqlAddFilters">Add in Filters</a>
             </li>
             <li>
-              <a href="#sparqlSimplification">Simplify the algebra expression</a>
+              <a href="#sparqlSimplification">Simplify the resulting expression</a>
             </li>
           </ul>
           <p>We write</p>
           <blockquote>
             translate(graph pattern)
           </blockquote>
-          <p>for the algorthm described here to translate graph patterns.</p>
+          <p>for the algorithm described here to translate graph patterns.</p>
           <div class="wgNote">
             The working group notes that in SPARQL 1.0, the point at which the simplification step is
             applied leads to ambiguous transformation of queries involving a doubly nested filter and
@@ -8923,8 +8857,8 @@ WHERE {
             preferred reading.</p>
           <section id="sparqlExpandForms">
             <h5>Expand Syntax Forms</h5>
-            <p>Expand abbreviations for IRIs and triple patterns given in 
-              <a href="#sparqlSyntax">section 4</a>.</p>
+            <p>Expand abbreviations for IRIs and triple patterns given in
+              Section&nbsp;<a href="#sparqlSyntax" class="sectionRef"></a>.</p>
           </section>
           <section id="sparqlCollectFilters">
             <h5>Collect <code>FILTER</code> Elements</h5>
@@ -9114,74 +9048,74 @@ For each form FILTER(expr) in the group graph pattern
               <p>If the form is <code><a href="#rGroupOrUnionGraphPattern">GroupOrUnionGraphPattern</a></code></p>
             </blockquote>
 
-<pre class="code nohighlightBlock">Let A := undefined
+<pre class="code nohighlight">Let <var>A</var> := undefined
           
-For each element G in the GroupOrUnionGraphPattern
-    If A is undefined
-        A := Translate(G)
+For each element <var>G</var> in the GroupOrUnionGraphPattern
+    If <var>A</var> is undefined
+        <var>A</var> := Translate(<var>G</var>)
     Else
-        A := Union(A, Translate(G))
+        <var>A</var> := <a href="#defn_absUnion" class="absOp">Union</a>(<var>A</var>, Translate(<var>G</var>))
     End
 
-The result is A
+The result is <var>A</var>
             </pre>
 
             <blockquote>
               <p>If the form is <code><a href="#rGraphGraphPattern">GraphGraphPattern</a></code></p>
             </blockquote>
 
-            <pre class="code nohighlightBlock">
+            <pre class="code nohighlight">
 If the form is GRAPH IRI GroupGraphPattern
-    The result is Graph(IRI, Translate(GroupGraphPattern))
+    The result is <a href="#defn_absGraph" class="absOp">Graph</a>(IRI, Translate(GroupGraphPattern))
 </pre>
 
-            <pre class="code nohighlightBlock">
+            <pre class="code nohighlight">
 If the form is GRAPH Var GroupGraphPattern
-    The result is Graph(Var, Translate(GroupGraphPattern))
+    The result is <a href="#defn_absGraph" class="absOp">Graph</a>(Var, Translate(GroupGraphPattern))
 </pre>
 
             <blockquote>
               <p>If the form is <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>:</p>
             </blockquote>
-<pre class="code nohighlightBlock">
+<pre class="code nohighlight">
 Let FS := the empty set
-Let G := the empty pattern, a basic graph pattern which is the empty set.
+Let <var>G</var> := the empty pattern, a basic graph pattern which is the empty set.
 
-For each element E in the sequence of elements in the GroupGraphPattern
+For each element <var>E</var> in the sequence of elements in the GroupGraphPattern
 
-    If E is of the form OPTIONAL{P} 
-        Let A := Translate(P)
-        If A is of the form Filter(F, A2)
-            G := LeftJoin(G, A2, F)
+    If <var>E</var> is of the form OPTIONAL{<var>P</var>} 
+        Let <var>A</var> := Translate(<var>P</var>)
+        If <var>A</var> is of the form <a href="#defn_absFilter" class="absOp">Filter</a>(<var>F</var>, <var>A2</var>)
+            <var>G</var> := <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>G</var>, <var>A2</var>, <var>F</var>)
         Else 
-            G := LeftJoin(G, A, true)
+            <var>G</var> := <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>G</var>, <var>A</var>, true)
             End
         End
 
-    If E is of the form MINUS{P}
-        G := Minus(G, Translate(P))
+    If <var>E</var> is of the form MINUS{<var>P</var>}
+        <var>G</var> := <a href="#defn_absMinus" class="absOp">Minus</a>(<var>G</var>, Translate(<var>P</var>))
         End
 
-    If E is of the form BIND(expr AS var)
-        G := Extend(G, var, expr)
+    If <var>E</var> is of the form BIND(<var>expr</var> AS <var>var</var>)
+        <var>G</var> := <a href="#defn_absExtend" class="absOp">Extend</a>(<var>G</var>, <var>var</var>, <var>expr</var>)
         End
 
-    If E is any other form 
-        Let A := Translate(E)
-        G := Join(G, A)
+    If <var>E</var> is any other form 
+        Let <var>A</var> := Translate(<var>E</var>)
+        <var>G</var> := <a href="#defn_absJoin" class="absOp">Join</a>(<var>G</var>, <var>A</var>)
         End
 
    End
    
-The result is G.
+The result is <var>G</var>.
             </pre>
             <blockquote>
               <p>If the form is <a href="#rInlineData">InlineData</a></p>
             </blockquote>
-            <pre class="code nohighlightBlock">The result is a multiset of solution mappings 'data'.</pre>
+            <pre class="code nohighlight">The result is a multiset <var>data</var> of solution mappings.</pre>
             <div id="data-block">
               <blockquote>
-                <i>data</i> is formed by forming a solution mapping from the variable in the
+                <var>data</var> is formed by forming a solution mapping from the variable in the
                 corresponding position in list of variables (or single variable), omitting a binding
                 if the <a href="#rDataBlockValue">DataBlockValue</a>
                 is the word <code>UNDEF</code>.
@@ -9190,41 +9124,43 @@ The result is G.
             <blockquote>
               <p>If the form is <a href="#rSubSelect">SubSelect</a></p>
             </blockquote>
-            <pre class="code nohighlightBlock">The result is ToMultiset(Translate(SubSelect))</pre>
+            <pre class="code nohighlight">The result is <a href="#defn_absToMultiset" class="absOp">ToMultiset</a>(Translate(SubSelect))</pre>
           </section>
           <section id="sparqlAddFilters">
             <h5>Filters of Group</h5>
             <p>After the group has been translated, the filter expressions are added so they wil
               apply to the whole of the rest of the group:</p>
-            <pre class="code nohighlightBlock">
-If FS is not empty
-    Let G := output of preceding step
-    Let X := Conjunction of expressions in FS
-    G := Filter(X, G)
+            <pre class="code nohighlight">
+If <var>FS</var> is not empty
+    Let <var>G</var> := output of preceding step
+    Let <var>X</var> := Conjunction of expressions in <var>FS</var>
+    <var>G</var> := <a href="#defn_absFilter" class="absOp">Filter</a>(<var>X</var>, <var>G</var>)
 End</pre>
           </section>
           <section id="sparqlSimplification">
             <h5>Simplification step</h5>
-            <p>Some groups of one graph pattern become <code>join(Z, A)</code>, where Z is the empty
-              basic graph pattern (which is the empty set). These can be replaced by A. The empty graph
-              pattern Z is the identity for join:</p>
-            <pre class="code nohighlightBlock">
-Replace join(Z, A) by A
-Replace join(A, Z) by A
+            <p>Some groups of one graph pattern become <a href="#defn_absJoin"
+              class="absOp">Join</a>(|Z|, |A|), where |Z| is the empty basic graph
+              pattern (which is the empty set). These are replaced by |A|. The empty
+              graph pattern |Z| is the identity for join:</p>
+            <pre class="code nohighlight">
+Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>Z</var>, <var>A</var>) by <var>A</var>
+Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var>) by <var>A</var>
 </pre>
           </section>
         </section>
         <section id="sparqlAlgebraExamples">
           <h4>Examples of Mapped Graph Patterns</h4>
           <p>The second form of a rewrite example is the first with empty group joins removed by the
-            simplification step.</p>
+            simplification step.
+            |Z| is the empty basic graph pattern.</p>
           <p>Example: group with a basic graph pattern consisting of a single triple pattern:</p>
           <div class="algExample">
             <div class="algExample1">
               { ?s ?p ?o }
             </div>
             <div class="algExample2">
-              Join(Z, BGP(?s ?p ?o) )
+              <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s ?p ?o) )
             </div>
             <div class="algExample2">
               BGP(?s ?p ?o)
@@ -9239,17 +9175,21 @@ Replace join(A, Z) by A
               BGP( ?s :p1 ?v1 . ?s :p2 ?v2 )
             </div>
           </div>
+<div class="issue" data-number="246">
+  The example above does not include the version of the resulting expression
+  before the simplification step. The same is true for several other examples
+  below. The examples should be consistent in this regard.</div>
           <p>Example: group consisting of a union of two basic graph patterns:</p>
           <div class="algExample">
             <div class="algExample1">
               { { ?s :p1 ?v1 } UNION {?s :p2 ?v2 } }
             </div>
             <div class="algExample2">
-              Union(Join(Z, BGP(?s :p1 ?v1)),<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Join(Z, BGP(?s :p2 ?v2)) )
+              <a href="#defn_absUnion" class="absOp">Union</a>(<a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p1 ?v1)),<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p2 ?v2)) )
             </div>
             <div class="algExample2">
-              Union( BGP(?s :p1 ?v1) , BGP(?s :p2 ?v2) )
+              <a href="#defn_absUnion" class="absOp">Union</a>( BGP(?s :p1 ?v1) , BGP(?s :p2 ?v2) )
             </div>
           </div>
           <p>Example: group consisting of a union of a union and a basic graph pattern:</p>
@@ -9258,15 +9198,15 @@ Replace join(A, Z) by A
               { { ?s :p1 ?v1 } UNION {?s :p2 ?v2 } UNION {?s :p3 ?v3 } }
             </div>
             <div class="algExample2">
-              Union(<br>
-              &nbsp;&nbsp;&nbsp; Union( Join(Z, BGP(?s :p1 ?v1)),<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Join(Z, BGP(?s :p2 ?v2)))
+              <a href="#defn_absUnion" class="absOp">Union</a>(<br>
+              &nbsp;&nbsp;&nbsp; <a href="#defn_absUnion" class="absOp">Union</a>( <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p1 ?v1)),<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p2 ?v2)))
               ,<br>
-              &nbsp;&nbsp;&nbsp; Join(Z, BGP(?s :p3 ?v3)) )
+              &nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p3 ?v3)) )
             </div>
             <div class="algExample2">
-              Union(<br>
-              &nbsp;&nbsp;&nbsp; Union( BGP(?s :p1 ?v1) ,<br>
+              <a href="#defn_absUnion" class="absOp">Union</a>(<br>
+              &nbsp;&nbsp;&nbsp; <a href="#defn_absUnion" class="absOp">Union</a>( BGP(?s :p1 ?v1) ,<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BGP(?s :p2 ?v2),<br>
               &nbsp;&nbsp;&nbsp; BGP(?s :p3 ?v3))
             </div>
@@ -9277,13 +9217,13 @@ Replace join(A, Z) by A
               { ?s :p1 ?v1 OPTIONAL {?s :p2 ?v2 } }
             </div>
             <div class="algExample2">
-              LeftJoin(<br>
-              &nbsp;&nbsp;&nbsp; Join(Z, BGP(?s :p1 ?v1)),<br>
-              &nbsp;&nbsp;&nbsp; Join(Z, BGP(?s :p2 ?v2)),<br>
+              <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<br>
+              &nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p1 ?v1)),<br>
+              &nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p2 ?v2)),<br>
               &nbsp;&nbsp;&nbsp; true)
             </div>
             <div class="algExample2">
-              LeftJoin(BGP(?s :p1 ?v1), BGP(?s :p2 ?v2), true)
+              <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(BGP(?s :p1 ?v1), BGP(?s :p2 ?v2), true)
             </div>
           </div>
           <p>Example: group consisting of a basic graph pattern and two optional graph patterns:</p>
@@ -9292,8 +9232,8 @@ Replace join(A, Z) by A
               { ?s :p1 ?v1 OPTIONAL {?s :p2 ?v2 } OPTIONAL { ?s :p3 ?v3 } }
             </div>
             <div class="algExample2">
-              LeftJoin(<br>
-              &nbsp;&nbsp;&nbsp; LeftJoin(<br>
+              <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<br>
+              &nbsp;&nbsp;&nbsp; <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BGP(?s :p1 ?v1),<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BGP(?s :p2 ?v2),<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; true) ,<br>
@@ -9308,13 +9248,13 @@ Replace join(A, Z) by A
               { ?s :p1 ?v1 OPTIONAL {?s :p2 ?v2 FILTER(?v1&lt;3) } }
             </div>
             <div class="algExample2">
-              LeftJoin(<br>
-              &nbsp;&nbsp;&nbsp;&nbsp; Join(Z, BGP(?s :p1 ?v1)),<br>
-              &nbsp;&nbsp;&nbsp;&nbsp; Join(Z, BGP(?s :p2 ?v2)),<br>
+              <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<br>
+              &nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p1 ?v1)),<br>
+              &nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, BGP(?s :p2 ?v2)),<br>
               &nbsp;&nbsp;&nbsp;&nbsp; (?v1&lt;3) )
             </div>
             <div class="algExample2">
-              LeftJoin(<br>
+              <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<br>
               &nbsp;&nbsp;&nbsp; BGP(?s :p1 ?v1) ,<br>
               &nbsp;&nbsp;&nbsp; BGP(?s :p2 ?v2) ,<br>
               &nbsp;&nbsp; (?v1&lt;3) )
@@ -9326,8 +9266,8 @@ Replace join(A, Z) by A
               { {?s :p1 ?v1} UNION {?s :p2 ?v2} OPTIONAL {?s :p3 ?v3} }
             </div>
             <div class="algExample2">
-              LeftJoin(<br>
-              &nbsp; Union(BGP(?s :p1 ?v1),<br>
+              <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<br>
+              &nbsp; <a href="#defn_absUnion" class="absOp">Union</a>(BGP(?s :p1 ?v1),<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BGP(?s :p2 ?v2)) ,<br>
               &nbsp; BGP(?s :p3 ?v3) ,<br>
               &nbsp; true )
@@ -9340,8 +9280,8 @@ Replace join(A, Z) by A
               { ?s :p1 ?v1 FILTER (?v1 &lt; 3 ) OPTIONAL {?s :p2 ?v2} }
             </div>
             <div class="algExample2">
-              Filter( ?v1 &lt; 3 ,<br>
-              &nbsp; LeftJoin( BGP(?s :p1 ?v1), BGP(?s :p2 ?v2), true) ,<br>
+              <a href="#defn_absFilter" class="absOp">Filter</a>( ?v1 &lt; 3 ,<br>
+              &nbsp; <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>( BGP(?s :p1 ?v1), BGP(?s :p2 ?v2), true) ,<br>
               &nbsp; )
             </div>
           </div>
@@ -9351,27 +9291,32 @@ Replace join(A, Z) by A
               { ?s :p ?v . BIND (2*?v AS ?v2) ?s :p1 ?v2 }
             </div>
             <div class="algExample2">
-              Join(<br>
-              &nbsp;&nbsp; Extend( BGP(?s :p ?v), ?v2, 2*?v) ,<br>
+              <a href="#defn_absJoin" class="absOp">Join</a>(<br>
+              &nbsp;&nbsp; <a href="#defn_absExtend" class="absOp">Extend</a>( BGP(?s :p ?v), ?v2, 2*?v) ,<br>
               &nbsp;&nbsp; BGP(?s :p1 ?v2) )
             </div>
           </div>
           <p>Example: Pattern involving BIND, with a 
             <a href="#sparqlSimplification">simplification</a> step:</p>
+<div class="issue" data-number="246">
+  The following example uses <code>{}</code> to represent the empty BGP in the
+  first version of the resulting expression (the one before the simplification
+  step), whereas the previous examples above are using |Z| instead. The
+  examples should be consistent in this regard.</div>
           <div class="algExample">
             <div class="algExample1">
               { ?s :p ?v . {} BIND (2*?v AS ?v2) }
             </div>
             <div class="algExample2">
-              Extend(<br>
-              &nbsp;&nbsp; Join( <br>
-              &nbsp;&nbsp;&nbsp;&nbsp; Join( {}, BGP(?s :p ?v)),<br>
+              <a href="#defn_absExtend" class="absOp">Extend</a>(<br>
+              &nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>( <br>
+              &nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absJoin" class="absOp">Join</a>( {}, BGP(?s :p ?v)),<br>
               &nbsp;&nbsp;&nbsp;&nbsp; {}),<br>
               &nbsp;&nbsp; ?v2, 2*?v<br>
               )
             </div>
             <div class="algExample2">
-              Extend(<br>
+              <a href="#defn_absExtend" class="absOp">Extend</a>(<br>
               &nbsp;&nbsp; BGP(?s :p ?v) ,<br>
               &nbsp;&nbsp; ?v2, 2*?v<br>
             )
@@ -9383,8 +9328,8 @@ Replace join(A, Z) by A
               { ?s :p ?v . MINUS {?s :p1 ?v2 } }
             </div>
             <div class="algExample2">
-              Minus(<br>
-              &nbsp;&nbsp; BGP(?s :p ?v)<br>
+              <a href="#defn_absMinus" class="absOp">Minus</a>(<br>
+              &nbsp;&nbsp; BGP(?s :p ?v) ,<br>
               &nbsp;&nbsp; BGP(?s :p1 ?v2)<br>
               )
             </div>
@@ -9395,11 +9340,11 @@ Replace join(A, Z) by A
               { ?s :p ?o . {SELECT DISTINCT ?o {?o ?p ?z} } }
             </div>
             <div class="algExample2">
-              Join(<br>
+              <a href="#defn_absJoin" class="absOp">Join</a>(<br>
               &nbsp;&nbsp; BGP(?s :p ?o) ,<br>
-              &nbsp;&nbsp; ToMultiSet(<br>
-              &nbsp;&nbsp;&nbsp;&nbsp; Distinct( <br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Project( ToList(BGP(?o ?p ?z)), {?o} ) <br>
+              &nbsp;&nbsp; <a href="#defn_absToMultiset" class="absOp">ToMultiset</a>(<br>
+              &nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absDistinct" class="absOp">Distinct</a>( <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#defn_absProject" class="absOp">Project</a>( <a href="#defn_absToList" class="absOp">ToList</a>(BGP(?o ?p ?z)), {?o} ) <br>
               &nbsp;&nbsp;&nbsp;&nbsp; ) <br>
               &nbsp;&nbsp; ) <br>
               )
@@ -9431,50 +9376,56 @@ Replace join(A, Z) by A
             <p>Step: Aggregates</p>
             <p>
               The aggregation step is applied as a transformation on the query level, replacing
-              aggregate expressions in the query level with Aggregation() algebraic
+              aggregate expressions in the query level with <a href="#defn_absAggregation" class="absOp">Aggregation</a>() algebraic
               expressions.
             </p>
             <p>
               The transformation for query levels that use any aggregates is given
               below:
             </p>
+<div class="issue" data-number="247">
+  There are a few minor issues in the following algorithm.</div>
 
-<pre class="code nohighlightBlock">Let A := the empty sequence
-Let Q := the query level being evaluated
-Let P := the algebra translation of the GroupGraphPattern of the query level
-Let E := [], a list of pairs of the form (variable, expression)
+<pre class="code nohighlight">Let <var>A</var> := the empty sequence
+Let <var>Q</var> := the query level being evaluated
+Let <var>P</var> := algebraic query expression <a href="#convertGraphPattern">produced</a> for the GroupGraphPattern of the query level
+Let <var>E</var> := [], a list of pairs of the form (variable, expression)
 
-If Q contains GROUP BY exprlist
-   Let Grp := Group(exprlist, ToList(P))
-Else If Q contains an aggregate in SELECT, HAVING, ORDER BY
-   Let Grp := Group((1), ToList(P))
+If <var>Q</var> contains GROUP BY <var>exprlist</var>
+   Let <var>Grp</var> := <a href="#defn_absGroup" class="absOp">Group</a>(<var>exprlist</var>, <a href="#defn_absToList" class="absOp">ToList</a>(<var>P</var>))
+Else If <var>Q</var> contains an aggregate in SELECT, HAVING, ORDER BY
+   Let <var>Grp</var> := <a href="#defn_absGroup" class="absOp">Group</a>((1), <a href="#defn_absToList" class="absOp">ToList</a>(<var>P</var>))
 Else
-   skip the rest of the aggregate step
+   skip the rest of the Aggregates step
    End
 
-Global i := 1   # Initially 1 for each query processed
+Global <var>i</var> := 1   # Initially 1 for each query processed
 
-For each (X AS Var) in SELECT, each HAVING(X), and each ORDER BY X in Q
-  For each unaggregated variable V in X
-      Replace V with Sample(V)
+For each (<var>X</var> AS <var>Var</var>) in SELECT, each HAVING(<var>X</var>), and each ORDER BY <var>X</var> in <var>Q</var>
+  For each unaggregated variable <var>V</var> in <var>X</var>
+      Replace <var>V</var> with SAMPLE(<var>V</var>)
       End
-  For each aggregate R(args ; scalarvals) now in X
-      # note: scalarvals may be omitted; if so, it's equivalent to the empty function
-      A<span><sub>i</sub></span> := Aggregation(args, R, scalarvals, Grp)
-      Replace R(...) with agg<span><sub>i</sub></span> in Q
-      i := i + 1
+  For each aggregate <var>R</var>(<var>args</var> ; <var>scalarvals</var>) now in <var>X</var>
+      # note: <var>scalarvals</var> may be omitted; if so, it is equivalent to the empty function
+      <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>args</var>, <var>R</var>, <var>scalarvals</var>, <var>Grp</var>)
+      Replace <var>R</var>(...) with agg<sub><var>i</var></sub> in <var>Q</var>
+      <var>i</var> := <var>i</var> + 1
       End
   End
 
-For each variable V appearing outside of an aggregate
-   A<span><sub>i</sub></span> := Aggregation(V, Sample, {}, Grp)
-   E := E append (V, agg<span><sub>i</sub></span>)
-   i := i + 1
+For each variable <var>V</var> appearing outside of an aggregate
+   <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>V</var>, <a href="#defn_aggSample" class="aggFct">Sample</a>, {}, <var>Grp</var>)
+   <var>E</var> := <var>E</var> append (<var>V</var>, agg<sub><var>i</var></sub>)
+   <var>i</var> := <var>i</var> + 1
    End
 
-A := A<span><sub>i</sub></span>, ..., A<span><sub>i-1</sub></span>
-P := AggregateJoin(A)
+<var>A</var> := <var>A</var><sub><var>i</var></sub>, ..., <var>A</var><sub><var>i</var>-1</sub>
+<var>P</var> := <a href="#defn_absAggregateJoin" class="absOp">AggregateJoin</a>(<var>A</var>)
 </pre>
+            <p>
+              The list <var>E</var> will be used when translating SELECT expressions in
+              Section&nbsp;<a href="#sparqlSelectExpressions" class="sectionRef"></a>.
+            </p>
           </section>
           <section id="sparqlHavingClause">
             <h5>HAVING</h5>
@@ -9482,12 +9433,12 @@ P := AggregateJoin(A)
               Note that, due to the logic position in which the HAVING clause is
               evaluated, expressions projected by the
               SELECT clause are not visible to the HAVING clause.</p>
-            <pre class="code nohighlightBlock">
-Let Q := the query level being evaluated
-Let P := the algebra translation of the query level so far
+            <pre class="code nohighlight">
+Let <var>Q</var> := the query level being evaluated
+Let <var>P</var> := the algebraic query expression produced for the query level so far
 
-For each HAVING(E) in Q
-    P := Filter(E, P)
+For each HAVING(<var>E</var>) in <var>Q</var>
+    <var>P</var> := <a href="#defn_absFilter" class="absOp">Filter</a>(<var>E</var>, <var>P</var>)
     End
 </pre>
 
@@ -9496,13 +9447,13 @@ For each HAVING(E) in Q
             <h5>VALUES</h5>
             <p>If the query has a trailing VALUES clause:</p>
 
-<pre class="code nohighlightBlock">
-Let P := the algebra translation of the query level so far
-P := Join(P, ToMultiSet(data))
-  where <i>data</i> is a solution sequence derived from the VALUES clause
+<pre class="code nohighlight">
+Let <var>P</var> := the algebraic query expression produced for the query level so far
+<var>P</var> := <a href="#defn_absJoin" class="absOp">Join</a>(<var>P</var>, <a href="#defn_absToMultiset" class="absOp">ToMultiset</a>(<var>data</var>))
+  where <var>data</var> is a solution sequence derived from the VALUES clause
 </pre>
 
-            <p>The translatation of the data is the same as for <a href="#data-block">inline
+            <p>The translation of the data is the same as for <a href="#data-block">inline
                 data</a>.</p>
           </section>
           <section id="sparqlSelectExpressions">
@@ -9515,37 +9466,37 @@ P := Join(P, ToMultiSet(data))
   SELECT * { pattern }
 </pre>
 
-<pre class="code nohighlightBlock">
-Let X := algebra from earlier steps
-Let VS := list of all variables visible in the pattern,
+<pre class="code nohighlight">
+Let <var>X</var> := algebraic query expression from earlier steps
+Let <var>VS</var> := set of all variables visible in the pattern,
            so restricted by sub-SELECT projected variables and GROUP BY variables.
            Not visible: only in filter, exists/not exists, masked by a subselect, 
                         non-projected GROUP variables, only in the right hand side of MINUS
 
-Let PV := {}, a set of variable names
-Note, E is a list of pairs of the form (variable, expression), defined in <a href="#convertGroupAggSelectExpressions">section 18.2.4</a>.
+Let <var>PV</var> := {}, a set of variable names
+Let <var>E</var> := a list of pairs of the form (variable, expression), populated in Section&nbsp;<a href="#sparqlGroupAggregate" class="sectionRef"></a>
   
 If "SELECT *"
-    PV := VS
+    <var>PV</var> := <var>VS</var>
 
 If  "SELECT selItem ..."
     For each selItem
         If selItem is a variable
-            PV := PV ∪ { variable }
+            <var>PV</var> := <var>PV</var> ∪ { variable }
         End
-        If selItem is (expr AS variable)
-            variable must not appear in VS nor in PV; if it does then generate a syntax error and stop
-            PV := PV ∪ { variable }
-            E := E append (variable, expr) 
+        If selItem is (<var>expr</var> AS <var>var</var>)
+            <var>var</var> must not appear in <var>VS</var> nor in <var>PV</var>; if it does then generate a syntax error and stop
+            <var>PV</var> := <var>PV</var> ∪ { <var>var</var> }
+            <var>E</var> := <var>E</var> append (<var>var</var>, <var>expr</var>) 
         End
     End
 
-For each pair (var, expr) in E
-    X := Extend(X, var, expr)
+For each pair (<var>var</var>, <var>expr</var>) in <var>E</var>
+    <var>X</var> := <a href="#defn_absExtend" class="absOp">Extend</a>(<var>X</var>, <var>var</var>, <var>expr</var>)
     End
   
-Result is X  
-The set PV is used later for projection.
+Result is <var>X</var>  
+The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#sparqlProjection" class="sectionRef"></a>).
             </pre>
 
             <p>The syntax error arises for use of a variable as the named target of AS (e.g. ... AS
@@ -9563,12 +9514,14 @@ The set PV is used later for projection.
             this sequence, and duplicates need not be adjacent, the sequence
             is identical to the multiset in terms of the elements that it
             contains, and their multiplicities. To apply this conversion
-            from a multiset into a sequence, the algorithm for capturing
-            the solution modifiers in the algebra expression begins with
-            the following step, where <var>Pattern</var> is the algebra
-            expression produced by the algorithm in the previous section.</p>
+            from a multiset into a sequence, the algorithm for translating
+            the solution modifiers into
+            <a href="#defn_AlgebraicQueryExpression">algebraic query expressions</a>
+            begins with the following step, where |A| is the
+            <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>
+            produced by the algorithm in the previous section.</p>
           <blockquote>
-            <p>Let M := ToList(<var>Pattern</var>)</p>
+            <p>Let |M| := <a href="#defn_absToList" class="absOp">ToList</a>(|A|)</p>
           </blockquote>
           <p>Now, the solution modifiers are applied in the following order:</p>
           <ul>
@@ -9583,49 +9536,48 @@ The set PV is used later for projection.
             <h5>ORDER BY</h5>
             <p>If the query string has an ORDER BY clause</p>
             <blockquote>
-              <p>M := OrderBy(M, list of order comparators)</p>
+              <p>|M| := <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|M|, list of order comparators)</p>
             </blockquote>
           </section>
           <section id="sparqlProjection">
             <h5>Projection</h5>
-            <p>The set of projection variables, <code>PV</code>, was calculated in the
+            <p>The set |PV| of projection variables was calculated in the
               <a href="#sparqlSelectExpressions">processing of SELECT expressions</a>.</p>
             <blockquote>
-              <p>M := Project(M, PV)</p>
+              <p>|M| := <a href="#defn_absProject" class="absOp">Project</a>(|M|, |PV|)</p>
             </blockquote>
-            <p>where vars is the set of variables mentioned in the SELECT clause or all named
-              variables that are <a href="#variableScope">in-scope</a> in the query if SELECT *
-              used.</p>
           </section>
           <section id="sparqlDistinct">
             <h5>DISTINCT</h5>
             <p>If the query contains DISTINCT,</p>
             <blockquote>
-              <p>M := Distinct(M)</p>
+              <p>|M| := <a href="#defn_absDistinct" class="absOp">Distinct</a>(|M|)</p>
             </blockquote>
           </section>
           <section id="sparqlReduced">
             <h5>REDUCED</h5>
             <p>If the query contains REDUCED,</p>
             <blockquote>
-              <p>M := Reduced(M)</p>
+              <p>|M| := <a href="#defn_absReduced" class="absOp">Reduced</a>(|M|)</p>
             </blockquote>
           </section>
           <section id="sparqlOffsetLimit">
             <h5>OFFSET and LIMIT</h5>
-            <p>If the query contains "OFFSET start" or "LIMIT length"</p>
+            <p>If the query contains "OFFSET |start|" or "LIMIT |length|"</p>
             <blockquote>
-              <p>M := Slice(M, start, length)</p>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |start|, |length|)</p>
               <blockquote>
-                <p>start defaults to 0</p>
-                <p>length defaults to (size(M)-start).</p>
+                <p>|start| defaults to 0</p>
+                <p>|length| defaults to (size(|M|)-|start|).</p>
               </blockquote>
             </blockquote>
+<div class="issue" data-number="248">
+  The definition of this translation step is formally incorrect.</div>
           </section>
           <section id="sparqlAlgebraOutcome">
-            <h5>Final Algebra Expression</h5>
+            <h5>Final Algebraic Query Expression</h5>
             <blockquote>
-              The overall abstract query is M.
+              The overall algebraic query expression is |M|.
             </blockquote>
           </section>
         </section>
@@ -12534,7 +12486,8 @@ _:x rdf:type xsd:decimal .
                 <li>Move definitions of Flatten and Card to <a href="#setFunctions" class="sectionRef"></a></li>
                 <li>Improve definitions in <a href="#initDefinitions" class="sectionRef"></a></li>
                 <li>Fix algorithm for translation SELECT expressions <a href="#sparqlSelectExpressions" class="sectionRef"></a></li>
-                <li>Clarify the use of ToList in algebra expressions in <a href="#sparqlQuery" class="sectionRef"></a></li>
+                <li>Clarify the use of ToList in algebra expressions in <a href="#translation" class="sectionRef"></a></li>
+                <li>Add an explicit definition of the algebraic syntax (<a href="#algebraicSyntax" class="sectionRef"></a>) into which the AST expressions are translated according to <a href="#translation" class="sectionRef"></a>, and mark up all mentions of symbols of this syntax as links to their respective definition; similarly, mark up all mentions of operators of the <a href="#sparqlAlgebra">SPARQL algebra</a> as links to their respective definition</li>
             </ul>
         </li>
         <li>
