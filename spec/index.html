@@ -8886,6 +8886,7 @@ WHERE {
             <p>Expand abbreviations for IRIs and triple patterns given in
               Section&nbsp;<a href="#sparqlSyntax" class="sectionRef"></a>.</p>
           </section>
+
           <section id="sparqlCollectFilters">
             <h5>Collect <code>FILTER</code> Elements</h5>
             <p><code>FILTER</code> expressions apply to the whole group graph pattern in which they
@@ -8901,13 +8902,120 @@ WHERE {
 Let FS := empty set
 For each form FILTER(expr) in the group graph pattern
     In expr, replace NOT EXISTS{P} with fn:not(<a href="#defn_evalExists">exists(translate(P)))</a> 
-    In expr, replace EXISTS{P} with <a href="#defn_evalExists">exists(translate(P))</a>
+    In expr, replace EXISTS{P} with prepare(EXISTS{P})
     FS := FS ∪ {expr}
     End
 </pre>
             <p>The set of filter expressions <code>FS</code> is <a href="#sparqlAddFilters">used
                 later</a>.</p>
+
+            <div>
+              <i>Prepare EXISTS and NOT EXISTS</i>
+              <p><b>prepare(EXISTS{P})</b></p>
+
+              <div class="ednote">
+                <p>@@ Scoping rule already done (grammar note).<br/>
+                  Prepare FILTER for exists. 
+                </p>
+                <ul>
+                  <li>A1 = translate(P) without applying simplification</li>
+                  <li>A2 = A1 rewritten to include access current binding</li>
+                  <li>A3 = A2 Remapped hidden-scope variables (if we do that)</li>
+                </ul>
+
+                <div class="defn">
+                  <div>
+                    <b>Definition: Access to the current binding</b>
+                    <p>
+                      During <a href="#sparqlQuery">translation to the SPARQL algebra</a>
+                    </p>
+                  <pre>
+Replace each occurence of `Y` in X where `Y` is one of
+          <a href="#sparqlTranslateBasicGraphPatterns">Basic Graph Pattern</a>,
+          <a href="#sparqlTranslatePathExpressions">Property Path Expression</a>,
+          <a href="#sparqlTranslateGraphPatterns">Graph(Var, pattern)</a>,
+          <a href="#rInlineData">Inline Data</a>
+          with join(Y, BindingInScope()) .</pre>
+                  </div>
+                  <div class="note">
+                    c.f. section <a href="#sparqlTranslateGraphPatterns">Translate Graph Patterns</a>
+                    where an empty basic graph pattern start any 
+                    <a href="#rGroupGraphPattern">GroupGraphPattern</a>.
+                    It happens before the <a href="#sparqlSimplification">simplification step</a>.
+                  </div>
+                </div>
+            
+                <div class="ednote" id="note-BindingInScope">
+                  <p>
+                    One way to provide `BindingInScope` is to change `eval` to also have the current row
+                    as an argument or a "null" token. . Normally this the "null" token. This would be set in
+                    eval-filter.
+                  </p>
+                  <p>
+                    Another way is to have a global (to the execution) variable. In eval-exists, the
+                    old value is recorded, the global set to the new value, and reset on exit - this forms a
+                    stack for nested EXISTS.
+                  </p>
+                  <p>
+                    Modifing `eval` is better prepartion for other correlted operations.<br/>
+                    A current-row stack in EXISTS isless intrusive.
+                  </p>
+                </div>
+                
+                <div class="defn">
+                  <b>Definition: <span id="defn_projmap">Projection Expression Variable Remapping</span></b>
+                  <p>
+                    For a projection algebra operation #sparqlProjection `Project(A, PV)` acting on algreg express `A` and with set of variables `PV`, define
+                    a partial mapping `F` from
+                    `<a href="#sparqlQueryVariables">V</a>`,
+                    the set of all variables, to `V` where:
+                  </p>
+                  <pre>F(v) = v1 if v is in PV, where v1 is a fresh variable
+F(v) = v if v is not in PV</pre>
+                  <p>
+                    Define the Projection Expression Variable Remapping `ProjectMap(P, PV)`
+                  </p>
+                  <pre>ProjectMap(Project(A, PV)) = Project(A1, PV) 
+                 where A1 is the result of applying F
+                 to every variable mentioned in A.</pre>
+                  <p>
+                    The Projection Expression Variable Remapping yields an algrebra expression that
+                    evaluates to the same results as the Project argument. No variable of `ProjectMap(Project(A, PV))`
+                    that is not in `PV` is mentioned anywhere else in the algebra expression for the query.
+                  </p>
+                </div>
+                <p>This process is applied throughout the graph pattern of <code>EXISTS</code>:</p>
+                <div class="defn">
+                  <b>Definition: <span id="defn_varrename">Variable Remapping</span></b>
+                  <p>
+                    For any algebra expression `X`, define the Variable Remapping `PrjMap(X)` 
+                    of algebra expression `X`:
+                  </p>
+                  <pre>PrjMap(X) = replace all project operations Project(P, PV) 
+      with ProjectMap(P, PV) for each projection in X.</pre>
+                </div>
+                <p>
+                  The outcome of `PrjMap` is independent of the order of replacement
+                  (e.g. bottom-up or top-down).
+                  Replacements may happen several times, depending on recursive order
+                  but each time a replacement is made, the variable not used anywhere else.
+                </p>
+                
+                <div class="note">
+                  <p>
+                    A variable inside a project expression that is not in the variables projected
+                    is not affected by the values insertion operation because it is renamed apart.
+                  </p>
+                <p>
+                  This operation is as part of the <a href="#sparqlQuery">translation to the SPARQL
+                    algebra</a>.
+                </p>
+                </div>
+              </div>
+            </div>
           </section>
+
+
           <section id="sparqlTranslatePathExpressions">
             <h5>Translate Property Path Expressions</h5>
             <p>The following table gives the translation
@@ -9164,14 +9272,17 @@ End</pre>
           </section>
           <section id="sparqlSimplification">
             <h5>Simplification step</h5>
-            <p>Some groups of one graph pattern become <a href="#defn_absJoin"
-              class="absOp">Join</a>(|Z|, |A|), where |Z| is the empty basic graph
+            <p class="ednote">
+              @@ Move out of the general `translate()` process and
+              perform once after top level translation only
+            </p>
+            <p>Some groups of one graph pattern become 
+              <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, |A|), where |Z| is the empty basic graph
               pattern (which is the empty set). These are replaced by |A|. The empty
               graph pattern |Z| is the identity for join:</p>
             <pre class="code nohighlight">
 Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>Z</var>, <var>A</var>) by <var>A</var>
-Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var>) by <var>A</var>
-</pre>
+Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var>) by <var>A</var></pre>
           </section>
         </section>
         <section id="sparqlAlgebraExamples">
@@ -10490,6 +10601,10 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
             <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absFilter" class="absOp">Filter</a>(|F|, |P|) ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |D|, |G| )</p>
+            <p class="ednote">@@ Make current μ available. Or use current language in Exist.
+              Long term: change eval() to be arity three - 3rd argument is "current row".
+              <a href="note-BindingInScope">editors note</a>.
+            </p>
           </div>
           <p>'substitute' is a filter function in support of the evaluation of 
             <a href="#func-filter-exists"><code>EXISTS</code>
@@ -10504,6 +10619,9 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalExists">Evaluation of Exists</span></b></p>
+
+            <p class="ednote">@@ Update</p>
+
             <p>Let <var>μ</var> be the current solution mapping for a filter and |P| a graph pattern:</p>
             <blockquote>
               The value exists(|P|), given |D|(|G|) is true if and only if <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), substitute(|P|, <var>μ</var>)) is
@@ -10627,209 +10745,6 @@ the result is <var>Ω</var>
 <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |start|, |length|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |start|, |length| )
             </p>
           </div>
-
-          <!-- ValuesInsertion -->
-          <section>
-            <h3>Values Insertion and `EXISTS`</h3>
-            <div class="ednote">
-            <p>The following subsections contain draft material for a revised
-              "`exists`" operation.
-            </p>
-            <p>
-              Background: <a href="https://github.com/w3c/sparql-dev/blob/main/SEP/SEP-0007/sep-0007.md">SPARQL CG SEP-0007</a>
-            </p>
-            </div>
-            <section>
-              <h4>Syntax Restriction</h4>
-              <p><i>Additional [[[#sparqlGrammar]]] note:</i></p>
-                <blockquote>
-                Any variable that is assigned to in the graph pattern of `EXISTS`/`NOT EXISTS` must not be in-scope.
-                This applies to `BIND`, variables introduced by `AS` in a `SELECT` clause, variables in a `VALUES`
-                clause, and variables introduced by `AS` in `GROUP BY`.
-              </blockquote>
-              <p>
-                Extend the "in-scope" rules to include the possible 
-                variables that are in-scope for the current row:
-              </p>
-              <table style="border-collapse: collapse; border-color: #000000; border-spacing:5px; border-width: 1px">
-                <tbody>
-                  <tr>
-                    <th>Syntax Form</th>
-                    <th>In-scope variables</th>
-                  </tr>
-                  <tr>
-                    <td>`EXISTS` and `NOT EXISTS` filters </td>
-                    <td><code>v</code> is in-scope if it is in-scope for the pattern to which the `FILTER` is applied.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="note">
-                <p>
-                  This restriction means that inserted values
-                  do not conflict with values assigned to variables within the pattern.
-                </p>
-                <p>
-                  This operation is performed as part of query parsing.
-                </p>
-              </div>
-            </section>
-            <section>
-              <h4>Remapping</h4>
-              <p>
-                Remapping ensures that a variable name used inside a project expression,
-                but which is not part of the results of the evaluation of the project expression,
-                does not coincide with a variable mentioned anywhere else in the
-                algebra expression of a query.
-              </p>
-              <p>
-                Renaming these variables does not change the results of evaluating
-                the project expresssion.
-              </p>
-              <div class="defn">
-                <b>Definition: <span id="defn_projmap">Projection Expression Variable Remapping</span></b>
-                <p>
-                  For a <a href="#sparqlProjection">projection algebra operation</a>
-		              `Project(A, PV)` acting on algebra expression `A` and with set of variables `PV`,
-		              define a mapping `F` from `V`,
-		              <a href="#sparqlQueryVariables">the set of all variables</a>,
-                  to `V` where:
-                </p>
-                <pre>F(v) = v1 if v is not in PV, where v1 is a fresh variable
-F(v) = v if v is in PV</pre>
-                <p>
-                Define the Projection Expression Variable Remapping `ProjectMap(P, PV)`
-                </p>
-                <pre>ProjectMap(Project(A, PV)) = Project(A1, PV) 
-                                where A1 is the result of applying F
-                                to every variable mentioned in A.
-                </pre>
-                <p>
-                  The Projection Expression Variable Remapping yields an algrebra expression that
-                  evaluates to the same results as the Project argument. No variable of `ProjectMap(Project(A, PV))`
-                  that is not in `PV` is mentioned anywhere else in the algebra expression for the query.
-                </p>
-              </div>
-              <p>This process is applied throughout the graph pattern of <code>EXISTS</code>:</p>
-              <div class="defn">
-                <b>Definition: <span id="defn_varrename">Variable Remapping</span></b>
-                <p>
-                  For any algebra expression `X`, define the Variable Remapping `PrjMap(X)`
-                  of algebra expression `X`:
-                </p>
-                  <pre>PrjMap(X) = replace all project operations Project(P, PV) 
-                with ProjectMap(Project(A, PV), PV) for each projection in X.</pre>
-              </div>
-              <p>
-                The outcome of `PrjMap` is independent of the order of replacement
-                (whether "bottom-up" or "top-down") order.
-                Replacements may happen several times, depending on recursive order
-                but each time a replacement is made, the variable not used anywhere else.
-              </p>
-
-              <div class="note">
-                <p>
-                  A variable inside a project expression that is not in the variables projected
-                  is not affected by the values insertion operation because it is renamed apart.
-                </p>
-                <p>
-                  This operation is as part of the <a href="#sparqlQuery">translation to the SPARQL
-                  algebra</a>.
-                </p>
-              </div>
-            </section>
-            <section>
-              <h4>Values Insertion</h4>
-              <p>
-                Alternative 1: rewrite the algebra during 
-                <a href="#sparqlQuery">translation to the SPARQL algebra</a>
-                to include a function that evaluates to the current row.
-              </p>
-
-              <div class="defn">
-                <div>
-                  <b>Definition: <span id="defn_correlate">Values In Scope</span></b>
-                  <p>
-                    Define the function `BindingInScope()`. 
-                    Evaluation of `BindingInScope()` results in a table of one row,
-                    being the current binding of the enclosing filter.
-                  </p>
-                </div>
-                <p class="ednote">Need to define `BindingInScope`</p>
-              </div>
-
-              <div class="defn">
-                <div>
-                  <b>Definition: Access to the current binding</b>
-                  <p>
-                    During <a href="#sparqlQuery">translation to the SPARQL algebra</a>
-                  </p>
-                  <p class="ednote">Define putting in the `BindingInScope` operator</p>
-                  <pre>
-Replace each occurence of Y where Y is one of
-          <a href="#sparqlTranslateBasicGraphPatterns">Basic Graph Pattern</a>,
-          <a href="#sparqlTranslatePathPatterns">Property Path Patterns</a>,
-          <a href="#sparqlTranslateGraphPatterns">Graph(Var, pattern)</a>,
-          <a href="#https://www.w3.org/TR/sparql12-query/#sparqlTranslateGraphPatterns">Inline Data</a>
-      with join(Y, BindingInScope()).</pre>
-                </div>
-                <div class="note">
-                  c.f. section <a href="#sparqlTranslateGraphPatterns">Translate Graph Patterns</a>
-                  where an empty basic graph pattern start any 
-                  <a href="#rGroupGraphPattern">GroupGraphPattern</a>.
-                  It happens before the <a href="#sparqlSimplification">simplification step</a>.
-                </div>
-              </div>
-
-              <div class="example">
-                <p>
-                  Examples
-                </p>
-              </div>
-
-              <p>
-                Alternative 2: rewrite the algebra during execution. This corresponds to the 
-                <a href="https://github.com/w3c/sparql-dev/blob/main/SEP/SEP-0007/sep-0007.md">original SEP-0007 proposal</a>.
-              </p>
-              <div class="defn">
-                <div>
-                  <b>Definition: <span id="defn_insertvalues">Insert Values</span></b>
-                  <p>
-                    Define the function `InsertValues(X, μ)`
-                  </p>
-                  <pre>Let Table(μ) = { μ } and multiplicity( μ | Table(μ) = { μ } ) = 1
-
-Replace each occurence of Y in X where Y is one of
-          <a href="#sparqlTranslateBasicGraphPatterns">Basic Graph Pattern</a>,
-          <a href="#sparqlTranslatePathPatterns">Property Path Patterns</a>,
-          <a href="#sparqlTranslateGraphPatterns">Graph(Var, pattern)</a>,
-          <a href="#https://www.w3.org/TR/sparql12-query/#sparqlTranslateGraphPatterns">Inline Data</a>
-      with join(Y, Table(μ)).</pre>
-
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <h4>Evaluation of EXISTS</h4>
-              <div class="defn">
-                <b>Definition: <span id="x-defn_evalExists">Evaluation of Exists</span></b>
-                <p>
-                  Let `μ` be the current solution mapping for a filter, and `X` a graph pattern,
-                      define the Evaluation of Exists `exists(X)`
-                </p>
-                <p class="ednote">
-                   @@ Set up the current row for `BindingdInScope`.
-                </p>
-                <pre>exists(X) = true 
-              if eval( D(G), μ)
-                 is a non-empty solution sequence.
-exists(X) = false otherwise</pre>
-              </div>
-            </section>
-          </section>
-          <!-- ValuesInsertion -->
-
         </section>
 
         <section id="sparqlBGPExtend">
