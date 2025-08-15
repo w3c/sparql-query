@@ -9904,14 +9904,20 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           described above.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algFilter">Filter</span></b></p>
-          <p>Let <var>Ω</var> be a multiset of solution mappings and <var>expr</var> be an expression. We define:</p>
-          <p><a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>) = { <var>μ</var> | <var>μ</var> in <var>Ω</var> and <var>expr</var>(<var>μ</var>) is an expression that has an
+          <p>Let <var>Ω</var> be a multiset of solution mappings,
+            <var>expr</var> be an <a href="#expressions">expression</a>,
+            |D| be a <a href="#sparqlDataset">dataset</a>,
+            and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
+            We define:</p>
+          <p><a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) = { <var>μ</var> in <var>Ω</var>  | <var>expr</var>(<var>μ</var>) is an expression that has an
             effective boolean value of true }</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>) )
+<div class="issue" data-number="254">
+  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) )
             = <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> )</p>
           <blockquote>
-            Note that evaluating an <code>exists(pattern)</code> expression uses the dataset and
-            active graph, D(G). See the <a href="#defn_evalFilter">evaluation of filter</a>.
+            Note that evaluating an <code>exists(pattern)</code> expression uses the dataset |D| and
+            active graph |G|. See the <a href="#defn_evalFilter">evaluation of filter</a>.
           </blockquote>
         </div>
         <div class="defn">
@@ -9933,10 +9939,12 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         <div class="defn">
           <p><b>Definition: <span id="defn_algDiff">Diff</span></b></p>
           <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings and <var>expr</var> be an
-            expression. We define:</p>
+            <a href="#expressions">expression</a>. We define:</p>
           <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> such that ∀ <var>μ'</var> in
             <var>Ω<sub>2</sub></var>, either <var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a> or <var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
             <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an effective boolean value of true }</p>
+<div class="issue" data-number="254">
+  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>1</sub></var> )</p>
         </div>
@@ -9946,7 +9954,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
         <div class="defn">
           <p><b>Definition: <span id="defn_algLeftJoin">LeftJoin</span></b></p>
           <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings and <var>expr</var> be an
-            expression. We define:</p>
+            <a href="#expressions">expression</a>. We define:</p>
           <p><a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>,
             <var>Ω<sub>2</sub></var>)) ∪ <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>)</p>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
@@ -9984,6 +9992,8 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <p>Let <var>μ</var> be a solution mapping, <var>Ω</var> a multiset of solution mappings, <var>var</var> a variable
             and <var>expr</var> be an <a href="#expressions">expression</a>, then we define:</p>
           <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> ∪ { (<var>var</var>, <var>value</var>) | <var>var</var> not in dom(<var>μ</var>) and <var>value</var> = <var>expr</var>(<var>μ</var>) }</p>
+<div class="issue" data-number="254">
+  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
           <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> if <var>var</var> not in dom(<var>μ</var>) and expr(<var>μ</var>) is an error</p>
           <p><a href="#defn_algExtend" class="algFct">Extend</a> is undefined if <var>var</var> in dom(<var>μ</var>).</p>
           <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>) = { <a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) | <var>μ</var> in <var>Ω</var> }</p>
@@ -10437,7 +10447,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           <ul>
             <li>|P|, <var>P<sub>1</sub></var>, <var>P<sub>2</sub></var> : graph patterns</li>
             <li>|L| : a solution sequence</li>
-            <li>|F| : an expression</li>
+            <li>|F| : an <a href="#expressions">expression</a></li>
           </ul>
 <div class="issue" data-number="225">
   The definitions in this section do not cover the cases in which
@@ -10454,7 +10464,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absFilter" class="absOp">Filter</a>(|F|, |P|) ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |D|(|G|) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absFilter" class="absOp">Filter</a>(|F|, |P|) ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |D|, |G| )</p>
           </div>
           <p>'substitute' is a filter function in support of the evaluation of 
             <a href="#func-filter-exists"><code>EXISTS</code>
