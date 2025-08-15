@@ -8781,16 +8781,27 @@ WHERE {
                 <td><code>VALUES varlist { values }</code></td>
                 <td><code>v</code> is in-scope if <code>v</code> is in <code>varlist</code></td>
               </tr>
+              <tr>
+                <td>`EXISTS` and `NOT EXISTS` filters</td>
+                <td>
+                  <code>v</code> is in-scope if it is in-scope for the 
+                  <a href="#defn_sparqlSolutionMapping">solution mapping</a>
+                  where the `FILTER` containing `EXISTS` or `NOT EXISTS` is applied.
+                </td>
+              </tr>
             </tbody>
           </table>
-          <p>The variable <code>v</code> must not be in-scope at the point of the <code>(expr AS
-              v)</code> form. The scoping for <code>(expr AS v)</code> applies immediately in
-            <code>SELECT</code> expressions.</p>
+          <p>The variable <code>v</code> must not be in-scope at the point of the 
+            <code>(expr AS v)</code> form. The scoping for <code>(expr AS v)</code>
+            applies immediately in <code>SELECT</code> expressions.
+          </p>
           <p>In <code>BIND (expr AS v)</code> requires that the variable <code>v</code> is not
-            in-scope from the preceeding elements in the group graph pattern in which it is used.</p>
+            in-scope from the preceeding elements in the group graph pattern in which it is used.
+          </p>
           <p>In <code>SELECT</code>, the variable <code>v</code> must not be in-scope in the graph
             pattern of the <code>SELECT</code> clause, nor used in another select expression earlier in
-            the clause.</p>
+            the clause.
+          </p>
         </section>
         <section id="convertGraphPattern">
           <h4>Converting Graph Patterns</h4>
@@ -8860,6 +8871,7 @@ WHERE {
             <p>Expand abbreviations for IRIs and triple patterns given in
               Section&nbsp;<a href="#sparqlSyntax" class="sectionRef"></a>.</p>
           </section>
+
           <section id="sparqlCollectFilters">
             <h5>Collect <code>FILTER</code> Elements</h5>
             <p><code>FILTER</code> expressions apply to the whole group graph pattern in which they
@@ -8875,13 +8887,120 @@ WHERE {
 Let FS := empty set
 For each form FILTER(expr) in the group graph pattern
     In expr, replace NOT EXISTS{P} with fn:not(<a href="#defn_evalExists">exists(translate(P)))</a> 
-    In expr, replace EXISTS{P} with <a href="#defn_evalExists">exists(translate(P))</a>
+    In expr, replace EXISTS{P} with prepare(EXISTS{P})
     FS := FS ∪ {expr}
     End
 </pre>
             <p>The set of filter expressions <code>FS</code> is <a href="#sparqlAddFilters">used
                 later</a>.</p>
+
+            <div>
+              <i>Prepare EXISTS and NOT EXISTS</i>
+              <p><b>prepare(EXISTS{P})</b></p>
+
+              <div class="ednote">
+                <p>@@ Scoping rule already done (grammar note).<br/>
+                  Prepare FILTER for exists. 
+                </p>
+                <ul>
+                  <li>A1 = translate(P) without applying simplification</li>
+                  <li>A2 = A1 rewritten to include access current binding</li>
+                  <li>A3 = A2 Remapped hidden-scope variables (if we do that)</li>
+                </ul>
+
+                <div class="defn">
+                  <div>
+                    <b>Definition: Access to the current binding</b>
+                    <p>
+                      During <a href="#sparqlQuery">translation to the SPARQL algebra</a>
+                    </p>
+                  <pre>
+Replace each occurence of `Y` in X where `Y` is one of
+          <a href="#sparqlTranslateBasicGraphPatterns">Basic Graph Pattern</a>,
+          <a href="#sparqlTranslatePathExpressions">Property Path Expression</a>,
+          <a href="#sparqlTranslateGraphPatterns">Graph(Var, pattern)</a>,
+          <a href="#rInlineData">Inline Data</a>
+          with join(Y, BindingInScope()) .</pre>
+                  </div>
+                  <div class="note">
+                    c.f. section <a href="#sparqlTranslateGraphPatterns">Translate Graph Patterns</a>
+                    where an empty basic graph pattern start any 
+                    <a href="#rGroupGraphPattern">GroupGraphPattern</a>.
+                    It happens before the <a href="#sparqlSimplification">simplification step</a>.
+                  </div>
+                </div>
+            
+                <div class="ednote" id="note-BindingInScope">
+                  <p>
+                    One way to provide `BindingInScope` is to change `eval` to also have the current row
+                    as an argument or a "null" token. . Normally this the "null" token. This would be set in
+                    eval-filter.
+                  </p>
+                  <p>
+                    Another way is to have a global (to the execution) variable. In eval-exists, the
+                    old value is recorded, the global set to the new value, and reset on exit - this forms a
+                    stack for nested EXISTS.
+                  </p>
+                  <p>
+                    Modifing `eval` is better prepartion for other correlted operations.<br/>
+                    A current-row stack in EXISTS isless intrusive.
+                  </p>
+                </div>
+                
+                <div class="defn">
+                  <b>Definition: <span id="defn_projmap">Projection Expression Variable Remapping</span></b>
+                  <p>
+                    For a projection algebra operation #sparqlProjection `Project(A, PV)` acting on algreg express `A` and with set of variables `PV`, define
+                    a partial mapping `F` from
+                    `<a href="#sparqlQueryVariables">V</a>`,
+                    the set of all variables, to `V` where:
+                  </p>
+                  <pre>F(v) = v1 if v is in PV, where v1 is a fresh variable
+F(v) = v if v is not in PV</pre>
+                  <p>
+                    Define the Projection Expression Variable Remapping `ProjectMap(P, PV)`
+                  </p>
+                  <pre>ProjectMap(Project(A, PV)) = Project(A1, PV) 
+                 where A1 is the result of applying F
+                 to every variable mentioned in A.</pre>
+                  <p>
+                    The Projection Expression Variable Remapping yields an algrebra expression that
+                    evaluates to the same results as the Project argument. No variable of `ProjectMap(Project(A, PV))`
+                    that is not in `PV` is mentioned anywhere else in the algebra expression for the query.
+                  </p>
+                </div>
+                <p>This process is applied throughout the graph pattern of <code>EXISTS</code>:</p>
+                <div class="defn">
+                  <b>Definition: <span id="defn_varrename">Variable Remapping</span></b>
+                  <p>
+                    For any algebra expression `X`, define the Variable Remapping `PrjMap(X)` 
+                    of algebra expression `X`:
+                  </p>
+                  <pre>PrjMap(X) = replace all project operations Project(P, PV) 
+      with ProjectMap(P, PV) for each projection in X.</pre>
+                </div>
+                <p>
+                  The outcome of `PrjMap` is independent of the order of replacement
+                  (e.g. bottom-up or top-down).
+                  Replacements may happen several times, depending on recursive order
+                  but each time a replacement is made, the variable not used anywhere else.
+                </p>
+                
+                <div class="note">
+                  <p>
+                    A variable inside a project expression that is not in the variables projected
+                    is not affected by the values insertion operation because it is renamed apart.
+                  </p>
+                <p>
+                  This operation is as part of the <a href="#sparqlQuery">translation to the SPARQL
+                    algebra</a>.
+                </p>
+                </div>
+              </div>
+            </div>
           </section>
+
+
           <section id="sparqlTranslatePathExpressions">
             <h5>Translate Property Path Expressions</h5>
             <p>The following table gives the translation
@@ -9078,7 +9197,6 @@ If the form is GRAPH Var GroupGraphPattern
               <p>If the form is <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>:</p>
             </blockquote>
 <pre class="code nohighlight">
-Let FS := the empty set
 Let <var>G</var> := the empty pattern, a basic graph pattern which is the empty set.
 
 For each element <var>E</var> in the sequence of elements in the GroupGraphPattern
@@ -9139,14 +9257,17 @@ End</pre>
           </section>
           <section id="sparqlSimplification">
             <h5>Simplification step</h5>
-            <p>Some groups of one graph pattern become <a href="#defn_absJoin"
-              class="absOp">Join</a>(|Z|, |A|), where |Z| is the empty basic graph
+            <p class="ednote">
+              @@ Move out of the general `translate()` process and
+              perform once after top level translation only
+            </p>
+            <p>Some groups of one graph pattern become 
+              <a href="#defn_absJoin" class="absOp">Join</a>(|Z|, |A|), where |Z| is the empty basic graph
               pattern (which is the empty set). These are replaced by |A|. The empty
               graph pattern |Z| is the identity for join:</p>
             <pre class="code nohighlight">
 Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>Z</var>, <var>A</var>) by <var>A</var>
-Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var>) by <var>A</var>
-</pre>
+Replace <a href="#defn_absJoin" class="absOp">Join</a>(<var>A</var>, <var>Z</var>) by <var>A</var></pre>
           </section>
         </section>
         <section id="sparqlAlgebraExamples">
@@ -10454,6 +10575,12 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
+
+            <p class="ednote">@@ Make current μ available. Or use current language in Exist.
+              Long term: change eval() to be arity three - 3rd argument is "current row".
+              <a href="note-BindingInScope">editors note</a>.
+            </p>
+
             <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absFilter" class="absOp">Filter</a>(|F|, |P|) ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |D|(|G|) )</p>
           </div>
           <p>'substitute' is a filter function in support of the evaluation of 
@@ -10469,6 +10596,9 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalExists">Evaluation of Exists</span></b></p>
+
+            <p class="ednote">@@ Update</p>
+
             <p>Let <var>μ</var> be the current solution mapping for a filter and |P| a graph pattern:</p>
             <blockquote>
               The value exists(|P|), given |D|(|G|) is true if and only if <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), substitute(|P|, <var>μ</var>)) is
@@ -10593,6 +10723,7 @@ the result is <var>Ω</var>
             </p>
           </div>
         </section>
+
         <section id="sparqlBGPExtend">
           <h3>Extending SPARQL Basic Graph Matching</h3>
           <p>The overall SPARQL design can be used for queries which assume a more elaborate form of
@@ -10946,52 +11077,95 @@ _:x rdf:type xsd:decimal .
           section 6 <a data-cite="xml11#sec-notation">Notation</a>.</p>
         <p>Notes:</p>
         <ol>
-          <li>Keywords are matched in a case-insensitive manner with the exception of
+          <li>
+            Keywords are matched in a case-insensitive manner with the exception of
             the keyword '<code>a</code>'  which, in line with Turtle and N3, is used
             in place of the IRI <code>rdf:type</code>
-            (in full, <code><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a></code>).</li>
-          <li>Escape sequences are case sensitive.</li>
-          <li>When tokenizing the input and choosing grammar rules, the longest match is chosen.</li>
-          <li>The SPARQL grammar is LL(1) when the rules with uppercased names are used as terminals.</li>
-          <li>There are two entry points into the grammar: <code>QueryUnit</code> for the SPARQL query language
-            and <code>UpdateUnit</code> for the SPARQL update language.</li>
-          <li>In signed numbers, no white space is allowed between the sign and the number.
+            (in full, <code><a
+href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a></code>).
+          </li>
+          <li>
+            Escape sequences are case sensitive.
+          </li>
+          <li>
+            When tokenizing the input and choosing grammar rules, the longest match is chosen.
+          </li>
+          <li>
+            The SPARQL grammar is LL(1) when the rules with uppercased names are used as terminals.
+          </li>
+          <li>
+            There are two entry points into the grammar: <code>QueryUnit</code> for the SPARQL query language
+            and <code>UpdateUnit</code> for the SPARQL update language.
+          </li>
+          <li>
+            In signed numbers, no white space is allowed between the sign and the number.
             The <code><a href="#rAdditiveExpression">AdditiveExpression</a></code> grammar rule allows for this by
             covering the two cases of an expression followed by a signed number. These 
-            produce an addition or subtraction of the unsigned number as appropriate.</li>
-          <li>The tokens <code><a href="#rInsertData">INSERT DATA</a></code>, 
+            produce an addition or subtraction of the unsigned number as appropriate.
+          </li>
+          <li>
+            The tokens <code><a href="#rInsertData">INSERT DATA</a></code>, 
             <code><a href="#rDeleteData">DELETE DATA</a></code> and 
             <code><a href="#rDeleteWhere">DELETE WHERE</a></code> allow any amount of white space between the words.
-            The single space version is used in the grammar for clarity.</li>
-          <li>The <code><a href="#rQuadData">QuadData</a></code> and 
+            The single space version is used in the grammar for clarity.
+          </li>
+          <li>
+            The <code><a href="#rQuadData">QuadData</a></code> and 
             <code><a href="#rQuadPattern">QuadPattern</a></code> 
             rules both use rule <code><a href="#rQuads">Quads</a></code>. The rule
             <code><a href="#rQuadData">QuadData</a></code>, used in 
             <a href="#rInsertData"><code>INSERTDATA</code></a> and 
             <a href="#rDeleteData"><code>DELETE DATA</code></a>, 
-            must not allow variables in the quad patterns.</li>
-          <li>Blank node syntax is not allowed in <code><a href="#rDeleteWhere">DELETE WHERE</a></code>,
+            must not allow variables in the quad patterns.
+          </li>
+          <li>
+            Blank node syntax is not allowed in <code><a href="#rDeleteWhere">DELETE WHERE</a></code>,
             the <code><a href="#rDeleteClause">DeleteClause</a></code> for 
             <code>DELETE</code>,
-            nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.</li>
-          <li>Rules for limiting the use of blank node identifiers are given in <a href="#grammarBNodes">section 19.6</a>.</li>
-          <li>The number of variables in the variable list of <code>VALUES</code> block 
-            must be the same as the number of each list of associated values in the <code>DataBlock</code>.</li>
-          <li>Variables introduced by <code>AS</code> in a <code>SELECT</code> clause
-            must not already be <a href="#variableScope">in-scope</a>.</li>
-          <li>The variable assigned in a <code>BIND</code> clause must not be already 
+            nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.
+          </li>
+          <li>
+            Rules for limiting the use of blank node identifiers are given in 
+            <a href="#grammarBNodes">section 19.6</a>.
+          </li>
+          <li>
+            The number of variables in the variable list of <code>VALUES</code> block 
+            must be the same as the number of each list of associated values in
+            the <code>DataBlock</code>.
+          </li>
+          <li>
+            Variables introduced by <code>AS</code> in a <code>SELECT</code> clause
+            must not already be <a href="#variableScope">in-scope</a>.
+          </li>
+          <li>
+            The variable assigned in a <code>BIND</code> clause must not be already 
             in-use within the immediately preceding <code><a href="#rTriplesBlock">TriplesBlock</a></code> within a
-            <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>.</li>
-          <li>Aggregate functions can be one of the 
+            <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>.
+          </li>
+          <li>
+            Any variable that is assigned to in the graph pattern of `EXISTS` or `NOT EXISTS` 
+            must not be <a href="#variableScope">in-scope</a>. This applies to `BIND`, 
+            variables introduced by `AS` in a `SELECT` clause, 
+            variables introduced by `AS` in `GROUP BY`,
+            and variables in a `VALUES` clause.
+          </li>
+          <li>
+            Aggregate functions can be one of the 
             <a href="#rAggregate">built-in keywords for aggregates</a> 
             or a custom aggregate, which is syntactically a <a href="#rFunctionCall">function
               call</a>. Aggregate functions may only be used in 
             <a href="#rSelectClause">SELECT</a>, <a href="#rHavingClause">HAVING</a>
-            and <a href="#rOrderClause">ORDER BY</a> clauses.</li>
-          <li>The expression argument of an aggregate function can not contain an aggregate function.</li>
-          <li>Only custom aggregate functions use the <code>DISTINCT</code> keyword
-            in a <a href="#rFunctionCall">function call</a>.</li>
-          <li>A <a href="#rReifier">reifier</a> or
+            and <a href="#rOrderClause">ORDER BY</a> clauses.
+          </li>
+          <li>
+            The expression argument of an aggregate function can not contain an aggregate function.
+          </li>
+          <li>
+            Only custom aggregate functions use the <code>DISTINCT</code> keyword
+            in a <a href="#rFunctionCall">function call</a>.
+          </li>
+          <li>
+            A <a href="#rReifier">reifier</a> or
             <a href="#rAnnotationBlockPath">annotation syntax</a>
             is only permitted after a triple when the property position is
             a simple path (an IRI, the keyword <code>a</code>, or a variable),
