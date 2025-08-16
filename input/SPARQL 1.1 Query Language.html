@@ -2264,14 +2264,20 @@ SELECT ?name
 	    query evaluation.
             No additional binding of variables occurs. The <code>NOT EXISTS</code> form 
             translates into <code>fn:not(EXISTS{...})</code>.</p><pre class="prototype"> <span class="return">xsd:boolean</span>  <span class="operator">NOT EXISTS</span> { <span class="pattern">pattern</span> }</pre><p>Returns <code>false</code> if <code>pattern</code> matches. Returns true otherwise.</p><p><code>NOT EXISTS { pattern }</code> is equivalent to <code>fn:not(EXISTS { pattern })</code>.</p><pre class="prototype"> <span class="return">xsd:boolean</span>  <code>EXISTS</code> { <span class="pattern">pattern</span> }</pre><p>Returns <code>true</code> if <code>pattern</code> matches. 
-            Returns false otherwise.</p><p>Variables in the <code>pattern</code> that are bound in the current
+            Returns false otherwise.</p>
+            <p>
+            Variables in the pattern <code>pattern</code> that are not bound in the current 
+            solution mapping take part in pattern matching.
+            Variables in the <code>pattern</code> that are bound in the current
             <a href="http://www.w3.org/TR/rdf-sparql-query/#defn_sparqlSolutionMapping">
-              solution mapping</a> take the value that they have from the solution mapping. 
-              Variables in the pattern <code>pattern</code> that are not bound in the current 
-            solution mapping take part in pattern matching.</p><p>To facilitate this, we introduce a function <a href="#defn_exists">Exists</a> 
+              solution mapping</a> take the value that they have from the solution mapping.
+            This value, whether a literal, an iri, <em>or</em> a blank node,
+            can constrain both pattern matching and operands in select claus expressions.
+            <p>To facilitate this, we introduce a function <a href="#defn_exists">Exists</a> 
 	    that evaluates a SPARQL Algebra expression and returns true or false, depending
 	    on whether there are any solutions to the pattern, given the solution mapping
-	    being tested by the filter operation.</p></div><div class="div4">
+	      being tested by the filter operation.</p>
+            </div><div class="div4">
 <h5><a name="func-logical-or" id="func-logical-or"></a>17.4.1.5 logical-or</h5><pre class="prototype"> <span class="return">xsd:boolean</span>  <span class="type">xsd:boolean</span> <span class="name">left</span> <span class="operator">||</span> <span class="type">xsd:boolean</span> <span class="name">right</span></pre><p>Returns a logical <code>OR</code> of <code>left</code> and <code>right</code>. Note that <span class="SPARQLoperator">logical-or</span> operates on the <a href="#ebv">effective boolean value</a> of its arguments.</p><p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for 
             the <code>||</code> operator's treatment of errors.</p></div><div class="div4">
 <h5><a name="func-logical-and" id="func-logical-and"></a>17.4.1.6 logical-and</h5><pre class="prototype"> <span class="return">xsd:boolean</span>  <span class="type">xsd:boolean</span> <span class="name">left</span> <span class="operator">&amp;&amp;</span> <span class="type">xsd:boolean</span> <span class="name">right</span></pre><p>Returns a logical <code>AND</code> of <code>left</code> and <code>right</code>. Note that <span class="SPARQLoperator">logical-and</span> operates on the <a href="#ebv">effective boolean value</a> of its arguments.</p><p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for 
@@ -3598,7 +3604,8 @@ F : an expression</pre><div class="defn"><b>Definition: <a id="defn_evalBasicGra
 	    <p>substitute(<i>pattern</i>, μ) = the pattern formed by replacing every 
 	    occurrence of a variable v in <i>pattern</i> by μ(v) for each v in dom(μ)</p>
 	  </blockquote></div><div class="defn"><p><b>Definition: <a name="defn_evalExists" id="defn_evalExists">Evaluation of Exists</a></b></p><p>Let μ be the current solution mapping for a filter and P a graph pattern:</p><blockquote>
-	    The value exists(P), given D(G) is true if and only if eval(D(G), substitute(P, μ)) is a non-empty sequence.
+            The value exists(P), given D(G) is true if and only if eval(D(G), substitute(P, μ)) is a non-empty sequence.
+            In the evaluation, blank node do not contribute to RDF instance mapping of statement patterns, but instead act as contants to contrain the match.
 	  </blockquote></div><div class="defn"><b>Definition: <a id="defn_evalJoin" name="defn_evalJoin">Evaluation of Join</a></b><pre class="code">eval(D(G), Join(P1, P2)) = Join(eval(D(G), P1), eval(D(G), P2))</pre></div><div class="defn"><b>Definition: <a id="defn_evalLeftJoin" name="defn_evalLeftJoin">Evaluation of LeftJoin</a></b><pre class="code">eval(D(G), LeftJoin(P1, P2, F)) = LeftJoin(eval(D(G), P1), eval(D(G), P2), F)</pre></div><div class="defn"><b>Definition: <a id="defn_evalUnion" name="defn_evalUnion">Evaluation of Union</a></b><pre class="code">eval(D(G), Union(P1,P2)) = Union(eval(D(G), P1), eval(D(G), P2))</pre></div><div class="defn"><b>Definition: <a id="defn_evalGraph" name="defn_evalGraph">Evaluation of Graph</a></b><pre class="code">if IRI is a graph name in D
 eval(D(G), Graph(IRI,P)) = eval(D(D[IRI]), P)</pre><pre class="code">if IRI is not a graph name in D
 eval(D(G), Graph(IRI,P)) = the empty multiset</pre><pre class="code">eval(D(G), Graph(var,P)) =
