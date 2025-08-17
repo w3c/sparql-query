@@ -4709,8 +4709,10 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <a href="#func-bound">BOUND</a>, <a href="#func-coalesce">COALESCE</a>,
             <a href="#func-if">IF</a>, <a href="#func-in">IN</a>, <a href="#func-not-in">NOT IN</a>, 
             <a href="#func-logical-or">logical-or</a> (<code>||</code>),
-            <a href="#func-logical-and">logical-and</a> (<code>&amp;&</code>),
-            <a href="#func-filter-not-exists">NOT EXISTS</a>, and <a href="#func-filter-exists">EXISTS</a>,
+            <a href="#func-logical-and">logical-and</a> (<code>&amp;&amp</code>),
+            <a href="#func-logical-not">logical-not</a> (<code>!</code>),
+            <a href="#func-filter-not-exists">NOT EXISTS</a>, 
+            and <a href="#func-filter-exists">EXISTS</a>,
             all functions operate on RDF Terms and will produce a type error if any
             arguments are unbound.
           </li>
@@ -4820,9 +4822,9 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         <section id="ebv">
           <h4>Effective Boolean Value (EBV)</h4>
           <p>Effective boolean value is used to calculate the arguments to the logical functions
-            <a href="#func-logical-and">logical-and</a>, <a href="#func-logical-or">logical-or</a>, and
-            <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>, as well as evaluate the result of a
-            <code>FILTER</code> expression.</p>
+            <a href="#func-logical-and">logical-and</a>, <a href="#func-logical-or">logical-or</a>,
+            and <a href="#func-logical-not">logical-not</a>,
+            as well as evaluate the result of a <code>FILTER</code> expression.</p>
           <p>The XQuery <a data-cite="XQUERY-31#id-ebv">Effective Boolean Value</a> rules rely on the
             definition of XPath's <a data-cite="XPATH-FUNCTIONS-31#func-boolean">fn:boolean</a>. The following
             rules reflect the rules for <code>fn:boolean</code> applied to the argument types present
@@ -4905,7 +4907,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
                 xsd:boolean <a href="#ebv-arg">(EBV)</a>
               </td>
               <td class="xpathOp">
-                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(A)
+                <a href="#func-logical-not" class="SPARQLoperator">logical-not</a>(A)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5609,7 +5611,7 @@ class="expression">expression, ....</span>)
               The purpose of this function is to define the semantics of the "<code>||</code>" operator.</p>
             <p>The function returns a logical <code>OR</code> of <code>left</code> and <code>right</code>. 
               Note that <span class="SPARQLoperator">logical-or</span> operates on the 
-              <a href="#ebv">effective boolean value</a> of its arguments.</p>
+              <a href="#ebv">effective boolean value</a> of each of its arguments.</p>
             <p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for the
               <code>||</code> operator's treatment of errors.</p>
           </section>
@@ -5618,12 +5620,25 @@ class="expression">expression, ....</span>)
             <pre class="prototype nohighlight">
               <span class="return">xsd:boolean</span> <span class="operator" style="text-transform: none;">logical-and</span> (<span class="type">xsd:boolean</span> <span class="name">left</span>, <span class="type">xsd:boolean</span> <span class="name">right</span>)
             </pre>
-            <p>This function cannot be used directly in expressions. The purpose of this function is to define the semantics of the "<code>&amp;&amp;</code>" operator.</p>
+            <p>This function cannot be used directly in expressions. 
+              The purpose of this function is to define the semantics of the "<code>&amp;&amp;</code>" operator.</p>
             <p>The function returns a logical <code>AND</code> of <code>left</code> and <code>right</code>.
               Note that <span class="SPARQLoperator">logical-and</span> operates on the 
-              <a href="#ebv">effective boolean value</a> of its arguments.</p>
+              <a href="#ebv">effective boolean value</a> of each of its arguments.</p>
             <p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for the
-              <code>&amp;&</code> operator's treatment of errors.</p>
+              <code>&amp;&amp;</code> operator's treatment of errors.</p>
+          </section>
+          <section id="func-logical-not">
+            <h5>logical-not</h5>
+            <pre class="prototype nohighlight">
+              <span class="return">xsd:boolean</span> <span class="operator" style="text-transform: none;">logical-not</span> (<span class="type">xsd:boolean</span> <span class="name">arg</span>)
+            </pre>
+            <p>This function cannot be used directly in expressions.  The purpose of this
+              function is to define the semantics of the "<code>!</code>" operator.</p>
+            <p>The function returns a logical <code>NOT</code> of <code>arg</code>.
+              Note that <span class="SPARQLoperator">logical-not</span> operates on the 
+              <a href="#ebv">effective boolean value</a> of its argument.
+            </p>
           </section>
           <section id="func-in">
             <h5>IN</h5>
@@ -10825,7 +10840,7 @@ _:x rdf:type xsd:decimal .
           <p><code>?a&lt;?b&amp;&amp;?c&gt;?d</code></p>
         </blockquote>
         <p>is the token sequence variable '<code>?a</code>', an IRI
-          '<code>&lt;?b&amp;&amp;?c&gt;</code>', and variable '<code>?d</code>', not a expression
+          '<code>&lt;?b&amp;&amp;?c&gt;</code>', and variable '<code>?d</code>', not an expression
           involving the operator '<code>&amp;&</code>' connecting two expression using
           '<code>&lt;</code>' (less than) and '<code>&gt;</code>' (greater than).</p>
       </section>

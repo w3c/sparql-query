@@ -79,11 +79,6 @@ sparql:less-than-or-equal rdf:type sparql:Function ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
     
-sparql:logical-not rdf:type sparql:Functional ;
-    rdfs:comment "This form computes the logical NOT of a boolean expression." ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-and> ;
-    .
-
 # Section: Functional Forms
 
 sparql:bound rdf:type sparql:FunctionalForm ;
@@ -119,6 +114,11 @@ sparql:logical-or rdf:type sparql:FunctionalForm ;
 sparql:logical-and rdf:type sparql:FunctionalForm ;
     rdfs:comment "This form computes the logical AND of two boolean expressions." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-and> ;
+    .
+
+sparql:logical-not rdf:type sparql:FunctionalForm ;
+    rdfs:comment "This form computes the logical NOT of a boolean expression." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-not> ;
     .
 
 sparql:in rdf:type sparql:FunctionalForm ;
