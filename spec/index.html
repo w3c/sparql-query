@@ -8634,7 +8634,7 @@ WHERE {
         <p>This section defines the process of converting graph patterns and solution modifiers in a
           SPARQL query string into an <a href="#defn_AlgebraicQueryExpression">algebraic
           query expression</a>. The process described converts one
-          level of query nesting, as formed by subqueries using the nested <code>SELECT</code> syntax and
+          level of query nesting as formed by subqueries using the nested <code>SELECT</code> syntax, and
           is applied recursively on subqueries. Each level consists of graph pattern matching and
           filtering, followed by the application of solution modifiers.</p>
         <p>The SPARQL query string is parsed and the abbreviations for IRIs and triple patterns given
@@ -8730,10 +8730,10 @@ WHERE {
             query. The definition below provides a way of determining this from the
             abstract syntax tree of a query.</p>
           <p>Note that a subquery with a projection can hide variables; use of a variable in
-            <code>FILTER</code>, or in <code>MINUS</code> does not cause the variable to be in-scope
+            <code>FILTER</code> or in <code>MINUS</code> does not cause the variable to be in-scope
             outside of those forms.</p>
-          <p>Let <b>P</b>, <b>P1</b>, <b>P2</b> be graph patterns and <b>E</b>,
-            <b>E1</b>,...<b>En</b> be expressions. A variable <code>v</code> is in-scope if:</p>
+          <p>Let <b>P</b>, <b>P1</b>, and <b>P2</b> be graph patterns, and <b>E</b>,
+            <b>E1</b>,..., through <b>En</b> be expressions. A variable <code>v</code> is in-scope if:</p>
           <table style="border-collapse: collapse; border-color: #000000; border-spacing:5px; border-width: 1px">
             <tbody>
               <tr>
