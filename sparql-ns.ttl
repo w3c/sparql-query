@@ -121,6 +121,11 @@ sparql:logical-not rdf:type sparql:FunctionalForm ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-not> ;
     .
 
+sparql:ebv rdf:type sparql:FunctionalForm ;
+    rdfs:comment "This form computes the effective boolean value." ;
+    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-ebv> ;
+    .
+
 sparql:in rdf:type sparql:FunctionalForm ;
     rdfs:comment "This form checks whether a given value matches any value from a list of expressions." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-in> ;

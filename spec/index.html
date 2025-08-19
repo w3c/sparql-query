@@ -1159,13 +1159,15 @@ book:book1</pre>
             <li><code>true</code>, which is the same as <code>"true"^^xsd:boolean</code></li>
             <li><code>false</code>, which is the same as <code>"false"^^xsd:boolean</code></li>
           </ul>
-          <p>Tokens matching the productions 
+          <p>A token matching one of the productions
             <a href="#rINTEGER">INTEGER</a>,
-            <a href="#rDECIMAL">DECIMAL</a>, 
+            <a href="#rDECIMAL">DECIMAL</a>,
             <a href="#rDOUBLE">DOUBLE</a> or 
-            <a href="#rBooleanLiteral">BooleanLiteral</a> are equivalent to a typed literal with the lexical
-            value of the token and the corresponding datatype (<code>xsd:integer</code>,
-            <code>xsd:decimal</code>, <code>xsd:double</code>, <code>xsd:boolean</code>).</p>
+            <a href="#rBooleanLiteral">BooleanLiteral</a> is equivalent to a literal
+            with the lexical value of the token and the corresponding datatype 
+            (<code>xsd:integer</code>, <code>xsd:decimal</code>, 
+            <code>xsd:double</code>, or <code>xsd:boolean</code>).
+          </p>
         </section>
         <section id="QSynVariables">
           <h4>Syntax for Query Variables</h4>
@@ -4553,13 +4555,14 @@ foaf:mbox_sha1sum  rdf:type  owl:InverseFunctionalProperty .
     </section>
     <section id="expressions">
       <h2>Expressions and Testing Values</h2>
-      <p>SPARQL <code>FILTERs</code> restrict the solutions of a graph pattern match according to a
+      <p>
+        SPARQL <code>FILTERs</code> restrict the solutions of a graph pattern match according to a
         given <a href="#rConstraint">constraint</a>. Specifically, <code>FILTERs</code> eliminate any
         solutions that, when substituted into the expression, either result in an effective boolean
         value of <code>false</code> or produce an error. Effective boolean values are defined in
-        section <a href="#ebv">17.2.2 <em>Effective Boolean Value</em></a> and errors are defined in
-        [[[XQUERY-31]]] [[XQUERY-31]] section <a data-cite="XQUERY-31#dt-type-error">2.3.1, <em>Kinds of
-            Errors</em></a>. These errors have no effect outside of <code>FILTER</code> evaluation.</p>
+        section <a href="#ebv"> <em>Effective Boolean Value</em></a> and errors are defined in
+        <a href="#sparql-error">Evaluation Errors</a>.
+      </p>
       <div class="exampleGroup">
         <p><a data-cite="RDF12-CONCEPTS#dfn-literal">RDF Literals</a> have datatypes 
           that determine the value of the literal.</p>
@@ -4688,22 +4691,27 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           datatypes.</p>
       </section>
 
-      <section id="evaluation">
-        <h3>Filter Evaluation</h3>
-        <p>SPARQL provides a subset of the functions and operators defined by 
-          XQuery <a data-cite="XQUERY-31#mapping">Operator Mapping</a>. 
-          The XQuery section <a data-cite="XQUERY-31#id-expression-processing">Expression Processing</a>
-          describes the invocation of
-          XPath functions. The following rules accommodate the differences in the data and execution
-          models between XQuery and SPARQL:</p>
+      <section id="expression-evaluation">
+        <span id="evaluation"><!-- Legacy name --></span>
+        <h3>Expression Evaluation</h3>
+        <p>
+          SPARQL provides a subset of the functions and operators defined by 
+          <a data-cite="XPATH-FUNCTIONS-31#">XPath and XQuery Functions and Operators</a>.
+          The following rules accommodate the differences in the data and execution
+          models between XPath/XQuery and SPARQL:
+        </p>
         <ul>
-          <li>Unlike XPath/XQuery, SPARQL functions do not process node sequences. When interpreting
-            the semantics of XPath functions, assume that each argument is a sequence of a single
-            node.</li>
-          <li>Functions invoked with an argument of the wrong type will produce a 
-            <a data-cite="XQUERY-31#dt-type-error">type error</a>. Effective boolean value arguments (labeled
+          <li>
+            Unlike functions in XPath/XQuery, functions in SPARQL do not
+            process node sequences.
+          </li>
+          <li>
+            Functions invoked with an argument of the wrong type will produce an [=error=].
+          </li>
+          <li>
+            Effective boolean value arguments (labeled
             "xsd:boolean (EBV)" in the operator mapping table below), are coerced to
-            <code>xsd:boolean</code> using the <a href="#ebv">EBV rules</a> in section 17.2.2.
+            <code>xsd:boolean</code> using the <a href="#ebv">SPARQL EBV rules</a>.
           </li>
           <li>Apart from the <a href="#func-forms">functional forms</a>
             <a href="#func-bound">BOUND</a>, <a href="#func-coalesce">COALESCE</a>,
@@ -4712,9 +4720,10 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <a href="#func-logical-and">logical-and</a> (<code>&amp;&amp</code>),
             <a href="#func-logical-not">logical-not</a> (<code>!</code>),
             <a href="#func-filter-not-exists">NOT EXISTS</a>, 
-            and <a href="#func-filter-exists">EXISTS</a>,
-            all functions operate on RDF Terms and will produce a type error if any
-            arguments are unbound.
+            <a href="#func-filter-exists">EXISTS</a>, and
+            <a href="#func-ebv">EBV</a>,
+            all functions operate on RDF Terms.
+            Functions produce an [=error=] if any argument is unbound.
           </li>
           <li>Any expression other than <a href="#func-logical-or">logical-or</a> (<code>||</code>)
             or <a href="#func-logical-and">logical-and</a> (<code>&amp;&</code>) that encounters an
@@ -4727,8 +4736,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             branch will return an error if the other branch is TRUE and FALSE if the other branch is
             FALSE.
           </li>
-          <li>A <a href="#func-logical-or">logical-or</a> or <a href="#func-logical-and">logical-and</a> that encounters errors on both branches will produce
-            <em>either</em> of the errors.
+          <li>A <a href="#func-logical-or">logical-or</a> or <a href="#func-logical-and">logical-and</a> 
+            that encounters errors on both branches will produce <em>either</em> of the [=errors=].
           </li>
         </ul>
         <p>The logical-and and logical-or truth table for true (<span class="truth">T</span>), false
@@ -4815,40 +4824,126 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <li>The function or operator is invoked on the argument values.</li>
           </ul>
           <p>If any of these steps fails, the invocation generates an error. The effects of errors
-            are defined in <a href="#evaluation">Filter Evaluation</a>.</p>
+            are defined in section <a href="#expression-evaluation" class="sectionRef"></a>.</p>
           <p>There are also "<a href="#func-forms">functional forms</a>" which have different
-            evaluation rules to functions as specified by each such form.</p>
+            evaluation rules to functions, as specified by each such form.</p>
         </section>
+
+        <section id="sparql-error">
+          <h4>Evaluation errors</h4>
+          <p>Evaluation of an expression can lead to an 
+            <dfn data-lt="sparql-eval-error" data-local-lt="error">error</dfn>,
+            such as when an argument to a function is a literal of the wrong datatype,
+            or an argument being the wrong kind of 
+            <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>.
+          </p>
+          <p>
+            If the evaluation of an expression raises an [=error=], then the 
+            evaluation of every function, operator, and expression that contains 
+            the expression with the error also raises an [=error=].
+            Certain <a href="#func-forms">functional forms</a>
+            handle errors as described in their definitions.
+          </p>
+        </section>
+
         <section id="ebv">
           <h4>Effective Boolean Value (EBV)</h4>
-          <p>Effective boolean value is used to calculate the arguments to the logical functions
+          <p><dfn data-local-lt="EBV|ebv">Effective boolean value</dfn> is used to calculate the arguments to the logical functions
             <a href="#func-logical-and">logical-and</a>, <a href="#func-logical-or">logical-or</a>,
             and <a href="#func-logical-not">logical-not</a>,
-            as well as evaluate the result of a <code>FILTER</code> expression.</p>
-          <p>The XQuery <a data-cite="XQUERY-31#id-ebv">Effective Boolean Value</a> rules rely on the
-            definition of XPath's <a data-cite="XPATH-FUNCTIONS-31#func-boolean">fn:boolean</a>. The following
-            rules reflect the rules for <code>fn:boolean</code> applied to the argument types present
-            in SPARQL queries:</p>
-          <ul>
-            <li>The EBV of any literal whose type is <code>xsd:boolean</code> or 
-              <span class="type">numeric</span> is false if the lexical form is not valid for that
-              datatype, such as <code>"abc"^^xsd:integer</code>.</li>
-            <li>If the argument is a <span class="type typedLiteral">typed literal</span> with a
-              <span class="type datatype">datatype</span> of <code>xsd:boolean</code>, and it has a
-              valid lexical form, the EBV is the value of that argument.</li>
-            <li>If the argument is a literal with a 
-              <span class="type datatype">datatype</span> of <code>xsd:string</code>, the EBV is false if the
-              operand value has zero length; otherwise the EBV is true.</li>
-            <li>If the argument is a <span class="type numeric">numeric</span> type or a 
-              <span class="type typedLiteral">typed literal</span> with a datatype derived from a 
-              <span class="type numeric">numeric</span> type, and it has a valid lexical form, the EBV is false if
-              the operand value is NaN or is numerically equal to zero; otherwise the EBV is true.</li>
-            <li>All other arguments, including unbound arguments, produce a type error.</li>
+            as well as to evaluate the result of a <code>FILTER</code> expression.</p>
+
+          <div id="func-ebv">
+          <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">EBV</span> (<span class="type">RDF term</span> <span class="name">term</span>)</pre>
+          </div>
+          <ul>    
+            <li>
+              If the argument is a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a> 
+              with a <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>
+              of <code>xsd:boolean</code>, and it has a
+              valid lexical form, the EBV function returns that argument.
+            </li>
+            <li>
+              If the argument is a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>
+              with a datatype derived from a <span class="type numeric">numeric</span> type,
+              and the argument has a valid lexical form,
+              the EBV function returns the literal `"false"^^xsd:boolean`
+              if the value of the operand is `NaN` or is numerically equal to zero;
+              otherwise the EBV function returns the literal `"true"^^xsd:boolean`.
+            </li>
+            <li>
+              If the argument is a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>
+              with a <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>
+              <code>xsd:string</code> and the value is equal to the empty string,
+              the EBV function returns the literal `"false"^^xsd:boolean`;
+              otherwise the EBV function returns the literal `"true"^^xsd:boolean`.
+            </li>
+            <li>
+              If the argument is a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>
+              with an invalid lexical form for the 
+              <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>,
+              then raise an error.
+            </li>
+            <li>
+              If the argument is a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>
+              with a <a data-cite="RDF12-CONCEPTS#dfn-datatype-iri">datatype IRI</a>
+              which is not `xsd:boolean`,
+              a <span class="type numeric">numeric</span> datatype, 
+              or `xsd:string`, then raise an [=error=].
+            </li>
+            <li>
+              If the argument is not a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>,
+              then raise an error.
+            </li>
           </ul>
-          <p>An EBV of <code>true</code> is represented as a <span class="type typedLiteral">typed
-              literal</span> with a datatype of <code>xsd:boolean</code> and a lexical value of "true";
-            an EBV of false is represented as a <span class="type literal">literal</span>
-            with a datatype of <code>xsd:boolean</code> and a lexical value of "false".</p>
+
+          <div class="result">
+            <table>
+              <thead>
+                <tr>
+                  <th>Example</th>
+                  <th>EBV Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>EBV("true"^^xsd:boolean)</td>
+                  <td>`true`</td>
+                </tr>
+                <tr>
+                  <td>EBV("")</td>
+                  <td>`false`</td>
+                </tr>
+                <tr>
+                  <td>EBV("1"^^xsd:boolean)</td>
+                  <td>`true`</td>
+                </tr>
+                <tr>
+                  <td>EBV(-2e10)</td>
+                  <td>`true`</td>
+                </tr>
+                <tr>
+                  <td>EBV(-0)</td>
+                  <td>`false`</td>
+                </tr>
+                <tr>
+                  <td>EBV(&lt;http://example/&gt;)</td>
+                  <td><i><code>error</code></i></td>
+                </tr>
+                <tr>
+                  <td>EBV("2025-08-18"^^xsd:date)</td>
+                  <td><i><code>error</code></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <p>An EBV of <code>true</code> is represented as a 
+            <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>
+            with a datatype IRI of <code>xsd:boolean</code> and a lexical value of "true";
+            an EBV of false is represented as a 
+            <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>
+            with a datatype IRI of <code>xsd:boolean</code> and a lexical value of "false".</p>
         </section>
       </section>
 
@@ -4865,8 +4960,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <code>xsd:integer = xsd:signedInt</code>, the definition for <code>=</code> with two
           <code>numeric</code> parameters applies, rather than the one with two
           <span class="type RDFterm">RDF terms</span>. The table is arranged so that the upper-most viable
-          candidate is the most specific. Operators invoked without appropriate operands result in a
-          type error.</p>
+          candidate is the most specific. Operators invoked without appropriate operands
+          result in an [=error=].</p>
         <p>SPARQL follows XPath's scheme for numeric type promotions and subtype substitution for
           arguments to numeric operators. The <a data-cite="XPATH-31#mapping">XPath Operator Mapping</a>
           rules for <span class="type numeric">numeric</span> operands (<code>xsd:integer</code>,
@@ -5323,8 +5418,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td>
-                ( A.subject = B.subject ) <a href="#logical-and-operator" class="SPARQLoperator">&&</a><br/>
-                ( A.predicate = B.predicate ) <a href="#logical-and-operator" class="SPARQLoperator">&&</a><br/>
+                ( A.subject = B.subject ) <a href="#logical-and-operator" class="SPARQLoperator">&amp;&amp;</a><br/>
+                ( A.predicate = B.predicate ) <a href="#logical-and-operator" class="SPARQLoperator">&amp;&amp;</a><br/>
                 ( A.object = B.object )
               </td>
               <td>xsd:boolean</td>
@@ -5390,7 +5485,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           <h4>Operator Extensibility</h4>
           <p>SPARQL language extensions may provide additional associations between operators and
             operator functions; this amounts to adding rows to the table above. No additional operator
-            may yield a result that replaces any result other than a type error.
+            may yield a result that replaces any result other than an [=error=].
             The consequence of this rule is that SPARQL <code>FILTER</code>s will
             produce <em>at least</em> the same intermediate bindings after applying a
             <code>FILTER</code> as an unextended implementation.</p>
@@ -5493,9 +5588,12 @@ WHERE {
               <a href="#ebv">effective boolean value</a>, then returns the value of
               <code>expression2</code> if the EBV is true, otherwise it returns the value of
               <code>expression3</code>. Only one of <code>expression2</code> and
-              <code>expression3</code> is evaluated. If evaluating the first argument raises an error,
-              then an error is raised for the evaluation of the <code>IF</code> expression.</p>
-            <p>Examples: Suppose ?x = 2, ?z = 0 and ?y is not bound in some query solution:</p>
+              <code>expression3</code> is evaluated. If evaluating the first argument raises an [=error=],
+              then an [=error=] is raised for the evaluation of the <code>IF</code> expression.</p>
+            <p>
+              Examples: Suppose that `?x` is bound to `2`, `?z` is bound to `0`, 
+              and that `?y` is not bound, in some query solution:
+            </p>
             <div class="result">
               <table>
                 <tbody>
@@ -5612,7 +5710,7 @@ class="expression">expression, ....</span>)
             <p>The function returns a logical <code>OR</code> of <code>left</code> and <code>right</code>. 
               Note that <span class="SPARQLoperator">logical-or</span> operates on the 
               <a href="#ebv">effective boolean value</a> of each of its arguments.</p>
-            <p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for the
+            <p>Note: see section <a href="#expression-evaluation" class="sectionRef"></a>, for the
               <code>||</code> operator's treatment of errors.</p>
           </section>
           <section id="func-logical-and">
@@ -5625,7 +5723,7 @@ class="expression">expression, ....</span>)
             <p>The function returns a logical <code>AND</code> of <code>left</code> and <code>right</code>.
               Note that <span class="SPARQLoperator">logical-and</span> operates on the 
               <a href="#ebv">effective boolean value</a> of each of its arguments.</p>
-            <p>Note: see section 17.2, <a href="#evaluation">Filter Evaluation</a>, for the
+            <p>Note: see section <a href="#expression-evaluation" class="sectionRef"></a>, for the
               <code>&amp;&amp;</code> operator's treatment of errors.</p>
           </section>
           <section id="func-logical-not">
@@ -5876,13 +5974,13 @@ class="expression">expression, ....</span>)
                 <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
                 and one or both of these literals has a datatype that is
                 not handled by the SPARQL processor,
-                then produce a type error.
+                then produce an [=error=].
               </li>
               <li>If <code>term1</code> and <code>term2</code> are both
                 <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
                 and one or both of these literals are known to be
                 <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>,
-                then produce a type error.
+                then produce an [=error=].
               </li>
               <li>
                 `"NaN"^^xsd:double` and `"NaN"^^xsd:float` are considered to 
@@ -5906,7 +6004,7 @@ class="expression">expression, ....</span>)
                 <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>,
                 apply the function `sameValue` pair-wise to each of the components.
                 Return TRUE if each component pair returns TRUE;
-                produce a type error if any component pair produces an error;
+                produce an [=error=] if any component pair produces an [=error=];
                 otherwise return FALSE.
               </li>
               <li>Otherwise, return FALSE.</li>
@@ -9925,7 +10023,7 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
             We define:</p>
           <p><a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) = { <var>μ</var> in <var>Ω</var>  | <var>expr</var>(<var>μ</var>) is an expression that has an
-            effective boolean value of true }</p>
+            [=effective boolean value=] of true }</p>
 <div class="issue" data-number="254">
   It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) )
@@ -9957,14 +10055,14 @@ Let x and y be variables or RDF terms, and S a set of IRIs:
             <a href="#expressions">expression</a>. We define:</p>
           <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> such that ∀ <var>μ'</var> in
             <var>Ω<sub>2</sub></var>, either <var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a> or <var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
-            <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an effective boolean value of true }</p>
+            <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an [=effective boolean value=] of true }</p>
 <div class="issue" data-number="254">
   It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>1</sub></var> )</p>
         </div>
-        <p>The evaluation of <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an effective boolean
-          value of true if it evaluates to false or if it raises an error.</p>
+        <p>The evaluation of <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an
+          [=effective boolean value=] of true if it evaluates to false or if it raises an error.</p>
         <p><a href="#defn_algDiff" class="algFct">Diff</a> is used internally for the definition of <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algLeftJoin">LeftJoin</span></b></p>
@@ -12489,6 +12587,7 @@ _:x rdf:type xsd:decimal .
                 <li>Remove concepts of plain and simple literals, in favor of explicit mentions of `xsd:string`</li>
                 <li>Migrate XML Schema references to 1.1</li>
                 <li>Update references to XPath from 2.0 to 3.1</li>
+                <li>Define `EBV` as a functional form.</li>
             </ul>
         </li>
         <li>
@@ -12504,7 +12603,7 @@ _:x rdf:type xsd:decimal .
                 <li>Introduce a function called multiplicity to replace card[Ω](μ) in <a href="#BasicGraphPattern" class="sectionRef"></a></li>
                 <li>Update to Media Type language instead of MIME Type language</li>
                 <li>Clarify that aggregation returns a single partial function in <a href="#sparqlGroupAggregate" class="sectionRef"></a></li>
-                <li>Update Filter Evaluation language to reference more functional forms in <a href="#evaluation" class="sectionRef"></a></li>
+                <li>Update Filter Evaluation language to reference more functional forms in <a href="#expression-evaluation" class="sectionRef"></a></li>
                 <li>Use PREFIX instead of @prefix</li>
                 <li>Clarify definition of the Sum set function in <a href="#aggSum" class="sectionRef"></a></li>
                 <li>Improve definition of Group operator in <a href="#aggregateAlgebra" class="sectionRef"></a></li>
@@ -12512,7 +12611,15 @@ _:x rdf:type xsd:decimal .
                 <li>Improve definitions in <a href="#initDefinitions" class="sectionRef"></a></li>
                 <li>Fix algorithm for translation SELECT expressions <a href="#sparqlSelectExpressions" class="sectionRef"></a></li>
                 <li>Clarify the use of ToList in algebra expressions in <a href="#translation" class="sectionRef"></a></li>
-                <li>Add an explicit definition of the algebraic syntax (<a href="#algebraicSyntax" class="sectionRef"></a>) into which the AST expressions are translated according to <a href="#translation" class="sectionRef"></a>, and mark up all mentions of symbols of this syntax as links to their respective definition; similarly, mark up all mentions of operators of the <a href="#sparqlAlgebra">SPARQL algebra</a> as links to their respective definition</li>
+                <li>Add an explicit definition of the algebraic syntax
+                  (<a href="#algebraicSyntax" class="sectionRef"></a>) into which the AST
+                  expressions are translated according to <a href="#translation"
+                  class="sectionRef"></a>, and mark up all mentions of symbols of this
+                  syntax as links to their respective definition; similarly, mark up all
+                  mentions of operators of the <a href="#sparqlAlgebra">SPARQL algebra</a>
+                  as links to their respective definition</li>
+                <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors</a>.</li>
+                <li>Rename section "Filter evaluation" as <a href="#expression-evaluation" class="sectionRef"></a>.</li>
             </ul>
         </li>
         <li>
