@@ -9687,45 +9687,49 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
         <h3>Property Path Patterns</h3>
         <p>This section defines the evaluation of <a href="#defn_PropertyPathPattern">property path
             patterns</a>. A property path pattern is a subject endpoint (an RDF term or a variable), a
-          property path express and an object endpoint. The 
-          <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a> converts some
-          forms to other SPARQL expressions, such as converting property paths of length one to triple
-          patterns, which in turn are combined into basic graph patterns. This leaves property path
-          operators ZeroOrOnePath, ZeroOrMorePath, OneOrMorePath and NegatedPropertySets and also path
+          <a href="#defn_PropertyPathExpr">property path expression</a>, and an object endpoint. The 
+          <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a> converts every
+          <a href="#defn_PropertyPathExpr">property path expression</a> into an
+          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
+          Thereafter, <a href="#sparqlTranslatePathPatterns">translation of property path pattern</a> converts
+          some of these algebraic property path expressions
+          to other SPARQL graph pattern, such as converting property paths of length one to triple
+          patterns, which in turn are combined into basic graph patterns.
+          This leaves algebraic property path expressions with the operators
+          <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>,
+          <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>,
+          <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>,
+          and <a href="#defn_ppeNPS" class="ppeOp">NegatedPropertySets</a>,
+          as well as algebraic property path
           expressions contained within these operators.</p>
-        <p>All remaining property path expressions are present in the algebra in the form
-          <code>Path(X, path, Y)</code> for endpoints X and Y. For example: syntax<code>(:p/:q)*</code>
-          is a ZeroOrMorePath expression involving a sequence property path becoming the algebra
-          expession <code>ZeroOrMorePath(seq(link(:p), link(:q)))</code>.</p>
+        <p>The property path patterns with these remaining algebraic property path expressions
+          are present in the <a href="#algebraicSyntax">algebraic syntax</a> in the form
+          <a href="#defn_absPath" class="absOp">Path</a>(|X|, |ppe|, |X|) for endpoints |X| and |Y|.
+          For example, the <a href="#defn_PropertyPathExpr">property path expression</a> <code>(:p/:q)*</code>
+          is a ZeroOrMorePath expression involving a sequence property path,
+          and is translated into the algebraic property path expression
+          <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>( <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<a href="#defn_ppeLink" class="ppeOp">link</a>(:p), <a href="#defn_ppeLink" class="ppeOp">link</a>(:q)) ).</p>
+<div class="ednote">The example at the end of the previous paragraph fits much better into the first paragraph of the section and, thus, should be moved there.</div>          
         <div class="defn">
           <div id="pp-eval-notation">
             <b>Notation</b>
           </div>
-          <p>Write</p>
-          <pre>eval(Path(X, PP, Y))</pre>
-          <p>for the evaluation of the property path patterns. This produces a multiset of solution
-            mappings μ, each solution mapping having a binding for variables used (each of X and Y can
+          <p>For every <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a> of the form
+            <a href="#defn_absPath" class="absOp">Path</a>(|X|, |ppe|, |Y|) we write</p>
+          <pre class="nohighlight">ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>)</pre>
+          <p>to denote the evaluation of the property path pattern. This produces a multiset of solution
+            mappings, each solution mapping having a binding for variables used (each of |X| and |Y| can
             be a variable). Some operators only produce a set of solution mappings.</p>
-          <p>Write</p>
-          <pre>
-Var(x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>) = { x<sub>i</sub> | i in 1...n and x<sub>i</sub> is a variable
-}
-          </pre>
-          <p>for the variables in <code>x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub></code>.</p>
           <p>Write</p>
           <table style="border-collapse: collapse; border-color: #000000; border-spacing: 10px ; border-width: 1px">
             <tbody>
               <tr>
-                <td><code>x:term</code></td>
-                <td>when <code>x</code> is an RDF term</td>
+                <td><code>|x|:term</code></td>
+                <td>when <code>|x|</code> is an RDF term</td>
               </tr>
               <tr>
-                <td><code>x:var</code></td>
-                <td>when <code>x</code> is a variable</td>
-              </tr>
-              <tr>
-                <td><code>x:path</code></td>
-                <td>when <code>x</code> is a path expression</td>
+                <td><code>|x|:var</code></td>
+                <td>when <code>|x|</code> is a variable</td>
               </tr>
             </tbody>
           </table>
@@ -9735,46 +9739,44 @@ Var(x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>) = { x<sub>i</sub> | i in 1
           in each definition for clarity.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_predicate">Evaluation of Predicate Property Path</span></b></p>
-          <p>Let Path(X, link(iri), Y) be an predicate inverse property path pattern, using some IRI
-            iri.</p>
-            <pre>
-eval(Path(X, link(iri), Y)) = <a href="#BasicGraphPattern">evaluation of basic graph pattern</a> {X iri Y}
+          <p>Let |iri| be an IRI.</p>
+            <pre class="nohighlight">
+ppeval(<var>X</var>, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>) = <a href="#BasicGraphPattern">evaluation of basic graph pattern</a> {<var>X</var> <var>iri</var> <var>Y</var>}
             </pre>
         </div>
-        <p>If both X and Y are variables, this is the same as:</p>
-        <pre>
-eval(Path(X:var, link(iri), Y:var)) = { (X, xn) (Y, yn) | xn and yn are RDF terms and triple (xn iri yn) is in the active graph }</pre>
-        <p>If X is a variable and Y an RDF term:</p>
-        <pre>
-eval(Path(X:var, link(iri), Y:term)) = { (X, xn) | xn is an RDF term and triple (xn iri Y) is in the active graph
-}
-        </pre>
-        <p>If X is an RDF term and Y is a variable:</p>
-        <pre>
-eval(Path(X:term, link(iri), Y:var)) = { (Y, yn) | yn is an RDF term and triple (X iri yn) is in the active graph
-}
-        </pre>
-        <p>If both X and Y are RDF terms:</p>
-        <pre>
-eval(Path(X:term, link(iri), Y:term)) 
-    = { μ<sub>0</sub> } if triple (X iri Y) is in the active graph
+        <p>If both |X| and |Y| are variables, this is the same as:</p>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:var) = { (<var>X</var>, <var>xn</var>) (<var>Y</var>, <var>yn</var>) | <var>xn</var> and <var>yn</var> are RDF terms and triple (<var>xn</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
+        <p>If |X| is a variable and |Y| an RDF term:</p>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) = { (<var>X</var>, <var>xn</var>) | <var>xn</var> is an RDF term and triple (<var>xn</var>, <var>iri</var>, <var>Y</var>) is in the active graph }</pre>
+        <p>If |X| is an RDF term and |Y| is a variable:</p>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:var) = { (<var>Y</var>, <var>yn</var>) | <var>yn</var> is an RDF term and triple (<var>X</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
+        <p>If both |X| and |Y| are RDF terms:</p>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term)
+    = { μ<sub>0</sub> } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is in the active graph
     = { { } } = Ω<sub>0</sub> 
 
-eval(Path(X:term, link(iri), Y:term)) = { } if triple (X iri Y) is not in the active graph
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) = { } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is not in the active graph
         </pre>
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
-          <code>SELECT * { <i>X P Y</i> }</code> at that point in the query evaluation.</p>
+          <code>SELECT * { |X| |iri| |Y|</i> }</code> at that point in the query evaluation.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_inverse">Evaluation of Inverse Property Path</span></b></p>
-          <p>Let P be a property path expression, then:</p>
-          <pre>eval(Path(X, inv(P), Y)) = eval(Path(Y, P, X))</pre>
+          <p>Let |ppe| be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>, then:</p>
+          <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeInv" class="ppeOp">inv</a>(<var>ppe</var>), <var>Y</var>) = ppeval(<var>Y</var>, <var>ppe</var>, <var>X</var>)</pre>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_sequence">Evaluation of Sequence Property Path</span></b></p>
-          <p>Let P and Q be property path expressions. Let V be a fresh variable.</p>
-          <pre>A = Join( eval(Path(X, P, V)), eval(Path(V, Q, Y)) )</pre>
-          <pre>eval(Path(X, seq(P,Q), Y)) = Project(A, Var(X,Y))</pre>
+          <p>Let <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> be <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>. Let |V| be a fresh variable.</p>
+          <pre class="nohighlight"><var>A</var> = <a href="#defn_algJoin" class="algFct">Join</a>( ppeval(<var>X</var>, <var>ppe<sub>1</sub></var>, <var>V</var>), ppeval(<var>V</var>, <var>ppe<sub>2</sub></var>, <var>Y</var>) )</pre>
+          <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>,<var>ppe<sub>2</sub></var>), <var>Y</var>) = <a href="#defn_algProject" class="algFct">Project</a>(<var>A</var>, <var>PV</var>)</pre>
+          <p>where |PV| = { |v| ∈ {|X|,|Y|} | |v| is a variable}.</p>
+<div class="issue" data-number="266"><a href="#defn_algJoin" class="algFct">Join</a> produces a multiset of solution mappings but <a href="#defn_algProject" class="algFct">Project</a> expects a sequence as its first argument. Moreover, <a href="#defn_algProject" class="algFct">Project</a> produces a sequence but ppeval(..) should be a multiset.</div>
         </div>
+<div class="ednote">Olaf, continue here!</div>
         <p>Informally, this is the same as:</p>
         <pre>SELECT * { X P _:a . _:a Q Y }</pre>
         <p>using the fact that a blank node <code>_:a</code> acts like a variable (under simple
