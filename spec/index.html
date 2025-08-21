@@ -9686,14 +9686,18 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
       <section id="PropertyPathPatterns">
         <h3>Property Path Patterns</h3>
         <p>This section defines the evaluation of <a href="#defn_PropertyPathPattern">property path
-            patterns</a>. A property path pattern is a subject endpoint (an RDF term or a variable), a
-          <a href="#defn_PropertyPathExpr">property path expression</a>, and an object endpoint. The 
-          <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a> converts every
-          <a href="#defn_PropertyPathExpr">property path expression</a> into an
-          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
-          Thereafter, <a href="#sparqlTranslatePathPatterns">translation of property path pattern</a> converts
-          some of these algebraic property path expressions
-          to other SPARQL graph pattern, such as converting property paths of length one to triple
+            patterns</a>. A property path pattern consists of a subject endpoint (an RDF term or a variable), a
+          <a href="#defn_PropertyPathExpr">property path expression</a>, and an object endpoint.</p>
+        <p>The <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a>
+          converts every <a href="#defn_PropertyPathExpr">property path expression</a>
+          into an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
+          For example, the property path expression <code>(:p/:q)*</code>
+          is a ZeroOrMorePath expression involving a sequence property path,
+          and is translated into the algebraic property path expression
+          <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>( <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<a href="#defn_ppeLink" class="ppeOp">link</a>(:p), <a href="#defn_ppeLink" class="ppeOp">link</a>(:q)) ).</p>
+        <p>Thereafter, the <a href="#sparqlTranslatePathPatterns">translation of property path patterns</a>
+          converts some of these algebraic property path expressions
+          to other SPARQL graph patterns, such as converting property paths of length one to triple
           patterns, which in turn are combined into basic graph patterns.
           This leaves algebraic property path expressions with the operators
           <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>,
@@ -9704,12 +9708,7 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
           expressions contained within these operators.</p>
         <p>The property path patterns with these remaining algebraic property path expressions
           are present in the <a href="#algebraicSyntax">algebraic syntax</a> in the form
-          <a href="#defn_absPath" class="absOp">Path</a>(|X|, |ppe|, |X|) for endpoints |X| and |Y|.
-          For example, the <a href="#defn_PropertyPathExpr">property path expression</a> <code>(:p/:q)*</code>
-          is a ZeroOrMorePath expression involving a sequence property path,
-          and is translated into the algebraic property path expression
-          <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>( <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<a href="#defn_ppeLink" class="ppeOp">link</a>(:p), <a href="#defn_ppeLink" class="ppeOp">link</a>(:q)) ).</p>
-<div class="ednote">The example at the end of the previous paragraph fits much better into the first paragraph of the section and, thus, should be moved there.</div>          
+          <a href="#defn_absPath" class="absOp">Path</a>(|X|, |ppe|, |X|) for endpoints |X| and |Y|.</p>
         <div class="defn">
           <div id="pp-eval-notation">
             <b>Notation</b>
@@ -9776,139 +9775,150 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>ir
           <p>where |PV| = { |v| ∈ {|X|,|Y|} | |v| is a variable}.</p>
 <div class="issue" data-number="266"><a href="#defn_algJoin" class="algFct">Join</a> produces a multiset of solution mappings but <a href="#defn_algProject" class="algFct">Project</a> expects a sequence as its first argument. Moreover, <a href="#defn_algProject" class="algFct">Project</a> produces a sequence but ppeval(..) should be a multiset.</div>
         </div>
-<div class="ednote">Olaf, continue here!</div>
         <p>Informally, this is the same as:</p>
-        <pre>SELECT * { X P _:a . _:a Q Y }</pre>
-        <p>using the fact that a blank node <code>_:a</code> acts like a variable (under simple
+        <pre class="nohighlight">SELECT * { <var>X</var> <var>P<sub>1</sub></var> _:a . _:a <var>P<sub>2</sub></var> <var>Y</var> }</pre>
+        <p>where <var>P<sub>1</sub></var> is a
+          <a href="#defn_AlgebraicPropertyPathExpression">property path expression</a>
+          that can be <a href="#sparqlTranslatePathExpressions">translated</a> into the
+          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> <var>ppe<sub>1</sub></var>
+          and <var>P<sub>2</sub></var> can be translated into <var>ppe<sub>2</sub></var>.
+          This observation is based on the fact that a blank node <code>_:a</code> acts like a variable (under simple
           entailment) except it does not appear in the results from <code>SELECT *</code>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_alternative">Evaluation of Alternative Property Path</span></b></p>
-          <p>Let P and Q be property path expressions.</p>
-          <pre>
-eval(Path(X, alt(P,Q), Y)) = 
-    Union(eval(Path(X, P, Y)), eval(Path(X, Q, Y)))
+          <p>Let <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> be <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>.
+          <pre class="nohighlight">
+ppeval(<var>X</var>, <a href="#defn_ppeAlt" class="ppeOp">alt</a>(<var>ppe<sub>1</sub></var>,<var>ppe<sub>2</sub></var>), <var>Y</var>) =
+    <a href="#defn_algUnion" class="algFct">Union</a>( ppeval(<var>X</var>, <var>ppe<sub>1</sub></var>, <var>Y</var>), ppeval(<var>X</var>, <var>ppe<sub>2</sub></var>, <var>Y</var>) )
           </pre>
         </div>
         <p>Informally, this is the same as:</p>
-        <pre>SELECT * { { X P Y } UNION { X Q Y } }</pre>
+        <pre class="nohighlight">SELECT * { { <var>X</var> <var>P<sub>1</sub></var> <var>Y</var> } UNION { <var>X</var> <var>P<sub>2</sub></var> <var>Y</var> } }</pre>
+        <p>where <var>P<sub>1</sub></var> is a
+          <a href="#defn_AlgebraicPropertyPathExpression">property path expression</a>
+          that can be <a href="#sparqlTranslatePathExpressions">translated</a> into the
+          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> <var>ppe<sub>1</sub></var>
+          and <var>P<sub>2</sub></var> can be translated into <var>ppe<sub>2</sub></var>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_nodeSet">Node set of a graph</span></b></p>
-          <p>The node set of a graph G, nodes(G), is:</p>
-          <p>nodes(G) = { n | n is an RDF term that is used as a subject or object of a triple of
-            G}</p>
+          <p>The node set of a graph |G|, <a href="#defn_nodeSet">nodes</a>(|G|), is:</p>
+          <p><a href="#defn_nodeSet">nodes</a>(|G|) = { |n| | |n| is an RDF term that is used as a subject or object of a triple of
+            |G|}</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_ZeroOrOnePath">Evaluation of ZeroOrOnePath</span></b></p>
-          <pre>
-eval(Path(X:term, ZeroOrOnePath(P), Y:var)) = 
-    { (Y, yn) | yn = X or {(Y, yn)} in eval(Path(X,P,Y)) }
+          <p>Let |ppe| be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
+            Let <var>G</var> be the <a href="#defn_ActiveGraph">active graph</a>.</p>
+          <pre class="nohighlight">
+ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:var) = 
+    { (<var>Y</var>, <var>yn</var>) | <var>yn</var> = <var>X</var> or {(<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>,<var>ppe</var>,<var>Y</var>) }
 </pre>
-          <pre>
-eval(Path(X:var, ZeroOrOnePath(P), Y:term)) =
-    { (X, xn) | xn = Y or {(X, xn)} in eval(Path(X,P,Y)) }
+          <pre class="nohighlight">
+ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:term) =
+    { (<var>X</var>, <var>xn</var>) | <var>xn</var> = <var>Y</var> or {(<var>X</var>, <var>xn</var>)} in ppeval(<var>X</var>,<var>ppe</var>,<var>Y</var>) }
           </pre>
-          <pre>
-eval(Path(X:term, ZeroOrOnePath(P), Y:term)) = 
-    { {} } if X = Y or eval(Path(X,P,Y)) is not empty
-    { } othewise</pre>
-          <pre>
-eval(Path(X:var, ZeroOrOnePath(P), Y:var)) = 
-    { (X, xn) (Y, yn) | either (yn in nodes(G) and xn = yn) or {(X,xn), (Y,yn)} in eval(Path(X,P,Y)) }</pre>
+          <pre class="nohighlight">
+ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:term) = 
+    { {} } if <var>X</var> = <var>Y</var> or ppeval(<var>X</var>,<var>ppe</var>,<var>X</var>) is not empty
+    { } otherwise</pre>
+          <pre class="nohighlight">
+ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:var) = 
+    { (<var>X</var>, <var>xn</var>) (<var>Y</var>, <var>yn</var>) | either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>) or {(<var>X</var>,<var>xn</var>), (<var>Y</var>,<var>yn</var>)} in ppeval(<var>X</var>,<var>ppe</var>,<var>Y</var>) }</pre>
         </div>
-        <p>We define an auxillary function, ALP, used in the definitions of ZeroOrMorePath and
-          OneOrMorePath. Note that the algorithm given here serves to specify the feature. An
+        <p>We define an auxiliary function, <a href="#defn_evalALP_1">ALP</a>, used in the definitions of <a href="#defn_evalZeroOrMorePath">ZeroOrMorePath</a> and
+          <a href="#defn_evalOneOrMorePath">OneOrMorePath</a>. Note that the algorithm given here serves to specify the feature. An
           implementation is free to implement evaluation by any method that produces the same results
-          for the query overall. The ZeroOrMorePath and OneOrMorePath forms return matches based on
+          for the query overall. The <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a> and <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a> forms return matches based on
           distinct nodes connected by the path.</p>
         <p>The matching algorithm is based on following all paths, and detecting when a graph node
           (subject or object), has been already visited on the path.</p>
         <p>Informally, this algorithm attempts to extend the multiset of results by one application
-          of <code>path</code> at each step, noting which nodes it has visited for this particular path. If
+          of the given <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> |ppe| at each step, noting which nodes it has visited for this particular path. If
           a node has been visited for the path under consideration, it is not a candidate for another
           step.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalALP_1">Function ALP</span></b></p>
-          <pre>
-Let eval(x:term, path) be the evaluation of 'path', starting at RDF term x, 
+          <pre class="nohighlight">
+Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
+Let <var>eval</var>(<var>x</var>:term, <var>ppe</var>) be the evaluation of <var>ppe</var>, starting at RDF term <var>x</var>, 
  and returning a multiset of RDF terms reached 
- by repeated matches of path.
+ by repeated matches of <var>ppe</var>.
 
-  ALP(x:term, path) = 
-      Let V = empty set
-      ALP(x:term, path, V)
-      return is V
+  <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>) = 
+      Let <var>V</var> = empty set
+      <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>)
+      return is <var>V</var>
 
-  # V is the set of nodes visited
+  # <var>V</var> is the set of nodes visited
 
-  ALP(x:term, path, V:set of RDF terms) =
-      if ( x in V ) return 
-      add x to V
-      X = eval(x,path) 
-      For n:term in X
-          ALP(n, path, V)
+  <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>:set of RDF terms) =
+      if ( <var>x</var> in <var>V</var> ) return 
+      add <var>x</var> to <var>V</var>
+      <var>X</var> = <var>eval</var>(<var>x</var>, <var>ppe</var>) 
+      For <var>n</var>:term in <var>X</var>
+          <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
           End
 </pre>
         </div>
         <div class="defn">
-          <p><b>Definition: Evaluation of</b></p>
-          <div id="defn_evalZeroOrMorePath">
-            <b>ZeroOrMorePath</b>
-          </div>
-          <pre>
-eval(Path(X:term, ZeroOrMorePath(path), vy:var)) =
-    { { (vy, n) } | n in ALP(X, path) }
+          <p><b>Definition: <span id="defn_evalZeroOrMorePath">Evaluation of ZeroOrMorePath</span></b></p>
+          <p>Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
+            Let <var>G</var> be the <a href="#defn_ActiveGraph">active graph</a>.</p>
+          <pre class="nohighlight">
+ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
+    { { (<var>vy</var>, <var>n</var>) } | <var>n</var> in <a href="#defn_evalALP_1">ALP</a>(<var>X</var>, <var>ppe</var>) }
 
-eval(Path(vx:var, ZeroOrMorePath(path), vy:var)) =
-    { { (vx, t), (vy, n) } |  t in nodes(G), (vy, n) in eval(Path(t, ZeroOrMorePath(path), vy)) }
+ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
+    { { (<var>vx</var>, <var>t</var>), (<var>vy</var>, <var>n</var>) } |  <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
 
-eval(Path(vx:var, ZeroOrMorePath(path), y:term)) = 
-    eval(Path(y:term, ZeroOrMorePath(inv(path)), vx:var))
+ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) = 
+    ppeval(<var>y</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeInv" class="ppeOp">inv</a>(<var>ppe</var>)), <var>vx</var>:var)
 
-eval(Path(x:term, ZeroOrMorePath(path), y:term)) = 
-    { { } } if { (vy:var,y) } in eval(Path(x, ZeroOrMorePath(path) vy)
+ppeval(<var>x</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) = 
+    { { } } if { (<var>vy</var>:var,<var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
     { } otherwise
           </pre>
         </div>
         <div class="defn">
-          <p><b>Definition: Evaluation of</b></p>
-          <div id="defn_evalOneOrMorePath">
-            <b>OneOrMorePath</b>
-          </div>
-          <p>eval(Path(X, OneOrMorePath(path), Y))</p>
-          <pre>
-# For OneOrMorePath, we take one step of the path then start
+          <p><b>Definition: <span id="defn_evalOneOrMorePath">Evaluation of OneOrMorePath</span></b></p>
+          <p>Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
+            Let <var>G</var> be the <a href="#defn_ActiveGraph">active graph</a>.</p>
+          <pre class="nohighlight">
+# For <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>, we take one step of the path then start
 # recording nodes for results.
 
-eval(Path(x:term, OneOrMorePath(path), vy:var)) =
-    Let X = eval(x, path)
-    Let V = the empty multiset
-    For n in X
-        ALP(n, path, V)
+ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
+    Let <var>X</var> = <var>eval</var>(<var>x</var>, <var>ppe</var>)
+    Let <var>V</var> = the empty multiset
+    For <var>n</var> in <var>X</var>
+        <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
     End
-    result is V
+    result is <var>V</var>
+<div class="issue" data-number="267"><var>V</var> is not a multiset of solution mappings but a set of RDF terms.</div>
 
-eval(Path(vx:var, OneOrMorePath(path), vy:var)) =
-     { { (vx, t), (vy, n) } |  t in nodes(G), (vy, n) in eval(Path(t, OneOrMorePath(path), vy)) }
+ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
+     { { (<var>vx</var>, <var>t</var>), (<var>vy</var>, <var>n</var>) } |  <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
 
-eval(Path(vx:var, OneOrMorePath(path), y:term)) =
-    eval(Path(y:term, OneOrMorePath(inv(path)), vx))
+ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) =
+    ppeval(<var>y</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<a href="#defn_ppeInv" class="ppeOp">inv</a>(<var>ppe</var>)), <var>vx</var>)
 
-eval(Path(x:term, OneOrMorePath(path), y:term)) =
-    { { } } if { (vy:var, y) } in eval(Path(x, OneOrMorePath(path), vy))
+ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) =
+    { { } } if { (<var>vy</var>:var, <var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
     { } otherwise
 </pre>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="eval_negatedPropertySet">Evaluation of NegatedPropertySet</span></b></p>
-          <pre class="code nohighlight">
-Write μ' as the extension of a solution mapping:
-μ'(μ,x) = μ(x)   if x is a variable
-μ'(μ,t) = t      if t is a RDF term
+          <pre class="nohighlight">
+Write <var>μ'</var> as the extension of a solution mapping:
+<var>μ'</var>(<var>μ</var>, <var>x</var>) = <var>μ</var>(<var>x</var>)   if <var>x</var> is a variable
+<var>μ'</var>(<var>μ</var>, <var>t</var>) = <var>t</var>      if <var>t</var> is a RDF term
           </pre>
-          <pre class="code nohighlight">
-Let x and y be variables or RDF terms, and S a set of IRIs:
+          <pre class="nohighlight">
+Let <var>x</var> and <var>y</var> be variables or RDF terms, <var>S</var> a set of IRIs,
+and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
 
-   eval(Path(x, NPS(S), y)) = { μ | ∃ triple(μ'(μ,x), p, μ'(μ,y)) in G, such that the IRI of p ∉ S }
+   ppeval(<var>x</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>) = { <var>μ</var> | ∃ triple(<var>μ'</var>(<var>μ</var>,<var>x</var>), <var>p</var>, <var>μ'</var>(<var>μ</var>,<var>y</var>)) in <var>G</var>, such that the IRI of <var>p</var> ∉ <var>S</var> }
           </pre>
         </div>
       </section>
