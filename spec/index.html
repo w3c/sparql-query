@@ -9894,7 +9894,6 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
         <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
     End
     result is <var>V</var>
-<div class="issue" data-number="267"><var>V</var> is not a multiset of solution mappings but a set of RDF terms.</div>
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
      { { (<var>vx</var>, <var>t</var>), (<var>vy</var>, <var>n</var>) } |  <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
@@ -9906,6 +9905,7 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
     { { } } if { (<var>vy</var>:var, <var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
     { } otherwise
 </pre>
+<div class="issue" data-number="267"><var>V</var> is not a multiset of solution mappings but a set of RDF terms.</div>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="eval_negatedPropertySet">Evaluation of NegatedPropertySet</span></b></p>
