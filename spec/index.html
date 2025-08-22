@@ -9713,22 +9713,25 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
           <div id="pp-eval-notation">
             <b>Notation</b>
           </div>
-          <p>For every <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a> of the form
-            <a href="#defn_absPath" class="absOp">Path</a>(|X|, |ppe|, |Y|) we write</p>
+          <p>To denote the evaluation of the property path pattern, for every <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a> of the form
+            <a href="#defn_absPath" class="absOp">Path</a>(|X|, |ppe|, |Y|) </p>, we write the following:
           <pre class="nohighlight">ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>)</pre>
-          <p>to denote the evaluation of the property path pattern. This produces a multiset of solution
+          <p>This produces a multiset of solution
             mappings, each solution mapping having a binding for variables used (each of |X| and |Y| can
             be a variable). Some operators only produce a set of solution mappings.</p>
-          <p>Write</p>
           <table style="border-collapse: collapse; border-color: #000000; border-spacing: 10px ; border-width: 1px">
             <tbody>
               <tr>
+                <th>Write</th>
+                <th>When <code>|x|</code> is</th>
+              </tr>
+              <tr>
                 <td><code>|x|:term</code></td>
-                <td>when <code>|x|</code> is an RDF term</td>
+                <td>an RDF term</td>
               </tr>
               <tr>
                 <td><code>|x|:var</code></td>
-                <td>when <code>|x|</code> is a variable</td>
+                <td>a variable</td>
               </tr>
             </tbody>
           </table>
@@ -9761,7 +9764,7 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>ir
 ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) = { } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is not in the active graph
         </pre>
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
-          <code>SELECT * { |X| |iri| |Y|</i> }</code> at that point in the query evaluation.</p>
+          <code>SELECT&nbsp;*&nbsp;{&nbsp;|X|&nbsp;|iri|&nbsp;|Y|&nbsp;}</code> at that point in the query evaluation.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_inverse">Evaluation of Inverse Property Path</span></b></p>
           <p>Let |ppe| be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>, then:</p>
@@ -9771,7 +9774,7 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>ir
           <p><b>Definition: <span id="defn_evalPP_sequence">Evaluation of Sequence Property Path</span></b></p>
           <p>Let <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> be <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>. Let |V| be a fresh variable.</p>
           <pre class="nohighlight"><var>A</var> = <a href="#defn_algJoin" class="algFct">Join</a>( ppeval(<var>X</var>, <var>ppe<sub>1</sub></var>, <var>V</var>), ppeval(<var>V</var>, <var>ppe<sub>2</sub></var>, <var>Y</var>) )</pre>
-          <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>,<var>ppe<sub>2</sub></var>), <var>Y</var>) = <a href="#defn_algProject" class="algFct">Project</a>(<var>A</var>, <var>PV</var>)</pre>
+          <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>), <var>Y</var>) = <a href="#defn_algProject" class="algFct">Project</a>(<var>A</var>, <var>PV</var>)</pre>
           <p>where |PV| = { |v| ∈ {|X|,|Y|} | |v| is a variable}.</p>
 <div class="issue" data-number="266"><a href="#defn_algJoin" class="algFct">Join</a> produces a multiset of solution mappings but <a href="#defn_algProject" class="algFct">Project</a> expects a sequence as its first argument. Moreover, <a href="#defn_algProject" class="algFct">Project</a> produces a sequence but ppeval(..) should be a multiset.</div>
         </div>
@@ -9788,7 +9791,7 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>ir
           <p><b>Definition: <span id="defn_evalPP_alternative">Evaluation of Alternative Property Path</span></b></p>
           <p>Let <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> be <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>.
           <pre class="nohighlight">
-ppeval(<var>X</var>, <a href="#defn_ppeAlt" class="ppeOp">alt</a>(<var>ppe<sub>1</sub></var>,<var>ppe<sub>2</sub></var>), <var>Y</var>) =
+ppeval(<var>X</var>, <a href="#defn_ppeAlt" class="ppeOp">alt</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>), <var>Y</var>) =
     <a href="#defn_algUnion" class="algFct">Union</a>( ppeval(<var>X</var>, <var>ppe<sub>1</sub></var>, <var>Y</var>), ppeval(<var>X</var>, <var>ppe<sub>2</sub></var>, <var>Y</var>) )
           </pre>
         </div>
@@ -9811,11 +9814,11 @@ ppeval(<var>X</var>, <a href="#defn_ppeAlt" class="ppeOp">alt</a>(<var>ppe<sub>1
             Let <var>G</var> be the <a href="#defn_ActiveGraph">active graph</a>.</p>
           <pre class="nohighlight">
 ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:var) = 
-    { (<var>Y</var>, <var>yn</var>) | <var>yn</var> = <var>X</var> or {(<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>,<var>ppe</var>,<var>Y</var>) }
+    { (<var>Y</var>, <var>yn</var>) | <var>yn</var> = <var>X</var> or {(<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }
 </pre>
           <pre class="nohighlight">
 ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:term) =
-    { (<var>X</var>, <var>xn</var>) | <var>xn</var> = <var>Y</var> or {(<var>X</var>, <var>xn</var>)} in ppeval(<var>X</var>,<var>ppe</var>,<var>Y</var>) }
+    { (<var>X</var>, <var>xn</var>) | <var>xn</var> = <var>Y</var> or {(<var>X</var>, <var>xn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }
           </pre>
           <pre class="nohighlight">
 ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:term) = 
@@ -9823,11 +9826,11 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrO
     { } otherwise</pre>
           <pre class="nohighlight">
 ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:var) = 
-    { (<var>X</var>, <var>xn</var>) (<var>Y</var>, <var>yn</var>) | either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>) or {(<var>X</var>,<var>xn</var>), (<var>Y</var>,<var>yn</var>)} in ppeval(<var>X</var>,<var>ppe</var>,<var>Y</var>) }</pre>
+    { (<var>X</var>, <var>xn</var>) (<var>Y</var>, <var>yn</var>) | either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>) or {(<var>X</var>, <var>xn</var>), (<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }</pre>
         </div>
         <p>We define an auxiliary function, <a href="#defn_evalALP_1">ALP</a>, used in the definitions of <a href="#defn_evalZeroOrMorePath">ZeroOrMorePath</a> and
           <a href="#defn_evalOneOrMorePath">OneOrMorePath</a>. Note that the algorithm given here serves to specify the feature. An
-          implementation is free to implement evaluation by any method that produces the same results
+          implementor is free to implement evaluation by any method that produces the same results
           for the query overall. The <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a> and <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a> forms return matches based on
           distinct nodes connected by the path.</p>
         <p>The matching algorithm is based on following all paths, and detecting when a graph node
@@ -9840,7 +9843,8 @@ ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOn
           <p><b>Definition: <span id="defn_evalALP_1">Function ALP</span></b></p>
           <pre class="nohighlight">
 Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
-Let <var>eval</var>(<var>x</var>:term, <var>ppe</var>) be the evaluation of <var>ppe</var>, starting at RDF term <var>x</var>, 
+Let <var>eval</var>(<var>x</var>:term, <var>ppe</var>) be the evaluation of <var>ppe</var>,
+ starting at RDF term <var>x</var>, 
  and returning a multiset of RDF terms reached 
  by repeated matches of <var>ppe</var>.
 
@@ -9912,13 +9916,13 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
           <pre class="nohighlight">
 Write <var>μ'</var> as the extension of a solution mapping:
 <var>μ'</var>(<var>μ</var>, <var>x</var>) = <var>μ</var>(<var>x</var>)   if <var>x</var> is a variable
-<var>μ'</var>(<var>μ</var>, <var>t</var>) = <var>t</var>      if <var>t</var> is a RDF term
+<var>μ'</var>(<var>μ</var>, <var>t</var>) = <var>t</var>      if <var>t</var> is an RDF term
           </pre>
           <pre class="nohighlight">
 Let <var>x</var> and <var>y</var> be variables or RDF terms, <var>S</var> a set of IRIs,
 and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
 
-   ppeval(<var>x</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>) = { <var>μ</var> | ∃ triple(<var>μ'</var>(<var>μ</var>,<var>x</var>), <var>p</var>, <var>μ'</var>(<var>μ</var>,<var>y</var>)) in <var>G</var>, such that the IRI of <var>p</var> ∉ <var>S</var> }
+   ppeval(<var>x</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>) = { <var>μ</var> | ∃ triple(<var>μ'</var>(<var>μ</var>, <var>x</var>), <var>p</var>, <var>μ'</var>(<var>μ</var>, <var>y</var>)) in <var>G</var>, such that the IRI of <var>p</var> ∉ <var>S</var> }
           </pre>
         </div>
       </section>
