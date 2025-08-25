@@ -8730,10 +8730,10 @@ WHERE {
             query. The definition below provides a way of determining this from the
             abstract syntax tree of a query.</p>
           <p>Note that a subquery with a projection can hide variables; use of a variable in
-            <code>FILTER</code> or in <code>MINUS</code> does not cause the variable to be in-scope
+            `FILTER` or in `MINUS` does not cause the variable to be in-scope
             outside of those forms.</p>
           <p>Let <b>P</b>, <b>P1</b>, and <b>P2</b> be graph patterns, and <b>E</b>,
-            <b>E1</b>,..., through <b>En</b> be expressions. A variable <code>v</code> is in-scope if:</p>
+            <b>E1</b>,..., through <b>En</b> be expressions. A variable `v` is in-scope if:</p>
           <table style="border-collapse: collapse; border-color: #000000; border-spacing:5px; border-width: 1px">
             <tbody>
               <tr>
@@ -8742,70 +8742,81 @@ WHERE {
               </tr>
               <tr>
                 <td>Basic Graph Pattern (BGP)</td>
-                <td><code>v</code> occurs in the BGP</td>
+                <td>`v` occurs in the BGP</td>
               </tr>
               <tr>
                 <td>Path</td>
-                <td><code>v</code> occurs in the path</td>
+                <td>`v` occurs in the path</td>
               </tr>
               <tr>
-                <td>Group <code>{ P1 P2 ... }</code></td>
-                <td><code>v</code> is in-scope if it is in-scope in one or more of P1, P2, ...</td>
+                <td>Group `{ P1 P2 ... }`</td>
+                <td>`v` is in-scope if it is in-scope in one or more of P1, P2, ...</td>
               </tr>
               <tr>
-                <td><code>GRAPH term { P }</code></td>
-                <td><code>v</code> is <code>term</code> or <code>v</code> is in-scope in P</td>
+                <td>`GRAPH term { P }`</td>
+                <td>`v` is `term` or `v` is in-scope in P</td>
               </tr>
               <tr>
-                <td><code>{ P1 } UNION { P2 }</code></td>
-                <td><code>v</code> is in-scope in P1 or in-scope in P2</td>
+                <td>`{ P1 } UNION { P2 }`</td>
+                <td>`v` is in-scope in P1 or in-scope in P2</td>
               </tr>
               <tr>
-                <td><code>OPTIONAL {P}</code></td>
-                <td><code>v</code> is in-scope in P</td>
+                <td>`OPTIONAL {P}`</td>
+                <td>`v` is in-scope in P</td>
               </tr>
               <tr>
-                <td><code>SERVICE term {P}</code></td>
-                <td><code>v</code> is <code>term</code> or <code>v</code> is in-scope in P</td>
+                <td>`SERVICE term {P}`</td>
+                <td>`v` is `term` or `v` is in-scope in P</td>
               </tr>
               <tr>
-                <td><code>BIND (expr AS v)</code></td>
-                <td><code>v</code> is in-scope</td>
+                <td>`BIND (expr AS v)`</td>
+                <td>`v` is in-scope</td>
               </tr>
               <tr>
-                <td><code>SELECT .. v .. { P }</code></td>
-                <td><code>v</code> is in-scope</td>
+                <td>`SELECT .. v .. { P }`</td>
+                <td>`v` is in-scope</td>
               </tr>
               <tr>
-                <td><code>SELECT ... (expr AS v)</code></td>
-                <td><code>v</code> is in-scope</td>
+                <td>`SELECT ... (expr AS v)`</td>
+                <td>`v` is in-scope</td>
               </tr>
               <tr>
-                <td><code>GROUP BY (expr AS v)</code></td>
-                <td><code>v</code> is in-scope</td>
+                <td>`GROUP BY (expr AS v)`</td>
+                <td>`v` is in-scope</td>
               </tr>
               <tr>
-                <td><code>SELECT * { P }</code></td>
-                <td><code>v</code> is in-scope in <code>P</code></td>
+                <td>`SELECT * { P }`</td>
+                <td>`v` is in-scope in `P`</td>
               </tr>
               <tr>
-                <td><code>VALUES v { values }</code></td>
-                <td><code>v</code> is in-scope</td>
+                <td>`VALUES v { values }`</td>
+                <td>`v` is in-scope</td>
               </tr>
               <tr>
-                <td><code>VALUES varlist { values }</code></td>
-                <td><code>v</code> is in-scope if <code>v</code> is in <code>varlist</code></td>
+                <td>`VALUES varlist { values }`</td>
+                <td>`v` is in-scope if `v` is in `varlist`</td>
+              </tr>
+              <tr>
+                <td>`EXISTS` and `NOT EXISTS`</td>
+                <td>
+                  `v` is in-scope if it is in-scope for the
+                  <a href="#defn_sparqlSolutionMapping">solution mapping</a>
+                  where the expression containing `EXISTS` or `NOT EXISTS` is applied.
+                </td>
               </tr>
             </tbody>
           </table>
-          <p>The variable <code>v</code> must not be in-scope at the point of the <code>(expr AS
-              v)</code> form. The scoping for <code>(expr AS v)</code> applies immediately in
-            <code>SELECT</code> expressions.</p>
-          <p>In <code>BIND (expr AS v)</code> requires that the variable <code>v</code> is not
-            in-scope from the preceeding elements in the group graph pattern in which it is used.</p>
-          <p>In <code>SELECT</code>, the variable <code>v</code> must not be in-scope in the graph
-            pattern of the <code>SELECT</code> clause, nor used in another select expression earlier in
-            the clause.</p>
+          <p>The variable `v` must not be in-scope at the point of the
+            `(expr AS v)` form. The scoping for `(expr AS v)`
+            applies immediately in `SELECT` expressions.
+          </p>
+          <p>In `BIND (expr AS v)` requires that the variable `v` is not
+            in-scope from the preceeding elements in the group graph pattern in which it is used.
+          </p>
+          <p>In `SELECT`, the variable `v` must not be in-scope in the graph
+            pattern of the `SELECT` clause, nor used in another select expression earlier in
+            the clause.
+          </p>
         </section>
         <section id="convertGraphPattern">
           <h4>Converting Graph Patterns</h4>
@@ -10971,52 +10982,95 @@ _:x rdf:type xsd:decimal .
           section 6 <a data-cite="xml11#sec-notation">Notation</a>.</p>
         <p>Notes:</p>
         <ol>
-          <li>Keywords are matched in a case-insensitive manner with the exception of
-            the keyword '<code>a</code>'  which, in line with Turtle and N3, is used
-            in place of the IRI <code>rdf:type</code>
-            (in full, <code><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a></code>).</li>
-          <li>Escape sequences are case sensitive.</li>
-          <li>When tokenizing the input and choosing grammar rules, the longest match is chosen.</li>
-          <li>The SPARQL grammar is LL(1) when the rules with uppercased names are used as terminals.</li>
-          <li>There are two entry points into the grammar: <code>QueryUnit</code> for the SPARQL query language
-            and <code>UpdateUnit</code> for the SPARQL update language.</li>
-          <li>In signed numbers, no white space is allowed between the sign and the number.
+          <li>
+            Keywords are matched in a case-insensitive manner with the exception of
+            the keyword '`a`'  which, in line with Turtle and N3, is used
+            in place of the IRI `rdf:type` (in full, 
+            <code><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a></code>).
+          </li>
+          <li>
+            Escape sequences are case sensitive.
+          </li>
+          <li>
+            When tokenizing the input and choosing grammar rules, the longest match is chosen.
+          </li>
+          <li>
+            The SPARQL grammar is LL(1) when the rules with uppercased names are used as terminals.
+          </li>
+          <li>
+            There are two entry points into the grammar: `QueryUnit` for the SPARQL query language
+            and `UpdateUnit` for the SPARQL update language.
+          </li>
+          <li>
+            In signed numbers, no white space is allowed between the sign and the number.
             The <code><a href="#rAdditiveExpression">AdditiveExpression</a></code> grammar rule allows for this by
             covering the two cases of an expression followed by a signed number. These 
-            produce an addition or subtraction of the unsigned number as appropriate.</li>
-          <li>The tokens <code><a href="#rInsertData">INSERT DATA</a></code>, 
+            produce an addition or subtraction of the unsigned number as appropriate.
+          </li>
+          <li>
+            The tokens <code><a href="#rInsertData">INSERT DATA</a></code>, 
             <code><a href="#rDeleteData">DELETE DATA</a></code> and 
             <code><a href="#rDeleteWhere">DELETE WHERE</a></code> allow any amount of white space between the words.
-            The single space version is used in the grammar for clarity.</li>
-          <li>The <code><a href="#rQuadData">QuadData</a></code> and 
+            The single space version is used in the grammar for clarity.
+          </li>
+          <li>
+            The <code><a href="#rQuadData">QuadData</a></code> and 
             <code><a href="#rQuadPattern">QuadPattern</a></code> 
             rules both use rule <code><a href="#rQuads">Quads</a></code>. The rule
             <code><a href="#rQuadData">QuadData</a></code>, used in 
             <a href="#rInsertData"><code>INSERTDATA</code></a> and 
             <a href="#rDeleteData"><code>DELETE DATA</code></a>, 
-            must not allow variables in the quad patterns.</li>
-          <li>Blank node syntax is not allowed in <code><a href="#rDeleteWhere">DELETE WHERE</a></code>,
-            the <code><a href="#rDeleteClause">DeleteClause</a></code> for 
-            <code>DELETE</code>,
-            nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.</li>
-          <li>Rules for limiting the use of blank node identifiers are given in <a href="#grammarBNodes">section 19.6</a>.</li>
-          <li>The number of variables in the variable list of <code>VALUES</code> block 
-            must be the same as the number of each list of associated values in the <code>DataBlock</code>.</li>
-          <li>Variables introduced by <code>AS</code> in a <code>SELECT</code> clause
-            must not already be <a href="#variableScope">in-scope</a>.</li>
-          <li>The variable assigned in a <code>BIND</code> clause must not be already 
+            must not allow variables in the quad patterns.
+          </li>
+          <li>
+            Blank node syntax is not allowed in 
+            <code><a href="#rDeleteWhere">DELETE WHERE</a></code>,
+            in a <code><a href="#rDeleteClause">DeleteClause</a></code>,
+            nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.
+          </li>
+          <li>
+            Rules for limiting the use of blank node identifiers are given in 
+            <a href="#grammarBNodes">section 19.6</a>.
+          </li>
+          <li>
+            The number of variables in the variable list of <code>VALUES</code> block
+            must be the same as the number of each list of associated values in the
+            <code>DataBlock</code>.
+          </li>
+          <li>
+            Variables introduced by <code>AS</code> in a <code>SELECT</code> clause
+            must not already be <a href="#variableScope">in-scope</a>.
+          </li>
+          <li>
+            The variable assigned in a <code>BIND</code> clause must not be already 
             in-use within the immediately preceding <code><a href="#rTriplesBlock">TriplesBlock</a></code> within a
-            <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>.</li>
-          <li>Aggregate functions can be one of the 
+            <code><a href="#rGroupGraphPattern">GroupGraphPattern</a></code>.
+          </li>
+          <li>
+            Aggregate functions can be one of the 
             <a href="#rAggregate">built-in keywords for aggregates</a> 
-            or a custom aggregate, which is syntactically a <a href="#rFunctionCall">function
-              call</a>. Aggregate functions may only be used in 
+            or a custom aggregate, which is syntactically a 
+            <a href="#rFunctionCall">function call</a>. 
+            Aggregate functions may only be used in
             <a href="#rSelectClause">SELECT</a>, <a href="#rHavingClause">HAVING</a>
-            and <a href="#rOrderClause">ORDER BY</a> clauses.</li>
-          <li>The expression argument of an aggregate function can not contain an aggregate function.</li>
-          <li>Only custom aggregate functions use the <code>DISTINCT</code> keyword
-            in a <a href="#rFunctionCall">function call</a>.</li>
-          <li>A <a href="#rReifier">reifier</a> or
+            and <a href="#rOrderClause">ORDER BY</a> clauses.
+          </li>
+	        <li>
+            Any variable that is assigned to in the graph pattern of `EXISTS` or `NOT EXISTS`
+            must not be <a href="#variableScope">in-scope</a>. This applies to `BIND`, 
+            variables introduced by `AS` in a `SELECT` clause, 
+            variables introduced by `AS` in `GROUP BY`,
+            and variables in a `VALUES` clause.
+          </li>
+          <li>
+            The expression argument of an aggregate function can not contain an aggregate function.
+          </li>
+          <li>
+            Only custom aggregate functions use the <code>DISTINCT</code> keyword
+            in a <a href="#rFunctionCall">function call</a>.
+          </li>
+          <li>
+            A <a href="#rReifier">reifier</a> or
             <a href="#rAnnotationBlockPath">annotation syntax</a>
             is only permitted after a triple when the property position is
             a simple path (an IRI, the keyword <code>a</code>, or a variable),
