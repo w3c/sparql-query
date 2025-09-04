@@ -11970,7 +11970,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[135]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rUnaryExpression">UnaryExpression</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">&nbsp;&nbsp;<span class="token">'!'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>|	<span class="token">'+'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>|	<span class="token">'-'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>|	<a href="#rPrimaryExpression">PrimaryExpression</a></code></td>
+                <td><code class="gRuleBody">&nbsp;&nbsp;<span class="token">'!'</span> <a href="#rUnaryExpression">UnaryExpression</a> <br/>|	<span class="token">'+'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>|	<span class="token">'-'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>|	<a href="#rPrimaryExpression">PrimaryExpression</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12535,7 +12535,9 @@ _:x rdf:type xsd:decimal .
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-13">errata-query-13</a>: Fix definition of Project cardinality in <a href="#sparqlAlgebra" class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-18">errata-query-18</a>: Fix table in <a href="#sparqlTranslatePathPatterns" class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-19">errata-query-19</a>: Fix translation in <a href="#sparqlTranslateGraphPatterns" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-23">errata-query-23</a>: Fix inconsistenties between <a href="#defn_aggMin">MIN</a> and <a href="#defn_aggMax">MAX</a></li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-23">errata-query-23</a>: Fix inconsistenties between <a href="#defn_aggMin">MIN</a> and <a
+href="#defn_aggMax">MAX</a></li>
+              <li>Grammar rule `UnaryExpression` to allow `!!`</li>
             </ul>
         </li>
       </ul>

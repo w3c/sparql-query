@@ -132,7 +132,7 @@ RelationalExpression      ::= NumericExpression ( '=' NumericExpression | '!=' N
 NumericExpression         ::= AdditiveExpression
 AdditiveExpression        ::= MultiplicativeExpression ( '+' MultiplicativeExpression | '-' MultiplicativeExpression | ( NumericLiteralPositive | NumericLiteralNegative ) ( ( '*' UnaryExpression ) | ( '/' UnaryExpression ) )* )*
 MultiplicativeExpression  ::= UnaryExpression ( '*' UnaryExpression | '/' UnaryExpression )*
-UnaryExpression           ::= '!' PrimaryExpression 
+UnaryExpression           ::= '!' UnaryExpression 
                           |   '+' PrimaryExpression 
                           |   '-' PrimaryExpression 
                           |   PrimaryExpression
