@@ -9716,7 +9716,7 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
           <p>To denote the evaluation of the property path pattern, for every
           <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>
           of the form
-            <a href="#defn_absPath" class="absOp">Path</a>(|X|, |ppe|, |Y|) </p>, we write the following:
+            <a href="#defn_absPath" class="absOp">Path</a>(|X|, |ppe|, |Y|), we write the following:</p>
           <pre class="nohighlight">ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>)</pre>
           <p>This produces a multiset of solution
             mappings, each solution mapping having a binding for variables used (each of |X| and |Y| can
@@ -9750,20 +9750,24 @@ ppeval(<var>X</var>, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</va
         </div>
         <p>If both |X| and |Y| are variables, this is the same as:</p>
         <pre class="nohighlight">
-ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:var) = { (<var>X</var>, <var>xn</var>) (<var>Y</var>, <var>yn</var>) | <var>xn</var> and <var>yn</var> are RDF terms and triple (<var>xn</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
+ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:var) =
+    { (<var>X</var>, <var>xn</var>:term) (<var>Y</var>, <var>yn</var>:term) | triple (<var>xn</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
         <p>If |X| is a variable and |Y| an RDF term:</p>
         <pre class="nohighlight">
-ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) = { (<var>X</var>, <var>xn</var>) | <var>xn</var> is an RDF term and triple (<var>xn</var>, <var>iri</var>, <var>Y</var>) is in the active graph }</pre>
+ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) =
+    { (<var>X</var>, <var>xn</var>:term) | triple (<var>xn</var>, <var>iri</var>, <var>Y</var>) is in the active graph }</pre>
         <p>If |X| is an RDF term and |Y| is a variable:</p>
         <pre class="nohighlight">
-ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:var) = { (<var>Y</var>, <var>yn</var>) | <var>yn</var> is an RDF term and triple (<var>X</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:var) =
+    { (<var>Y</var>, <var>yn</var>:term) | triple (<var>X</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
         <p>If both |X| and |Y| are RDF terms:</p>
         <pre class="nohighlight">
 ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term)
     = { μ<sub>0</sub> } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is in the active graph
     = { { } } = Ω<sub>0</sub> 
 
-ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) = { } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is not in the active graph
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) =
+     { } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is not in the active graph
         </pre>
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
           <code>SELECT&nbsp;*&nbsp;{&nbsp;|X|&nbsp;|iri|&nbsp;|Y|&nbsp;}</code> at that point in the query evaluation.</p>
@@ -9785,7 +9789,7 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>ir
         <p>where <var>P<sub>1</sub></var> is a
           <a href="#defn_AlgebraicPropertyPathExpression">property path expression</a>
           that can be <a href="#sparqlTranslatePathExpressions">translated</a> into the
-          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> <var>ppe<sub>1</sub></var>
+          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> <var>ppe<sub>1</sub></var>,
           and <var>P<sub>2</sub></var> can be translated into <var>ppe<sub>2</sub></var>.
           This observation is based on the fact that a blank node <code>_:a</code> acts like a variable (under simple
           entailment) except it does not appear in the results from <code>SELECT *</code>.</p>
@@ -9802,12 +9806,12 @@ ppeval(<var>X</var>, <a href="#defn_ppeAlt" class="ppeOp">alt</a>(<var>ppe<sub>1
         <p>where <var>P<sub>1</sub></var> is a
           <a href="#defn_AlgebraicPropertyPathExpression">property path expression</a>
           that can be <a href="#sparqlTranslatePathExpressions">translated</a> into the
-          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> <var>ppe<sub>1</sub></var>
+          <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> <var>ppe<sub>1</sub></var>,
           and <var>P<sub>2</sub></var> can be translated into <var>ppe<sub>2</sub></var>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_nodeSet">Node set of a graph</span></b></p>
           <p>The node set of a graph |G|, <a href="#defn_nodeSet">nodes</a>(|G|), is:</p>
-          <p><a href="#defn_nodeSet">nodes</a>(|G|) = { |n| | |n| is an RDF term that is used as a subject or object of a triple of
+          <p><a href="#defn_nodeSet">nodes</a>(|G|) = { |n| | |n| is an RDF term that is used as a subject or object of an asserted triple of
             |G|}</p>
         </div>
         <div class="defn">
@@ -9828,7 +9832,9 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrO
     { } otherwise</pre>
           <pre class="nohighlight">
 ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:var) = 
-    { (<var>X</var>, <var>xn</var>) (<var>Y</var>, <var>yn</var>) | either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>) or {(<var>X</var>, <var>xn</var>), (<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }</pre>
+    { (<var>X</var>, <var>xn</var>) (<var>Y</var>, <var>yn</var>) | 
+        either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>)
+        or {(<var>X</var>, <var>xn</var>), (<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }</pre>
         </div>
         <p>We define an auxiliary function, <a href="#defn_evalALP_1">ALP</a>, used in the definitions of <a href="#defn_evalZeroOrMorePath">ZeroOrMorePath</a> and
           <a href="#defn_evalOneOrMorePath">OneOrMorePath</a>. Note that the algorithm given here serves to specify the feature. An
@@ -9848,7 +9854,8 @@ Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebra
 Let <var>eval</var>(<var>x</var>:term, <var>ppe</var>) be the evaluation of <var>ppe</var>,
  starting at RDF term <var>x</var>, 
  and returning a multiset of RDF terms reached 
- by repeated matches of <var>ppe</var>.
+    starting at RDF term <var>x</var>, and returning a multiset
+    of RDF terms reached by repeated matches of <var>ppe</var>.
 
   <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>) = 
       Let <var>V</var> = empty set
@@ -9875,7 +9882,8 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOr
     { { (<var>vy</var>, <var>n</var>) } | <var>n</var> in <a href="#defn_evalALP_1">ALP</a>(<var>X</var>, <var>ppe</var>) }
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
-    { { (<var>vx</var>, <var>t</var>), (<var>vy</var>, <var>n</var>) } |  <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
+    { { (<var>vx</var>, <var>t</var>), (<var>vy</var>, <var>n</var>) } |  
+      <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) = 
     ppeval(<var>y</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeInv" class="ppeOp">inv</a>(<var>ppe</var>)), <var>vx</var>:var)
@@ -9902,7 +9910,8 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
     result is <var>V</var>
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
-     { { (<var>vx</var>, <var>t</var>), (<var>vy</var>, <var>n</var>) } |  <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
+     { { (<var>vx</var>, <var>t</var>), (<var>vy</var>, <var>n</var>) } |
+         <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) =
     ppeval(<var>y</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<a href="#defn_ppeInv" class="ppeOp">inv</a>(<var>ppe</var>)), <var>vx</var>)
@@ -9924,7 +9933,8 @@ Write <var>μ'</var> as the extension of a solution mapping:
 Let <var>x</var> and <var>y</var> be variables or RDF terms, <var>S</var> a set of IRIs,
 and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
 
-   ppeval(<var>x</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>) = { <var>μ</var> | ∃ triple(<var>μ'</var>(<var>μ</var>, <var>x</var>), <var>p</var>, <var>μ'</var>(<var>μ</var>, <var>y</var>)) in <var>G</var>, such that the IRI of <var>p</var> ∉ <var>S</var> }
+   ppeval(<var>x</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>) =
+       { <var>μ</var> | ∃ triple(<var>μ'</var>(<var>μ</var>, <var>x</var>), <var>p</var>, <var>μ'</var>(<var>μ</var>, <var>y</var>)) in <var>G</var>, such that the IRI of <var>p</var> ∉ <var>S</var> }
           </pre>
         </div>
       </section>
