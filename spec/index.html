@@ -5418,9 +5418,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td>
-                ( A.subject = B.subject ) <a href="#logical-and-operator" class="SPARQLoperator">&amp;&amp;</a><br/>
-                ( A.predicate = B.predicate ) <a href="#logical-and-operator" class="SPARQLoperator">&amp;&amp;</a><br/>
-                ( A.object = B.object )
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a href="#func-sameTerm">compareTripleTerm</a>(A, B), 0)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5445,9 +5443,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td>
-                ( A.subject != B.subject ) <a href="#logical-or-operator" class="SPARQLoperator">||</a><br/>
-                ( A.predicate != B.predicate ) <a href="#logical-or-operator" class="SPARQLoperator">||</a><br/>
-                ( A.object != B.object )
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a href="#func-sameTerm">compareTripleTerm</a>(A, B), 0))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5466,6 +5462,42 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type RDFterm">RDF term</span></td>
               <td class="xpathOp">
                 <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a href="#func-sameValue">sameValue</a>(A, B))
+              </td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td>
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a href="#func-sameTerm">compareTripleTerm</a>(A, B), -1)
+              </td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&lt;=</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td>
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a href="#func-sameTerm">compareTripleTerm</a>(A, B), 1))
+              </td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td>
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a href="#func-sameTerm">compareTripleTerm</a>(A, B), 1)
+              </td>
+              <td>xsd:boolean</td>
+            </tr>
+            <tr>
+              <th><a href="#rRelationalExpression" title="RelationalExpression">A <span class="FAOTtoken">&gt;=</span> B</a></th>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
+              <td>
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a href="#func-sameTerm">compareTripleTerm</a>(A, B), -1))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -6082,6 +6114,66 @@ class="expression">expression, ....</span>)
             <p id="sameValue-old-name" class="note">
               This function was called `RDFterm-equal` up until SPARQL 1.1.
             </p>
+          </section>
+
+          <section id="func-compareTripleTerm">
+            <h5>compareTripleTerm</h5>
+            <pre class="prototype nohighlight">
+              <span class="return">xsd:integer</span> <span class="operator" style="text-transform: none;">compareTripleTerm</span> (<span class="type"><span class="type RDFterm">Triple term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">Triple term</span></span> <span class="name">term2</span>)
+            </pre>
+
+            <p>This function cannot be used directly in expressions. The purpose
+              of this function is to define the semantics of value-comparison operators on <a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Terms</a> such as "=" and "&lt;" operator
+              in Section <a href="#OperatorMapping" class="sectionRef"></a>.
+            </p>
+
+            <p>This function returns -1, 0, 1, or throws an error.
+                Comparison is performed pairwise on the components of the triple terms in the order subject, predicate, object until the result is determined.
+                An error is thrown if comparing two components results in an error.</p>
+
+            <p>The result of this function is determined by going through the following steps.</p>
+
+            <ol>
+              <li>If <code>SUBJECT(A) = SUBJECT(B)</code> evaluates to true, go to the next step.
+                  If <code>SUBJECT(A) &lt; SUBJECT(B)</code> evaluates to true, return -1.
+                  If <code>SUBJECT(A) &gt; SUBJECT(B)</code> evaluates to true, return 1.
+                  If any of the evalutions cause an error, raise an error.
+              </li>
+              <li>If <code>PREDICATE(A) = PREDICATE(B)</code> evaluates to true, go to the next step.
+                  If <code>PREDICATE(A) &lt; PREDICATE(B)</code> evaluates to true, return -1.
+                  If <code>PREDICATE(A) &gt; PREDICATE(B)</code> evaluates to true, return 1.
+                  If any of the evalutions cause an error, raise an error.
+              </li>
+              <li>If <code>OBJECT(A) = OBJECT(B)</code> evaluates to true, return 0.
+                  If <code>OBJECT(A) &lt; OBJECT(B)</code> evaluates to true, return -1.
+                  If <code>OBJECT(A) &gt; OBJECT(B)</code> evaluates to true, return 1.
+                  If any of the evalutions cause an error, raise an error.
+              </li>
+            </ol>
+
+            <p>Examples:</p>
+            <div class="result">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>compareTripleTerm</th>
+                    <th>Results</th>
+                  </tr>
+                  <tr>
+                    <td><code>compareTripleTerm(&lt;&lt;(:s :p :o)&gt;&gt;, &lt;&lt;(:s :p :o)&gt;&gt;)</code></td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td><code>compareTripleTerm(&lt;&lt;(:s :p 123)&gt;&gt;, &lt;&lt;(:s :p 124)&gt;&gt;)</code></td>
+                    <td>-1</td>
+                  </tr>
+                  <tr>
+                    <td><code>compareTripleTerm(&lt;&lt;(:s :p 123)&gt;&gt;, &lt;&lt;(:s :p 122)&gt;&gt;)</code></td>
+                    <td>1</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <section id="func-isIRI">
