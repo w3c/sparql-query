@@ -4695,6 +4695,15 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         <span id="evaluation"><!-- Legacy name --></span>
         <h3>Expression Evaluation</h3>
         <p>
+          A SPARQL expression is evaluated
+          with respect to a <a href="#defn_sparqlSolutionMapping">solution mapping</a>
+          and in the context of an <a href="#sparqlDataset">RDF dataset</a>
+          with an <a href="#defn_ActiveGraph">active graph</a>.
+          The result of such an evaluation is either
+          an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> or
+          an [=error=].
+        </p>
+        <p>
           SPARQL provides a subset of the functions and operators defined by 
           <a data-cite="XPATH-FUNCTIONS-31#">XPath and XQuery Functions and Operators</a>.
           The following rules accommodate the differences in the data and execution
@@ -10048,16 +10057,18 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             |D| be a <a href="#sparqlDataset">dataset</a>,
             and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
             We define:</p>
-          <p><a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) = { <var>μ</var> in <var>Ω</var>  | <var>expr</var>(<var>μ</var>) is an expression that has an
-            [=effective boolean value=] of true }</p>
-<div class="issue" data-number="254">
-  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
+          <p><a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) =
+            { <var>μ</var> in <var>Ω</var>  |
+            |expr|(<var>μ</var>, |D|, |G|) is an RDF term |t|
+            such that <a href="#func-ebv">EBV</a>(|t|) is `"true"^^xsd:boolean` }</p>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) )
             = <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> )</p>
-          <blockquote>
-            Note that evaluating an <code>exists(pattern)</code> expression uses the dataset |D| and
-            active graph |G|. See the <a href="#defn_evalFilter">evaluation of filter</a>.
-          </blockquote>
+          <p>
+            where, for every solution mapping <var>μ</var>,
+            |expr|(<var>μ</var>, |D|, |G|) is the result of
+            <a href="#expression-evaluation">evaluating</a> expression |expr|
+            with respect to <var>μ</var>, in the context of dataset |D| with active graph |G|.
+          </p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algJoin">Join</span></b></p>
@@ -10077,29 +10088,43 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           of <var>μ</var> is the sum of the multiplicities from all possibilities.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algDiff">Diff</span></b></p>
-          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings and <var>expr</var> be an
-            <a href="#expressions">expression</a>. We define:</p>
-          <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> such that ∀ <var>μ'</var> in
-            <var>Ω<sub>2</sub></var>, either <var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a> or <var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
-            <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an [=effective boolean value=] of true }</p>
-<div class="issue" data-number="254">
-  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings,
+            <var>expr</var> be an <a href="#expressions">expression</a>,
+            |D| be a <a href="#sparqlDataset">dataset</a>,
+            and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
+            We define:</p>
+          <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> such that ∀ <var>μ'</var> in
+            <var>Ω<sub>2</sub></var>, either i)&nbsp;<var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a>,
+            or
+            ii)&nbsp;<var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
+            |expr|(merge(<var>μ</var>, <var>μ'</var>), |D|, |G|) is an [=error=],
+            or
+            iii)&nbsp;<var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
+            |expr|(merge(<var>μ</var>, <var>μ'</var>), |D|, |G|) is an RDF term |t| for which
+            <a href="#func-ebv">EBV</a>(|t|) is not `"true"^^xsd:boolean` }</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>1</sub></var> )</p>
+          <p>
+            where, for every solution mapping <var>μ</var>,
+            |expr|(<var>μ</var>, |D|, |G|) is the result of
+            <a href="#expression-evaluation">evaluating</a> expression |expr|
+            with respect to <var>μ</var>, in the context of dataset |D| with active graph |G|.
+          </p>
         </div>
-        <p>The evaluation of <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an
-          [=effective boolean value=] of true if it evaluates to false or if it raises an error.</p>
         <p><a href="#defn_algDiff" class="algFct">Diff</a> is used internally for the definition of <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algLeftJoin">LeftJoin</span></b></p>
-          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings and <var>expr</var> be an
-            <a href="#expressions">expression</a>. We define:</p>
-          <p><a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>,
-            <var>Ω<sub>2</sub></var>)) ∪ <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>)</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>)) ) +
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings,
+            <var>expr</var> be an <a href="#expressions">expression</a>,
+            |D| be a <a href="#sparqlDataset">dataset</a>,
+            and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
+            We define:</p>
+          <p><a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) = <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>,
+            <var>Ω<sub>2</sub></var>), |D|, |G|) ∪ <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>), |D|, |G|) ) +
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>,
-            <var>expr</var>) )</p>
+            <var>expr</var>, |D|, |G|) )</p>
         </div>
 
         <div class="defn">
@@ -10128,14 +10153,28 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           pattern <code>P</code>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algExtend">Extend</span><span id="defn_extend"><!-- obsolete id --></span></b></p>
-          <p>Let <var>μ</var> be a solution mapping, <var>Ω</var> a multiset of solution mappings, <var>var</var> a variable
-            and <var>expr</var> be an <a href="#expressions">expression</a>, then we define:</p>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> ∪ { (<var>var</var>, <var>value</var>) | <var>var</var> not in dom(<var>μ</var>) and <var>value</var> = <var>expr</var>(<var>μ</var>) }</p>
-<div class="issue" data-number="254">
-  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> if <var>var</var> not in dom(<var>μ</var>) and expr(<var>μ</var>) is an error</p>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a> is undefined if <var>var</var> in dom(<var>μ</var>).</p>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>) = { <a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) | <var>μ</var> in <var>Ω</var> }</p>
+          <p>Let <var>μ</var> be a solution mapping, <var>Ω</var> a multiset of solution mappings,
+            <var>var</var> be a variable,
+            <var>expr</var> be an <a href="#expressions">expression</a>,
+            |D| be a <a href="#sparqlDataset">dataset</a>,
+            and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
+            We define:</p>
+          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = { |Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) | <var>μ</var> in <var>Ω</var> },</p>
+          <p>where, for every solution mapping <var>μ</var>,</p>
+          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = <var>μ</var> ∪ { (<var>var</var>, |expr|(<var>μ</var>, |D|, |G|)) }
+            if <var>var</var> not in dom(<var>μ</var>) and
+            |expr|(<var>μ</var>, |D|, |G|) is an RDF term,</p>
+          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = <var>μ</var>
+            if <var>var</var> not in dom(<var>μ</var>) and
+            |expr|(<var>μ</var>, |D|, |G|) is an [=error=],</p>
+          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) is undefined
+            if <var>var</var> in dom(<var>μ</var>), and</p>
+          <p>|expr|(<var>μ</var>, |D|, |G|) is the result of
+            <a href="#expression-evaluation">evaluating</a> expression |expr|
+            with respect to <var>μ</var>, in the context of dataset |D| with active graph |G|.
+          </p>
+<div class="issue" data-number="290">
+  We need to define <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>, |D|, |G|) )</div>
         </div>
         <p>Write [ <var>x</var> | <var>C</var> ] for a sequence of elements where <var>C</var> is a condition on <var>x</var>.</p>
         <div class="defn">
@@ -10631,7 +10670,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <div class="defn">
             <p><b>Definition: <span id="defn_evalLeftJoin">Evaluation of LeftJoin</span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|) ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>), |F| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|) ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>), |F|, |D|, |G| )
             </p>
           </div>
           <div class="defn">
@@ -10702,9 +10741,9 @@ the result is <var>Ω</var>
           </div>
           <p>Note that if <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>i</sub></var>) is an error, it is ignored.</p>
           <div class="defn">
-            <p><b>Definition: <span id="defn_evalExtend">Evaluation of <a href="#defn_absExtend" class="absOp">Extend</a></span></b></p>
+            <p><b>Definition: <span id="defn_evalExtend">Evaluation of Extend</span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absExtend" class="absOp">Extend</a>(|P|, |var|, |expr|) ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |var|, |expr| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absExtend" class="absOp">Extend</a>(|P|, |var|, |expr|) ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |var|, |expr|, |D|, |G| )
             </p>
           </div>
           <div class="defn">
@@ -12652,6 +12691,9 @@ _:x rdf:type xsd:decimal .
                   from <i>eval</i> to <i>reachableTerms</i>.</li>
                 <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors</a>.</li>
                 <li>Rename section "Filter evaluation" as <a href="#expression-evaluation" class="sectionRef"></a>.</li>
+                <li>Improve definitions of all algebra operators that involve expressions
+                  (<a href="#defn_algFilter" class="algFct">Filter</a>, <a href="#defn_algDiff" class="algFct">Diff</a>,
+                  <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>, and <a href="#defn_algExtend" class="algFct">Extend</a>).</li>
             </ul>
         </li>
         <li>
