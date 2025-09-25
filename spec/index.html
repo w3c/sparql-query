@@ -3674,7 +3674,7 @@ ORDER BY ?name DESC(?emp)
         <p>The <a href="#op_lt">"&lt;" operator</a> (see the <a href="#OperatorMapping">Operator
             Mapping</a> and <a href="#operatorExtensibility">17.3.1 Operator Extensibility</a>) defines
           the relative order of pairs of <code>numerics</code>,
-          <code>xsd:strings</code>, <code>xsd:booleans</code> and <code>xsd:dateTimes</code>. Pairs of
+          <code>xsd:strings</code>, <code>xsd:booleans</code>, <code>xsd:dateTimes</code>, and <a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Terms</a>. Pairs of
           IRIs are ordered by comparing them as literals with datatype <code>xsd:string</code>.</p>
         <p>SPARQL also fixes an order between some kinds of RDF terms that would not otherwise be
           ordered:</p>
@@ -3683,6 +3683,7 @@ ORDER BY ?name DESC(?emp)
           <li>Blank nodes</li>
           <li>IRIs</li>
           <li>RDF literals</li>
+          <li>Triple terms</li>
         </ol>
         <p>SPARQL does not define a total ordering of all possible RDF terms. Here are a few examples
           of pairs of terms for which the relative order is undefined:</p>
