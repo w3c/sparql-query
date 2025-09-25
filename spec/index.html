@@ -9949,11 +9949,9 @@ ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOn
           <p><b>Definition: <span id="defn_evalALP_1">Function ALP</span></b></p>
           <pre class="nohighlight">
 Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
-Let <var>eval</var>(<var>x</var>:term, <var>ppe</var>) be the evaluation of <var>ppe</var>,
- starting at RDF term <var>x</var>, 
- and returning a multiset of RDF terms reached 
-    starting at RDF term <var>x</var>, and returning a multiset
-    of RDF terms reached by repeated matches of <var>ppe</var>.
+Let <span id="defn_reachableTerms"><var>reachableTerms</var></span>(<var>x</var>:term, <var>ppe</var>) be the set of RDF terms
+ reached by repeated matches of <var>ppe</var>,
+ when starting at RDF term <var>x</var>.
 
   <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>) = 
       Let <var>V</var> = empty set
@@ -9965,7 +9963,7 @@ Let <var>eval</var>(<var>x</var>:term, <var>ppe</var>) be the evaluation of <var
   <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>:set of RDF terms) =
       if ( <var>x</var> in <var>V</var> ) return 
       add <var>x</var> to <var>V</var>
-      <var>X</var> = <var>eval</var>(<var>x</var>, <var>ppe</var>) 
+      <var>X</var> = <a href="#defn_reachableTerms"><var>reachableTerms</var></a>(<var>x</var>, <var>ppe</var>)
       For <var>n</var>:term in <var>X</var>
           <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
           End
@@ -10000,7 +9998,7 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOr
 # recording nodes for results.
 
 ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
-    Let <var>X</var> = <var>eval</var>(<var>x</var>, <var>ppe</var>)
+    Let <var>X</var> = <a href="#defn_reachableTerms"><var>reachableTerms</var></a>(<var>x</var>, <var>ppe</var>)
     Let <var>V</var> = the empty multiset
     For <var>n</var> in <var>X</var>
         <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
@@ -12646,6 +12644,12 @@ _:x rdf:type xsd:decimal .
                   syntax as links to their respective definition; similarly, mark up all
                   mentions of operators of the <a href="#sparqlAlgebra">SPARQL algebra</a>
                   as links to their respective definition</li>
+                <li>Rename the function used to define the evaluation of property path expressions
+                  in <a href="#PropertyPathPatterns" class="sectionRef"></a>
+                  from <i>eval</i> to <i>ppeval</i>.</li>
+                <li>Rename the function used within the definition of
+                  the <a href="#defn_evalALP_1">ALP</a> function
+                  from <i>eval</i> to <i>reachableTerms</i>.</li>
                 <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors</a>.</li>
                 <li>Rename section "Filter evaluation" as <a href="#expression-evaluation" class="sectionRef"></a>.</li>
             </ul>
