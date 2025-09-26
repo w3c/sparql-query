@@ -6124,8 +6124,10 @@ class="expression">expression, ....</span>)
             </pre>
 
             <p>This function cannot be used directly in expressions. The purpose
-              of this function is to define the semantics of value-comparison operators on <a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Terms</a> such as "=" and "&lt;" operator
-              in Section <a href="#OperatorMapping" class="sectionRef"></a>.
+              of this function is to define the semantics of comparison operators,
+              such as "=" and "&lt;",
+              for the case of comparing <a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Terms</a>.
+              The function is used in Section <a href="#OperatorMapping" class="sectionRef"></a>.
             </p>
 
             <p>This function returns -1, 0, 1, or throws an error.
@@ -6138,17 +6140,17 @@ class="expression">expression, ....</span>)
               <li>If <code>SUBJECT(A) = SUBJECT(B)</code> evaluates to true, go to the next step.
                   If <code>SUBJECT(A) &lt; SUBJECT(B)</code> evaluates to true, return -1.
                   If <code>SUBJECT(A) &gt; SUBJECT(B)</code> evaluates to true, return 1.
-                  If any of the evalutions cause an error, raise an error.
+                  If any of the evaluations causes an error, raise an error.
               </li>
               <li>If <code>PREDICATE(A) = PREDICATE(B)</code> evaluates to true, go to the next step.
                   If <code>PREDICATE(A) &lt; PREDICATE(B)</code> evaluates to true, return -1.
                   If <code>PREDICATE(A) &gt; PREDICATE(B)</code> evaluates to true, return 1.
-                  If any of the evalutions cause an error, raise an error.
+                  If any of the evaluations causes an error, raise an error.
               </li>
               <li>If <code>OBJECT(A) = OBJECT(B)</code> evaluates to true, return 0.
                   If <code>OBJECT(A) &lt; OBJECT(B)</code> evaluates to true, return -1.
                   If <code>OBJECT(A) &gt; OBJECT(B)</code> evaluates to true, return 1.
-                  If any of the evalutions cause an error, raise an error.
+                  If any of the evaluations causes an error, raise an error.
               </li>
             </ol>
 
