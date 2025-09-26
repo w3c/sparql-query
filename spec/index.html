@@ -6132,12 +6132,12 @@ class="expression">expression, ....</span>)
             <p>The result of this function is determined by going through the following steps.</p>
 
             <ol>
-              <li>If <code><a href="#func-subject">SUBJECT</a>(term1) = <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, go to the next step.
+              <li>If <code><a href="#func-subject">SUBJECT</a>(term1) = <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, go to step 2.
                   If <code><a href="#func-subject">SUBJECT</a>(term1) &lt; <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, return -1.
                   If <code><a href="#func-subject">SUBJECT</a>(term1) &gt; <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, return 1.
                   If any of the evaluations causes an error, raise an error.
               </li>
-              <li>If <code><a href="#func-predicate">PREDICATE</a>(term1) = <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, go to the next step.
+              <li>If <code><a href="#func-predicate">PREDICATE</a>(term1) = <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, go to step 3.
                   If <code><a href="#func-predicate">PREDICATE</a>(term1) &lt; <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, return -1.
                   If <code><a href="#func-predicate">PREDICATE</a>(term1) &gt; <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, return 1.
                   If any of the evaluations causes an error, raise an error.
