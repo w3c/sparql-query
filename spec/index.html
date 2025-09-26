@@ -6137,19 +6137,19 @@ class="expression">expression, ....</span>)
             <p>The result of this function is determined by going through the following steps.</p>
 
             <ol>
-              <li>If <code>SUBJECT(A) = SUBJECT(B)</code> evaluates to true, go to the next step.
-                  If <code>SUBJECT(A) &lt; SUBJECT(B)</code> evaluates to true, return -1.
-                  If <code>SUBJECT(A) &gt; SUBJECT(B)</code> evaluates to true, return 1.
+              <li>If <code><a href="#func-subject">SUBJECT</a>(A) = <a href="#func-subject">SUBJECT</a>(B)</code> evaluates to true, go to the next step.
+                  If <code><a href="#func-subject">SUBJECT</a>(A) &lt; <a href="#func-subject">SUBJECT</a>(B)</code> evaluates to true, return -1.
+                  If <code><a href="#func-subject">SUBJECT</a>(A) &gt; <a href="#func-subject">SUBJECT</a>(B)</code> evaluates to true, return 1.
                   If any of the evaluations causes an error, raise an error.
               </li>
-              <li>If <code>PREDICATE(A) = PREDICATE(B)</code> evaluates to true, go to the next step.
-                  If <code>PREDICATE(A) &lt; PREDICATE(B)</code> evaluates to true, return -1.
-                  If <code>PREDICATE(A) &gt; PREDICATE(B)</code> evaluates to true, return 1.
+              <li>If <code><a href="#func-predicate">PREDICATE</a>(A) = <a href="#func-predicate">PREDICATE</a>(B)</code> evaluates to true, go to the next step.
+                  If <code><a href="#func-predicate">PREDICATE</a>(A) &lt; <a href="#func-predicate">PREDICATE</a>(B)</code> evaluates to true, return -1.
+                  If <code><a href="#func-predicate">PREDICATE</a>(A) &gt; <a href="#func-predicate">PREDICATE</a>(B)</code> evaluates to true, return 1.
                   If any of the evaluations causes an error, raise an error.
               </li>
-              <li>If <code>OBJECT(A) = OBJECT(B)</code> evaluates to true, return 0.
-                  If <code>OBJECT(A) &lt; OBJECT(B)</code> evaluates to true, return -1.
-                  If <code>OBJECT(A) &gt; OBJECT(B)</code> evaluates to true, return 1.
+              <li>If <code><a href="#func-object">OBJECT</a>(A) = <a href="#func-object">OBJECT</a>(B)</code> evaluates to true, return 0.
+                  If <code><a href="#func-object">OBJECT</a>(A) &lt; <a href="#func-object">OBJECT</a>(B)</code> evaluates to true, return -1.
+                  If <code><a href="#func-object">OBJECT</a>(A) &gt; <a href="#func-object">OBJECT</a>(B)</code> evaluates to true, return 1.
                   If any of the evaluations causes an error, raise an error.
               </li>
             </ol>
