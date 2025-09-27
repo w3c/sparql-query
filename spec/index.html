@@ -10093,15 +10093,18 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             |D| be a <a href="#sparqlDataset">dataset</a>,
             and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
             We define:</p>
-          <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> such that ∀ <var>μ'</var> in
-            <var>Ω<sub>2</sub></var>, either i)&nbsp;<var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a>,
-            or
-            ii)&nbsp;<var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
-            |expr|(merge(<var>μ</var>, <var>μ'</var>), |D|, |G|) is an [=error=],
-            or
-            iii)&nbsp;<var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
-            |expr|(merge(<var>μ</var>, <var>μ'</var>), |D|, |G|) is an RDF term |t| for which
-            <a href="#func-ebv">EBV</a>(|t|) is not `"true"^^xsd:boolean` }</p>
+          <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|)
+            = { <var>μ</var> in <var>Ω<sub>1</sub></var> | for every <var>μ'</var> in <var>Ω<sub>2</sub></var>,
+            either of the following conditions holds:</p>
+          <ul>
+            <li><var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a>,</li>
+            <li><var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a>
+              and |expr|(merge(<var>μ</var>, <var>μ'</var>), |D|, |G|) is an [=error=], or</li>
+            <li><var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a>
+              and |expr|(merge(<var>μ</var>, <var>μ'</var>), |D|, |G|) is an RDF term |t|
+              for which <a href="#func-ebv">EBV</a>(|t|) is not `"true"^^xsd:boolean`.</li>
+          </ul>
+          <p>}</p>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>1</sub></var> )</p>
           <p>
