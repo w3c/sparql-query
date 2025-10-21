@@ -3674,7 +3674,8 @@ ORDER BY ?name DESC(?emp)
         <p>The <a href="#op_lt">"&lt;" operator</a> (see the <a href="#OperatorMapping">Operator
             Mapping</a> and <a href="#operatorExtensibility">17.3.1 Operator Extensibility</a>) defines
           the relative order of pairs of <code>numerics</code>,
-          <code>xsd:strings</code>, <code>xsd:booleans</code>, <code>xsd:dateTimes</code>, and <a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Terms</a>. Pairs of
+          <code>xsd:strings</code>, <code>xsd:booleans</code>, <code>xsd:dateTimes</code>, and
+          <a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Terms</a>. Pairs of
           IRIs are ordered by comparing them as literals with datatype <code>xsd:string</code>.</p>
         <p>SPARQL also fixes an order between some kinds of RDF terms that would not otherwise be
           ordered:</p>
@@ -5419,7 +5420,8 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td>
-                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a href="#func-compareTripleTerm">compareTripleTerm</a>(A, B), 0)
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a
+                href="#func-compareTripleTerm">compareTripleTerm</a>(A, B), 0)
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -5444,7 +5446,9 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td><span class="type RDFterm"><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Term</a></span></td>
               <td>
-                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a href="#func-compareTripleTerm">compareTripleTerm</a>(A, B), 0))
+                <a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(<a
+                data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">op:numeric-equal</a>(<a
+                href="#func-compareTripleTerm">compareTripleTerm</a>(A, B), 0))
               </td>
               <td>xsd:boolean</td>
             </tr>
@@ -6115,7 +6119,12 @@ class="expression">expression, ....</span>)
           <section id="func-compareTripleTerm">
             <h5>compareTripleTerm</h5>
             <pre class="prototype nohighlight">
-              <span class="return">xsd:integer</span> <span class="operator" style="text-transform: none;">compareTripleTerm</span> (<span class="type"><span class="type RDFterm">Triple term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">Triple term</span></span> <span class="name">term2</span>)
+              <span class="return">xsd:integer</span>
+              <span class="operator" style="text-transform: none;">compareTripleTerm</span>
+              (<span class="type"><span class="type RDFterm">Triple term</span></span>
+              <span class="name">term1</span>,
+              <span class="type"><span class="type RDFterm">Triple term</span></span>
+              <span class="name">term2</span>)
             </pre>
 
             <p>This function cannot be used directly in expressions. The purpose
@@ -6125,27 +6134,37 @@ class="expression">expression, ....</span>)
               The function is used in Section <a href="#OperatorMapping" class="sectionRef"></a>.
             </p>
 
-            <p>This function returns -1, 0, 1, or throws an error.
-                Comparison is performed pairwise on the components of the triple terms in the order subject, predicate, object until the result is determined.
+            <p>This function returns `-1`, `0`, or `1`, or throws an error.
+                Comparison is performed pairwise on the components of the triple terms
+                in the order subject, predicate, object until the result is determined.
                 An error is thrown if comparing two components results in an error.</p>
 
             <p>The result of this function is determined by going through the following steps.</p>
 
             <ol>
-              <li>If <code><a href="#func-subject">SUBJECT</a>(term1) = <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, go to step 2.
-                  If <code><a href="#func-subject">SUBJECT</a>(term1) &lt; <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, return -1.
-                  If <code><a href="#func-subject">SUBJECT</a>(term1) &gt; <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, return 1.
-                  If any of the evaluations causes an error, raise an error.
+              <li>
+                <ol type="i">
+                  <li>If <code><a href="#func-subject">SUBJECT</a>(term1) = <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, go to step 2.</li>
+                  <li>If <code><a href="#func-subject">SUBJECT</a>(term1) &lt; <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, return -1.</li>
+                  <li>If <code><a href="#func-subject">SUBJECT</a>(term1) &gt; <a href="#func-subject">SUBJECT</a>(term2)</code> evaluates to true, return 1.</li>
+                  <li>If any of the evaluations causes an error, raise an error.</li>
+                </ol>
               </li>
-              <li>If <code><a href="#func-predicate">PREDICATE</a>(term1) = <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, go to step 3.
-                  If <code><a href="#func-predicate">PREDICATE</a>(term1) &lt; <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, return -1.
-                  If <code><a href="#func-predicate">PREDICATE</a>(term1) &gt; <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, return 1.
-                  If any of the evaluations causes an error, raise an error.
+              <li>
+                <ol type="i">
+                  <li>If <code><a href="#func-predicate">PREDICATE</a>(term1) = <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, go to step 3.</li>
+                  <li>If <code><a href="#func-predicate">PREDICATE</a>(term1) &lt; <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, return -1.</li>
+                  <li>If <code><a href="#func-predicate">PREDICATE</a>(term1) &gt; <a href="#func-predicate">PREDICATE</a>(term2)</code> evaluates to true, return 1.</li>
+                  <li>If any of the evaluations causes an error, raise an error.</li>
+                </ol>
               </li>
-              <li>If <code><a href="#func-object">OBJECT</a>(term1) = <a href="#func-object">OBJECT</a>(term2)</code> evaluates to true, return 0.
-                  If <code><a href="#func-object">OBJECT</a>(term1) &lt; <a href="#func-object">OBJECT</a>(term2)</code> evaluates to true, return -1.
-                  If <code><a href="#func-object">OBJECT</a>(term1) &gt; <a href="#func-object">OBJECT</a>(term2)</code> evaluates to true, return 1.
-                  If any of the evaluations causes an error, raise an error.
+              <li>
+                <ol type="i">
+                  <li>If <code><a href="#func-object">OBJECT</a>(term1) = <a href="#func-object">OBJECT</a>(term2)</code> evaluates to true, return 0.</li>
+                  <li>If <code><a href="#func-object">OBJECT</a>(term1) &lt; <a href="#func-object">OBJECT</a>(term2)</code> evaluates to true, return -1.</li>
+                  <li>If <code><a href="#func-object">OBJECT</a>(term1) &gt; <a href="#func-object">OBJECT</a>(term2)</code> evaluates to true, return 1.</li>
+                  <li>If any of the evaluations causes an error, raise an error.</li>
+                </ol>
               </li>
             </ol>
 
