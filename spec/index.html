@@ -6134,7 +6134,18 @@ class="expression">expression, ....</span>)
                 in the order subject, predicate, object until the result is determined.
                 An error is thrown if comparing two components results in an error.</p>
 
-            <p>The result of this function is determined by going through the following steps.</p>
+            <p>Triple term component comparison
+                requires a relative ordering for pairs of IRIs and for pairs of blank nodes,
+                even if no operator extension exists for them
+                in <a href="#operatorExtensibility" class="sectionRef"></a>.
+                How this relative ordering is defined, is up to the implementation,
+                as long as it is consistent across query executions.</p>
+
+            <p class="note">For example, the relative ordering of IRIs could behave similar as in
+                the <a href="#modOrderBy" class="sectionRef">ORDER BY operator</a>, which compares IRIs as string literals.
+                Blank nodes could be compared using their internal identifier.</p>
+
+            <p>The result of the <code>compareTripleTerm</code> function is determined by going through the following steps.</p>
 
             <ol>
               <li>
