@@ -91,6 +91,27 @@ For each solution where EXISTS is evaluated:
 
 ---
 
+### CONSTRAIN-based Approach (Rewrite/Segment preferred; SIP fallback)
+
+Two execution modes, chosen based on shared-variable analysis and modifiers:
+
+1) Rewrite/Segment (preferred):
+- Rewrite dependent pattern to embed correlation on shared variables (e.g., VALUES at leaves) so it can run as an isolated subquery once (or per key segment).
+- Join the subquery results with the base on the shared variables.
+
+Time (rewrite/segment): O(Q + J) (or Σ O(Q_seg + J_seg) across segments)
+
+Space (rewrite/segment): O(P + |Ω_sub|)
+
+2) SIP fallback (only when static injection is not possible):
+- Evaluate per solution with dynamic bindings, then join.
+
+Time (fallback): O(N × (V + Q + J))
+
+Space (fallback): O(P + V)
+
+---
+
 ## Complexity Differences Summary
 
 ### Time Complexity
@@ -99,6 +120,8 @@ For each solution where EXISTS is evaluated:
 |----------|--------------|-------------------------|-------------------------------------|
 | **Dynamic Binding** | O(V + Q) | O(N × (V + Q)) | O(V + Q) |
 | **One at a Time (operator-level)** | O(V + Q) | O(N × (V + Q)) | O(V + Q) |
+| **CONSTRAIN (rewrite/segment)** | — | O(Q + J) | — |
+| **CONSTRAIN (fallback)** | O(V + Q + J) | O(N × (V + Q + J)) | O(V + Q + J) |
 
 Note: If the ONCE approach were implemented via pattern rewriting (e.g., injecting a VALUES clause by transforming the pattern tree), it would add an extra O(P) per-solution overhead. The DEEP INJECTION document does not require rewriting; it requires only operator-level changes to BGP/Path/ToMultiset.
 
@@ -107,7 +130,9 @@ Note: If the ONCE approach were implemented via pattern rewriting (e.g., injecti
 | Approach | Single Solution | N Solutions Simultaneous |
 |----------|-----------------|--------------------------|
 | **Dynamic Binding** | O(P + V) | O(P + V) |
-| **One at a Time** | O(P + V) | O(N × (P + V)) |
+| **One at a Time (operator-level)** | O(P + V) | O(P + V) |
+| **CONSTRAIN (rewrite/segment)** | O(P + |Ω_sub|) | O(P + |Ω_sub|) |
+| **CONSTRAIN (fallback)** | O(P + V) | O(P + V) |
 
 **Key Difference**: 
 - Dynamic binding: Pattern stored once, reused for all solutions
@@ -128,7 +153,12 @@ Note: If the ONCE approach were implemented via pattern rewriting (e.g., injecti
 - Operator-level ONCE: pattern stored once (O(P)); per-solution unary multiset is O(V); no per-solution pattern copies are required.
 - Pattern-rewriting ONCE (optional implementation): creates a new pattern tree per solution (adds O(P) transient space per solution); with sequential evaluation and GC, peak space typically remains O(P + V).
 
-### 3. Task Cloning Frequency
+### 3. Rewrite/Segment vs SIP Fallback in CONSTRAIN
+
+- If shared variables can be fully injected, CONSTRAIN behaves like a precomputed dependent subquery plus a join (O(Q + J)).
+- If some shared variables remain unbound in ways that prevent static injection, CONSTRAIN must fall back to SIP/dynamic mode (O(N × (V + Q + J))).
+
+### 4. Task Cloning Frequency
 
 **Dynamic Binding:**
 - Surrogate task created once per EXISTS expression context (at macro expansion / runtime setup)
@@ -155,6 +185,10 @@ If the EXISTS pattern is simple (e.g., just a BGP with a few triples):
 If the EXISTS pattern is complex (nested joins, filters, unions, etc.):
 - With operator-level ONCE, there is no O(P) per-solution overhead; performance matches dynamic binding in big-O terms.
 - If a pattern-rewriting implementation is used, O(P) per solution can become significant; in that case dynamic binding or operator-level ONCE is preferable.
+
+### When Correlation Can Be Pre-Injected (CONSTRAIN)
+
+- If correlation can be injected statically, CONSTRAIN avoids per-solution execution and reduces cost to one subquery evaluation plus a join. When Q dominates and |Ω_sub| is moderate, this is often preferable.
 
 ### Memory Usage
 
@@ -187,6 +221,10 @@ Pattern: `EXISTS { ?s :p ?o }`
 - Time: O(1000 × (1 + Q)) ≈ 1000 × Q (same big-O as dynamic binding)
 - Space: O(3 + 1) = O(1) constant
 
+**CONSTRAIN (rewrite/segment):**
+- Time: O(Q + J)
+- Space: O(P + |Ω_sub|)
+
 **Verdict**: Difference is small for simple patterns.
 
 ### Scenario 2: Complex EXISTS with Nested Operators
@@ -211,6 +249,10 @@ Pattern: `EXISTS {
 - Time: O(10000 × (1 + Q))
 - Space: O(21) constant
 
+**CONSTRAIN (rewrite/segment):**
+- Time: O(Q + J)
+- Space: O(21 + |Ω_sub|)
+
 **Verdict**: Significant difference. Dynamic binding saves ~200,000 tree operations.
 
 ---
@@ -222,20 +264,24 @@ Pattern: `EXISTS {
 **Time Complexity:**
 - **Dynamic Binding**: O(V + Q) per solution
 - **One at a Time (operator-level)**: O(V + Q) per solution
-- **Note**: A pattern-rewriting variant of ONCE would add O(P) per solution, but this is not required by the DEEP INJECTION definition.
+ - **CONSTRAIN (rewrite/segment)**: O(Q + J) total (or per segment)
+ - **CONSTRAIN (fallback)**: O(N × (V + Q + J))
 
 **Space Complexity:**
 - **Dynamic Binding**: O(P + V) constant
-- **One at a Time**: O(P + V) per solution (but can be GC'd)
+ - **One at a Time**: O(P + V) per solution (but can be GC'd)
+ - **CONSTRAIN (rewrite/segment)**: O(P + |Ω_sub|)
+ - **CONSTRAIN (fallback)**: O(P + V)
 
 ### When Differences Matter
 
 1. **Large patterns (P >> V)**: Dynamic binding significantly faster
 2. **Many solutions (N large)**: Operator-level ONCE and dynamic binding behave similarly in big-O; OVERALL can still be superior when Q dominates.
-3. **Pattern-rewriting ONCE**: Avoid unless necessary; it introduces O(P) overhead not required by the spec.
-4. **Memory-constrained**: Operator-level ONCE and dynamic binding are comparable; rewriting may increase transient space.
+3. **CONSTRAIN**: Prefer rewrite/segment when static injection is possible; fall back to SIP only when required.
+4. **Pattern-rewriting ONCE**: Avoid unless necessary; it introduces O(P) overhead not required by the spec.
+5. **Memory-constrained**: Operator-level ONCE and dynamic binding are comparable; CONSTRAIN rewrite/segment uses space proportional to subquery result size.
 
 ### Key Takeaway
 
-Per the DEEP INJECTION document, the ONCE approach does not require pattern rewriting; it only requires operator-level joins with the unary multiset {μ}. Implemented that way, **ONCE and dynamic binding have the same big-O time and space complexity** (O(V + Q) per solution, O(P + V) space). Any O(P) overhead arises only from an optional implementation that rewrites the pattern to inject VALUES.
+Per the DEEP INJECTION document, the ONCE approach does not require pattern rewriting; it only requires operator-level joins with the unary multiset {μ}. Implemented that way, **ONCE and dynamic binding have the same big-O time and space complexity** (O(V + Q) per solution, O(P + V) space). Any O(P) overhead arises only from an optional implementation that rewrites the pattern to inject VALUES. The CONSTRAIN-based approach, when correlation can be injected statically, evaluates the dependent subquery once (or per segment) and joins (O(Q + J)); it only falls back to per-solution SIP (O(N × (V + Q + J))) when static injection is not possible.
 
