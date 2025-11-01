@@ -9,6 +9,8 @@ This document analyzes the **space and time complexity** differences between the
 - `V` = number of referenced dimensions (variables to inject)
 - `P` = size of the EXISTS pattern expression (nodes in the pattern tree)
 - `Q` = time to execute the EXISTS subquery pattern (query execution time)
+- `J` = cost of the correlating join between base solutions and dependent results (algorithm-dependent; e.g., hash join vs nested loop; a function of input sizes)
+- `|Ω_sub|` = size of the dependent subquery result set in the CONSTRAIN rewrite/segment mode (number of solution mappings produced by the rewritten subquery prior to correlation)
 
 ## Complexity Comparison
 
