@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document analyzes the **space and time complexity** differences between the two EXISTS implementation approaches for a given EXISTS group expression evaluated over N solutions.
+This document analyzes the **space and time complexity** differences between four EXISTS implementation approaches for a given EXISTS group expression evaluated over N solutions.
 
 **Notation:**
 - `N` = number of solutions for which EXISTS is evaluated
@@ -10,6 +10,8 @@ This document analyzes the **space and time complexity** differences between the
 - `P` = size of the EXISTS pattern expression (nodes in the pattern tree)
 - `Q` = time to execute the EXISTS subquery pattern (query execution time)
 - `J` = cost of the correlating join between base solutions and dependent results (algorithm-dependent; e.g., hash join vs nested loop; a function of input sizes)
+- `C` = cost of compatibility check between a solution and EXISTS result set (algorithm-dependent; typically O(1) with hash, O(|Ω|) with linear search, or O(log |Ω|) with index)
+- `|Ω|` = size of EXISTS pattern result set in OVERALL approach (number of solution mappings produced by evaluating pattern with all filter context solutions)
 - `|Ω_sub|` = size of the dependent subquery result set in the CONSTRAIN rewrite/segment mode (number of solution mappings produced by the rewritten subquery prior to correlation)
 
 ## Complexity Comparison
@@ -114,6 +116,59 @@ Space (fallback): O(P + V)
 
 ---
 
+### OVERALL Approach (DEEP INJECTION: OVERALL)
+
+**Semantics:**
+- Evaluates the EXISTS pattern **once** with all solutions from the filter context (Ω_ctx) as input
+- Results in multiset Ω of solution mappings from the pattern evaluation
+- Then for each original solution μ, checks compatibility with results in Ω
+- Solution μ passes the filter if there exists μ' in Ω such that μ and μ' are compatible (agree on shared variables)
+
+#### Time Complexity
+
+1. **Solution Collection**: O(N)
+   - Collect all solutions from filter context into Ω_ctx
+   - May require buffering if filter is part of streaming evaluation
+
+2. **Pattern Evaluation**: O(Q)
+   - Evaluate EXISTS pattern once with Ω_ctx: `eval(D(G), E, Ω_ctx)`
+   - Produces result multiset Ω
+   - This is done **once**, not N times
+
+3. **Compatibility Checking**: O(N × C)
+   - For each of N solutions, check if compatible with any in Ω
+   - C depends on compatibility check algorithm:
+     - Hash-based: O(1) per check (build hash index from Ω first: O(|Ω|))
+     - Linear search: O(|Ω|) per check
+     - Indexed: O(log |Ω|) per check (requires index construction: O(|Ω| log |Ω|))
+
+**Total time**: O(N + Q + N × C)
+
+If hash-based compatibility (typical): O(N + Q + |Ω| + N) = O(Q + |Ω| + N)
+
+#### Space Complexity
+
+1. **Pattern Storage**: O(P)
+   - Pattern stored once, unchanged
+
+2. **Filter Context Solutions**: O(N)
+   - Must buffer all solutions from filter context to form Ω_ctx
+   - Space for N solutions
+
+3. **EXISTS Results**: O(|Ω|)
+   - Store result multiset Ω from pattern evaluation
+   - Size depends on pattern selectivity and data
+
+4. **Compatibility Check Structures**: O(|Ω|)
+   - Hash index or other structures for efficient compatibility checking
+   - One-time construction cost
+
+**Total space**: O(P + N + |Ω|)
+
+**Key Insight**: OVERALL amortizes the expensive pattern evaluation (Q) over all solutions, paying instead for compatibility checking (N × C) which is typically cheaper when |Ω| is moderate.
+
+---
+
 ## Complexity Differences Summary
 
 ### Time Complexity
@@ -122,8 +177,13 @@ Space (fallback): O(P + V)
 |----------|--------------|-------------------------|-------------------------------------|
 | **Dynamic Binding** | O(V + Q) | O(N × (V + Q)) | O(V + Q) |
 | **One at a Time (operator-level)** | O(V + Q) | O(N × (V + Q)) | O(V + Q) |
+| **OVERALL** | — | O(N + Q + N × C) | O(N + Q + N × C) |
 | **CONSTRAIN (rewrite/segment)** | — | O(Q + J) | — |
 | **CONSTRAIN (fallback)** | O(V + Q + J) | O(N × (V + Q + J)) | O(V + Q + J) |
+
+**Notes:**
+- OVERALL: C is compatibility check cost; typically O(1) with hash, O(|Ω|) with linear search, or O(log |Ω|) with index. With hash: O(Q + |Ω| + N)
+- Early termination not applicable to OVERALL (pattern evaluated once before compatibility checks)
 
 Note: If the ONCE approach were implemented via pattern rewriting (e.g., injecting a VALUES clause by transforming the pattern tree), it would add an extra O(P) per-solution overhead. The DEEP INJECTION document does not require rewriting; it requires only operator-level changes to BGP/Path/ToMultiset.
 
@@ -133,8 +193,13 @@ Note: If the ONCE approach were implemented via pattern rewriting (e.g., injecti
 |----------|-----------------|--------------------------|
 | **Dynamic Binding** | O(P + V) | O(P + V) |
 | **One at a Time (operator-level)** | O(P + V) | O(P + V) |
+| **OVERALL** | O(P + N + |Ω|) | O(P + N + |Ω|) |
 | **CONSTRAIN (rewrite/segment)** | O(P + |Ω_sub|) | O(P + |Ω_sub|) |
 | **CONSTRAIN (fallback)** | O(P + V) | O(P + V) |
+
+**Notes:**
+- OVERALL: Must buffer N filter context solutions and |Ω| EXISTS results simultaneously
+- CONSTRAIN (rewrite/segment): Space for subquery results depends on result size |Ω_sub|
 
 **Key Difference**: 
 - Dynamic binding: Pattern stored once, reused for all solutions
@@ -160,7 +225,17 @@ Note: If the ONCE approach were implemented via pattern rewriting (e.g., injecti
 - If shared variables can be fully injected, CONSTRAIN behaves like a precomputed dependent subquery plus a join (O(Q + J)).
 - If some shared variables remain unbound in ways that prevent static injection, CONSTRAIN must fall back to SIP/dynamic mode (O(N × (V + Q + J))).
 
-### 4. Task Cloning Frequency
+### 4. OVERALL: One Pattern Evaluation vs N Compatibility Checks
+
+- OVERALL evaluates the pattern once with all solutions (Ω_ctx), producing result set Ω
+- Then performs N compatibility checks instead of N pattern evaluations
+- Trade-off: Pattern evaluation (Q) done once, but must:
+  - Buffer all filter context solutions (O(N) space)
+  - Store EXISTS results (O(|Ω|) space)
+  - Perform compatibility checking (N × C time)
+- When Q is expensive and C is cheap (e.g., hash-based), OVERALL is superior to ONCE
+
+### 5. Task Cloning Frequency
 
 **Dynamic Binding:**
 - Surrogate task created once per EXISTS expression context (at macro expansion / runtime setup)
@@ -170,6 +245,11 @@ Note: If the ONCE approach were implemented via pattern rewriting (e.g., injecti
 - Task cloned per solution evaluation (in `process-unary-exists-once-complex`)
 - Each clone has a different `sse-expression` (modified pattern)
 - Clones can be garbage collected after use, but creation overhead exists
+
+**OVERALL:**
+- Task created once, pattern evaluated once with all solutions
+- No per-solution task cloning needed
+- Compatibility checking done outside task execution
 
 ---
 
@@ -191,6 +271,15 @@ If the EXISTS pattern is complex (nested joins, filters, unions, etc.):
 ### When Correlation Can Be Pre-Injected (CONSTRAIN)
 
 - If correlation can be injected statically, CONSTRAIN avoids per-solution execution and reduces cost to one subquery evaluation plus a join. When Q dominates and |Ω_sub| is moderate, this is often preferable.
+
+### When Pattern Evaluation Dominates (OVERALL)
+
+- OVERALL is most beneficial when:
+  - Pattern evaluation (Q) is expensive relative to compatibility checking (C)
+  - Many solutions (N large)
+  - EXISTS result set (|Ω|) is moderate (not too large for compatibility checking)
+- With hash-based compatibility checking: O(Q + |Ω| + N) vs ONCE's O(N × (V + Q))
+- Break-even point: When Q is expensive enough that evaluating once plus N cheap checks beats N expensive evaluations
 
 ### Memory Usage
 
@@ -227,7 +316,11 @@ Pattern: `EXISTS { ?s :p ?o }`
 - Time: O(Q + J)
 - Space: O(P + |Ω_sub|)
 
-**Verdict**: Difference is small for simple patterns.
+**OVERALL:**
+- Time: O(N + Q + N × C) ≈ O(Q + N) with hash-based compatibility (assuming |Ω| << N)
+- Space: O(P + N + |Ω|)
+
+**Verdict**: Difference is small for simple patterns. OVERALL becomes advantageous when Q is large relative to N.
 
 ### Scenario 2: Complex EXISTS with Nested Operators
 
@@ -255,7 +348,11 @@ Pattern: `EXISTS {
 - Time: O(Q + J)
 - Space: O(21 + |Ω_sub|)
 
-**Verdict**: Significant difference. Dynamic binding saves ~200,000 tree operations.
+**OVERALL:**
+- Time: O(10000 + Q + 10000 × C) ≈ O(Q + 10000) with hash-based compatibility (assuming |Ω| < 10000)
+- Space: O(21 + 10000 + |Ω|) = O(10000 + |Ω|)
+
+**Verdict**: For complex patterns with many solutions, OVERALL is often the most efficient, evaluating the expensive pattern once rather than 10,000 times. CONSTRAIN can also be efficient if rewrite/segment mode applies.
 
 ---
 
@@ -264,26 +361,42 @@ Pattern: `EXISTS {
 ### Complexity Comparison
 
 **Time Complexity:**
-- **Dynamic Binding**: O(V + Q) per solution
-- **One at a Time (operator-level)**: O(V + Q) per solution
- - **CONSTRAIN (rewrite/segment)**: O(Q + J) total (or per segment)
- - **CONSTRAIN (fallback)**: O(N × (V + Q + J))
+- **Dynamic Binding**: O(V + Q) per solution → O(N × (V + Q)) total
+- **One at a Time (operator-level)**: O(V + Q) per solution → O(N × (V + Q)) total
+- **OVERALL**: O(N + Q + N × C) total, typically O(Q + |Ω| + N) with hash-based compatibility
+- **CONSTRAIN (rewrite/segment)**: O(Q + J) total (or per segment)
+- **CONSTRAIN (fallback)**: O(N × (V + Q + J)) total
 
 **Space Complexity:**
 - **Dynamic Binding**: O(P + V) constant
- - **One at a Time**: O(P + V) per solution (but can be GC'd)
- - **CONSTRAIN (rewrite/segment)**: O(P + |Ω_sub|)
- - **CONSTRAIN (fallback)**: O(P + V)
+- **One at a Time**: O(P + V) constant (pattern reused, only unary multiset per solution)
+- **OVERALL**: O(P + N + |Ω|) - must buffer filter context and EXISTS results
+- **CONSTRAIN (rewrite/segment)**: O(P + |Ω_sub|)
+- **CONSTRAIN (fallback)**: O(P + V)
 
 ### When Differences Matter
 
-1. **Large patterns (P >> V)**: Dynamic binding significantly faster
-2. **Many solutions (N large)**: Operator-level ONCE and dynamic binding behave similarly in big-O; OVERALL can still be superior when Q dominates.
-3. **CONSTRAIN**: Prefer rewrite/segment when static injection is possible; fall back to SIP only when required.
-4. **Pattern-rewriting ONCE**: Avoid unless necessary; it introduces O(P) overhead not required by the spec.
-5. **Memory-constrained**: Operator-level ONCE and dynamic binding are comparable; CONSTRAIN rewrite/segment uses space proportional to subquery result size.
+1. **Large patterns (P >> V)**: No significant difference between operator-level ONCE and dynamic binding
+2. **Many solutions (N large)**: 
+   - If pattern evaluation (Q) is expensive: **OVERALL** is superior (O(Q + N) vs O(N × Q))
+   - If pattern evaluation is cheap: Operator-level ONCE and dynamic binding are similar (O(N × (V + Q)))
+3. **CONSTRAIN**: Prefer rewrite/segment when static injection is possible (O(Q + J)); fall back to SIP only when required (O(N × (V + Q + J)))
+4. **Pattern-rewriting ONCE**: Avoid unless necessary; it introduces O(P) overhead not required by the spec
+5. **Memory-constrained**: 
+   - OVERALL requires most space (O(P + N + |Ω|)) - must buffer all solutions and results
+   - Operator-level ONCE and dynamic binding are most space-efficient (O(P + V))
+   - CONSTRAIN rewrite/segment uses space proportional to subquery result size (O(P + |Ω_sub|))
 
 ### Key Takeaway
 
-Per the DEEP INJECTION document, the ONCE approach does not require pattern rewriting; it only requires operator-level joins with the unary multiset {μ}. Implemented that way, **ONCE and dynamic binding have the same big-O time and space complexity** (O(V + Q) per solution, O(P + V) space). Any O(P) overhead arises only from an optional implementation that rewrites the pattern to inject VALUES. The CONSTRAIN-based approach, when correlation can be injected statically, evaluates the dependent subquery once (or per segment) and joins (O(Q + J)); it only falls back to per-solution SIP (O(N × (V + Q + J))) when static injection is not possible.
+Per the DEEP INJECTION document:
+- **ONCE** does not require pattern rewriting; it only requires operator-level joins with the unary multiset {μ}. Implemented that way, **ONCE and dynamic binding have the same big-O time and space complexity** (O(V + Q) per solution, O(P + V) space).
+- **OVERALL** evaluates the pattern once with all solutions (O(Q)) and then performs compatibility checking (O(N × C), typically O(N) with hash). This is superior when pattern evaluation dominates: O(Q + N) vs O(N × Q) for ONCE.
+- **CONSTRAIN**, when correlation can be injected statically, evaluates the dependent subquery once (or per segment) and joins (O(Q + J)); it only falls back to per-solution SIP (O(N × (V + Q + J))) when static injection is not possible.
+
+**Summary**: Choose approach based on:
+- **Few solutions, simple patterns**: ONCE or Dynamic Binding (similar performance)
+- **Many solutions, expensive patterns**: OVERALL (amortizes pattern evaluation)
+- **When static correlation injection possible**: CONSTRAIN rewrite/segment (single subquery + join)
+- **Memory constraints**: Prefer ONCE/Dynamic Binding (lowest space overhead)
 
