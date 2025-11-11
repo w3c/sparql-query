@@ -8683,10 +8683,10 @@ WHERE {
           <li id="defn_absSlice">
             <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |offset|)
             and
-            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |offset|, |length|)
+            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |offset|, |limit|)
             are algebraic query expressions if
             |A| is an algebraic query expression and
-            |offset| and |length| are integers.</li>
+            |offset| and |limit| are integers.</li>
         </ul>
         <p id="defn_AlgebraicPropertyPathExpression">The notion of an
           <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>,
@@ -9678,17 +9678,17 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
           </section>
           <section id="sparqlOffsetLimit">
             <h5>OFFSET and LIMIT</h5>
-            <p>If the query contains "OFFSET |offset|" and "LIMIT |length|"</p>
+            <p>If the query contains "OFFSET |offset|" and "LIMIT |limit|"</p>
             <blockquote>
-              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |offset|, |length|)</p>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |offset|, |limit|)</p>
             </blockquote>
-            <p>If the query contains "OFFSET |offset|" but the query does not contain "LIMIT |length|"</p>
+            <p>If the query contains "OFFSET |offset|" but the query does not contain "LIMIT |limit|"</p>
             <blockquote>
               <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |offset|)</p>
             </blockquote>
-            <p>If the query contains "LIMIT |length|" but the query does not contain "OFFSET |offset|"</p>
+            <p>If the query contains "LIMIT |limit|" but the query does not contain "OFFSET |offset|"</p>
             <blockquote>
-              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, 0, |length|)</p>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, 0, |limit|)</p>
             </blockquote>
           </section>
           <section id="sparqlAlgebraOutcome">
@@ -10191,7 +10191,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
         <p>The <a href="#defn_algReduced" class="algFct">Reduced</a> solution sequence modifier does not guarantee a defined multiplicity.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algSlice">Slice</span></b></p>
-          <p>Let <var>Ψ</var> be a sequence of solution mappings, and |offset| and |length| be integers. We define:</p>
+          <p>Let <var>Ψ</var> be a sequence of solution mappings, and |offset| and |limit| be integers. We define:</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
             = <var>Ψ</var>
             &nbsp; if |offset| &leq; 0</p>
@@ -10201,22 +10201,22 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
             = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|)
             &nbsp; if 0 &lt; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
-          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |length|)
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = <var>Ψ</var>
             &nbsp; if |offset| &leq; 0
-            and |length| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
-          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |length|)
+            and |limit| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = <var>Ψ<sub>0</sub></var>
             &nbsp; if |offset| &gt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
-            or |length| &leq; 0</p>
-          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |length|)
+            or |limit| &leq; 0</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|)
             &nbsp; if 0 &lt; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
-            and |length| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
-          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |length|)
-            = subseq(<var>Ψ</var>, |offset|+1, |offset|+|length|)
+            and |limit| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
+            = subseq(<var>Ψ</var>, |offset|+1, |offset|+|limit|)
             &nbsp; if 0 &lt; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
-            and 0 &lt; |length| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
+            and 0 &lt; |limit| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
           <p>where <var>Ψ<sub>0</sub></var> is the empty sequence of solution mappings
             and, for every two integers |i| and |j|,
             subseq(<var>Ψ</var>, |i|, |j|) is the subsequence of <var>Ψ</var>
@@ -10778,7 +10778,7 @@ the result is <var>Ω</var>
             <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |offset| )
             </p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|, |length|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |offset|, |length| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|, |limit|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |offset|, |limit| )
             </p>
           </div>
         </section>
