@@ -10193,29 +10193,22 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <p><b>Definition: <span id="defn_algSlice">Slice</span></b></p>
           <p>Let <var>Ψ</var> be a sequence of solution mappings, and |offset| and |limit| be non-negative integers. We define:</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
-            = <var>Ψ</var>
-            &nbsp; if |offset| = 0</p>
-          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
             = <var>Ψ<sub>0</sub></var>
             &nbsp; if |offset| &gt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
             = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|)
-            &nbsp; if 0 &lt; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
-          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
-            = <var>Ψ</var>
-            &nbsp; if |offset| = 0
-            and |limit| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = <var>Ψ<sub>0</sub></var>
             &nbsp; if |offset| &gt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
             or |limit| = 0</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
-            = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|)
-            &nbsp; if 0 &lt; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>))
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
             and |limit| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = subseq(<var>Ψ</var>, |offset|+1, |offset|+|limit|)
-            &nbsp; if 0 &lt; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
             and 0 &lt; |limit| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
           <p>where <var>Ψ<sub>0</sub></var> is the empty sequence of solution mappings
             and, for every two integers |i| and |j|,
