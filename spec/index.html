@@ -8686,7 +8686,7 @@ WHERE {
             <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |offset|, |limit|)
             are algebraic query expressions if
             |A| is an algebraic query expression and
-            |offset| and |limit| are integers.</li>
+            |offset| and |limit| are non-negative integers.</li>
         </ul>
         <p id="defn_AlgebraicPropertyPathExpression">The notion of an
           <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>,
@@ -10191,10 +10191,10 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
         <p>The <a href="#defn_algReduced" class="algFct">Reduced</a> solution sequence modifier does not guarantee a defined multiplicity.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algSlice">Slice</span></b></p>
-          <p>Let <var>Ψ</var> be a sequence of solution mappings, and |offset| and |limit| be integers. We define:</p>
+          <p>Let <var>Ψ</var> be a sequence of solution mappings, and |offset| and |limit| be non-negative integers. We define:</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
             = <var>Ψ</var>
-            &nbsp; if |offset| &leq; 0</p>
+            &nbsp; if |offset| = 0</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
             = <var>Ψ<sub>0</sub></var>
             &nbsp; if |offset| &gt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
@@ -10203,12 +10203,12 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             &nbsp; if 0 &lt; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = <var>Ψ</var>
-            &nbsp; if |offset| &leq; 0
+            &nbsp; if |offset| = 0
             and |limit| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = <var>Ψ<sub>0</sub></var>
             &nbsp; if |offset| &gt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
-            or |limit| &leq; 0</p>
+            or |limit| = 0</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|)
             &nbsp; if 0 &lt; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
