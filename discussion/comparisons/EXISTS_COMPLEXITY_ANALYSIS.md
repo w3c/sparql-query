@@ -193,8 +193,8 @@ Note: If the ONCE approach were implemented via pattern rewriting (e.g., injecti
 |----------|-----------------|--------------------------|
 | **Dynamic Binding** | O(P + V) | O(P + V) |
 | **One at a Time (operator-level)** | O(P + V) | O(P + V) |
-| **OVERALL** | O(P + N + |Ω|) | O(P + N + |Ω|) |
-| **CONSTRAIN (rewrite/segment)** | O(P + |Ω_sub|) | O(P + |Ω_sub|) |
+| **OVERALL** | O(P + N + \|Ω\|) | O(P + N + \|Ω\|) |
+| **CONSTRAIN (rewrite/segment)** | O(P + \|Ω_sub\|) | O(P + \|Ω_sub\|) |
 | **CONSTRAIN (fallback)** | O(P + V) | O(P + V) |
 
 **Notes:**
