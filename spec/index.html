@@ -10200,7 +10200,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = <var>Ψ<sub>0</sub></var>
-            &nbsp; if |offset| &gt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            &nbsp; if |offset| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
             or |limit| = 0</p>
           <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
             = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>))
