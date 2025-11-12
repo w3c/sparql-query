@@ -8690,10 +8690,12 @@ WHERE {
             is an algebraic query expression if
             |A| is an algebraic query expression.</li>
           <li id="defn_absSlice">
-            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |start|, |length|)
-            is an algebraic query expression if
+            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |offset|)
+            and
+            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |offset|, |limit|)
+            are algebraic query expressions if
             |A| is an algebraic query expression and
-            |start| and |length| are integers.</li>
+            |offset| and |limit| are non-negative integers.</li>
         </ul>
         <p id="defn_AlgebraicPropertyPathExpression">The notion of an
           <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>,
@@ -9685,16 +9687,18 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
           </section>
           <section id="sparqlOffsetLimit">
             <h5>OFFSET and LIMIT</h5>
-            <p>If the query contains "OFFSET |start|" or "LIMIT |length|"</p>
+            <p>If the query contains "OFFSET |offset|" and "LIMIT |limit|"</p>
             <blockquote>
-              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |start|, |length|)</p>
-              <blockquote>
-                <p>|start| defaults to 0</p>
-                <p>|length| defaults to (size(|M|)-|start|).</p>
-              </blockquote>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |offset|, |limit|)</p>
             </blockquote>
-<div class="issue" data-number="248">
-  The definition of this translation step is formally incorrect.</div>
+            <p>If the query contains "OFFSET |offset|" but the query does not contain "LIMIT |limit|"</p>
+            <blockquote>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |offset|)</p>
+            </blockquote>
+            <p>If the query contains "LIMIT |limit|" but the query does not contain "OFFSET |offset|"</p>
+            <blockquote>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, 0, |limit|)</p>
+            </blockquote>
           </section>
           <section id="sparqlAlgebraOutcome">
             <h5>Final Algebraic Query Expression</h5>
@@ -10229,8 +10233,35 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
         <p>The <a href="#defn_algReduced" class="algFct">Reduced</a> solution sequence modifier does not guarantee a defined multiplicity.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algSlice">Slice</span></b></p>
-          <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
-          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, <var>start</var>, <var>length</var>)[<var>i</var>] = <var>Ψ</var>[<var>start</var>+<var>i</var>] for <var>i</var> = 0 to (<var>length</var>-1)</p>
+          <p>Let <var>Ψ</var> be a sequence of solution mappings, and |offset| and |limit| be non-negative integers. We define:</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
+            = <var>Ψ<sub>0</sub></var>
+            &nbsp; if |offset| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
+            = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>))
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
+            = <var>Ψ<sub>0</sub></var>
+            &nbsp; if |offset| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            or |limit| = 0</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
+            = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>))
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            and |limit| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
+            = subseq(<var>Ψ</var>, |offset|+1, |offset|+|limit|)
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            and 0 &lt; |limit| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
+          <p>where <var>Ψ<sub>0</sub></var> is the empty sequence of solution mappings
+            and, for every two integers |i| and |j|,
+            subseq(<var>Ψ</var>, |i|, |j|) is the subsequence of <var>Ψ</var>
+            that starts with the |i|-th element of <var>Ψ</var>
+            and ends with the |j|-th element of <var>Ψ</var>.</p>
+            <p>Notice that this definition assumes that sequences are 1-based
+            and subsequences are inclusive at both ends
+            (i.e., ending with |j|-th element means that
+            the subsequence contains the |j|-th element of <var>Ψ</var> as its last element).
+            </p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algToMultiSet">ToMultiSet</span></b></p>
@@ -10779,8 +10810,10 @@ the result is <var>Ω</var>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalSlice">Evaluation of Slice</span></b></p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |offset| )
+            </p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |start|, |length|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |start|, |length| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|, |limit|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |offset|, |limit| )
             </p>
           </div>
         </section>
@@ -12673,6 +12706,7 @@ _:x rdf:type xsd:decimal .
                 <li>Clarify that aggregation returns a single partial function in <a href="#sparqlGroupAggregate" class="sectionRef"></a></li>
                 <li>Update Filter Evaluation language to reference more functional forms in <a href="#expression-evaluation" class="sectionRef"></a></li>
                 <li>Use PREFIX instead of @prefix</li>
+                <li>More accurate definition of the <a href="#defn_algSlice" class="algFct">Slice</a> algebra operator</li>
                 <li>Clarify definition of the Sum set function in <a href="#aggSum" class="sectionRef"></a></li>
                 <li>Improve definition of Group operator in <a href="#aggregateAlgebra" class="sectionRef"></a></li>
                 <li>Move definitions of Flatten and Card to <a href="#setFunctions" class="sectionRef"></a></li>
