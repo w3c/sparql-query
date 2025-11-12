@@ -155,7 +155,7 @@ ONCE approach would evaluate the pattern 3 times:
 | **Pattern Evaluation** | N times (once per solution) | 1 time (all solutions) | 1 time (rewrite/segment) or N times (fallback) |
 | **Result Correlation** | Immediate boolean per solution | Compatibility check per solution | Join on shared variables |
 | **Complexity** | O(N × (V + Q)) | O(Q + N × C) where C = compatibility check | O(Q + J) in rewrite/segment mode; O(N × (V + Q + J)) in fallback |
-| **Space** | O(P + V) | O(P + |Ω|) where |Ω| = EXISTS result size | O(P + |Ω_sub|) rewrite/segment; O(P + V) fallback |
+| **Space** | O(P + V) | O(P + \|Ω\|) where |\Ω\| = EXISTS result size | O(P + \|Ω_sub\|) rewrite/segment; O(P + V) fallback |
 | **Optimization Potential** | Similar to dynamic binding | High - pattern evaluated once | High when rewrite/segment applies |
 
 ### Complexity Breakdown
