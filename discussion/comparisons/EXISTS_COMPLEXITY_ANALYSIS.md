@@ -324,12 +324,12 @@ Pattern: `EXISTS { ?s :p ?o }`
 
 ### Scenario 2: Complex EXISTS with Nested Operators
 
-Pattern: `EXISTS { 
-  { ?s :p1 ?o1 } 
-  UNION 
-  { { ?s :p2 ?o2 } 
-    FILTER (?o2 > 10) 
-    OPTIONAL { ?s :p3 ?o3 } 
+Pattern: `EXISTS {
+  { ?s :p1 ?o1 }
+  UNION
+  { { ?s :p2 ?o2 }
+    FILTER (?o2 > 10)
+    OPTIONAL { ?s :p3 ?o3 }
   }
 }`
 - V = 1 (?s)
