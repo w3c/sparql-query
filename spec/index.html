@@ -2684,6 +2684,7 @@ VALUES ?z { "abc" "def" }
           <pre class="data nohighlight">
             VALUES (?z) { ("abc") ("def") }
           </pre>
+          <p>Note that the same variable cannot be mentioned multiple times within the variables list of a VALUES clause.</p>
         </section>
         <section id="inline-data-examples">
           <h4>VALUES Examples</h4>
@@ -11199,8 +11200,9 @@ _:x rdf:type xsd:decimal .
             <code>DELETE</code>,
             nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.</li>
           <li>Rules for limiting the use of blank node identifiers are given in <a href="#grammarBNodes">section 19.6</a>.</li>
-          <li>The number of variables in the variable list of <code>VALUES</code> block 
+          <li>The number of variables in the variable list of a <code>VALUES</code> block 
             must be the same as the number of each list of associated values in the <code>DataBlock</code>.</li>
+          <li>Variables in the variable list of a <code>VALUES</code> block must be unique within that list.</li>
           <li>Variables introduced by <code>AS</code> in a <code>SELECT</code> clause
             must not already be <a href="#variableScope">in-scope</a>.</li>
           <li>The variable assigned in a <code>BIND</code> clause must not be already 
@@ -12689,6 +12691,7 @@ _:x rdf:type xsd:decimal .
                 <li>Migrate XML Schema references to 1.1</li>
                 <li>Update references to XPath from 2.0 to 3.1</li>
                 <li>Define `EBV` as a functional form.</li>
+                <li>Forbid duplicated variables in `VALUES`.</li>
             </ul>
         </li>
         <li>
