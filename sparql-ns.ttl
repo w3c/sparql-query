@@ -528,23 +528,27 @@ sparql:agg-group-concat-distinct rdf:type sparql:Aggregate ;
 sparql:version-1.2 a rdfs:Resource ;
     rdfs:label "1.2" ;
     rdfs:comment "Version 1.2." ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    rdfs:isDefinedBy <https://www.w3.org/ns/sparql> ;
+    rdfs:seeAlso <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:version-1.2-basic a rdfs:Resource ;
     rdfs:label "1.2-basic" ;
     rdfs:comment "Version 1.2-basic" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    rdfs:isDefinedBy <https://www.w3.org/ns/sparql> ;
+    rdfs:seeAlso <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:version-1.1 a rdfs:Resource ;
     rdfs:label "1.1" ;
     rdfs:comment "Version 1.1" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    rdfs:isDefinedBy <https://www.w3.org/ns/sparql> ;
+    rdfs:seeAlso <http://www.w3.org/TR/sparql12-query/> ;
     .
 
 sparql:version-1.0 a rdfs:Resource ;
     rdfs:label "1.0" ;
     rdfs:comment "Version 1.0" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
+    rdfs:isDefinedBy <https://www.w3.org/ns/sparql> ;
+    rdfs:seeAlso <http://www.w3.org/TR/sparql12-query/> ;
     .
