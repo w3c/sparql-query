@@ -2684,6 +2684,7 @@ VALUES ?z { "abc" "def" }
           <pre class="data nohighlight">
             VALUES (?z) { ("abc") ("def") }
           </pre>
+          <p>Note that the same variable cannot be mentioned multiple times within the variables list of a VALUES clause.</p>
         </section>
         <section id="inline-data-examples">
           <h4>VALUES Examples</h4>
@@ -4697,6 +4698,15 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       <section id="expression-evaluation">
         <span id="evaluation"><!-- Legacy name --></span>
         <h3>Expression Evaluation</h3>
+        <p>
+          A SPARQL expression is evaluated
+          with respect to a <a href="#defn_sparqlSolutionMapping">solution mapping</a>
+          and in the context of an <a href="#sparqlDataset">RDF dataset</a>
+          with an <a href="#defn_ActiveGraph">active graph</a>.
+          The result of such an evaluation is either
+          an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> or
+          an [=error=].
+        </p>
         <p>
           SPARQL provides a subset of the functions and operators defined by 
           <a data-cite="XPATH-FUNCTIONS-31#">XPath and XQuery Functions and Operators</a>.
@@ -6716,7 +6726,7 @@ WHERE {
             </p>
             <p>
               The argument `langTag` MUST not be an empty string and SHOULD be a
-              a valid <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
+              valid <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
             </p>
             <div class="result">
               <table>
@@ -6755,7 +6765,7 @@ WHERE {
             </p>
             <p>
               The argument `langTag` MUST NOT be an empty string and SHOULD be a
-              a valid <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
+              valid <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>.
               The argument `baseDirection` MUST be either `"ltr"` or `"rtl"`.
             </p>
             <div class="result">
@@ -8684,10 +8694,12 @@ WHERE {
             is an algebraic query expression if
             |A| is an algebraic query expression.</li>
           <li id="defn_absSlice">
-            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |start|, |length|)
-            is an algebraic query expression if
+            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |offset|)
+            and
+            <a href="#defn_absSlice" class="absOp">Slice</a>(|A|, |offset|, |limit|)
+            are algebraic query expressions if
             |A| is an algebraic query expression and
-            |start| and |length| are integers.</li>
+            |offset| and |limit| are non-negative integers.</li>
         </ul>
         <p id="defn_AlgebraicPropertyPathExpression">The notion of an
           <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>,
@@ -9679,16 +9691,18 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
           </section>
           <section id="sparqlOffsetLimit">
             <h5>OFFSET and LIMIT</h5>
-            <p>If the query contains "OFFSET |start|" or "LIMIT |length|"</p>
+            <p>If the query contains "OFFSET |offset|" and "LIMIT |limit|"</p>
             <blockquote>
-              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |start|, |length|)</p>
-              <blockquote>
-                <p>|start| defaults to 0</p>
-                <p>|length| defaults to (size(|M|)-|start|).</p>
-              </blockquote>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |offset|, |limit|)</p>
             </blockquote>
-<div class="issue" data-number="248">
-  The definition of this translation step is formally incorrect.</div>
+            <p>If the query contains "OFFSET |offset|" but the query does not contain "LIMIT |limit|"</p>
+            <blockquote>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, |offset|)</p>
+            </blockquote>
+            <p>If the query contains "LIMIT |limit|" but the query does not contain "OFFSET |offset|"</p>
+            <blockquote>
+              <p>|M| := <a href="#defn_absSlice" class="absOp">Slice</a>(|M|, 0, |limit|)</p>
+            </blockquote>
           </section>
           <section id="sparqlAlgebraOutcome">
             <h5>Final Algebraic Query Expression</h5>
@@ -10051,16 +10065,18 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             |D| be a <a href="#sparqlDataset">dataset</a>,
             and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
             We define:</p>
-          <p><a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) = { <var>μ</var> in <var>Ω</var>  | <var>expr</var>(<var>μ</var>) is an expression that has an
-            [=effective boolean value=] of true }</p>
-<div class="issue" data-number="254">
-  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
+          <p><a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) =
+            { <var>μ</var> in <var>Ω</var>  |
+            |expr|(<var>μ</var>, |D|, |G|) is an RDF term |t|
+            such that <a href="#func-ebv">EBV</a>(|t|) is `"true"^^xsd:boolean` }</p>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <var>Ω</var>, |D|, |G|) )
             = <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> )</p>
-          <blockquote>
-            Note that evaluating an <code>exists(pattern)</code> expression uses the dataset |D| and
-            active graph |G|. See the <a href="#defn_evalFilter">evaluation of filter</a>.
-          </blockquote>
+          <p>
+            where, for every solution mapping <var>μ</var>,
+            |expr|(<var>μ</var>, |D|, |G|) is the result of
+            <a href="#expression-evaluation">evaluating</a> expression |expr|
+            with respect to <var>μ</var>, in the context of dataset |D| with active graph |G|.
+          </p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algJoin">Join</span></b></p>
@@ -10080,29 +10096,46 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           of <var>μ</var> is the sum of the multiplicities from all possibilities.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algDiff">Diff</span></b></p>
-          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings and <var>expr</var> be an
-            <a href="#expressions">expression</a>. We define:</p>
-          <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = { <var>μ</var> | <var>μ</var> in <var>Ω<sub>1</sub></var> such that ∀ <var>μ'</var> in
-            <var>Ω<sub>2</sub></var>, either <var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a> or <var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a> and
-            <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an [=effective boolean value=] of true }</p>
-<div class="issue" data-number="254">
-  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings,
+            <var>expr</var> be an <a href="#expressions">expression</a>,
+            |D| be a <a href="#sparqlDataset">dataset</a>,
+            and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
+            We define:</p>
+          <p><a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|)
+            = { <var>μ</var> in <var>Ω<sub>1</sub></var> | for every <var>μ'</var> in <var>Ω<sub>2</sub></var>,
+            any of the following conditions holds:</p>
+          <ul>
+            <li><var>μ</var> and <var>μ'</var> are not <a href="#defn_algCompatibleMapping">compatible</a>,</li>
+            <li><var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a>
+              and |expr|(merge(<var>μ</var>, <var>μ'</var>), |D|, |G|) is an [=error=], or</li>
+            <li><var>μ</var> and <var>μ'</var> are <a href="#defn_algCompatibleMapping">compatible</a>
+              and |expr|(merge(<var>μ</var>, <var>μ'</var>), |D|, |G|) is an RDF term |t|
+              for which <a href="#func-ebv">EBV</a>(|t|) is not `"true"^^xsd:boolean`.</li>
+          </ul>
+          <p>}</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω<sub>1</sub></var> )</p>
+          <p>
+            where, for every solution mapping <var>μ</var>,
+            |expr|(<var>μ</var>, |D|, |G|) is the result of
+            <a href="#expression-evaluation">evaluating</a> expression |expr|
+            with respect to <var>μ</var>, in the context of dataset |D| with active graph |G|.
+          </p>
         </div>
-        <p>The evaluation of <var>expr</var>(merge(<var>μ</var>, <var>μ'</var>)) does not have an
-          [=effective boolean value=] of true if it evaluates to false or if it raises an error.</p>
         <p><a href="#defn_algDiff" class="algFct">Diff</a> is used internally for the definition of <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algLeftJoin">LeftJoin</span></b></p>
-          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings and <var>expr</var> be an
-            <a href="#expressions">expression</a>. We define:</p>
-          <p><a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) = <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>,
-            <var>Ω<sub>2</sub></var>)) ∪ <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>)</p>
-          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>) ) =
-            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>)) ) +
+          <p>Let <var>Ω<sub>1</sub></var> and <var>Ω<sub>2</sub></var> be multisets of solution mappings,
+            <var>expr</var> be an <a href="#expressions">expression</a>,
+            |D| be a <a href="#sparqlDataset">dataset</a>,
+            and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
+            We define:</p>
+          <p><a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) = <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>,
+            <var>Ω<sub>2</sub></var>), |D|, |G|) ∪ <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|)</p>
+          <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>, <var>expr</var>, |D|, |G|) ) =
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algFilter" class="algFct">Filter</a>(<var>expr</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>), |D|, |G|) ) +
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algDiff" class="algFct">Diff</a>(<var>Ω<sub>1</sub></var>, <var>Ω<sub>2</sub></var>,
-            <var>expr</var>) )</p>
+            <var>expr</var>, |D|, |G|) )</p>
         </div>
 
         <div class="defn">
@@ -10131,14 +10164,28 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           pattern <code>P</code>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algExtend">Extend</span><span id="defn_extend"><!-- obsolete id --></span></b></p>
-          <p>Let <var>μ</var> be a solution mapping, <var>Ω</var> a multiset of solution mappings, <var>var</var> a variable
-            and <var>expr</var> be an <a href="#expressions">expression</a>, then we define:</p>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> ∪ { (<var>var</var>, <var>value</var>) | <var>var</var> not in dom(<var>μ</var>) and <var>value</var> = <var>expr</var>(<var>μ</var>) }</p>
-<div class="issue" data-number="254">
-  It is not clear what <var>expr</var>(<var>μ</var>) is, and it is not apparent in the formula that the expression |expr| is meant to be evaluated not only with respect to <var>μ</var> but also with respect to |D| with active graph |G|.</div>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) = <var>μ</var> if <var>var</var> not in dom(<var>μ</var>) and expr(<var>μ</var>) is an error</p>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a> is undefined if <var>var</var> in dom(<var>μ</var>).</p>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>) = { <a href="#defn_algExtend" class="algFct">Extend</a>(<var>μ</var>, <var>var</var>, <var>expr</var>) | <var>μ</var> in <var>Ω</var> }</p>
+          <p>Let <var>μ</var> be a solution mapping, <var>Ω</var> a multiset of solution mappings,
+            <var>var</var> be a variable,
+            <var>expr</var> be an <a href="#expressions">expression</a>,
+            |D| be a <a href="#sparqlDataset">dataset</a>,
+            and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
+            We define:</p>
+          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = { |Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) | <var>μ</var> in <var>Ω</var> },</p>
+          <p>where, for every solution mapping <var>μ</var>,</p>
+          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = <var>μ</var> ∪ { (<var>var</var>, |expr|(<var>μ</var>, |D|, |G|)) }
+            if <var>var</var> not in dom(<var>μ</var>) and
+            |expr|(<var>μ</var>, |D|, |G|) is an RDF term,</p>
+          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = <var>μ</var>
+            if <var>var</var> not in dom(<var>μ</var>) and
+            |expr|(<var>μ</var>, |D|, |G|) is an [=error=],</p>
+          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) is undefined
+            if <var>var</var> in dom(<var>μ</var>), and</p>
+          <p>|expr|(<var>μ</var>, |D|, |G|) is the result of
+            <a href="#expression-evaluation">evaluating</a> expression |expr|
+            with respect to <var>μ</var>, in the context of dataset |D| with active graph |G|.
+          </p>
+<div class="issue" data-number="290">
+  We need to define <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>, |D|, |G|) )</div>
         </div>
         <p>Write [ <var>x</var> | <var>C</var> ] for a sequence of elements where <var>C</var> is a condition on <var>x</var>.</p>
         <div class="defn">
@@ -10190,8 +10237,35 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
         <p>The <a href="#defn_algReduced" class="algFct">Reduced</a> solution sequence modifier does not guarantee a defined multiplicity.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_algSlice">Slice</span></b></p>
-          <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
-          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, <var>start</var>, <var>length</var>)[<var>i</var>] = <var>Ψ</var>[<var>start</var>+<var>i</var>] for <var>i</var> = 0 to (<var>length</var>-1)</p>
+          <p>Let <var>Ψ</var> be a sequence of solution mappings, and |offset| and |limit| be non-negative integers. We define:</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
+            = <var>Ψ<sub>0</sub></var>
+            &nbsp; if |offset| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|)
+            = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>))
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
+            = <var>Ψ<sub>0</sub></var>
+            &nbsp; if |offset| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            or |limit| = 0</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
+            = subseq(<var>Ψ</var>, |offset|+1, <a href="#defn_Card">Card</a>(<var>Ψ</var>))
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            and |limit| &geq; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
+          <p><a href="#defn_algSlice" class="algFct">Slice</a>(<var>Ψ</var>, |offset|, |limit|)
+            = subseq(<var>Ψ</var>, |offset|+1, |offset|+|limit|)
+            &nbsp; if 0 &leq; |offset| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)
+            and 0 &lt; |limit| &lt; <a href="#defn_Card">Card</a>(<var>Ψ</var>)&minus;|offset|</p>
+          <p>where <var>Ψ<sub>0</sub></var> is the empty sequence of solution mappings
+            and, for every two integers |i| and |j|,
+            subseq(<var>Ψ</var>, |i|, |j|) is the subsequence of <var>Ψ</var>
+            that starts with the |i|-th element of <var>Ψ</var>
+            and ends with the |j|-th element of <var>Ψ</var>.</p>
+            <p>Notice that this definition assumes that sequences are 1-based
+            and subsequences are inclusive at both ends
+            (i.e., ending with |j|-th element means that
+            the subsequence contains the |j|-th element of <var>Ψ</var> as its last element).
+            </p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_algToMultiSet">ToMultiSet</span></b></p>
@@ -10634,7 +10708,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <div class="defn">
             <p><b>Definition: <span id="defn_evalLeftJoin">Evaluation of LeftJoin</span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|) ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>), |F| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|) ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>), |F|, |D|, |G| )
             </p>
           </div>
           <div class="defn">
@@ -10705,9 +10779,9 @@ the result is <var>Ω</var>
           </div>
           <p>Note that if <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>i</sub></var>) is an error, it is ignored.</p>
           <div class="defn">
-            <p><b>Definition: <span id="defn_evalExtend">Evaluation of <a href="#defn_absExtend" class="absOp">Extend</a></span></b></p>
+            <p><b>Definition: <span id="defn_evalExtend">Evaluation of Extend</span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absExtend" class="absOp">Extend</a>(|P|, |var|, |expr|) ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |var|, |expr| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absExtend" class="absOp">Extend</a>(|P|, |var|, |expr|) ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|), |var|, |expr|, |D|, |G| )
             </p>
           </div>
           <div class="defn">
@@ -10740,8 +10814,10 @@ the result is <var>Ω</var>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalSlice">Evaluation of Slice</span></b></p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |offset| )
+            </p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |start|, |length|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |start|, |length| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|, |limit|) ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|), |offset|, |limit| )
             </p>
           </div>
         </section>
@@ -11127,8 +11203,9 @@ _:x rdf:type xsd:decimal .
             <code>DELETE</code>,
             nor in <code><a href="#rDeleteData">DELETE DATA</a></code>.</li>
           <li>Rules for limiting the use of blank node identifiers are given in <a href="#grammarBNodes">section 19.6</a>.</li>
-          <li>The number of variables in the variable list of <code>VALUES</code> block 
+          <li>The number of variables in the variable list of a <code>VALUES</code> block 
             must be the same as the number of each list of associated values in the <code>DataBlock</code>.</li>
+          <li>Variables in the variable list of a <code>VALUES</code> block must be unique within that list.</li>
           <li>Variables introduced by <code>AS</code> in a <code>SELECT</code> clause
             must not already be <a href="#variableScope">in-scope</a>.</li>
           <li>The variable assigned in a <code>BIND</code> clause must not be already 
@@ -12617,6 +12694,7 @@ _:x rdf:type xsd:decimal .
                 <li>Migrate XML Schema references to 1.1</li>
                 <li>Update references to XPath from 2.0 to 3.1</li>
                 <li>Define `EBV` as a functional form.</li>
+                <li>Forbid duplicated variables in `VALUES`.</li>
                 <li>Add in-between ORDER BY support for triple terms in <a href="#modOrderBy" class="sectionRef"></a>.</li>
             </ul>
         </li>
@@ -12635,6 +12713,7 @@ _:x rdf:type xsd:decimal .
                 <li>Clarify that aggregation returns a single partial function in <a href="#sparqlGroupAggregate" class="sectionRef"></a></li>
                 <li>Update Filter Evaluation language to reference more functional forms in <a href="#expression-evaluation" class="sectionRef"></a></li>
                 <li>Use PREFIX instead of @prefix</li>
+                <li>More accurate definition of the <a href="#defn_algSlice" class="algFct">Slice</a> algebra operator</li>
                 <li>Clarify definition of the Sum set function in <a href="#aggSum" class="sectionRef"></a></li>
                 <li>Improve definition of Group operator in <a href="#aggregateAlgebra" class="sectionRef"></a></li>
                 <li>Move definitions of Flatten and Card to <a href="#setFunctions" class="sectionRef"></a></li>
@@ -12656,6 +12735,9 @@ _:x rdf:type xsd:decimal .
                   from <i>eval</i> to <i>reachableTerms</i>.</li>
                 <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors</a>.</li>
                 <li>Rename section "Filter evaluation" as <a href="#expression-evaluation" class="sectionRef"></a>.</li>
+                <li>Improve definitions of all algebra operators that involve expressions
+                  (<a href="#defn_algFilter" class="algFct">Filter</a>, <a href="#defn_algDiff" class="algFct">Diff</a>,
+                  <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>, and <a href="#defn_algExtend" class="algFct">Extend</a>).</li>
             </ul>
         </li>
         <li>
