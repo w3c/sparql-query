@@ -3674,8 +3674,7 @@ ORDER BY ?name DESC(?emp)
         <p>The <a href="#op_lt">"&lt;" operator</a> (see the <a href="#OperatorMapping">Operator
             Mapping</a> and <a href="#operatorExtensibility">17.3.1 Operator Extensibility</a>) defines
           the relative order of pairs of <code>numerics</code>,
-          <code>xsd:strings</code>, <code>xsd:booleans</code>, <code>xsd:dateTimes</code>, and
-          <a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple Terms</a>. Pairs of
+          <code>xsd:strings</code>, <code>xsd:booleans</code> and <code>xsd:dateTimes</code>. Pairs of
           IRIs are ordered by comparing them as literals with datatype <code>xsd:string</code>.</p>
         <p>SPARQL also fixes an order between some kinds of RDF terms that would not otherwise be
           ordered:</p>
@@ -3686,7 +3685,8 @@ ORDER BY ?name DESC(?emp)
           <li>RDF literals</li>
           <li>Triple terms</li>
         </ol>
-        <p>SPARQL does not define a total ordering of all possible RDF terms. Here are a few examples
+        <p>SPARQL does not define a total ordering of all possible RDF terms. Implementations may
+          define total ordering through <a href="#operatorExtensibility">17.3.1 Operator Extensibility</a>. Here are a few examples
           of pairs of terms for which the relative order is undefined:</p>
         <ul>
           <li>"a" and "a"@en_gb (a literal with datatype <code>xsd:string</code> and a literal with a language tag)</li>
@@ -3696,6 +3696,7 @@ ORDER BY ?name DESC(?emp)
           <li>"1"^^my:integer and "2"^^my:integer (two unsupported datatypes)</li>
           <li>"1"^^xsd:integer and "2"^^my:integer (a supported datatype and an unsupported
             datatype)</li>
+          <li>&lt;&lt; :person1 foaf:name "Bob" &gt;&gt; and &lt;&lt; :person2 foaf:name "Alice" &gt;&gt; (two triple terms)</li>
         </ul>
         <p>This list of variable bindings is in ascending order:</p>
         <div class="result">
@@ -12616,7 +12617,7 @@ _:x rdf:type xsd:decimal .
                 <li>Migrate XML Schema references to 1.1</li>
                 <li>Update references to XPath from 2.0 to 3.1</li>
                 <li>Define `EBV` as a functional form.</li>
-                <li>Add triple term support for ORDER BY in <a href="#modOrderBy" class="sectionRef"></a>.</li>
+                <li>Add in-between ORDER BY support for triple terms in <a href="#modOrderBy" class="sectionRef"></a>.</li>
             </ul>
         </li>
         <li>
