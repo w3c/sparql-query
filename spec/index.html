@@ -4606,7 +4606,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         functions are invoked by name (an IRI) within a SPARQL query. For example:</p>
       <pre class="query nohighlight">
         ... FILTER ( xsd:dateTime(?date) &lt; xsd:dateTime("2005-01-01T00:00:00Z") ) ...</pre>
-      <p>Typographical convention in this section: XPath operators are labeled with the prefix
+      <p>Typographical convention: XPath operators are labeled with the prefix
         <code>op:</code>. XPath operators have no namespace; <code>op:</code> is a labeling
         convention.</p>
       <section id="operandDataTypes">
@@ -6038,7 +6038,7 @@ class="expression">expression, ....</span>)
               <p>
                 The <a href="#OperatorMapping">Operator Mapping</a> for "`=`"
                 is the function
-                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">`fn:numeric-equal`</a>
+                <a data-cite="XPATH-FUNCTIONS-31#func-numeric-equal">`op:numeric-equal`</a>
                 which is defined to return `false` when comparing arguments involving `NaN`.
                 However, `sameTerm("NaN"^^xsd:double, "NaN"^^xsd:double)` is true.
                 The function `sameValue` defines `sameValue("NaN"^^xsd:double, "NaN"^^xsd:double)`
@@ -7640,7 +7640,7 @@ WHERE {
             <p>Returns the absolute value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
             <p>This function is the same as 
-              <a data-cite="XPATH-FUNCTIONS-31#func-abs">fn:numeric-abs</a>
+              <a data-cite="XPATH-FUNCTIONS-31#func-abs">fn:abs</a>
               for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
             <div class="result">
               <table>
@@ -7663,7 +7663,7 @@ WHERE {
             <p>Returns the number with no fractional part that is closest to the argument. If there
               are two such numbers, then the one that is closest to positive infinity is returned. An
               error is raised if <code>arg</code> is not a numeric value.</p>
-            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS-31#func-round">fn:numeric-round</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
+            <p>This function is the same as <a data-cite="XPATH-FUNCTIONS-31#func-round">fn:round</a> for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
             <div class="result">
               <table>
                 <tbody>
@@ -7690,7 +7690,7 @@ WHERE {
               that is not less than the value of <code>arg</code>. An error is raised if
               <code>arg</code> is not a numeric value.</p>
             <p>This function is the same as 
-              <a data-cite="XPATH-FUNCTIONS-31#func-ceiling">fn:numeric-ceil</a>
+              <a data-cite="XPATH-FUNCTIONS-31#func-ceiling">fn:ceiling</a>
               for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
             <div class="result">
               <table>
@@ -7714,7 +7714,7 @@ WHERE {
               is not greater than the value of <code>arg</code>. An error is raised if <code>arg</code>
               is not a numeric value.</p>
             <p>This function is the same as
-              <a data-cite="XPATH-FUNCTIONS-31#func-floor">fn:numeric-floor</a>
+              <a data-cite="XPATH-FUNCTIONS-31#func-floor">fn:floor</a>
               for terms with a datatype from <a data-cite="XPATH-DATAMODEL-31#">XDM</a>.</p>
             <div class="result">
               <table>
