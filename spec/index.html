@@ -9969,15 +9969,15 @@ Let <span id="defn_reachableTerms"><var>reachableTerms</var></span>(<var>x</var>
 
   <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>) = 
       Let <var>V</var> = empty set of nodes
-      <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>)
+      <a href="#defn_evalALP_1">ALP'</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>)
       return is <var>V</var>
 
-  <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>:set of RDF terms) =
+  <a href="#defn_evalALP_1">ALP'</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>:set of RDF terms) =
       if ( <var>x</var> in <var>V</var> ) return 
       add <var>x</var> to <var>V</var>
       <var>X</var> = <a href="#defn_reachableTerms"><var>reachableTerms</var></a>(<var>x</var>, <var>ppe</var>)
       For <var>n</var>:term in <var>X</var>
-          <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
+          <a href="#defn_evalALP_1">ALP'</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
           End
 </pre>
         </div>
@@ -10013,7 +10013,7 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
     Let <var>X</var> = <a href="#defn_reachableTerms"><var>reachableTerms</var></a>(<var>x</var>, <var>ppe</var>)
     Let <var>V</var> = the empty multiset
     For <var>n</var> in <var>X</var>
-        <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
+        <a href="#defn_evalALP_1">ALP'</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
     End
     result is <var>V</var>
 
