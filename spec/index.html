@@ -8704,7 +8704,7 @@ WHERE {
           is defined recursively as follows:</p>
         <ul>
           <li id="defn_ppeLink">
-            <a href="#defn_ppeLink" class="ppeOp">link</a>(|iri|)
+            <a href="#defn_ppeLink" class="ppeOp">Link</a>(|iri|)
             is an algebraic property path expression if
             |iri| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>.</li>
           <li id="defn_ppeNPS">
@@ -8713,15 +8713,15 @@ WHERE {
             |I| is a nonempty set of <a data-cite="RDF12-CONCEPTS#dfn-iri">IRIs</a>.
             NPS is an acronym for <em>negated property set</em>.</i>
           <li id="defn_ppeSeq">
-            <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>)
+            <a href="#defn_ppeSeq" class="ppeOp">Seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>)
             is an algebraic property path expression if
             <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> are algebraic property path expressions.</li>
           <li id="defn_ppeAlt">
-            <a href="#defn_ppeAlt" class="ppeOp">alt</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>)
+            <a href="#defn_ppeAlt" class="ppeOp">Alt</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>)
             is an algebraic property path expression if
             <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> are algebraic property path expressions.</li>
           <li id="defn_ppeInv">
-            <a href="#defn_ppeInv" class="ppeOp">inv</a>(|ppe|)
+            <a href="#defn_ppeInv" class="ppeOp">Inv</a>(|ppe|)
             is an algebraic property path expression if
             |ppe| is an algebraic property path expression.</li>
           <li id="defn_ppeZeroOrOnePath">
@@ -9031,11 +9031,11 @@ For each form FILTER(expr) in the group graph pattern
                 </tr>
                 <tr>
                   <td><code>iri</code></td>
-                  <td><code><a href="#defn_ppeLink" class="ppeOp">link</a>(iri)</code></td>
+                  <td><code><a href="#defn_ppeLink" class="ppeOp">Link</a>(iri)</code></td>
                 </tr>
                 <tr>
                   <td><code>^path</code></td>
-                  <td><code><a href="#defn_ppeInv" class="ppeOp">inv</a>(path)</code></td>
+                  <td><code><a href="#defn_ppeInv" class="ppeOp">Inv</a>(path)</code></td>
                 </tr>
                 <tr>
                   <td><code>!(:iri<sub>1</sub>|...|:iri<sub>n</sub>)</code></td>
@@ -9043,22 +9043,22 @@ For each form FILTER(expr) in the group graph pattern
                 </tr>
                 <tr>
                   <td><code>!(^:iri<sub>1</sub>|...|^:iri<sub>n</sub>)</code></td>
-                  <td><code><a href="#defn_ppeInv" class="ppeOp">inv</a>( <a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>1</sub> ... :iri<sub>n</sub>}) )</code></td>
+                  <td><code><a href="#defn_ppeInv" class="ppeOp">Inv</a>( <a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>1</sub> ... :iri<sub>n</sub>}) )</code></td>
                 </tr>
                 <tr>
                   <td>
                     <code>!(:iri<sub>1</sub>|...|:iri<sub>i</sub>|^:iri<sub>i+1</sub>|...|^:iri<sub>m</sub>)</code>&nbsp;</td>
-                  <td><code><a href="#defn_ppeAlt" class="ppeOp">alt</a>( <a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>1</sub> ...:iri<sub>i</sub>}),<br>
-                      &nbsp;&nbsp;&nbsp;&nbsp;<a href="#defn_ppeInv" class="ppeOp">inv</a>(<a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>i+1</sub>, ..., :iri<sub>m</sub>}))
+                  <td><code><a href="#defn_ppeAlt" class="ppeOp">Alt</a>( <a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>1</sub> ...:iri<sub>i</sub>}),<br>
+                      &nbsp;&nbsp;&nbsp;&nbsp;<a href="#defn_ppeInv" class="ppeOp">Inv</a>(<a href="#defn_ppeNPS" class="ppeOp">NPS</a>({:iri<sub>i+1</sub>, ..., :iri<sub>m</sub>}))
                       )</code></td>
                 </tr>
                 <tr>
                   <td><code>path1 / path2</code></td>
-                  <td><code><a href="#defn_ppeSeq" class="ppeOp">seq</a>(path1, path2)</code></td>
+                  <td><code><a href="#defn_ppeSeq" class="ppeOp">Seq</a>(path1, path2)</code></td>
                 </tr>
                 <tr>
                   <td><code>path1 | path2</code></td>
-                  <td><code><a href="#defn_ppeAlt" class="ppeOp">alt</a>(path1, path2)</code></td>
+                  <td><code><a href="#defn_ppeAlt" class="ppeOp">Alt</a>(path1, path2)</code></td>
                 </tr>
                 <tr>
                   <td><code>path*</code></td>
@@ -9106,15 +9106,15 @@ For each form FILTER(expr) in the group graph pattern
                   <th>Translation</th>
                 </tr>
                 <tr>
-                  <td>|x| <a href="#defn_ppeLink" class="ppeOp">link</a>(|iri|) |y|</td>
+                  <td>|x| <a href="#defn_ppeLink" class="ppeOp">Link</a>(|iri|) |y|</td>
                   <td>|x| |iri| |y|</td>
                 </tr>
                 <tr>
-                  <td>|x| <a href="#defn_ppeInv" class="ppeOp">inv</a>(|iri|) |y|</td>
+                  <td>|x| <a href="#defn_ppeInv" class="ppeOp">Inv</a>(|iri|) |y|</td>
                   <td>|y| |iri| |x|</td>
                 </tr>
                 <tr>
-                  <td>|x| <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>) |y|</td>
+                  <td>|x| <a href="#defn_ppeSeq" class="ppeOp">Seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>) |y|</td>
                   <td>|x| <var>ppe<sub>1</sub></var> |var| . |var| <var>ppe<sub>2</sub></var> |y|</td>
                 </tr>
                 <tr>
@@ -9126,7 +9126,7 @@ For each form FILTER(expr) in the group graph pattern
 <div class="issue" data-number="226">
   I assume that the translation rules in this table are meant to be applied recursively,
   but the section doesn't say anything about that. In particular, for the
-  "|x| <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>) |y|"
+  "|x| <a href="#defn_ppeSeq" class="ppeOp">Seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>) |y|"
   case: <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> in the resulting translation
   may still be arbitrary algebraic property path expressions and, thus,
   the translation should be applied again for each of the two resulting property path patterns
@@ -9147,7 +9147,7 @@ For each form FILTER(expr) in the group graph pattern
                 ?s :p* ?o
               </div>
               <div class="algExample2">
-                <a href="#defn_absPath" class="absOp">Path</a>(?s, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeLink" class="ppeOp">link</a>(:p)), ?o)
+                <a href="#defn_absPath" class="absOp">Path</a>(?s, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeLink" class="ppeOp">Link</a>(:p)), ?o)
               </div>
             </div>
             <div class="algExample">
@@ -9155,7 +9155,7 @@ For each form FILTER(expr) in the group graph pattern
                 :list rdf:rest*/rdf:first ?member
               </div>
               <div class="algExample2">
-                <a href="#defn_absPath" class="absOp">Path</a>(:list, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeLink" class="ppeOp">link</a>(rdf:rest)), ?_V) .<br>
+                <a href="#defn_absPath" class="absOp">Path</a>(:list, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeLink" class="ppeOp">Link</a>(rdf:rest)), ?_V) .<br>
                 ?_V rdf:first ?member
               </div>
             </div>
@@ -9806,13 +9806,13 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
           For example, the property path expression <code>(:p/:q)*</code>
           is a ZeroOrMorePath expression involving a sequence property path,
           and is translated into the algebraic property path expression
-          <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>( <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<a href="#defn_ppeLink" class="ppeOp">link</a>(:p), <a href="#defn_ppeLink" class="ppeOp">link</a>(:q)) ).</p>
+          <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>( <a href="#defn_ppeSeq" class="ppeOp">Seq</a>(<a href="#defn_ppeLink" class="ppeOp">Link</a>(:p), <a href="#defn_ppeLink" class="ppeOp">Link</a>(:q)) ).</p>
         <p>Thereafter, the <a href="#sparqlTranslatePathPatterns">translation of property path patterns</a>
           converts some of these algebraic property path expressions
           to other SPARQL graph patterns, such as converting property paths of length one to triple
           patterns, which in turn are combined into basic graph patterns.
           This leaves algebraic property path expressions with the operators
-          <a href="#defn_ppeAlt" class="ppeOp">alt</a>,
+          <a href="#defn_ppeAlt" class="ppeOp">Alt</a>,
           <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>,
           <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>,
           <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>,
@@ -9858,28 +9858,28 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
           <p><b>Definition: <span id="defn_evalPP_predicate">Evaluation of Predicate Property Path</span></b></p>
           <p>Let |iri| be an IRI.</p>
             <pre class="nohighlight">
-ppeval(<var>X</var>, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>) = <a href="#BasicGraphPattern">evaluation of basic graph pattern</a> {<var>X</var> <var>iri</var> <var>Y</var>}
+ppeval(<var>X</var>, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>) = <a href="#BasicGraphPattern">evaluation of basic graph pattern</a> {<var>X</var> <var>iri</var> <var>Y</var>}
             </pre>
         </div>
         <p>If both |X| and |Y| are variables, this is the same as:</p>
         <pre class="nohighlight">
-ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:var) =
+ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:var) =
     { (<var>X</var>, <var>xn</var>:term) (<var>Y</var>, <var>yn</var>:term) | triple (<var>xn</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
         <p>If |X| is a variable and |Y| an RDF term:</p>
         <pre class="nohighlight">
-ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) =
+ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:term) =
     { (<var>X</var>, <var>xn</var>:term) | triple (<var>xn</var>, <var>iri</var>, <var>Y</var>) is in the active graph }</pre>
         <p>If |X| is an RDF term and |Y| is a variable:</p>
         <pre class="nohighlight">
-ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:var) =
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:var) =
     { (<var>Y</var>, <var>yn</var>:term) | triple (<var>X</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
         <p>If both |X| and |Y| are RDF terms:</p>
         <pre class="nohighlight">
-ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term)
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:term)
     = { μ<sub>0</sub> } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is in the active graph
     = { { } } = Ω<sub>0</sub> 
 
-ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>iri</var>), <var>Y</var>:term) =
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:term) =
      { } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is not in the active graph
         </pre>
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
@@ -9887,13 +9887,13 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>ir
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_inverse">Evaluation of Inverse Property Path</span></b></p>
           <p>Let |ppe| be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>, then:</p>
-          <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeInv" class="ppeOp">inv</a>(<var>ppe</var>), <var>Y</var>) = ppeval(<var>Y</var>, <var>ppe</var>, <var>X</var>)</pre>
+          <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeInv" class="ppeOp">Inv</a>(<var>ppe</var>), <var>Y</var>) = ppeval(<var>Y</var>, <var>ppe</var>, <var>X</var>)</pre>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_sequence">Evaluation of Sequence Property Path</span></b></p>
           <p>Let <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> be <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>. Let |V| be a fresh variable.</p>
           <pre class="nohighlight"><var>A</var> = <a href="#defn_algJoin" class="algFct">Join</a>( ppeval(<var>X</var>, <var>ppe<sub>1</sub></var>, <var>V</var>), ppeval(<var>V</var>, <var>ppe<sub>2</sub></var>, <var>Y</var>) )</pre>
-          <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeSeq" class="ppeOp">seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>), <var>Y</var>) = <a href="#defn_algProject" class="algFct">Project</a>(<var>A</var>, <var>PV</var>)</pre>
+          <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeSeq" class="ppeOp">Seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>), <var>Y</var>) = <a href="#defn_algProject" class="algFct">Project</a>(<var>A</var>, <var>PV</var>)</pre>
           <p>where |PV| = { |v| ∈ {|X|,|Y|} | |v| is a variable}.</p>
 <div class="issue" data-number="266"><a href="#defn_algJoin" class="algFct">Join</a> produces a multiset of solution mappings but <a href="#defn_algProject" class="algFct">Project</a> expects a sequence as its first argument. Moreover, <a href="#defn_algProject" class="algFct">Project</a> produces a sequence but ppeval(..) should be a multiset.</div>
         </div>
@@ -9910,7 +9910,7 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">link</a>(<var>ir
           <p><b>Definition: <span id="defn_evalPP_alternative">Evaluation of Alternative Property Path</span></b></p>
           <p>Let <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> be <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>.
           <pre class="nohighlight">
-ppeval(<var>X</var>, <a href="#defn_ppeAlt" class="ppeOp">alt</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>), <var>Y</var>) =
+ppeval(<var>X</var>, <a href="#defn_ppeAlt" class="ppeOp">Alt</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>), <var>Y</var>) =
     <a href="#defn_algUnion" class="algFct">Union</a>( ppeval(<var>X</var>, <var>ppe<sub>1</sub></var>, <var>Y</var>), ppeval(<var>X</var>, <var>ppe<sub>2</sub></var>, <var>Y</var>) )
           </pre>
         </div>
@@ -9997,7 +9997,7 @@ ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOr
       <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) = 
-    ppeval(<var>y</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeInv" class="ppeOp">inv</a>(<var>ppe</var>)), <var>vx</var>:var)
+    ppeval(<var>y</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<a href="#defn_ppeInv" class="ppeOp">Inv</a>(<var>ppe</var>)), <var>vx</var>:var)
 
 ppeval(<var>x</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) = 
     { { } } if { (<var>vy</var>:var,<var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
@@ -10025,7 +10025,7 @@ ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
          <var>t</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>), (<var>vy</var>, <var>n</var>) in ppeval(<var>t</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>) }
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) =
-    ppeval(<var>y</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<a href="#defn_ppeInv" class="ppeOp">inv</a>(<var>ppe</var>)), <var>vx</var>)
+    ppeval(<var>y</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<a href="#defn_ppeInv" class="ppeOp">Inv</a>(<var>ppe</var>)), <var>vx</var>)
 
 ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) =
     { { } } if { (<var>vy</var>:var, <var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
