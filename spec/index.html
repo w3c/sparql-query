@@ -7453,14 +7453,18 @@ WHERE {
             <pre class="prototype nohighlight"> <span class="return">xsd:boolean</span>  <span class="operator">langMatches</span> (<span class="type"><span class="type">xsd:string</span></span> <span class="name">language-tag</span>, <span class="type"><span class="type">xsd:string</span></span> <span class="name">language-range</span>)
             </pre>
 
-            <p>Returns `true` if the <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
-              (first argument) matches <code>language-range</code> (second argument).
-              Otherwise, the function returns `false`.
-              Matching is performed according to the basic filtering scheme defined in
-              [[RFC4647]] section 3.3.1. <code>language-range</code> is a basic language range per
-              [[[RFC4647]]] [[RFC4647]] section 2.1. A <code>language-range</code> of "*" matches any
-              non-empty <code>language-tag</code> string. Otherwise, the function returns `false`.
+            <p>Returns `true` if the argument <code>language-tag</code> (a <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>)
+               matches the argument <code>language-range</code> (a [basic language range](https://www.rfc-editor.org/rfc/rfc4647#section-2.1) per [[[RFC4647]]] [[RFC4647]] section 2.1)
+              according to the basic filtering scheme defined in
+              [[RFC4647]] section 3.3.1. Otherwise, the function returns `false`.
             </p>
+              
+            <p>If <code>language-tag</code>, <code>language-range</code>, or both are empty
+              (and thus not a valid language tag or language range, respectively),
+              the function returns `false`.
+            </p>
+              
+            <p>A <code>language-range</code> of "*" matches any non-empty <code>language-tag</code> string.</p>
             <div class="exampleGroup">
               <pre class="data nohighlight">
 PREFIX dc:       &lt;http://purl.org/dc/elements/1.1/&gt;
