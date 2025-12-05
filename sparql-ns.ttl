@@ -543,12 +543,12 @@ sparql:version-1.1 a rdfs:Resource ;
     rdfs:label "1.1" ;
     rdfs:comment "Version 1.1" ;
     rdfs:isDefinedBy <https://www.w3.org/ns/sparql> ;
-    rdfs:seeAlso <http://www.w3.org/TR/sparql12-query/> ;
+    dc:conformsTo <http://www.w3.org/TR/sparql11-query/> ;
     .
 
 sparql:version-1.0 a rdfs:Resource ;
     rdfs:label "1.0" ;
     rdfs:comment "Version 1.0" ;
     rdfs:isDefinedBy <https://www.w3.org/ns/sparql> ;
-    rdfs:seeAlso <http://www.w3.org/TR/sparql12-query/> ;
+    dc:conformsTo <http://www.w3.org/TR/sparql10-query/> ;
     .
