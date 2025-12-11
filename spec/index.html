@@ -8603,6 +8603,9 @@ WHERE {
             is an algebraic query expression.
 <div class="issue" data-number="231">Do we really need both of the previous two points?</div>
             </li>
+          <li id="defn_absContextSolution">
+            <a href="#defn_absContextSolution" class="absOp">ContextSolution</a>
+            is an algebraic query expression.</li>
           <li id="defn_absPath">
             <a href="#defn_absPath" class="absOp">Path</a>(|x|, |ppe|, |y|)
             is an algebraic query expression if
@@ -9211,7 +9214,7 @@ If the form is GRAPH Var GroupGraphPattern
             </blockquote>
 <pre class="code nohighlight">
 Let FS := the empty set
-Let <var>G</var> := the empty pattern, a basic graph pattern which is the empty set.
+Let <var>G</var> := <a href="#defn_absContextSolution" class="absOp">ContextSolution</a>
 
 For each element <var>E</var> in the sequence of elements in the GroupGraphPattern
 
@@ -10664,9 +10667,10 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <h3>Evaluation Semantics</h3>
           <p id="defn_eval">We define <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|, <var>μ<sub>ctx</sub></var>) as the evaluation of an <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a> |A| with
             respect to a <a href="#sparqlDataset">dataset</a> |D| having <a href="#defn_ActiveGraph">active graph</a> |G|
-            in correlation with solution mapping <var>μ<sub>ctx</sub></var>.
-            The active graph is initially the default
-            graph of |D|. Further symbols used in the following definitions are:</p>
+            in correlation with solution mapping <var>μ<sub>ctx</sub></var>.</p>
+          <p>The active graph is initially the default graph of |D| and
+            <var>μ<sub>ctx</sub></var> is initially the empty solution mapping <var>μ<sub>0</sub></var>.</p>
+          <p>Further symbols used in the following definitions are:</p>
           <ul>
             <li>|P|, <var>P<sub>1</sub></var>, <var>P<sub>2</sub></var> : graph patterns</li>
             <li>|L| : a solution sequence</li>
@@ -10686,6 +10690,10 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             <p><b>Definition: <span id="defn_evalPropertyPathPattern">Evaluation of a Property Path Pattern</span></b></p>
             <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absPath" class="absOp">Path</a>(|X|, |path|, |Y|), <var>μ<sub>ctx</sub></var> ) = multiset of solution mappings</p>
             <p>See section <a href="#PropertyPathPatterns">Property Path Patterns</a></p>
+          </div>
+          <div class="defn">
+            <p><b>Definition: <span id="defn_evalContextSolution">Evaluation of ContextSolution</span></b></p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absContextSolution" class="absOp">ContextSolution</a>, <var>μ<sub>ctx</sub></var> ) = multiset that contains only <var>μ<sub>ctx</sub></var>, with a multiplicity of 1</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
