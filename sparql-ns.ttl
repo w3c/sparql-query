@@ -19,7 +19,7 @@ sparql:Aggregate rdf:type rdfs:Class .
 
 ## Operators
 
-sparql:plus rdf:type sparql:Function ;
+sparql:add rdf:type sparql:Function ;
     rdfs:comment "This operator adds two numeric expressions and returns their sum." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
