@@ -2929,8 +2929,8 @@ WHERE {
           <p>Note that it would not be legal to project <code>STR(?z)</code> as this is not a simple
             variable expression. However, with <code>GROUP BY (STR(?z) AS ?strZ)</code> it would be
             possible to project <code>?strZ</code>.</p>
-          <p>Other expressions, not using <code>GROUP BY</code> variables, or aggregates may have
-            non-deterministic values projected from their groups using the <code>SAMPLE</code>
+          <p>For other expressions (not using <code>GROUP BY</code> variables or aggregates),
+            non-deterministic values may be requested from their groups by using the <code>SAMPLE</code>
             aggregate function explicitly.</p>
         </div>
       </section>
