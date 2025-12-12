@@ -5688,30 +5688,45 @@ class="expression">expression, ....</span>)
             <h5>NOT EXISTS and EXISTS</h5>
             <p>There is a filter operator <code>EXISTS</code> that takes a graph pattern.
               <code>EXISTS</code> returns <code>true</code>/<code>false</code> depending on whether the
-              pattern matches the dataset given the bindings in the current group graph pattern, the
-              dataset and the <a href="#defn_ActiveGraph">active graph</a> at this point in the query
-              evaluation. No additional binding of variables occurs. The <code>NOT EXISTS</code> form
-              translates into <code>fn:not(EXISTS{...})</code>.</p>
+              pattern matches the dataset given solution mapping with respect to which
+              the expression is <a href="#expression-evaluation">evaluated</a>.
+              No additional binding of variables occurs. The <code>NOT EXISTS</code> form
+              translates into <code>fn:<a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(EXISTS {...})</code>.</p>
             <pre class="prototype nohighlight"> 
 <span class="return">xsd:boolean</span>  <span class="operator">NOT EXISTS</span> { <span class="pattern">pattern</span> }
             </pre>
-            <p>Returns <code>false</code> if <code>pattern</code> matches. Returns true
+            <p>Returns <code>false</code> if <code>pattern</code> matches. Returns `true`
               otherwise.</p>
-            <p><code>NOT EXISTS { pattern }</code> is equivalent to <code>fn:not(EXISTS { pattern
+            <p><code>NOT EXISTS { pattern }</code> is equivalent to <code><a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(EXISTS { pattern
                 })</code>.</p>
             <pre class="prototype nohighlight"> 
 <span class="return">xsd:boolean</span> EXISTS { <span class="pattern">pattern</span> }
             </pre>
-            <p>Returns <code>true</code> if <code>pattern</code> matches. Returns false
+            <p>Returns <code>true</code> if <code>pattern</code> matches. Returns `false`
               otherwise.</p>
-            <p>Variables in the <code>pattern</code> that are bound in the current 
-              <a data-cite="SPARQL11-QUERY#defn_sparqlSolutionMapping">solution mapping</a> take the value that they
-              have from the solution mapping. Variables in the pattern <code>pattern</code> that are
-              not bound in the current solution mapping take part in pattern matching.</p>
-            <p>To facilitate this, we introduce a function <a href="#defn_exists">Exists</a> that
-              evaluates a SPARQL Algebra expression and returns true or false, depending on whether
-              there are any solutions to the pattern, given the solution mapping being tested by the
-              filter operation.</p>
+            <p>Formally, for every <a href="#expressions">expression</a> |expr|
+              that is of the form `EXISTS { pattern }`,
+              the result of <a href="#expression-evaluation">evaluating</a> |expr|
+              with respect to a <a href="#defn_sparqlSolutionMapping">solution mapping</a> <var>μ</var>,
+              in the context of a <a href="#sparqlDataset">dataset</a> |D|
+              with <a href="#defn_ActiveGraph">active graph</a> |G|,
+              is:</p>
+            <ul>
+              <li>`"true"^^xsd:boolean` if
+                <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|, <var>μ</var>) is not empty,
+                and</li>
+              <li>`"false"^^xsd:boolean` if
+                <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|, <var>μ</var>) is empty,</li>
+            </ul>
+            <p>where |A| is the <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>
+              obtained by translating `{ pattern }` as per <a href="#translation" class="sectionRef"></a>.</p>
+            <p class="note">
+              As per the <a href="#rExistsFunc">ExistsFunc</a> production
+              of the <a href="#sparqlGrammar">grammar</a>,
+              `{ pattern }` matches the <a href="#rGroupGraphPattern">GroupGraphPattern</a> production.
+              The specific subsection of <a href="#translation" class="sectionRef"></a>
+              that covers the translation of any <a href="#rGroupGraphPattern">GroupGraphPattern</a>
+              is <a href="#sparqlTranslateGraphPatterns" class="sectionRef"></a>.</p>
           </section>
           <section id="func-logical-or">
             <h5>logical-or</h5>
@@ -10670,6 +10685,11 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             in correlation with solution mapping <var>μ<sub>ctx</sub></var>.</p>
           <p>The active graph is initially the default graph of |D| and
             <var>μ<sub>ctx</sub></var> is initially the empty solution mapping <var>μ<sub>0</sub></var>.</p>
+          <p class="note">The case in which <var>μ<sub>ctx</sub></var>
+            may be different from <var>μ<sub>0</sub></var>
+            is when evaluating an <a href="#expressions">expression</a>
+            of the form `EXISTS pattern` or `NOT EXISTS pattern`,
+            as defined in <a href="#func-filter-exists" class="sectionRef"></a>.</p>
           <p>Further symbols used in the following definitions are:</p>
           <ul>
             <li>|P|, <var>P<sub>1</sub></var>, <var>P<sub>2</sub></var> : graph patterns</li>
