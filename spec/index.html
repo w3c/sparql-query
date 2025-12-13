@@ -9540,7 +9540,7 @@ Global <var>i</var> := 1   # Initially 1 for each query processed
 
 For each (<var>X</var> AS <var>Var</var>) in SELECT, each HAVING(<var>X</var>), and each ORDER BY <var>X</var> in <var>Q</var>
   For each unaggregated variable <var>V</var> in <var>X</var>
-      Replace <var>V</var> with SAMPLE(<var>V</var>)
+      Raise an error
       End
   For each aggregate <var>R</var>(<var>args</var> ; <var>scalarvals</var>) now in <var>X</var>
       # note: <var>scalarvals</var> may be omitted; if so, it is equivalent to the empty function
