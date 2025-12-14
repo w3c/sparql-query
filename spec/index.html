@@ -12710,7 +12710,12 @@ _:x rdf:type xsd:decimal .
                   <a data-cite="RDF12-CONCEPTS#dfn-rdf-string">RDF string</a>. 
                   Exclude Unicode surrogates from Unicode escape sequences.</li>
                 <li>Remove concepts of plain and simple literals, in favor of explicit mentions of `xsd:string`</li>
-                <li>Migrate XML Schema references to 1.1. Note that, for the `xsd:dateTime` datatype, this means that year -1BC is now encoded as `0000` and not anymore as `-0001`.</li>
+                <li>Migrate XML Schema references to 1.1. 
+                Note that for datatypes involving years, the year 1 BCE is represented by `0000` and not as `-0001`.
+                See the note about the
+                <a data-cite="XMLSCHEMA11-2#dateTime-value-space">date/timeSevenPropertyModel</a>
+                for details.
+                </li>
                 <li>Update references to XPath from 2.0 to 3.1</li>
                 <li>Define `EBV` as a functional form.</li>
                 <li>Forbid duplicated variables in `VALUES`.</li>
