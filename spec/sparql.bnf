@@ -120,7 +120,7 @@ TripleTerm                ::= '<<(' TripleTermSubject Verb TripleTermObject ')>>
 TripleTermSubject         ::= Var | iri | RDFLiteral | NumericLiteral | BooleanLiteral | BlankNode | TripleTerm
 TripleTermObject          ::= Var | iri | RDFLiteral | NumericLiteral | BooleanLiteral | BlankNode | TripleTerm
 TripleTermData            ::= '<<(' TripleTermDataSubject ( iri | 'a' ) TripleTermDataObject ')>>'
-TripleTermDataSubject     ::= iri | RDFLiteral | NumericLiteral | BooleanLiteral | TripleTermData
+TripleTermDataSubject     ::= iri
 TripleTermDataObject      ::= iri | RDFLiteral | NumericLiteral | BooleanLiteral | TripleTermData
 VarOrIri                  ::= Var | iri
 Var                       ::= VAR1 | VAR2
@@ -138,7 +138,7 @@ UnaryExpression           ::= '!' UnaryExpression
                           |   PrimaryExpression
 PrimaryExpression         ::= BrackettedExpression | BuiltInCall | iriOrFunction | RDFLiteral | NumericLiteral | BooleanLiteral | Var | ExprTripleTerm
 ExprTripleTerm            ::= '<<(' ExprTripleTermSubject Verb ExprTripleTermObject ')>>'
-ExprTripleTermSubject     ::= iri | RDFLiteral | NumericLiteral | BooleanLiteral | Var | ExprTripleTerm
+ExprTripleTermSubject     ::= iri | Var
 ExprTripleTermObject      ::= iri | RDFLiteral | NumericLiteral | BooleanLiteral | Var | ExprTripleTerm
 BrackettedExpression      ::= '(' Expression ')'
 BuiltInCall               ::= Aggregate 
