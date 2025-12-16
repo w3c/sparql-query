@@ -7926,7 +7926,6 @@ WHERE {
           </section>
         </section>
 
-        <!-- QT -->
         <section id="func-triple-terms">
           <h4>Functions on Triple Terms</h4>
           <section id="func-triple">
@@ -7956,17 +7955,26 @@ class="name">obj</span>)
               the function returns a triple term with these three elements.
               Otherwise, the function raises an error.
             </p>
-
             <p>
               As a shorthand notation, the <code>TRIPLE</code> function 
               can also be written in the form of a
               <a href="#rExprTripleTerm">triple term expression</a>
-              using <code>&lt;&lt;(</code> and <code>)&gt;&gt;</code>.  There is a
-              syntax limitation to this shorthand form: the three elements of
-              the triple term expression can only be variables and directly
-              written RDF terms, not arbitrary expressions. 
-              In contrast, the function form, <code>TRIPLE</code>,
-              can be used with arbitrary expressions.
+              using <code>&lt;&lt;(</code> and <code>)&gt;&gt;</code>.  There are
+              syntax limitations to this shorthand form:
+            </p>
+            <ul>
+              <li>each of the three elements of the triple term expression can only be
+                a <a href="#defn_QueryVariable">variable</a>
+                or a directly written [=RDF term=], not an arbitrary expression.
+              </li>
+              <li>
+                the syntax of the subject and predicate positions is limited to an
+                <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a> or a
+                <a href="#defn_QueryVariable">variable</a>.
+              </li>
+            </ul>
+            <p>
+              The function form, <code>TRIPLE</code>, can be used with arbitrary expressions.
             </p>
             <pre class="query nohighlight">
               VERSION "1.2"
@@ -8051,7 +8059,6 @@ class="name">obj</span>)
             </p>
           </section>
         </section>
-        <!-- QT -->
 
         <section id="func-hash">
           <h4>Hash Functions</h4>
