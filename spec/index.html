@@ -5687,9 +5687,11 @@ class="expression">expression, ....</span>)
             <span id="func-filter-not-exists"></span>
             <h5>NOT EXISTS and EXISTS</h5>
             <p>There is a filter operator <code>EXISTS</code> that takes a graph pattern.
-              <code>EXISTS</code> returns <code>true</code>/<code>false</code> depending on whether the
-              pattern matches the dataset given solution mapping with respect to which
-              the expression is <a href="#expression-evaluation">evaluated</a>.
+              <code>EXISTS</code> returns <code>true</code> or <code>false</code>,
+              depending on whether the pattern,
+              together with the solution mapping
+              with respect to which the expression is <a href="#expression-evaluation">evaluated</a>,
+              matches the dataset.
               No additional binding of variables occurs. The `NOT EXISTS` form
               translates into <code>fn:<a data-cite="XPATH-FUNCTIONS-31#func-not">fn:not</a>(EXISTS {...})</code>.</p>
             <pre class="prototype nohighlight"> 
