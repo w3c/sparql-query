@@ -9959,7 +9959,7 @@ ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOn
         either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>)
         or {(<var>X</var>, <var>xn</var>), (<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }</pre>
         </div>
-        <p>We define an auxiliary function, <a href="#defn_evalALP_1">ALP</a>, used in the definitions of <a href="#defn_evalZeroOrMorePath">ZeroOrMorePath</a> and
+        <p>We define an auxiliary function, <a href="#defn_evalALP">ALP</a>, used in the definitions of <a href="#defn_evalZeroOrMorePath">ZeroOrMorePath</a> and
           <a href="#defn_evalOneOrMorePath">OneOrMorePath</a>. Note that the algorithm given here serves to specify the feature. An
           implementor is free to implement evaluation by any method that produces the same results
           for the query overall. The <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a> and <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a> forms return matches based on
@@ -9971,26 +9971,24 @@ ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOn
           a node has been visited for the path under consideration, it is not a candidate for another
           step.</p>
         <div class="defn">
-          <p><b>Definition: <span id="defn_evalALP_1">Function ALP</span></b></p>
+          <p><b>Definition: <span id="defn_evalALP">Function ALP</span><span id="defn_evalALP_1"><!-- obsolete id --></span></b></p>
           <pre class="nohighlight">
 Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
 Let <span id="defn_reachableTerms"><var>reachableTerms</var></span>(<var>x</var>:term, <var>ppe</var>) be the set of RDF terms
  reached by repeated matches of <var>ppe</var>,
  when starting at RDF term <var>x</var>.
 
-  <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>) = 
-      Let <var>V</var> = empty set
-      <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>)
+  <a href="#defn_evalALP">ALP</a>(<var>x</var>:term, <var>ppe</var>) =
+      Let <var>V</var> = empty set of terms
+      <a href="#defn_evalALP_recurse">ALP_recurse</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>)
       return is <var>V</var>
 
-  # <var>V</var> is the set of nodes visited
-
-  <a href="#defn_evalALP_1">ALP</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>:set of RDF terms) =
+  <a id="defn_evalALP_recurse" href="#defn_evalALP_recurse">ALP_recurse</a>(<var>x</var>:term, <var>ppe</var>, <var>V</var>:set of RDF terms) =
       if ( <var>x</var> in <var>V</var> ) return 
       add <var>x</var> to <var>V</var>
       <var>X</var> = <a href="#defn_reachableTerms"><var>reachableTerms</var></a>(<var>x</var>, <var>ppe</var>)
       For <var>n</var>:term in <var>X</var>
-          <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
+          <a href="#defn_evalALP_recurse">ALP_recurse</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
           End
 </pre>
         </div>
@@ -10000,7 +9998,7 @@ Let <span id="defn_reachableTerms"><var>reachableTerms</var></span>(<var>x</var>
             Let <var>G</var> be the <a href="#defn_ActiveGraph">active graph</a>.</p>
           <pre class="nohighlight">
 ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
-    { { (<var>vy</var>, <var>n</var>) } | <var>n</var> in <a href="#defn_evalALP_1">ALP</a>(<var>X</var>, <var>ppe</var>) }
+    { { (<var>vy</var>, <var>n</var>) } | <var>n</var> in <a href="#defn_evalALP">ALP</a>(<var>X</var>, <var>ppe</var>) }
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
     { { (<var>vx</var>, <var>t</var>), (<var>vy</var>, <var>n</var>) } |  
@@ -10026,7 +10024,7 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
     Let <var>X</var> = <a href="#defn_reachableTerms"><var>reachableTerms</var></a>(<var>x</var>, <var>ppe</var>)
     Let <var>V</var> = the empty multiset
     For <var>n</var> in <var>X</var>
-        <a href="#defn_evalALP_1">ALP</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
+        <a href="#defn_evalALP_recurse">ALP_recurse</a>(<var>n</var>, <var>ppe</var>, <var>V</var>)
     End
     result is <var>V</var>
 
@@ -12755,7 +12753,7 @@ _:x rdf:type xsd:decimal .
                   in <a href="#PropertyPathPatterns" class="sectionRef"></a>
                   from <i>eval</i> to <i>ppeval</i>.</li>
                 <li>Rename the function used within the definition of
-                  the <a href="#defn_evalALP_1">ALP</a> function
+                  the <a href="#defn_evalALP">ALP</a> function
                   from <i>eval</i> to <i>reachableTerms</i>.</li>
                 <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors</a>.</li>
                 <li>Rename section "Filter evaluation" as <a href="#expression-evaluation" class="sectionRef"></a>.</li>
@@ -12773,7 +12771,7 @@ _:x rdf:type xsd:decimal .
               <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-1">clarification-query-1</a>: Fix explanation of IN and NOT IN in <a href="#func-in" class="sectionRef"></a> and <a href="#func-not-in" class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-2">clarification-query-2</a>: Remove unneeded reference to the semantics above in <a href="#operatorExtensibility" class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-3">clarification-query-3</a>: Rephrase equality definition in <a href="#func-sameValue" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-1">errata-query-1</a>: Let V be an empty set instead of empty multiset in <a href="#defn_evalALP_1">Function ALP definition</a></li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-1">errata-query-1</a>: Let V be an empty set instead of empty multiset in <a href="#defn_evalALP">Function ALP definition</a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-2">errata-query-2</a>: Fix grammar of PropertyListPathNotEmpty in <a href="#grammar" class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-4">errata-query-4</a>: Fix CONCAT definition for zero and one argument in <a href="#func-concat" class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-5">errata-query-5</a>: Mention illegal nesting of aggregates in <a href="#sparqlGrammar" class="sectionRef"></a></li>
