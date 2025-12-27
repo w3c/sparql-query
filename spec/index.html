@@ -8449,14 +8449,44 @@ WHERE {
           <div class="defn">
             <p><b>Definition: <span id="defn_TriplePattern">Triple Pattern</span></b></p>
             <p>A <span class="definedTerm">triple pattern</span> is a 3-tuple
-              (|s|, |p|, |o|) where:</p>
+              that is defined inductively as follows:</p>
             <ul>
-              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
-                or a <a href="#defn_QueryVariable">variable</a>,</li>
-              <li>|p| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
-                or a <a href="#defn_QueryVariable">variable</a>, and</li>
-              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
-                or a <a href="#defn_QueryVariable">variable</a>.</li>
+              <li>If
+                <ul style="list-style-type: none;">
+                  <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+                    or a <a href="#defn_QueryVariable">variable</a>,</li>
+                  <li>|p| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
+                    or a <a href="#defn_QueryVariable">variable</a>, and</li>
+                  <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+                    or a <a href="#defn_QueryVariable">variable</a>,</li>
+                </ul>
+                then (|s|, |p|, |o|) is a triple pattern.</li>
+              <li>If
+                <ul style="list-style-type: none;">
+                  <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+                    or a <a href="#defn_QueryVariable">variable</a>,</li>
+                  <li>|p| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
+                    or a <a href="#defn_QueryVariable">variable</a>, and</li>
+                  <li>|o| is a triple pattern,</li>
+                </ul>
+                then (|s|, |p|, |o|) is a triple pattern.</li>
+              <li>If
+                <ul style="list-style-type: none;">
+                  <li>|s| is a triple pattern,</li>
+                  <li>|p| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
+                    or a <a href="#defn_QueryVariable">variable</a>, and</li>
+                  <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+                    or a <a href="#defn_QueryVariable">variable</a>,</li>
+                </ul>
+                then (|s|, |p|, |o|) is a triple pattern.</li>
+              <li>If
+                <ul style="list-style-type: none;">
+                  <li>|s| is a triple pattern,</li>
+                  <li>|p| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
+                    or a <a href="#defn_QueryVariable">variable</a>, and</li>
+                  <li>|o| is a triple pattern,</li>
+                </ul>
+                then (|s|, |p|, |o|) is a triple pattern.</li>
             </ul>
           </div>
           <p>This definition of Triple Pattern includes literal subjects. 
@@ -8501,10 +8531,12 @@ WHERE {
             <p><b>Definition: <span id="defn_PropertyPathPattern">Property Path Pattern</span></b></p>
             <p>A property path pattern is a 3-tuple (|s|, |p|, |o|) where:</p>
             <ul>
-              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>,
+                a <a href="#defn_TriplePattern">triple pattern</a>,
                 or a <a href="#defn_QueryVariable">variable</a>,</li>
               <li>|p| is a <a href="#defn_PropertyPathExpr">property path expression</a>, and</li>
-              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>,
+                a <a href="#defn_TriplePattern">triple pattern</a>,
                 or a <a href="#defn_QueryVariable">variable</a>.</li>
             </ul>
           </div>
