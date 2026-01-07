@@ -8474,23 +8474,12 @@ WHERE {
             extend the syntaxes to allow literals as the subjects of statements."</pre>
           <p>Because RDF graphs may not contain literal subjects, any SPARQL triple pattern with a
             literal as subject will fail to match on any RDF graph.</p>
-          <p class="note">The definition permits a triple pattern
-            to have another triple pattern in its subject position.
-            This option is needed to support
-            the <a href="#sparqlTranslatePathExpressions">translation of property path patterns</a>
-            into triple patterns,
-            because a <a href="#defn_PropertyPathPattern">property path pattern</a>
-            may also have a triple pattern in its subject position
-            (which, in turn, is needed for cases in which the
-            <a href="#defn_PropertyPathExpr">property path expression</a>
-            of the property path pattern is of the
-            <a href="#propertypaths">InversePath</a> form).
-            Nonetheless, a triple pattern that has another triple pattern in its subject position
-            fails to match on any RDF graph
+          <p class="note">A triple pattern that has another triple pattern
+            in its subject position will fail to match on any RDF graph 
             because an RDF triple cannot have
             a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
             in its subject position.
-            </p>
+          </p>
         </section>
         <section id="sparqlBasicGraphPatterns">
           <h4>Basic Graph Patterns</h4>
