@@ -6863,8 +6863,8 @@ WHERE {
         <section id="func-string">
           <h4>Functions on Strings</h4>
           <p>Certain functions (e.g., <a href="#func-regex">REGEX</a>, <a href="#func-strlen">STRLEN</a>, <a href="#func-contains">CONTAINS</a>)
-            take a <dfn>string literal</dfn> 
-            as an argument. A string literal is one of
+            take a string literal as an argument. 
+            A <dfn>string literal</dfn> is one of the following:
           </p>
           <ul>
             <li>a literal with datatype <code>xsd:string</code></li>
@@ -6880,26 +6880,31 @@ WHERE {
             <a data-cite="RDF12-CONCEPTS#dfn-simple-literal">simple literal</a>
             syntactic shorthand for <code>"abc"^^xsd:string</code>.
           </p>
-
           <span id="string-literal-return-type"></span>
-          <p>The functions <a href="#func-substr">SUBSTR</a>, 
+          <p>
+            The functions <a href="#func-substr">SUBSTR</a>, 
             <a href="#func-strbefore">STRBEFORE</a>,
             <a href="#func-strafter">STRAFTER</a>,
             and <a href="#func-replace">REPLACE</a> return a <a>string literal</a> of the same
             kind as their first argument.
           </p>
-
+          <p>
+            The function <a href="#func-concat">CONCAT</a> returns a [=string literal=] depending on the
+            string literal forms of the arguments.
+          </p>
           <span id="func-arg-compatibility"></span>
-          <p>The functions <a href="#func-strstarts">STRSTARTS</a>, 
+          <p>
+            The functions <a href="#func-strstarts">STRSTARTS</a>, 
             <a href="#func-strends">STRENDS</a>,
             <a href="#func-contains">CONTAINS</a>, 
             <a href="#func-strbefore">STRBEFORE</a>,
-            <a href="#func-strafter">STRAFTER</a> and 
-            <a href="#func-concat">CONCAT</a>
-            take two or more arguments. These arguments must be <dfn>argument compatible</dfn>; otherwise, invocation of the
-            function raises an error.</p>
-
-          <p>Two <a>string literal</a> arguments are <a>argument compatible</a> if:
+            and <a href="#func-strafter">STRAFTER</a>
+            take two arguments. These arguments must be <a>argument compatible</a>; 
+            otherwise, invocation of the function raises an error.
+          </p>
+          <p>
+            Two <a>string literal</a> arguments are <dfn>argument compatible</dfn> if:
+          </p>
           <ul>
             <li>
               The arguments are literals with datatype <code>xsd:string</code>
@@ -7398,8 +7403,7 @@ WHERE {
             <h5>CONCAT</h5>
             <pre class="prototype nohighlight"><span class="return">string literal</span>  <span class="operator">CONCAT</span>(<span class="type">string literal</span>, ..., <span class="type">string literal</span>)</pre>
             <p>The <code>CONCAT</code> function takes zero or more arguments.
-              The arguments must be pair-wise <a>argument compatible</a>,
-              otherwise an error is raised.
+              The arguments must be [=string literals=], otherwise an error is raised.
             </p>
             <p>
               If zero arguments are given, the result is an empty string of datatype `xsd:string`.
@@ -7411,22 +7415,31 @@ WHERE {
               If two or more arguments are given, the function returns a
               <a>string literal</a> such that the
               <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> 
-              of the resulting string literal is obtained by concatenating the
+              of the resulting [=string literal=] is obtained by concatenating the
               lexical forms of the arguments of the function using the
               <a data-cite="XPATH-FUNCTIONS-31#func-concat">fn:concat</a> function.
-              If all input literals are literals with the same 
-              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
-              and the same
-              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>,
-              then the returned string literal is a literal with that language
-              tag and base direction.
-              If  all input literals are literals with the same 
-              <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>,
-              but not all the same 
-              <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>,
-              the returned literal is a literal with that language tag and no
-              base direction.
             </p>
+            <ul>
+              <li>
+                If all input literals are literals with the same 
+                <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+                and the same
+                <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>,
+                then the returned [=string literal=] is a literal with datatype
+                `rdf:dirLangString` with the common language tag and base direction.
+              </li>
+              <li>
+                If all input literals are literals with the same 
+                <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a>
+                and none of the arguments have a 
+                <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>,
+                then the returned [=string literal=] is a literal with datatype
+                `rdf:langString` with the common language tag.
+              </li>
+              <li>
+                Otherwise, the result is a [=string literal=] with datatype `xsd:string`.
+              </li>
+            </ul>
             <div class="result">
               <table>
                 <tbody>
