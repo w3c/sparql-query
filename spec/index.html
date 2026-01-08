@@ -5978,6 +5978,9 @@ class="expression">expression, ....</span>)
           <section id="func-sameValue">
             <span id="func-RDFterm-equal"><!-- obsolete id --></span>
             <h5>sameValue</h5>
+            <p style="text-indent: 50px; margin-top: -5px">
+            <i>This function replaces</i> <code>RDFterm-equal</code> <i> from SPARQL 1.1.</i>
+          </p>
             <pre class="prototype nohighlight">
               <span class="return">xsd:boolean</span> <span class="operator" style="text-transform: none;">sameValue</span> (<span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term1</span>, <span class="type"><span class="type RDFterm">RDF term</span></span> <span class="name">term2</span>)
             </pre>
@@ -5992,21 +5995,32 @@ class="expression">expression, ....</span>)
             <p>The result of this function is determined by going through the following steps.</p>
 
             <ol>
-              <li>If <code>term1</code> and <code>term2</code> are
+              <li>
+                If <code>term1</code> and <code>term2</code> are
                 <a data-cite="RDF12-CONCEPTS#dfn-rdf-term-equality">equal RDF terms</a>,
                 then return TRUE.
               </li>
-              <li>If <code>term1</code> or <code>term2</code> is an
+              <li>
+                If <code>term1</code> or <code>term2</code> is an
                 <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a> or a
                 <a data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</a>
                 then return FALSE.
-              <li>If <code>term1</code> and <code>term2</code> are both
-                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
-                and one or both of these literals has a datatype that is
-                not handled by the SPARQL processor,
-                then produce an [=error=].
               </li>
-              <li>If <code>term1</code> and <code>term2</code> are both
+              <li>
+                If exactly one of <code>term1</code> and <code>term2</code> is a
+                <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>,
+                then return FALSE.
+              </li>
+              <li>
+                If <code>term1</code> and <code>term2</code> are both 
+                <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>,
+                apply the function `sameValue` pair-wise to each of the components.
+                Return TRUE if each component pair returns TRUE;
+                produce an [=error=] if any component pair produces an [=error=];
+                otherwise return FALSE.
+              </li>
+              <li>
+                If <code>term1</code> and <code>term2</code> are both
                 <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
                 and one or both of these literals are known to be
                 <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>,
@@ -6019,41 +6033,39 @@ class="expression">expression, ....</span>)
                 both "NaN" for either xsd:double or xsd:float, then 
                 return TRUE.
               </li>
-              <li>If <code>term1</code> and <code>term2</code> are both 
+              <li>
+                If <code>term1</code> and <code>term2</code> are both 
                 <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
-                and the SPARQL processor can determine that their the values are equal,
+                and the SPARQL processor can determine that their values are equal,
                 then return TRUE.
-              </li>
-              <li>If <code>term1</code> and <code>term2</code> are both 
-                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
-                and the SPARQL processor can determine the values can not be equal,
-                then return FALSE.
               </li>
               <li>
                 If <code>term1</code> and <code>term2</code> are both 
-                <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>,
-                apply the function `sameValue` pair-wise to each of the components.
-                Return TRUE if each component pair returns TRUE;
-                produce an [=error=] if any component pair produces an [=error=];
-                otherwise return FALSE.
+                <a data-cite="RDF12-CONCEPTS#dfn-literal">literals</a>
+                and the SPARQL processor can determine that their values
+                are not equal, then return FALSE.
               </li>
-              <li>Otherwise, return FALSE.</li>
+              <li>
+                Otherwise, produce an [=error=].
+              </li>
             </ol>
-            <div id="sameValue-ill-typed" class="note">
-              <p>A literal is 
-                <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>
-                if its datatype is handled by the SPARQL processor and
-                its lexical form is not in the
-                <a data-cite="RDF12-CONCEPTS#dfn-lexical-space">lexical space</a>
-                of the datatype.
-              </p>
-              <p>
-                If the two arguments are literals, the function `sameValue` 
-                returns `true` or `false` in cases where the SPARQL processor
-                can determine that the values of these literals are equal or are not equal. 
-                If the SPARQL processor can not be sure, it returns `error`.
-              </p>
-            </div>
+            <p id="sameValue-note" class="note">
+              If the two arguments are literals, the function `sameValue` 
+              returns `true` or `false` in cases where the SPARQL processor
+              can determine that the values of these literals are equal or are not equal. 
+              If the SPARQL processor cannot be sure, it returns `error`.
+            </p>
+            <p id="sameValue-ill-typed" class="note">
+              A literal is 
+              <a data-cite="RDF12-CONCEPTS#dfn-ill-typed">ill-typed</a>
+              if its datatype is handled by the SPARQL processor and
+              its lexical form is not in the
+              <a data-cite="RDF12-CONCEPTS#dfn-lexical-space">lexical space</a>
+              of the datatype.
+            </p>
+            <p id="sameValue-zeros" class="note">
+              For xsd:double and xsd:float, `+0`, `-0` and `0` are same value.
+            </p>
             <div id="sameValue-NaN" class="note">
               <p>
                 The <a href="#OperatorMapping">Operator Mapping</a> for "`=`"
@@ -6063,24 +6075,17 @@ class="expression">expression, ....</span>)
                 However, `sameTerm("NaN"^^xsd:double, "NaN"^^xsd:double)` is true.
                 The function `sameValue` defines `sameValue("NaN"^^xsd:double, "NaN"^^xsd:double)`
                 to be true because the arguments are the same element of the value space.
+                Similarly, the function `sameValue` defines `sameValue("NaN"^^xsd:float, "NaN"^^xsd:float)`
+                to be true.
+
               </p>
               <p>
-                `sameValue` treats the values of `"NaN"^^xsd:double` and `"NaN"^^xsd:float` as being
-                the same. `sameValue("NaN"^^xsd:double, "NaN"^^xsd:float)` is `true`.
+                `sameValue` treats the values of `"NaN"^^xsd:double` and `"NaN"^^xsd:float` 
+                as being the same value.
+                `sameValue("NaN"^^xsd:double, "NaN"^^xsd:float)` and 
+                `sameValue("NaN"^^xsd:float, "NaN"^^xsd:double)` are both `true`.
               </p>
             </div>
-            <p id="sameValue-zeros" class="note">
-              For xsd:double and xsd:float, `+0`, `-0` and `0` are same value.
-            </p>
-            <p id="func-sameValue-note1" class="note">
-              An extended implementation may support additional datatypes for literals. An
-              implementation processing a query that tests for equivalence of literals with non-recognized datatypes
-              (and non-identical lexical form and datatype IRI) returns an error, indicating that it
-              is unable to determine whether or not the values of the compared literals are equivalent. For example, an
-              unextended implementation will produce an error when testing either <span class="queryExcerpt"><code>"iiii"^^my:romanNumeral =
-                  "iv"^^my:romanNumeral</code></span> or <span class="queryExcerpt"><code>"iiii"^^my:romanNumeral !=
-                  "iv"^^my:romanNumeral</code></span>.
-            </p>
 
             <p>Examples:</p>
             <div class="result">
@@ -6109,8 +6114,13 @@ class="expression">expression, ....</span>)
                 </tbody>
               </table>
             </div>
-            <p id="sameValue-old-name" class="note">
-              This function was called `RDFterm-equal` up until SPARQL 1.1.
+            <p id="func-sameValue-note1" class="note">
+              An extended implementation may support additional datatypes for literals. An
+              implementation processing a query that tests for equivalence of literals with non-recognized datatypes
+              (and non-identical lexical form and datatype IRI) returns an error, indicating that it
+              is unable to determine whether or not the values of the compared literals are equivalent. For example, an
+              unextended implementation will produce an error when testing <span class="queryExcerpt"><code>"iiii"^^my:romanNumeral =
+                  "iv"^^my:romanNumeral</code></span>.
             </p>
           </section>
 
@@ -12743,6 +12753,9 @@ _:x rdf:type xsd:decimal .
                 <li>Forbid duplicated variables in `VALUES`.</li>
                 <li>Add in-between term type ORDER BY support for triple terms in <a href="#modOrderBy" class="sectionRef"></a>.</li>
                 <li>Fixes the previously informal definition of `EXISTS` by adding a formal definition in <a href="#func-filter-exists" class="sectionRef"></a>, which includes extending the <a href="#defn_eval" class="evalFct">eval</a> function with a solution mapping <var>μ<sub>ctx</sub></var> as third argument.</li>
+                <li>Rename function `RDFterm-equal` as <a href="#func-sameValue"></a> and
+                  expand the definition to cover literal arguments of differing datatypes where the
+                  values are known to be equal or to be not equal.</li>
             </ul>
         </li>
         <li>
@@ -12794,7 +12807,8 @@ _:x rdf:type xsd:decimal .
               <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-2">editorial-query-2</a>: Missing space in <a href="#defn_algJoin">Join definition</a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-3">editorial-query-3</a>: Incorrect link for DELETE DATA in <a href="#grammarBNodes" class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-1">clarification-query-1</a>: Fix explanation of IN and NOT IN in <a href="#func-in" class="sectionRef"></a> and <a href="#func-not-in" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-2">clarification-query-2</a>: Remove unneeded reference to the semantics above in <a href="#operatorExtensibility" class="sectionRef"></a></li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-2">clarification-query-2</a>: Remove unneeded reference to the semantics above in <a href="#operatorExtensibility"
+class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-3">clarification-query-3</a>: Rephrase equality definition in <a href="#func-sameValue" class="sectionRef"></a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-1">errata-query-1</a>: Let V be an empty set instead of empty multiset in <a href="#defn_evalALP">Function ALP definition</a></li>
               <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-2">errata-query-2</a>: Fix grammar of PropertyListPathNotEmpty in <a href="#grammar" class="sectionRef"></a></li>
