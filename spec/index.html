@@ -3140,9 +3140,11 @@ GRAPH &lt;http://example.org/alice&gt; {
           graphs. The triples in the named graphs are not visible in the default graph in this
           example.</p>
         <p id="ex_2"><b>Example 2:</b></p>
-        <p>RDF data can be combined by the <a data-cite="RDF12-SEMANTICS#dfn-merge">RDF merge</a>
-          [[RDF12-SEMANTICS]] of graphs. One possible arrangement of graphs in an RDF Dataset is to have the
-          default graph be the RDF merge of some or all of the information in the named graphs.</p>
+        <p>RDF data can be combined by the 
+          <a data-cite="RDF12-SEMANTICS#dfn-rdf-graph-merge">RDF merge</a> [[RDF12-SEMANTICS]]
+          of graphs. One possible arrangement of graphs in an RDF Dataset
+          is to have the default graph be the RDF merge of some or all of the 
+          information in the named graphs.</p>
         <p>
           In this next example, the named graphs contain the same triples as before. The RDF dataset
           includes an <a data-cite="RDF12-SEMANTICS#dfn-merge">RDF merge</a>
@@ -5909,7 +5911,7 @@ class="expression">expression, ....</span>)
             </p>
             <ul>
               <li><code>term1</code> and <code>term2</code> are 
-                <a data-cite="RDF12-CONCEPTS#iri">IRIs</a> that are the
+                <a data-cite="RDF12-CONCEPTS#dfn-iri">IRIs</a> that are the
                 <a data-cite="RDF12-CONCEPTS#dfn-iri-equality">same as IRIs</a>.
               </li>
               <li><code>term1</code> and <code>term2</code> are 
@@ -5922,12 +5924,12 @@ class="expression">expression, ....</span>)
               </li>
               <li><code>term1</code> and <code>term2</code> are 
                 <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> that are 
-                <a data-cite="RDF12-CONCEPTS#dfn-triple-term-equality">equal as triple terms</a>; that
-                is, the
+                <a data-cite="RDF12-CONCEPTS#dfn-triple-equality">equal as triples</a>; 
+                that is, the
                 <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a>,
                 <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a>, and
-                <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> components are pair-wise
-                the same term.
+                <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> 
+                components are pair-wise the same term.
               </li>
             </ul>
             <div class="result">
@@ -10775,7 +10777,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <div class="defn">
             <p><b>Definition: <span id="defn_evalGraph">Evaluation of Graph</span></b></p>
             <p>For every |x| that is
-              an <a data-cite="RDF12-CONCEPTS#dfn-IRI">IRI</a> or
+              an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a> or
               a <a href="#defn_QueryVariable">variable</a>,
               <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|), <var>μ<sub>ctx</sub></var> )
               is defined as follows:</p>
