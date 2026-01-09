@@ -9053,15 +9053,10 @@ WHERE {
               translation of each group element. We collect the filters together here and remove them
               from group, then <a href="#sparqlAddFilters">apply them to the whole translated group
                 graph pattern</a>.</p>
-            <p>In this step, we also translate graph patterns within <code>FILTER</code> expressions
-              <a href="#func-filter-exists"><code>EXISTS</code></a> and 
-              <a href="#func-filter-not-exists"><code>NOT EXISTS</code></a>.</p>
 
             <pre class="code nohighlightBlock">
 Let FS := empty set
 For each form FILTER(expr) in the group graph pattern
-    In expr, replace NOT EXISTS{P} with fn:not(<a href="#defn_evalExists">exists(translate(P)))</a> 
-    In expr, replace EXISTS{P} with <a href="#defn_evalExists">exists(translate(P))</a>
     FS := FS ∪ {expr}
     End
 </pre>
@@ -10331,13 +10326,6 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>(<var>Ψ</var>) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ψ</var> )</p>
         </div>
-        <div class="defn">
-          <p><b>Definition: <span id="defn_exists">Exists</span></b></p>
-          <p>exists(pattern) is a function that returns true if the pattern
-            <a href="#defn_evalExists">evaluates</a> to a non-empty solution sequence, given the current
-            solution mapping and active graph at the time of evaluation; otherwise it returns
-            false.</p>
-        </div>
         <section id="aggregateAlgebra">
           <h4>Aggregate Algebra</h4>
           <p><a href="#defn_algGroup" class="algFct">Group</a> is a function which groups a solution sequence into multiple solutions, based on
@@ -10722,7 +10710,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <p class="note">The case in which <var>μ<sub>ctx</sub></var>
             may be different from <var>μ<sub>0</sub></var>
             is when evaluating an <a href="#expressions">expression</a>
-            of the form `EXISTS pattern` or `NOT EXISTS pattern`,
+            of the form `EXISTS { pattern }` or `NOT EXISTS { pattern }`,
             as defined in <a href="#func-filter-exists" class="sectionRef"></a>.</p>
           <p>Further symbols used in the following definitions are:</p>
           <ul>
@@ -10752,27 +10740,6 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
             <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absFilter" class="absOp">Filter</a>(|F|, |P|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|, <var>μ<sub>ctx</sub></var>), |D|, |G| )</p>
-          </div>
-          <p>'substitute' is a filter function in support of the evaluation of 
-            <a href="#func-filter-exists"><code>EXISTS</code>
-              and <code>NOT EXISTS</code></a> forms which were translated to <code>exists</code>.</p>
-<div class="issue" data-number="302">
-  The sentence above and the next two definitions will be removed in the context of fixing the definition of EXISTS.</div>
-          <div class="defn">
-            <p><b>Definition: <span id="defn_substitute">Substitute</span></b></p>
-            <p>Let <var>μ</var> be a solution mapping.</p>
-            <blockquote>
-              <p>substitute(|pattern|, <var>μ</var>) = the pattern formed by replacing every occurrence of
-                a variable |v| in |pattern| by <var>μ</var>(|v|) for each |v| in dom(<var>μ</var>)</p>
-            </blockquote>
-          </div>
-          <div class="defn">
-            <p><b>Definition: <span id="defn_evalExists">Evaluation of Exists</span></b></p>
-            <p>Let <var>μ</var> be the current solution mapping for a filter and |P| a graph pattern:</p>
-            <blockquote>
-              The value exists(|P|), given |D|(|G|) is true if and only if <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), substitute(|P|, <var>μ</var>)) is
-              a non-empty sequence.
-            </blockquote>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalJoin">Evaluation of Join</span></b></p>
@@ -12774,6 +12741,7 @@ _:x rdf:type xsd:decimal .
                 <li>Define `EBV` as a functional form.</li>
                 <li>Forbid duplicated variables in `VALUES`.</li>
                 <li>Add in-between term type ORDER BY support for triple terms in <a href="#modOrderBy" class="sectionRef"></a>.</li>
+                <li>Fixes the previously informal definition of `EXISTS` by adding a formal definition in <a href="#func-filter-exists" class="sectionRef"></a>, which includes extending the <a href="#defn_eval" class="evalFct">eval</a> function with a solution mapping <var>μ<sub>ctx</sub></var> as third argument.</li>
             </ul>
         </li>
         <li>
