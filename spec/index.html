@@ -8477,15 +8477,21 @@ WHERE {
           <div class="defn">
             <p><b>Definition: <span id="defn_TriplePattern">Triple Pattern</span></b></p>
             <p>A <span class="definedTerm">triple pattern</span> is a 3-tuple
-              (|s|, |p|, |o|) where:</p>
-            <ul>
-              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
-                or a <a href="#defn_QueryVariable">variable</a>,</li>
+              that is defined inductively as follows:
+              If</p>
+            <ul style="list-style-type: none;">
+              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>,
+                a <a href="#defn_QueryVariable">variable</a>,
+                or a triple pattern,</li>
               <li>|p| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>
                 or a <a href="#defn_QueryVariable">variable</a>, and</li>
-              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
-                or a <a href="#defn_QueryVariable">variable</a>.</li>
+              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>,
+                a <a href="#defn_QueryVariable">variable</a>,
+                or a triple pattern,</li>
             </ul>
+            <p>then (|s|, |p|, |o|) is a triple pattern.</p>
+            <p>Triple patterns do not permit cycles
+              (i.e., a triple pattern cannot be contained within itself).</p>
           </div>
           <p>This definition of Triple Pattern includes literal subjects. 
             <a href="http://www.w3.org/2000/03/rdf-tracking/#rdfms-literalsubjects">
@@ -8496,6 +8502,12 @@ WHERE {
             extend the syntaxes to allow literals as the subjects of statements."</pre>
           <p>Because RDF graphs may not contain literal subjects, any SPARQL triple pattern with a
             literal as subject will fail to match on any RDF graph.</p>
+          <p class="note">A triple pattern that has another triple pattern
+            in its subject position will fail to match on any RDF graph 
+            because an [=RDF triple=] cannot have
+            a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
+            in its subject position.
+          </p>
         </section>
         <section id="sparqlBasicGraphPatterns">
           <h4>Basic Graph Patterns</h4>
@@ -8529,10 +8541,12 @@ WHERE {
             <p><b>Definition: <span id="defn_PropertyPathPattern">Property Path Pattern</span></b></p>
             <p>A property path pattern is a 3-tuple (|s|, |p|, |o|) where:</p>
             <ul>
-              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+              <li>|s| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>,
+                a <a href="#defn_TriplePattern">triple pattern</a>,
                 or a <a href="#defn_QueryVariable">variable</a>,</li>
               <li>|p| is a <a href="#defn_PropertyPathExpr">property path expression</a>, and</li>
-              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>
+              <li>|o| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>,
+                a <a href="#defn_TriplePattern">triple pattern</a>,
                 or a <a href="#defn_QueryVariable">variable</a>.</li>
             </ul>
           </div>
