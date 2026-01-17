@@ -10222,22 +10222,32 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             |D| be a <a href="#sparqlDataset">dataset</a>,
             and |G| be the <a href="#defn_ActiveGraph">active graph</a>.
             We define:</p>
-          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = { |Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) | <var>μ</var> in <var>Ω</var> },</p>
-          <p>where, for every solution mapping <var>μ</var>,</p>
-          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = <var>μ</var> ∪ { (<var>var</var>, |expr|(<var>μ</var>, |D|, |G|)) }
-            if <var>var</var> not in dom(<var>μ</var>) and
-            |expr|(<var>μ</var>, |D|, |G|) is an RDF term,</p>
-          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = <var>μ</var>
-            if <var>var</var> not in dom(<var>μ</var>) and
-            |expr|(<var>μ</var>, |D|, |G|) is an [=error=],</p>
-          <p>|Extend|(<var>μ</var>, <var>var</var>, <var>expr</var>, |D|, |G|) is undefined
-            if <var>var</var> in dom(<var>μ</var>), and</p>
-          <p>|expr|(<var>μ</var>, |D|, |G|) is the result of
-            <a href="#expression-evaluation">evaluating</a> expression |expr|
-            with respect to <var>μ</var>, in the context of dataset |D| with active graph |G|.
+          <p><a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = { |Extend|(<var>μ'</var>, <var>var</var>, <var>expr</var>, |D|, |G|) | <var>μ'</var> in <var>Ω</var> },</p>
+          <p>
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> |
+            <a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, |var|, |expr|, |D|, |G|) )
+            = <a href="#defn_Multiplicity">multiplicity</a>( <var>μ'</var> | <var>Ω</var> )
+            if there exists a solution mapping <var>μ'</var> in <var>Ω</var> such that
+            <var>μ</var> = |Extend|(<var>μ'</var>, <var>var</var>, <var>expr</var>, |D|, |G|),
           </p>
-<div class="issue" data-number="290">
-  We need to define <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, <var>var</var>, <var>expr</var>, |D|, |G|) )</div>
+          <p>
+            <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> |
+            <a href="#defn_algExtend" class="algFct">Extend</a>(<var>Ω</var>, |var|, |expr|, |D|, |G|) )
+            = 0 if no such solution mapping <var>μ'</var> exists in <var>Ω</var>,
+          </p>
+          <p>where, for every solution mapping <var>μ'</var>,</p>
+          <p>|Extend|(<var>μ'</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = <var>μ'</var> ∪ { (<var>var</var>, |expr|(<var>μ'</var>, |D|, |G|)) }
+            if <var>var</var> not in dom(<var>μ'</var>) and
+            |expr|(<var>μ'</var>, |D|, |G|) is an RDF term,</p>
+          <p>|Extend|(<var>μ'</var>, <var>var</var>, <var>expr</var>, |D|, |G|) = <var>μ'</var>
+            if <var>var</var> not in dom(<var>μ'</var>) and
+            |expr|(<var>μ'</var>, |D|, |G|) is an [=error=],</p>
+          <p>|Extend|(<var>μ'</var>, <var>var</var>, <var>expr</var>, |D|, |G|) is undefined
+            if <var>var</var> in dom(<var>μ'</var>), and</p>
+          <p>|expr|(<var>μ'</var>, |D|, |G|) is the result of
+            <a href="#expression-evaluation">evaluating</a> expression |expr|
+            with respect to <var>μ'</var>, in the context of dataset |D| with active graph |G|.
+          </p>
         </div>
         <p>Write [ <var>x</var> | <var>C</var> ] for a sequence of elements where <var>C</var> is a condition on <var>x</var>.</p>
         <div class="defn">
