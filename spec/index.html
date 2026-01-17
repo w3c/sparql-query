@@ -10714,12 +10714,10 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             as defined in <a href="#func-filter-exists" class="sectionRef"></a>.</p>
           <p>Further symbols used in the following definitions are:</p>
           <ul>
-            <li>|P|, <var>P<sub>1</sub></var>, <var>P<sub>2</sub></var> : graph patterns</li>
-            <li>|L| : a solution sequence</li>
+            <li><var>A'</var>, <var>A<sub>1</sub></var>, <var>A<sub>2</sub></var> :
+              <a href="#defn_AlgebraicQueryExpression">algebraic query expressions</a></li>
             <li>|F| : an <a href="#expressions">expression</a></li>
           </ul>
-<div class="issue" data-number="308">
-  |L| should not be a solution sequence but an <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>.</div>
 <div class="issue" data-number="225">
   The definitions in this section do not cover the cases in which
   |A| is a sequence or a multiset of solution mappings.</div>
@@ -10739,49 +10737,49 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalFilter">Evaluation of Filter</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absFilter" class="absOp">Filter</a>(|F|, |P|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|, <var>μ<sub>ctx</sub></var>), |D|, |G| )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absFilter" class="absOp">Filter</a>(|F|, <var>A'</var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algFilter" class="algFct">Filter</a>( |F|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>), |D|, |G| )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalJoin">Evaluation of Join</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absJoin" class="absOp">Join</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>, <var>μ<sub>ctx</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>, <var>μ<sub>ctx</sub></var>) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absJoin" class="absOp">Join</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algJoin" class="algFct">Join</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>1</sub></var>, <var>μ<sub>ctx</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>2</sub></var>, <var>μ<sub>ctx</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalLeftJoin">Evaluation of LeftJoin</span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>, |F|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>, <var>μ<sub>ctx</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>, <var>μ<sub>ctx</sub></var>), |F|, |D|, |G| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absLeftJoin" class="absOp">LeftJoin</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>, |F|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>1</sub></var>, <var>μ<sub>ctx</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>2</sub></var>, <var>μ<sub>ctx</sub></var>), |F|, |D|, |G| )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalUnion">Evaluation of Union</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absUnion" class="absOp">Union</a>(<var>P<sub>1</sub></var>, <var>P<sub>2</sub></var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algUnion" class="algFct">Union</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>1</sub></var>, <var>μ<sub>ctx</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>P<sub>2</sub></var>, <var>μ<sub>ctx</sub></var>) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absUnion" class="absOp">Union</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algUnion" class="algFct">Union</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>1</sub></var>, <var>μ<sub>ctx</sub></var>), <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A<sub>2</sub></var>, <var>μ<sub>ctx</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalGraph">Evaluation of Graph</span></b></p>
             <p>For every |x| that is
               an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a> or
               a <a href="#defn_QueryVariable">variable</a>,
-              <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|), <var>μ<sub>ctx</sub></var> )
+              <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, <var>A'</var>), <var>μ<sub>ctx</sub></var> )
               is defined as follows:</p>
             <ul>
               <li>If |x| is an IRI
                 that is a <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> in |D|,
                 <div class="indentedFormula">
-                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|), <var>μ<sub>ctx</sub></var> )
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, <var>A'</var>), <var>μ<sub>ctx</sub></var> )
                   =
-                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(<var>G<sub>|x|</sub></var>), |P|, <var>μ<sub>ctx</sub></var> ),
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(<var>G<sub>|x|</sub></var>), <var>A'</var>, <var>μ<sub>ctx</sub></var> ),
                 </div>
                 where <var>G<sub>|x|</sub></var> is the RDF graph of the named graph with name |x| in |D|.
               </li>
               <li>If |x| is an IRI
                 that is not a <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> in |D|,
                 <div class="indentedFormula">
-                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|), <var>μ<sub>ctx</sub></var> )
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, <var>A'</var>), <var>μ<sub>ctx</sub></var> )
                   is the empty multiset.
                 </div>
               </li>
               <li>If |x| is a variable,
                 <div class="indentedFormula">
-                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, |P|), <var>μ<sub>ctx</sub></var> )
+                  <a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGraph" class="absOp">Graph</a>(|x|, <var>A'</var>), <var>μ<sub>ctx</sub></var> )
                   =
                   <var>Ω</var>,
                 </div>
@@ -10790,7 +10788,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
 <var>Ω</var> := the empty multiset
 for each <a data-cite="RDF12-CONCEPTS#dfn-graph-name">graph name</a> <var>gn</var> in <var>D</var> (recall that a graph name may be an IRI or a blank node)
     <var>G'</var> := the RDF graph of the named graph with name <var>gn</var> in <var>D</var>
-    <var>Ω'</var> := <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G'</var>), <var>P</var>, <var>μ<sub>ctx</sub></var> )
+    <var>Ω'</var> := <a href="#defn_eval" class="evalFct">eval</a>( <var>D</var>(<var>G'</var>), <var>A'</var>, <var>μ<sub>ctx</sub></var> )
     <var>Ω</var> := <a href="#defn_algUnion" class="algFct">Union</a>( <var>Ω</var>, <a href="#defn_algJoin" class="algFct">Join</a>(<var>Ω'</var>, <var>μ</var>) ), where <var>μ</var> = {<var>x</var> → <var>gn</var>}
 the result is <var>Ω</var>
                 </pre>
@@ -10801,7 +10799,7 @@ the result is <var>Ω</var>
             <div id="defn_evalGroup">
               <b>Definition: Evaluation of Group</b>
             </div>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGroup" class="absOp">Group</a>(|exprlist|, |P|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algGroup" class="algFct">Group</a>( |exprlist|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|, <var>μ<sub>ctx</sub></var>) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absGroup" class="absOp">Group</a>(|exprlist|, <var>A'</var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algGroup" class="algFct">Group</a>( |exprlist|, <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>) )</p>
           </div>
           <div class="defn">
             <div id="defn_evalAggregation">
@@ -10821,43 +10819,43 @@ the result is <var>Ω</var>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalExtend">Evaluation of Extend</span></b></p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absExtend" class="absOp">Extend</a>(|P|, |var|, |expr|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|, <var>μ<sub>ctx</sub></var>), |var|, |expr|, |D|, |G| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absExtend" class="absOp">Extend</a>(<var>A'</var>, |var|, |expr|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algExtend" class="algFct">Extend</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>), |var|, |expr|, |D|, |G| )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalList">Evaluation of ToList</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absToList" class="absOp">ToList</a>(|P|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algToList" class="algFct">ToList</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |P|, <var>μ<sub>ctx</sub></var>) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absToList" class="absOp">ToList</a>(<var>A'</var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algToList" class="algFct">ToList</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalDistinct">Evaluation of Distinct</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absDistinct" class="absOp">Distinct</a>(|L|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algDistinct" class="algFct">Distinct</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|, <var>μ<sub>ctx</sub></var>) )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absDistinct" class="absOp">Distinct</a>(<var>A'</var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algDistinct" class="algFct">Distinct</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>) )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalReduced">Evaluation of Reduced</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absReduced" class="absOp">Reduced</a>(|L|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algReduced" class="algFct">Reduced</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|, <var>μ<sub>ctx</sub></var>) )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absReduced" class="absOp">Reduced</a>(<var>A'</var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algReduced" class="algFct">Reduced</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>) )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalProject">Evaluation of Project</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absProject" class="absOp">Project</a>(|L|, |vars|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algProject" class="algFct">Project</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|, <var>μ<sub>ctx</sub></var>), |vars| )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absProject" class="absOp">Project</a>(<var>A'</var>, |vars|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algProject" class="algFct">Project</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>), |vars| )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalOrderBy">Evaluation of OrderBy</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|L|, |condition|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algOrderBy" class="algFct">OrderBy</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|, <var>μ<sub>ctx</sub></var>), |condition| )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(<var>A'</var>, |condition|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algOrderBy" class="algFct">OrderBy</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>), |condition| )
             </p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalToMultiSet">Evaluation of ToMultiSet</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absToMultiset" class="absOp">ToMultiset</a>(|L|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|, <var>μ<sub>ctx</sub></var>) )</p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absToMultiset" class="absOp">ToMultiset</a>(<var>A'</var>), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>) )</p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalSlice">Evaluation of Slice</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|, <var>μ<sub>ctx</sub></var>), |offset| )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(<var>A'</var>, |offset|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>), |offset| )
             </p>
             <p>
-<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(|L|, |offset|, |limit|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |L|, <var>μ<sub>ctx</sub></var>), |offset|, |limit| )
+<a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absSlice" class="absOp">Slice</a>(<var>A'</var>, |offset|, |limit|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algSlice" class="algFct">Slice</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), <var>A'</var>, <var>μ<sub>ctx</sub></var>), |offset|, |limit| )
             </p>
           </div>
         </section>
