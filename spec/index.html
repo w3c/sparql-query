@@ -10066,7 +10066,11 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOr
 # For <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>, we take one step of the path then start
 # recording nodes for results.
 
-ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
+ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) = { { (<var>vy</var>, <var>t</var>) } | <var>t</var> in <var>V</var> }
+
+    where <var>V</var> is the set of RDF terms that is returned by the
+    following algorithm.
+
     Let <var>X</var> = <a href="#defn_reachableTerms"><var>reachableTerms</var></a>(<var>x</var>, <var>ppe</var>)
     Let <var>V</var> = the empty multiset
     For <var>n</var> in <var>X</var>
@@ -10085,7 +10089,6 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
     { { } } if { (<var>vy</var>:var, <var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
     { } otherwise
 </pre>
-<div class="issue" data-number="267"><var>V</var> is not a multiset of solution mappings but a set of RDF terms.</div>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="eval_negatedPropertySet">Evaluation of NegatedPropertySet</span></b></p>
