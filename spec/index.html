@@ -9948,9 +9948,10 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>ir
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_sequence">Evaluation of Sequence Property Path</span></b></p>
           <p>Let <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> be <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>. Let |V| be a fresh variable.</p>
-          <pre class="nohighlight"><var>A</var> = <a href="#defn_algJoin" class="algFct">Join</a>( ppeval(<var>X</var>, <var>ppe<sub>1</sub></var>, <var>V</var>), ppeval(<var>V</var>, <var>ppe<sub>2</sub></var>, <var>Y</var>) )</pre>
           <pre class="nohighlight">ppeval(<var>X</var>, <a href="#defn_ppeSeq" class="ppeOp">Seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>), <var>Y</var>) = <a href="#defn_algToMultiSet" class="algFct">ToMultiSet</a>( <a href="#defn_algProject" class="algFct">Project</a>(<a href="#defn_algToList" class="algFct">ToList</a>(<var>A</var>), <var>PV</var>) )</pre>
-          <p>where |PV| = { |v| ∈ {|X|,|Y|} | |v| is a variable}.</p>
+          <p>where |A| =
+            <a href="#defn_algJoin" class="algFct">Join</a>( `ppeval`(|X|, <var>ppe<sub>1</sub></var>, |V|), `ppeval`(|V|, <var>ppe<sub>2</sub></var>, |Y|) )
+            and |PV| = { |v| ∈ {|X|,|Y|} | |v| is a variable}.</p>
         </div>
         <p>Informally, this is the same as:</p>
         <pre class="nohighlight">SELECT * { <var>X</var> <var>P<sub>1</sub></var> _:a . _:a <var>P<sub>2</sub></var> <var>Y</var> }</pre>
