@@ -9907,6 +9907,11 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
             </tbody>
           </table>
         </div>
+<div class="issue" data-number="349">
+  The signature of `ppeval` should be extended to be:
+  `ppeval`(|X|, |ppe|, |Y|, |G|),
+  where |G| is an RDF graph.
+</div>
         <p>All evaluation is carried out by matching the <a href="#defn_ActiveGraph">active graph</a>
           at that point in the overall query evaluation. We omit explicitly including the active graph
           in each definition for clarity.</p>
