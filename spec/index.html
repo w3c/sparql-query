@@ -8930,12 +8930,12 @@ WHERE {
                 <td>`v` occurs in the path</td>
               </tr>
               <tr>
-                <td>Group `{ P1 P2 ... }`</td>
+                <td>GroupGraphPattern `{ P1 P2 ... }`</td>
                 <td>`v` is in-scope if it is in-scope in one or more of P1, P2, ...</td>
               </tr>
               <tr>
-                <td>`GRAPH term { P }`</td>
-                <td>`v` is `term` or `v` is in-scope in P</td>
+                <td>`GRAPH X { P }`</td>
+                <td>`X` is variable `v` or `v` is in-scope in P</td>
               </tr>
               <tr>
                 <td>`{ P1 } UNION { P2 }`</td>
@@ -8946,8 +8946,8 @@ WHERE {
                 <td>`v` is in-scope in P</td>
               </tr>
               <tr>
-                <td>`SERVICE term {P}`</td>
-                <td>`v` is `term` or `v` is in-scope in P</td>
+                <td>`SERVICE X {P}`</td>
+                <td>`X` is variable `v` or `v` is in-scope in P</td>
               </tr>
               <tr>
                 <td>`BIND (expr AS v)`</td>
