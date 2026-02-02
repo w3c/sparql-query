@@ -8979,6 +8979,17 @@ WHERE {
               </tr>
             </tbody>
           </table>
+          <p>
+            Syntax forms `EXISTS` or `NOT EXISTS` appear inside 
+            a `FILTER` and filters appear inside group graph patterns.
+            Let `F` be a syntax form `FILTER`
+            appearing inside group graph pattern `GP`,
+            then for all
+            syntax forms `EXISTS {P}` or `NOT EXISTS {P}`,
+            any variable that is in-scope for `GP` is
+            also in-scope for all group graph patterns,
+            basic graph patterns, and paths inside `P`.
+          </p>
           <p>The variable `v` must not be in-scope at the point of the
             `(expr AS v)` form. The scoping for `(expr AS v)`
             applies immediately in `SELECT` expressions.
