@@ -10631,7 +10631,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMin">Min</span></b></p>
-              <pre class="code nohighlight">term <a href="#defn_aggMin" class="aggFct">Min</a>(sequence <var>S</var>)</pre>
+              <pre class="code nohighlight">RDFterm <a href="#defn_aggMin" class="aggFct">Min</a>(sequence <var>S</var>)</pre>
               <p><a href="#defn_aggMin" class="aggFct">Min</a>(<var>S</var>) = <var>MinList</var>(<var>L</var>),</p>
               <p>where <var>L</var> is the list of values obtained by
                 <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
@@ -10655,7 +10655,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
               arbitrarily typed expressions.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggMax">Max</span></b></p>
-              <pre class="code nohighlight">term <a href="#defn_aggMax" class="aggFct">Max</a>(sequence <var>S</var>)</pre>
+              <pre class="code nohighlight">RDFterm <a href="#defn_aggMax" class="aggFct">Max</a>(sequence <var>S</var>)</pre>
               <p><a href="#defn_aggMax" class="aggFct">Max</a>(<var>S</var>) = <var>MaxList</var>(<var>L</var>),</p>
               <p>where <var>L</var> is the list of values obtained by
                 <a href="#defn_Flatten">Flatten</a>(<var>S</var>)
@@ -10679,7 +10679,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
               SEPARATOR.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggGroupConcat">GroupConcat</span></b></p>
-              <pre class="code nohighlight">literal <a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>(sequence <var>S</var>, function <var>scalarvals</var>)</pre>
+              <pre class="code nohighlight">xsd:string <a href="#defn_aggGroupConcat" class="aggFct">GroupConcat</a>(sequence <var>S</var>, function <var>scalarvals</var>)</pre>
               <p>If the <var>scalarvals</var> argument is absent from <code>GROUP_CONCAT</code>,
                 then <var>scalarvals</var> is taken to be the empty function.</p>
               <p>Let <var>sep</var> be a string that is defined as follows.</p>
@@ -10718,7 +10718,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
               to it.</p>
             <div class="defn">
               <p><b>Definition: <span id="defn_aggSample">Sample</span></b></p>
-              <pre class="code nohighlight">RDFTerm <a href="#defn_aggSample" class="aggFct">Sample</a>(sequence <var>S</var>)</pre>
+              <pre class="code nohighlight">RDFterm <a href="#defn_aggSample" class="aggFct">Sample</a>(sequence <var>S</var>)</pre>
               <p>If <a href="#defn_Card">Card</a>(<var>S</var>) = 0, then
                 <a href="#defn_aggSample" class="aggFct">Sample</a>(<var>S</var>) = error.</p>
               <p>If <a href="#defn_Card">Card</a>(<var>S</var>) &gt; 0, then
