@@ -4614,6 +4614,14 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
       <p>Typographical convention: XPath operators are labeled with the prefix
         <code>op:</code>. XPath operators have no namespace; <code>op:</code> is a labeling
         convention.</p>
+      <p>In SPARQL, the [[[XPATH-FUNCTIONS-31]]] [[XPATH-FUNCTIONS-31]] definitions which rely on XML and XML Schema
+        MUST use [[[XML11]]] [[XML11]] and [[[XMLSCHEMA11-2]]] [[XMLSCHEMA11-2]]</p>
+      <p class="note">
+        The use of XML 1.0 vs 1.1 and XML schema 1.0 vs 1.1 is
+        <a data-cite="XPATH-FUNCTIONS-31#conformance">implementation defined in [[[XPATH-FUNCTIONS-31]]]</a>.
+        This notably affects the definition of <a data-cite="XML11#NT-Char">`Char`</a>
+        that is more general in [[[XML11]]].
+      </p>
       <section id="operandDataTypes">
         <h3>Operand Data Types</h3>
         <p>SPARQL functions and operators operate on RDF terms and SPARQL variables. A subset of
