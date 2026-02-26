@@ -2234,7 +2234,7 @@ SELECT * WHERE {
       <h2>Property Paths</h2>
       <p>A property path is a possible route through a graph between two graph nodes. A trivial case
         is a property path of length exactly 1, which is a triple pattern. The ends of the path may be
-        RDF terms or variables. Variables can not be used as part of the path itself, only the
+        RDF terms or variables. Variables cannot be used as part of the path itself, only the
         ends.</p>
       <p>Property paths allow for more concise expressions for some SPARQL basic graph patterns and
         they also add the ability to match connectivity of two resources by an arbitrary length
@@ -8934,12 +8934,12 @@ WHERE {
                 <td>`v` occurs in the path</td>
               </tr>
               <tr>
-                <td>Group `{ P1 P2 ... }`</td>
+                <td>GroupGraphPattern `{ P1 P2 ... }`</td>
                 <td>`v` is in-scope if it is in-scope in one or more of P1, P2, ...</td>
               </tr>
               <tr>
-                <td>`GRAPH term { P }`</td>
-                <td>`v` is `term` or `v` is in-scope in P</td>
+                <td>`GRAPH X { P }`</td>
+                <td>`X` is variable `v` or `v` is in-scope in P</td>
               </tr>
               <tr>
                 <td>`{ P1 } UNION { P2 }`</td>
@@ -8950,8 +8950,8 @@ WHERE {
                 <td>`v` is in-scope in P</td>
               </tr>
               <tr>
-                <td>`SERVICE term {P}`</td>
-                <td>`v` is `term` or `v` is in-scope in P</td>
+                <td>`SERVICE X {P}`</td>
+                <td>`X` is variable `v` or `v` is in-scope in P</td>
               </tr>
               <tr>
                 <td>`BIND (expr AS v)`</td>
@@ -8983,6 +8983,17 @@ WHERE {
               </tr>
             </tbody>
           </table>
+          <p>
+            Syntax forms `EXISTS` or `NOT EXISTS` appear inside 
+            a `FILTER` and filters appear inside group graph patterns.
+            Let `F` be a syntax form `FILTER`
+            appearing inside group graph pattern `GP`,
+            then for all
+            syntax forms `EXISTS {P}` or `NOT EXISTS {P}`,
+            any variable that is in-scope for `GP` is
+            also in-scope for all group graph patterns,
+            basic graph patterns, and paths inside `P`.
+          </p>
           <p>The variable `v` must not be in-scope at the point of the
             `(expr AS v)` form. The scoping for `(expr AS v)`
             applies immediately in `SELECT` expressions.
@@ -11159,7 +11170,7 @@ _:x rdf:type xsd:decimal .
       </section>
       <section id="grammarBNodes">
         <h3>Blank Nodes and Blank Node Identifiers</h3>
-        <p>Blank nodes can not be used in:</p>
+        <p>Blank nodes cannot be used in:</p>
         <ul>
           <li><code><a href="#rDeleteWhere">DELETE WHERE</a></code></li>
           <li><code><a href="#rDeleteData">DELETE DATA</a></code></li>
@@ -11173,8 +11184,8 @@ _:x rdf:type xsd:decimal .
           are scoped to the <a>SPARQL string</a> in which they occur.
           Different uses of the same blank node identifier in a request
           string refer to the same blank node. Fresh blank nodes are generated for each request;
-          blank nodes can not be referenced by identifier across requests.</p>
-        <p>The same blank node identifier can not be used in:</p>
+          blank nodes cannot be referenced by identifier across requests.</p>
+        <p>The same blank node identifier cannot be used in:</p>
         <ul>
           <li>two separate basic graph patterns in a SPARQL Query</li>
           <li>two <code><a href="#rModify">WHERE</a></code> clauses within a single SPARQL update
@@ -11257,7 +11268,7 @@ _:x rdf:type xsd:decimal .
           <li><a href="#rUpdateUnit">`UpdateUnit`</a> for the SPARQL update language.</li>
         </ol>
         <p>
-          The SPARQL grammar is LL(1) when the rules with uppercased names are used as terminals.
+          The SPARQL grammar is LL(1) when the rules with uppercase names are used as terminals.
         </p>
         <p>Notes:</p>
         <ol>
@@ -11285,7 +11296,7 @@ _:x rdf:type xsd:decimal .
             <a href="#rDeleteData">`DELETE DATA`</a> and
             <a href="#rDeleteWhere">`DELETE WHERE`</a>
             allow any amount of white space between the words.
-            The single space version is used in the grammar for clarity.
+            The single-space version is used in the grammar for clarity.
           </li>
           <li>
             The <a href="#rQuadData">`QuadData`</a> and
@@ -11340,11 +11351,11 @@ _:x rdf:type xsd:decimal .
             and <a href="#rOrderClause">ORDER BY</a> clauses.
           </li>
           <li>
-            The expression argument of an aggregate function can not
+            The expression argument of an aggregate function cannot
             contain an aggregate function.
           </li>
           <li>
-            Only custom aggregate functions use the `DISTINCT` keyword
+            Only custom aggregate functions can use the `DISTINCT` keyword
             in a <a href="#rFunctionCall">function call</a>.
           </li>
           <li>
