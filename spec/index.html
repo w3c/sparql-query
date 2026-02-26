@@ -2921,12 +2921,14 @@ WHERE {
     ?x :q ?z .
 } GROUP BY ?x (STR(?z))
         </pre>
-        <p>Note that it would not be legal to project <code>STR(?z)</code> as this is not a simple
-          variable expression. However, with <code>GROUP BY (STR(?z) AS ?strZ)</code> it would be
-          possible to project <code>?strZ</code>.</p>
-        <p>Other expressions, not using <code>GROUP BY</code> variables, or aggregates may have
-          non-deterministic values projected from their groups using the <code>SAMPLE</code>
-          aggregate.</p>
+        <div class="note">
+          <p>Note that it would not be legal to project <code>STR(?z)</code> as this is not a simple
+            variable expression. However, with <code>GROUP BY (STR(?z) AS ?strZ)</code> it would be
+            possible to project <code>?strZ</code>.</p>
+          <p>For other expressions (not using <code>GROUP BY</code> variables or aggregates),
+            non-deterministic values may be requested from their groups by using the <code>SAMPLE</code>
+            aggregate function explicitly.</p>
+        </div>
       </section>
       <section id="aggregateExample2">
         <h3>Aggregate Example (with errors)</h3>
@@ -9601,7 +9603,7 @@ Global <var>i</var> := 1   # Initially 1 for each query processed
 
 For each (<var>X</var> AS <var>Var</var>) in SELECT, each HAVING(<var>X</var>), and each ORDER BY <var>X</var> in <var>Q</var>
   For each unaggregated variable <var>V</var> in <var>X</var>
-      Replace <var>V</var> with SAMPLE(<var>V</var>)
+      Raise an error
       End
   For each aggregate <var>R</var>(<var>args</var> ; <var>scalarvals</var>) now in <var>X</var>
       # note: <var>scalarvals</var> may be omitted; if so, it is equivalent to the empty function
