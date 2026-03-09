@@ -1062,9 +1062,10 @@ WHERE   {
         <h3>Other Term Constraints</h3>
         <p>In addition to <span class="type numeric">numeric</span> types, SPARQL supports types
           <code>xsd:string</code>, <code>xsd:boolean</code> and <code>xsd:dateTime</code>
-          (see <a href="#operandDataTypes">Operand Data Types</a>). Section <a href="#OperatorMapping">Operator
-            Mapping</a> describes the operators and section <a href="#SparqlOps">Function Definitions</a>
-          the functions that can be that can be applied to RDF terms.</p>
+          (see <a href="#operandDataTypes">Operand Data Types</a>). Section 
+          <a href="#OperatorMapping">Operator Mapping</a> describes the operators and
+          section <a href="#SparqlOps">Function Definitions</a> describes
+          the functions that can be applied to RDF terms.</p>
       </section>
     </section>
     <section id="sparqlSyntax">
@@ -4615,7 +4616,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         MUST use [[[XML11]]] [[XML11]] and [[[XMLSCHEMA11-2]]] [[XMLSCHEMA11-2]]</p>
       <p class="note">
         The use of XML 1.0 vs 1.1 and XML schema 1.0 vs 1.1 is
-        <a data-cite="XPATH-FUNCTIONS-31#conformance">implementation defined in [[[XPATH-FUNCTIONS-31]]]</a>.
+        <a data-cite="XPATH-FUNCTIONS-31#conformance">implementation defined</a> in [[[XPATH-FUNCTIONS-31]]].
         This notably affects the definition of <a data-cite="XML11#NT-Char">`Char`</a>
         that is more general in [[[XML11]]].
       </p>
@@ -4737,7 +4738,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
             <a href="#func-bound">BOUND</a>, <a href="#func-coalesce">COALESCE</a>,
             <a href="#func-if">IF</a>, <a href="#func-in">IN</a>, <a href="#func-not-in">NOT IN</a>, 
             <a href="#func-logical-or">logical-or</a> (<code>||</code>),
-            <a href="#func-logical-and">logical-and</a> (<code>&amp;&amp</code>),
+            <a href="#func-logical-and">logical-and</a> (<code>&amp;&amp;</code>),
             <a href="#func-logical-not">logical-not</a> (<code>!</code>),
             <a href="#func-filter-not-exists">NOT EXISTS</a>, 
             <a href="#func-filter-exists">EXISTS</a>, and
@@ -5066,7 +5067,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <th colspan="5" class="subHeading" scope="col">Logical Connectives</th>
             </tr>
             <tr>
-              <th><span id="logical-or-operator"/>
+              <th><span id="logical-or-operator"></span>
                 <a href="#rConditionalOrExpression" title="ConditionalOrExpression">A <span class="FAOTtoken">||</span> B</a>
               </th>
               <td>
@@ -5075,7 +5076,7 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
               <td>
                 xsd:boolean <a href="#ebv-arg">(EBV)</a>
               </td>
-              <td class="sparqlOp"><span id="logical-and-operator"/>
+              <td class="sparqlOp"><span id="logical-and-operator"></span>
                 <a href="#func-logical-or" class="SPARQLoperator">logical-or</a>(A, B)
               </td>
               <td>xsd:boolean</td>
@@ -6113,7 +6114,7 @@ class="expression">expression, ....</span>)
                     <td>true</td>
                   </tr>
                   <tr>
-                    <td><code>sameValue( &lt;&lt(:s :p 123)&gt;&gt , &lt;&lt(:s :p 123.0)&gt;&gt )</td>
+                    <td><code>sameValue( &lt;&lt;(:s :p 123)&gt;&gt; , &lt;&lt;(:s :p 123.0)&gt;&gt; )</code></td>
                     <td>true</td>
                   </tr>
                 </tbody>
@@ -6776,13 +6777,14 @@ WHERE {
                   <tr>
                     <td><code>STRLANG("abc", "")</code></td>
                     <td style="text-align: center"><em>error</em></td>
-                </tr>
-                <tr>
-                  <td><code>STRLANG(123, "en")</code></td>
-                  <td style="text-align: center"><em>error</em></td>
-                </tr>
-              </tbody>
-            </table>
+                  </tr>
+                  <tr>
+                    <td><code>STRLANG(123, "en")</code></td>
+                    <td style="text-align: center"><em>error</em></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <section id="func-strlangdir">
@@ -6837,8 +6839,9 @@ WHERE {
                   <td><code>STRLANGDIR(&lt;x:uri&gt;, "en", "ltr")</code></td>
                   <td style="text-align: center"><em>error</em></td>
                 </tr>
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </section>
 
           <section id="func-uuid">
@@ -7133,6 +7136,7 @@ WHERE {
                     <td><code>lcase("Bar"@en)</code></td>
                     <td>"bar"@en</td>
                   </tr>
+                  <tr>
                     <td><code>lcase("BAR"@en--ltr)</code></td>
                     <td>"bar"@en--ltr</td>
                   </tr>
@@ -8787,7 +8791,7 @@ WHERE {
             <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(|I|)
             is an algebraic property path expression if
             |I| is a nonempty set of <a data-cite="RDF12-CONCEPTS#dfn-iri">IRIs</a>.
-            NPS is an acronym for <em>negated property set</em>.</i>
+            NPS is an acronym for <em>negated property set</em>.</li>
           <li id="defn_ppeSeq">
             <a href="#defn_ppeSeq" class="ppeOp">Seq</a>(<var>ppe<sub>1</sub></var>, <var>ppe<sub>2</sub></var>)
             is an algebraic property path expression if
@@ -9001,7 +9005,7 @@ WHERE {
           <p>This section describes the process for translating a SPARQL graph pattern into an
             <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>. This
             process is applied to the group graph pattern (the unit between brace
-            ("<code>{&nbsp}</code>") delimiters) forming the <code>WHERE</code> clause of a
+            ("<code>{&nbsp;}</code>") delimiters) forming the <code>WHERE</code> clause of a
             query, and recursively to each syntactic element within the group graph pattern.
             The result of the
             translation is an <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>.</p>
@@ -10511,7 +10515,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
               keys, then<br>
               <a href="#defn_algAggregateJoin" class="algFct">AggregateJoin</a>(<var>S<sub>1</sub></var>, ..., <var>S<sub>|n|</sub></var>) = { <var>agg<sub>1</sub></var>→<var>val<sub>1</sub></var>,
               ..., <var>agg<sub>|n|</sub></var>→<var>val<sub>|n|</sub></var> | |key| in |K| and |key|→<var>val<sub>|i|</sub></var> in
-              <var>S<sub>|i|</sub><var> for each 1 &le; |i| &le; |n| }</p>
+              <var>S<sub>|i|</sub></var> for each 1 &le; |i| &le; |n| }</p>
           </div>
           <section id="setFunctions">
             <h5>Set Functions</h5>
@@ -10552,9 +10556,9 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
                 i.e., <var>S</var> =
                 [<var>L<sub>1</sub></var>,
                 <var>L<sub>2</sub></var>, ...,
-                <var>L<sub><var>m</var></sub></var>]
+                <var>L<sub>m</sub></var>]
                 where, for every <var>i</var> &in; {1, ..., <var>m</var>},
-                <var>L<sub><var>i</var></sub></var> is a list.</p>
+                <var>L<sub>i</sub></var> is a list.</p>
               <p><a href="#defn_Flatten">Flatten</a>(<var>S</var>) is the list
                 ( <var>x</var> | <var>L</var> in <var>S</var> and
                 <var>x</var> in <var>L</var> ).</p>
@@ -11365,7 +11369,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[1]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rQueryUnit">QueryUnit</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><a href="#rQuery">Query</a> <span class="token"></span></code></td>
+                <td><code class="gRuleBody"><a href="#rQuery">Query</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -11379,7 +11383,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[3]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rUpdateUnit">UpdateUnit</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><a href="#rUpdate">Update</a> <span class="token"></span></code></td>
+                <td><code class="gRuleBody"><a href="#rUpdate">Update</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12872,7 +12876,7 @@ _:x rdf:type xsd:decimal .
                 <li>Rename the function used within the definition of
                   the <a href="#defn_evalALP">ALP</a> function
                   from <i>eval</i> to <i>reachableTerms</i>.</li>
-                <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors</a>.</li>
+                <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors.</li>
                 <li>Rename section "Filter evaluation" as <a href="#expression-evaluation" class="sectionRef"></a>.</li>
                 <li>Improve definitions of all algebra operators that involve expressions
                   (<a href="#defn_algFilter" class="algFct">Filter</a>, <a href="#defn_algDiff" class="algFct">Diff</a>,
