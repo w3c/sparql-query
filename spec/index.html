@@ -9856,8 +9856,11 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
             [[[SPARQL11-RESULTS-CSV-TSV]]]) as scoped to the document, they cannot be understood as
             identifying nodes in the active graph of the dataset. If DS is the dataset of a query,
             pattern solutions are therefore understood to be not from the active graph of DS itself,
-            but from an RDF graph, called the <i>scoping graph,</i> which is graph-equivalent to the
-            active graph of DS but shares no blank nodes with DS or with BGP. The same scoping graph is
+            but from an RDF graph, called the <i>scoping graph,</i> which is the
+            active graph of DS but with its blank nodes uniformly replaced by new blank nodes
+	    that are in neither DS nor the BGP, much as is done when 
+	    <a data-cite="RDF12-SEMANTICS#dfn-merging">merging</a> RDF graphs.
+	    The same scoping graph is
             used for all solutions to a single query. The scoping graph is purely a theoretical
             construct; in practice, the effect is obtained simply by the document scope conventions for
             blank node identifiers.</p>
