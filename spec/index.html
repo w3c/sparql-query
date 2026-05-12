@@ -1386,6 +1386,48 @@ _:b0  :p        "v" .
                   :myreifier :tripleAdded ?date .
               }
 </pre>
+        <section id="versionLabels">
+          <h4>Version Labels</h4>
+          <p>
+            A <dfn class="export">SPARQL version label</dfn> is a string that identifies the syntax and semantics conformance
+            for the SPARQL query.
+          </p>
+          <p class="note">
+            Even though the version labels strings in SPARQL are the same as those in <a data-cite="RDF12-CONCEPTS#defined-version-labels">the version labels defined by RDF</a>, their meaning is different. Namely, the SPARQL version labels refer to SPARQL syntax and semantics, while the RDF version labels refer to RDF syntax and semantics.
+          </p>
+          <table id="tab-version-labels" class="simple">
+            <caption>SPARQL Version Labels</caption>
+            <thead>
+              <tr>
+                <th style="text-align: center">Version Label</th>
+                <th style="text-align: center">Syntax</th>
+                <th style="text-align: center">Semantics</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>"1.2"</td>
+                <td>SPARQL 1.2 query or update syntax</td>
+                <td>[[[SPARQL12-Query]]], [[[SPARQL12-Update]]]</td>
+              </tr>
+              <tr>
+                <td>"1.2-basic"</td>
+                <td>SPARQL 1.2 query or update syntax, without triple terms</td>
+                <td>[[[SPARQL12-Query]]], [[[SPARQL12-Update]]]</td>
+              </tr>
+              <tr>
+                <td>"1.1"</td>
+                <td>SPARQL 1.1 query or update syntax, except for use of a version directive</td>
+                <td>[[[SPARQL11-Query]]], [[[SPARQL11-Update]]]</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            A query conforming to version "1.1" is valid as a query with version "1.2-basic", 
+            and a query conforming to version "1.2-basic" is valid as a query with version "1.2".
+          </p>
+        </section>
       </section>
     </section>
     <section id="GraphPattern">
