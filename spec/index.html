@@ -1374,6 +1374,10 @@ _:b0  :p        "v" .
           or <a href="#func-triple-terms">functions on triple terms</a>,
           authors MAY announce the use of the new syntax forms by including this directive.
         </p>
+        <p>
+          Version labels are defined in the following section.
+          Processors may treat unrecognized labels as an error or as a warning.
+        </p>
         <pre class="query nohighlight">
               VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
@@ -1426,6 +1430,11 @@ _:b0  :p        "v" .
           <p>
             A query conforming to version "1.1" is valid as a query with version "1.2-basic", 
             and a query conforming to version "1.2-basic" is valid as a query with version "1.2".
+          </p>
+          <p>
+            While "1.1" is an acceptable version label,
+            its use in a <code>VERSION</code> directive is discouraged,
+            as it would needlessly cause SPARQL 1.1 parsers to fail.
           </p>
         </section>
       </section>
