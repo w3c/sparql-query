@@ -8974,7 +8974,11 @@ WHERE {
                 <td>`v` is in-scope</td>
               </tr>
               <tr>
-                <td>`GROUP BY (expr AS v)`</td>
+                <td>`GROUP BY ... v`</td>
+                <td>`v` is in-scope</td>
+              </tr>
+              <tr>
+                <td>`GROUP BY ... (expr AS v)`</td>
                 <td>`v` is in-scope</td>
               </tr>
               <tr>
