@@ -2960,10 +2960,16 @@ HAVING(AVG(?size) &gt; 10)
       </section>
       <section id="aggregateRestrictions">
         <h3>Aggregate Projection Restrictions</h3>
-        <p>In a query level which uses aggregates, only expressions consisting of aggregates and
-          constants may be projected, with one exception. When <code>GROUP BY</code> is given with one
-          or more simple expressions consisting of just a variable, those variables may be projected
-          from the level.</p>
+        <p>In a query level which uses grouping (either through the explicit use of aggregates in projection,
+          <code>HAVING</code>, or <code>ORDER BY</code> clauses, or by the use of a <code>GROUP BY</code> clause),
+          all variables appearing in projection or SELECT expressions MUST satisfy one of the following conditions:</p>
+        <ul>
+        <li>the variable is aggregated</li>
+        <li>the variable, <var>V</var>, appears as a named <code>GROUP BY</code> variable (with the <code>GROUP BY</code> expression consisting of just the variable <var>V</var>, or having the form <code>(expr AS <var>V</var>)</code>)</li>
+        <li>the variable is introduced by an earlier SELECT expression in the same SELECT clause</li>
+        </ul>
+        <p>If such a variable does not satisfy one of these conditions, the query is syntactically invalid.</p>
+
         <p>For example, the following query is legal as ?x is given as a <code>GROUP BY</code>
           term.</p>
         <pre class="query nohighlight">
@@ -2974,12 +2980,11 @@ WHERE {
     ?x :q ?z .
 } GROUP BY ?x (STR(?z))
         </pre>
-        <p>Note that it would not be legal to project <code>STR(?z)</code> as this is not a simple
-          variable expression. However, with <code>GROUP BY (STR(?z) AS ?strZ)</code> it would be
+        <p>Note that it would not be legal to project <code>STR(?z)</code> as this expression is neither a simple variable,
+          nor a named <code>GROUP BY</code> expression. However, with <code>GROUP BY (STR(?z) AS ?strZ)</code> it would be
           possible to project <code>?strZ</code>.</p>
-        <p>Other expressions, not using <code>GROUP BY</code> variables, or aggregates may have
-          non-deterministic values projected from their groups using the <code>SAMPLE</code>
-          aggregate.</p>
+        <p>Other expressions which use variables not satisfying the above conditions may be
+          projected from their groups using the <code>SAMPLE</code> aggregate.</p>
       </section>
       <section id="aggregateExample2">
         <h3>Aggregate Example (with errors)</h3>
