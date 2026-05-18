@@ -4042,8 +4042,9 @@ LIMIT 20
             selects all of the variables that are <a href="#variableScope">in-scope</a> at that point
             in the query. It excludes variables only used in <code>FILTER</code>, in the right-hand
             side of <code>MINUS</code>, and takes account of subqueries.</p>
-          <p>Use of <code>SELECT *</code> is only permitted when the query does not have a
-            <code>GROUP BY</code> clause.</p>
+          <p>Use of <code>SELECT *</code> is only permitted when the query does not use grouping
+            (either through the use of a <code>GROUP BY</code> clause, or due to the presence of aggregates
+            in <code>HAVING</code> or <code>ORDER BY</code> clauses).</p>
           <div class="exampleGroup">
             <pre class="data nohighlight">
 PREFIX  foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
@@ -11419,6 +11420,12 @@ _:x rdf:type xsd:decimal .
             is only permitted after a triple when the property position is
             a simple path (an IRI, the keyword `a`, or a variable),
             and not for other path expressions.
+          </li>
+          <li>
+            The use of `*` in a <a href="#rSelectClause">SELECT</a> clause
+            is not allowed in a <a href="#rQueryUnit">query</a> containing a <a href="#rGroupClause"><code>GROUP BY</code></a> clause
+            or when <a href="#rAggregate">aggregates</a> appear in either <a href="#rHavingClause"><code>HAVING</code></a> or
+            <a href="#rOrderClause"><code>ORDER BY</code></a> clauses.
           </li>
         </ol>
 
