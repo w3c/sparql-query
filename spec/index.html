@@ -2962,7 +2962,7 @@ HAVING(AVG(?size) &gt; 10)
         <h3>Aggregate Projection Restrictions</h3>
         <p>In a query level which uses grouping (either through the explicit use of aggregates in projection,
           <code>HAVING</code>, or <code>ORDER BY</code> clauses, or by the use of a <code>GROUP BY</code> clause),
-          all variables appearing in projection or SELECT expressions MUST satisfy one of the following conditions:</p>
+          all variables appearing in projection or SELECT expressions MUST satisfy exactly one of the following conditions:</p>
         <ul>
         <li>the variable is aggregated</li>
         <li>the variable, <var>V</var>, appears as a named <code>GROUP BY</code> variable (with the <code>GROUP BY</code> expression consisting of just the variable <var>V</var>, or having the form <code>(expr AS <var>V</var>)</code>)</li>
