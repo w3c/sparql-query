@@ -2965,7 +2965,8 @@ HAVING(AVG(?size) &gt; 10)
           every variable that appears in projection or SELECT expressions of that query level
           MUST satisfy exactly one of the following conditions:</p>
         <ul>
-        <li>the variable is aggregated</li>
+        <li>the variable appears as part of a sub-expression within the SELECT expression and this sub-expression is used as an argument to an aggregate (e.g., <code>MIN(?v)</code> or <code>AVG(?v+2)</code>)
+        </li>
         <li>the variable, <var>V</var>, appears as a named <code>GROUP BY</code> variable (with the corresponding <code>GROUP BY</code> expression consisting of just the variable <var>V</var>, or having the form <code>(expr AS <var>V</var>)</code>)</li>
         <li>the variable is introduced by an earlier SELECT expression in the same SELECT clause</li>
         </ul>
