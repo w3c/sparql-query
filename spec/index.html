@@ -2962,15 +2962,15 @@ HAVING(AVG(?size) &gt; 10)
         <h3>Aggregate Projection Restrictions</h3>
         <p>In a query level which uses grouping (either by the explicit use of a <code>GROUP BY</code> clause
           or through the use of aggregates in projection, <code>HAVING</code>, or <code>ORDER BY</code> clauses),
-          every variable that appears in projection or SELECT expressions of that query level
-          MUST satisfy exactly one of the following conditions:</p>
+          every occurrence of a variable that appears in projection or SELECT expressions of that query level
+          MUST satisfy one of the following conditions:</p>
         <ul>
         <li>the variable appears as part of a sub-expression within the SELECT expression and this sub-expression is used as an argument to an aggregate (e.g., <code>MIN(?v)</code> or <code>AVG(?v+2)</code>)
         </li>
         <li>the variable, <var>V</var>, appears as a named <code>GROUP BY</code> variable (with the corresponding <code>GROUP BY</code> expression consisting of just the variable <var>V</var>, or having the form <code>(expr AS <var>V</var>)</code>)</li>
         <li>the variable is introduced by an earlier SELECT expression in the same SELECT clause</li>
         </ul>
-        <p>If such a variable does not satisfy one of these conditions, the query is syntactically invalid.</p>
+        <p>If such a variable occurrence does not satisfy one of these conditions, the query is syntactically invalid.</p>
 
         <p>For example, the following query is legal as ?x is given as a <code>GROUP BY</code>
           term.</p>
