@@ -2966,7 +2966,7 @@ HAVING(AVG(?size) &gt; 10)
           MUST satisfy exactly one of the following conditions:</p>
         <ul>
         <li>the variable is aggregated</li>
-        <li>the variable, <var>V</var>, appears as a named <code>GROUP BY</code> variable (with the <code>GROUP BY</code> expression consisting of just the variable <var>V</var>, or having the form <code>(expr AS <var>V</var>)</code>)</li>
+        <li>the variable, <var>V</var>, appears as a named <code>GROUP BY</code> variable (with the corresponding <code>GROUP BY</code> expression consisting of just the variable <var>V</var>, or having the form <code>(expr AS <var>V</var>)</code>)</li>
         <li>the variable is introduced by an earlier SELECT expression in the same SELECT clause</li>
         </ul>
         <p>If such a variable does not satisfy one of these conditions, the query is syntactically invalid.</p>
