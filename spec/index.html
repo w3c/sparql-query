@@ -11521,7 +11521,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[12]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rConstructQuery">ConstructQuery</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><span class="token">'CONSTRUCT'</span> ( <a href="#rConstructTemplate">ConstructTemplate</a> <a href="#rDatasetClause">DatasetClause</a>* <a href="#rWhereClause">WhereClause</a> <a href="#rSolutionModifier">SolutionModifier</a> | <a href="#rDatasetClause">DatasetClause</a>* <span class="token">'WHERE'</span> <span class="token">'{'</span> <a href="#rTriplesTemplate">TriplesTemplate</a>? <span class="token">'}'</span> <a href="#rSolutionModifier">SolutionModifier</a> )</code></td>
+                <td><code class="gRuleBody"><span class="token">'CONSTRUCT'</span> ( <a href="#rConstructTemplate">ConstructTemplate</a> <a href="#rDatasetClause">DatasetClause</a>* <a href="#rWhereClause">WhereClause</a> <a href="#rSolutionModifier">SolutionModifier</a> | <a href="#rDatasetClause">DatasetClause</a>* <span class="token">'WHERE'</span> <a href="#rConstructTemplate">ConstructTemplate</a> <a href="#rSolutionModifier">SolutionModifier</a> )</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12555,7 +12555,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[159]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rIRIREF">IRIREF</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><span class="token">'&lt;' ([^&lt;&gt;"{}|^`\]-[#x00-#x20])* '&gt;'</span></code></td>
+                <td><code class="gRuleBody"><span class="token">'&lt;' [^&lt;&gt;"{}|^`\]-[#x00-#x20] | <a href="#rUCHAR">UCHAR</a> ) * '&gt;'</span></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12674,28 +12674,28 @@ _:x rdf:type xsd:decimal .
                 <td><code>[176]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSTRING_LITERAL1">STRING_LITERAL1</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">"'" ( ([^#x27#x5C#xA#xD]) | <a href="#rECHAR">ECHAR</a> )* "'"</code></td>
+                <td><code class="gRuleBody">"'" ( ([^#x27#x5C#xA#xD]) | <a href="#rECHAR">ECHAR</a> | <a href="#rUCHAR">UCHAR</a> )* "'"</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
                 <td><code>[177]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSTRING_LITERAL2">STRING_LITERAL2</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">'"' ( ([^#x22#x5C#xA#xD]) | <a href="#rECHAR">ECHAR</a> )* '"'</code></td>
+                <td><code class="gRuleBody">'"' ( ([^#x22#x5C#xA#xD]) | <a href="#rECHAR">ECHAR</a> | <a href="#rUCHAR">UCHAR</a> )* '"'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
                 <td><code>[178]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">"'''" ( ( "'" | "''" )? ( [^'\] | <a href="#rECHAR">ECHAR</a> ) )* "'''"</code></td>
+                <td><code class="gRuleBody">"'''" ( ( "'" | "''" )? ( [^'\] | <a href="#rECHAR">ECHAR</a> | <a href="#rUCHAR">UCHAR</a> ) )* "'''"</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
                 <td><code>[179]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">'"""' ( ( '"' | '""' )? ( [^"\] | <a href="#rECHAR">ECHAR</a> ) )* '"""'</code></td>
+                <td><code class="gRuleBody">'"""' ( ( '"' | '""' )? ( [^"\] | <a href="#rECHAR">ECHAR</a> | <a href="#rUCHAR">UCHAR</a> ) )* '"""'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12707,90 +12707,97 @@ _:x rdf:type xsd:decimal .
 
               <tr style="vertical-align: baseline">
                 <td><code>[181]&nbsp;&nbsp;</code></td>
+                <td><code><span class="doc-ref" id="rUCHAR">UCHAR</span></code></td>
+                <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
+                <td><code class="gRuleBody">('\u' HEX HEX HEX HEX) | ('\U' HEX HEX HEX HEX HEX HEX HEX HEX)</code></td>
+              </tr>
+
+              <tr style="vertical-align: baseline">
+                <td><code>[182]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rNIL">NIL</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'(' <a href="#rWS">WS</a>* ')'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[182]&nbsp;&nbsp;</code></td>
+                <td><code>[183]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rWS">WS</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">#x20 | #x9 | #xD | #xA</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[183]&nbsp;&nbsp;</code></td>
+                <td><code>[184]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rANON">ANON</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'['  <a href="#rWS">WS</a>* ']'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[184]&nbsp;&nbsp;</code></td>
+                <td><code>[185]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_CHARS_BASE">PN_CHARS_BASE</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">[A-Z] | [a-z] | [#x00C0-#x00D6] | [#x00D8-#x00F6] | [#x00F8-#x02FF] | [#x0370-#x037D] | [#x037F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[185]&nbsp;&nbsp;</code></td>
+                <td><code>[186]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_CHARS_U">PN_CHARS_U</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPN_CHARS_BASE">PN_CHARS_BASE</a> | '_'</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[186]&nbsp;&nbsp;</code></td>
+                <td><code>[187]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rVARNAME">VARNAME</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">( <a href="#rPN_CHARS_U">PN_CHARS_U</a>  | [0-9] ) ( <a href="#rPN_CHARS_U">PN_CHARS_U</a> | [0-9] | #x00B7 | [#x0300-#x036F] | [#x203F-#x2040] )*</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[187]&nbsp;&nbsp;</code></td>
+                <td><code>[188]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_CHARS">PN_CHARS</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPN_CHARS_U">PN_CHARS_U</a> | '-' | [0-9] | #x00B7 | [#x0300-#x036F] | [#x203F-#x2040]</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[188]&nbsp;&nbsp;</code></td>
+                <td><code>[189]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_PREFIX">PN_PREFIX</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPN_CHARS_BASE">PN_CHARS_BASE</a> ((<a href="#rPN_CHARS">PN_CHARS</a>|'.')* <a href="#rPN_CHARS">PN_CHARS</a>)?</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[189]&nbsp;&nbsp;</code></td>
+                <td><code>[190]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_LOCAL">PN_LOCAL</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">(<a href="#rPN_CHARS_U">PN_CHARS_U</a> | ':' | [0-9] | <a href="#rPLX">PLX</a> ) ((<a href="#rPN_CHARS">PN_CHARS</a> | '.' | ':' | <a href="#rPLX">PLX</a>)* (<a href="#rPN_CHARS">PN_CHARS</a> | ':' | <a href="#rPLX">PLX</a>) )?</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[190]&nbsp;&nbsp;</code></td>
+                <td><code>[191]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPLX">PLX</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody"><a href="#rPERCENT">PERCENT</a> | <a href="#rPN_LOCAL_ESC">PN_LOCAL_ESC</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[191]&nbsp;&nbsp;</code></td>
+                <td><code>[192]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPERCENT">PERCENT</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'%' <a href="#rHEX">HEX</a> <a href="#rHEX">HEX</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[192]&nbsp;&nbsp;</code></td>
+                <td><code>[193]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rHEX">HEX</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">[0-9] | [A-F] | [a-f]</code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
-                <td><code>[193]&nbsp;&nbsp;</code></td>
+                <td><code>[194]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rPN_LOCAL_ESC">PN_LOCAL_ESC</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
                 <td><code class="gRuleBody">'\' ( '_' | '~' | '.' | '-' | '!' | '$' | '&amp;' | "'" | '(' | ')' | '*' | '+' | ',' | ';' | '=' | '/' | '?' | '#' | '@' | '%' )</code></td>
