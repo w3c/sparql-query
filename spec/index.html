@@ -8581,15 +8581,24 @@ WHERE {
             <p>Triple patterns do not permit cycles
               (i.e., a triple pattern cannot be contained within itself).</p>
           </div>
-          <p>This definition of Triple Pattern includes literal subjects. 
-            <a href="http://www.w3.org/2000/03/rdf-tracking/#rdfms-literalsubjects">
-              This has been noted by RDF-core</a>.
-          </p>
-          <pre>"[The RDF core Working Group] noted that it is aware of no reason why literals should
-            not be subjects and a future WG with a less restrictive charter may
-            extend the syntaxes to allow literals as the subjects of statements."</pre>
-          <p>Because RDF graphs may not contain literal subjects, any SPARQL triple pattern with a
-            literal as subject will fail to match on any RDF graph.</p>
+
+          <div class="note">
+            <p>This definition of Triple Pattern includes literal subjects. 
+              <a href="http://www.w3.org/2000/03/rdf-tracking/#rdfms-literalsubjects">
+                This has been noted by RDF-core</a>.
+            </p>
+
+            <div>
+              <blockquote>
+                "[The RDF core Working Group] noted that it is aware of no reason why literals should
+                not be subjects and a future WG with a less restrictive charter may
+                extend the syntaxes to allow literals as the subjects of statements."
+              </blockquote>
+            </div>
+            <p>Because RDF graphs may not contain literal subjects, any SPARQL triple pattern with a
+              literal as subject will fail to match on any RDF graph.</p>
+          </div>
+
           <p class="note">A triple pattern that has another triple pattern
             in its subject position will fail to match on any RDF graph 
             because an [=RDF triple=] cannot have
