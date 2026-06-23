@@ -10076,6 +10076,10 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>ir
           with an <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>&nbsp;<var>σ</var>
           and a <a href="#defn_sparqlSolutionMapping">solution mapping</a>&nbsp;<var>μ</var>
           such that dom(<var>μ</var>) is the set of all variables in <var>Y</var> }</pre>
+<div class="issue" data-number="393">
+  All of these cases above are incomplete in the sense that they do not mention the multiplicities of the solution mappings.
+  Moreover, for cases in which |X| or |Y| is a blank node, the formulas are even wrong.
+</div>
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
           <code>SELECT&nbsp;*&nbsp;{&nbsp;|X|&nbsp;|iri|&nbsp;|Y|&nbsp;}</code> at that point in the query evaluation.</p>
         <div class="defn">
@@ -10143,6 +10147,13 @@ ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOn
         either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>)
         or {(<var>X</var>, <var>xn</var>), (<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }</pre>
         </div>
+<div class="issue" data-number="394">
+  <p>The previous definition does not correctly cover cases in which |X| or |Y| are a blank node.</p>
+  <p>Moreover, the definition needs to be explicit about the multiplicity of the resulting solution mappings.
+    Is the result of `ppeval`(<var>X</var>, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>)
+    just a set of solution mappings?
+    The question is relevant because `ppeval`(<var>X</var>, <var>ppe</var>, <var>Y</var>) may produce a multiset of solution mappings.</p>
+</div>
         <p>We define an auxiliary function, <a href="#defn_evalALP">ALP</a>, used in the definitions of <a href="#defn_evalZeroOrMorePath">ZeroOrMorePath</a> and
           <a href="#defn_evalOneOrMorePath">OneOrMorePath</a>. Note that the algorithm given here serves to specify the feature. An
           implementor is free to implement evaluation by any method that produces the same results
@@ -10252,6 +10263,13 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
         </div>
 <div class="issue">
   The previous definition needs to be extended to cover cases in which |x| or |y| is a triple pattern.
+</div>
+<div class="issue" data-number="395">
+  <p>The previous definition does not correctly cover cases in which |x| or |y| are a blank node.</p>
+  <p>Moreover, the definition needs to be explicit about the multiplicity of the resulting solution mappings.
+    Is the result of `ppeval`(<var>x</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>)
+    just a set of solution mappings?
+    The question is relevant because there may be multiple such <var>p</var> ∉ <var>S</var> (and, also, |x| or |y| may be a blank node).</p>
 </div>
       </section>
       <section id="sparqlAlgebra">
