@@ -1403,14 +1403,27 @@ _:b0  :p        "v" .
                   :myreifier :tripleAdded ?date .
               }
 </pre>
+        <p>
+          <p>
+            The [[[SPARQL12-PROTOCOL]]] also provides a 
+            <a data-cite="sparql12-protocol/#section-version-announcement"
+               >version announcement</a> using the `version` parameter
+            of the <a href=#mediaType>Media Type</a>.
+            This is considered if there is no `VERSION` directive.
+        </p>
+
         <section id="versionLabels">
           <h4>Version Labels</h4>
           <p>
-            A <dfn class="export">SPARQL version label</dfn> is a string that identifies the syntax and semantics conformance
-            for the SPARQL query.
+            A <dfn class="export">SPARQL version label</dfn> is a string that identifies 
+            the syntax and semantics conformance for the SPARQL query.
           </p>
           <p class="note">
-            Even though the version label strings in SPARQL are the same as <a data-cite="RDF12-CONCEPTS#defined-version-labels">the version labels defined by RDF</a>, their meaning is different. Namely, the SPARQL version labels refer to SPARQL syntax and semantics, while the RDF version labels refer to RDF syntax and semantics.
+            Even though the version label strings in SPARQL are the same
+            as <a data-cite="RDF12-CONCEPTS#defined-version-labels">the version labels defined by
+            RDF</a>, their meaning is different. Specifically, the SPARQL version labels refer to
+            SPARQL syntax and semantics, while the RDF version labels refer to RDF syntax 
+            and semantics.
           </p>
           <table id="tab-version-labels" class="simple">
             <caption>SPARQL Version Labels</caption>
