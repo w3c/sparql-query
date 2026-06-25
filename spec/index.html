@@ -1372,7 +1372,8 @@ _:b0  :p        "v" .
       <section id="syntaxTripleTerms">
         <h3>Triple Terms</h3>
         <p>Within the object position of a <a href="#defn_TriplePattern">triple pattern</a>,
-          we may use a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a> or another <a href="#defn_TriplePattern">triple pattern</a>.
+          we can use a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
+          or another <a href="#defn_TriplePattern">triple pattern</a>.
         </p>
         <p>Such a <a href="#defn_TriplePattern">triple pattern</a> or nested <a href="#defn_TriplePattern">triple pattern</a>
           is represented as a <a href="#rTripleTerm"><code>TripleTerm</code></a> with
@@ -1382,9 +1383,10 @@ _:b0  :p        "v" .
           preceded by <code>&lt;&lt;(</code>, and
           followed by <code>)&gt;&gt;</code>.
           Note that <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> and <a href="#defn_TriplePattern">triple patterns</a>
-          may be nested.
+          can be nested.
         </p>
-        <p>The example below shows how a <a href="#defn_TriplePattern">triple pattern</a> is being used in the object position of another <a href="#defn_TriplePattern">triple pattern</a>.</p>
+        <p>The example below shows how a <a href="#defn_TriplePattern">triple pattern</a>
+          can be used in the object position of another <a href="#defn_TriplePattern">triple pattern</a>.</p>
         <pre class="query nohighlight">
               VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
@@ -1401,9 +1403,9 @@ _:b0  :p        "v" .
         <h3>Reifying Triples</h3>
         <p><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple terms</a> are mostly used
           as the <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of a <a data-cite="RDF12-CONCEPTS#dfn-rdf-triple">triple</a>
-          using the `rdf:reifies` <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a>.
+          with a <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a> of `rdf:reifies`.
           Such a triple is called a <dfn data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</dfn>.
-          SPARQL provides a shorthand notation for writing <a>reifying triples</a>
+          SPARQL also provides a shorthand notation for writing <a>reifying triples</a>
           using the <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> grammar production.</p>
         </p>
         <p>A <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
@@ -1412,7 +1414,7 @@ _:b0  :p        "v" .
           identifier (<dfn data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</dfn>)
           and a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>.
           The identifier becomes a way to indirectly refer
-          to a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>, which
+          to the <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>, which
           may or may not be asserted within the query.
         </p>
         <p class="note">Reification using triple terms is a concept distinct from the
@@ -1433,14 +1435,15 @@ _:b0  :p        "v" .
           This <a href="#rReifier"><code>Reifier</code></a> is composed of a <code title="tilde">~</code>
           followed by an optional <a href="#rVarOrReifierId"><code>rVarOrReifierId</code></a> production.
           This <a href="#rVarOrReifierId"><code>rVarOrReifierId</code></a> is composed of
-          a <a href="#rVar">variable</a>, <a href="#riri">IRI</a>, or <a href="#rBlankNode">blank node</a>.
-          For example, `&lt;&lt; :subject :predicate :object ~ :IRIREF &gt;&gt;`.
-          If no reifiers are present,
+          a <a href="#rVar">variable</a>, an <a href="#riri">IRI</a>, or a <a href="#rBlankNode">blank node</a>;
+          for example, `&lt;&lt; :subject :predicate :object ~ :IRIREF &gt;&gt;`.
+          If no reifier is present,
           or the <code title="tilde">~</code>
-          is not immediately followed by <a href="#rVar">variable</a>, <a href="#riri">IRI</a>, or <a href="#rBlankNode">blank node</a>,
-          a fresh <a data-cite="RDF12-CONCEPTS#dfn-blank-node">RDF blank node</a> is allocated,
-          as with `&lt;&lt; :subject :predicate :object &gt;&gt;`,
-          or `&lt;&lt; :subject :predicate :object ~ &gt;&gt;`.
+          is not immediately followed by <a href="#rVar">variable</a>,
+          an <a href="#riri">IRI</a>, or a <a href="#rBlankNode">blank node</a> —
+          as in `&lt;&lt; :subject :predicate :object &gt;&gt;`,
+          or `&lt;&lt; :subject :predicate :object ~ &gt;&gt;` —
+          a fresh <a data-cite="RDF12-CONCEPTS#dfn-blank-node">RDF blank node</a> is allocated.
         </p>
         <p class="note"><a href="#rReifiedTriple"><code>ReifiedTriple</code>'s</a> may be nested,
           like
@@ -1469,7 +1472,7 @@ _:b0  :p        "v" .
                   &lt;&lt; ?person :jobTitle "Designer" ~ ?id &gt;&gt; :accordingTo ?authority .
               }
         </pre>
-        <p>The syntactic sugar of the example above expands to the following query.</p>
+        <p>The syntactic sugar of the example above expands to the following query:</p>
         <pre class="query nohighlight">
               VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
@@ -1481,13 +1484,14 @@ _:b0  :p        "v" .
                   ?id :accordingTo ?authority .
               }
         </pre>
-        <p class="note">Note the difference in syntax between the syntactic sugar of <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
-      (i.e., `&lt;&lt; ... >>`) and the regular <a href="#rTripleTerm"><code>TripleTerm</code></a> (i.e., `&lt;&lt;( ... )>>`).</p>
+        <p class="note">Note the subtle difference in syntax between the syntactic sugar of
+          the <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> (i.e., `&lt;&lt; ... >>`)
+          and the regular <a href="#rTripleTerm"><code>TripleTerm</code></a> (i.e., `&lt;&lt;( ... )>>`).</p>
 
         <section id="syntaxAnnotation">
           <h3>Annotation Syntax</h3>
           <p>SPARQL also defines an <dfn data-lt="annotation-syntax">annotation syntax</dfn>
-            to both reify and assert a <a href="#defn_TriplePattern">triple pattern</a>,
+            that both reifies and asserts a <a href="#defn_TriplePattern">triple pattern</a>,
             which provides a convenient shortcut.
             An annotation can be used to simultaneously assert a triple pattern,
             via an explicit or implicit identifier,
@@ -1500,18 +1504,18 @@ _:b0  :p        "v" .
             triple patterns and/or <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>.
           </p>
           <p>Like a <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>,
-            the annotation syntax uses a <a>reifier</a>, written as either an
-            <a href="#rVar">variable</a>, <a href="#riri">IRI</a>, or <a href="#rBlankNode">blank node</a>,
-            preceded by a tilde (<code title="tilde">~</code>),
+            the annotation syntax uses a <a>reifier</a> — written as either a
+            <a href="#rVar">variable</a>, an <a href="#riri">IRI</a>, or a <a href="#rBlankNode">blank node</a>,
+            preceded by a tilde (<code title="tilde">~</code>) —
             to identify the
             <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a> being reified.
-            However, while a
-            <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
+            However, while the
+            <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> syntax
             may contain at most one <a>reifier</a>, the annotation syntax may contain
             any number of <a>reifiers</a>. Each <a>reifier</a> causes a corresponding
             reifying triple to be produced.
           </p>
-          <p>A <a>reifier</a> may be followed by an annotation block.
+          <p>A <a>reifier</a> can be followed by an annotation block.
             If a <a>reifier</a> is not followed by an annotation block, it is treated
             analogously to a
             <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
@@ -1533,7 +1537,7 @@ _:b0  :p        "v" .
                     ?person :name "Alice" ~ :t {| :statedBy ?authority ; :recorded "2021-07-07"^^xsd:date |} .
                 }
           </pre>
-          <p>The syntactic sugar of the annotation syntax in the example above expands to the following query.</p>
+          <p>The syntactic sugar of the annotation syntax in the example above expands to the following query:</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -1545,7 +1549,8 @@ _:b0  :p        "v" .
                                                     :recorded "2021-07-07"^^xsd:date .
                 }
           </pre>
-          <p>And if we fully expand this query to use <a href="#rTripleTerm"><code>TripleTerm</code>'s</a> instead of reifiers, the query is expanded to the following.</p>
+          <p>If we fully expand this query to use <a href="#rTripleTerm"><code>TripleTerm</code>'s</a> instead of reifiers,
+          the query is expanded to the following:</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -13290,7 +13295,9 @@ _:x rdf:type xsd:decimal .
             Normative changes:
             <ul>
                 <li>Update grammar for triple terms, reifiers, reified triples, annotation syntax, and triple term functions
-                  in <a href="#sparqlGrammar" class="sectionRef"></a> and explain them in <a href="#syntaxTripleTerms" class="sectionRef"></a> and <a href="#syntaxReifyingTriples" class="sectionRef"></a></li>
+                  in <a href="#sparqlGrammar" class="sectionRef"></a> and explain them
+                  in <a href="#syntaxTripleTerms" class="sectionRef"></a>
+                  and <a href="#syntaxReifyingTriples" class="sectionRef"></a></li>
                 <li>Add functions related to <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> to
                   <a href="#func-triple-terms" class="sectionRef"></a>:
                   `TRIPLE`, `isTRIPLE`, `SUBJECT`, `PREDICATE`, `OBJECT`</li>
