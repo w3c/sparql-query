@@ -8777,8 +8777,8 @@ WHERE {
             <a href="#defn_absPath" class="absOp">Path</a>(|x|, |ppe|, |y|)
             is an algebraic query expression if
             |ppe| is an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>,
-            |x| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> or a <a href="#defn_QueryVariable">variable</a>, and
-            |y| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> or a <a href="#defn_QueryVariable">variable</a>.</li>
+            |x| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a>, a <a href="#defn_QueryVariable">variable</a>, or a <a href="#defn_TriplePattern">triple pattern</a>, and
+            so is |y|.</li>
           <li id="defn_absUnion">
             <a href="#defn_absUnion" class="absOp">Union</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>)
             is an algebraic query expression if
@@ -9268,7 +9268,8 @@ For each form FILTER(expr) in the group graph pattern
               of the form <a href="#defn_absPath" class="absOp">Path</a>(...).</p>
             <p>Notes:</p>
             <ul>
-              <li>|x| and |y| are <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF terms</a> or <a href="#defn_QueryVariable">variables</a>.</li>
+              <li>|x| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>, a <a href="#defn_QueryVariable">variable</a>, or a <a href="#defn_TriplePattern">triple pattern</a>.</li>
+              <li>|y| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF term</a>, a <a href="#defn_QueryVariable">variable</a>, or a <a href="#defn_TriplePattern">triple pattern</a>.</li>
               <li>|var| is a fresh <a href="#defn_QueryVariable">variable</a>.</li>
               <li>|ppe|, <var>ppe<sub>1</sub></var>, and <var>ppe<sub>2</sub></var> are <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>.</li>
               <li>These are only applied to property path patterns, not within property path
@@ -10029,6 +10030,10 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
                 <td><code>|x|:var</code></td>
                 <td>a variable</td>
               </tr>
+              <tr>
+                <td><code>|x|:TP</code></td>
+                <td>a triple pattern</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -10068,6 +10073,34 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>ir
 ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:term) =
      { } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is not in the active graph
         </pre>
+        <p>If |X| is a triple pattern:</p>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:TP, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:term) = { }</pre>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:TP, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:var) = { }</pre>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:TP, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:TP) = { }</pre>
+        <p>If |X| is a variable and |Y| a triple pattern:</p>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:TP) =
+    { (<var>X</var>, <var>xn</var>:term) &cup; <var>μ</var> | triple (<var>xn</var>, <var>iri</var>, <var>P</var>({<var>Y</var>}) ) is in the active graph,
+                         where <var>P</var> = <var>μ</var>(<var>σ</var>) is a <a href="#defn_PatternInstanceMapping">pattern instance mapping</a>
+                         with an <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>&nbsp;<var>σ</var>
+                         and a <a href="#defn_sparqlSolutionMapping">solution mapping</a>&nbsp;<var>μ</var>
+                         such that dom(<var>μ</var>) is the set of all variables in <var>Y</var>
+                         and {(<var>X</var>, <var>xn</var>:term)} and <var>μ</var> are <a href="#defn_algCompatibleMapping">compatible</a> }</pre>
+        <p>If |X| is an RDF term and |Y| a triple pattern:</p>
+        <pre class="nohighlight">
+ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:TP) =
+    { <var>μ</var> | triple (<var>X</var>, <var>iri</var>, <var>P</var>({<var>Y</var>}) ) is in the active graph,
+          where <var>P</var> = <var>μ</var>(<var>σ</var>) is a <a href="#defn_PatternInstanceMapping">pattern instance mapping</a>
+          with an <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>&nbsp;<var>σ</var>
+          and a <a href="#defn_sparqlSolutionMapping">solution mapping</a>&nbsp;<var>μ</var>
+          such that dom(<var>μ</var>) is the set of all variables in <var>Y</var> }</pre>
+<div class="issue" data-number="393">
+  All of these cases above are incomplete in the sense that they do not mention the multiplicities of the solution mappings.
+  Moreover, for cases in which |X| or |Y| is a blank node, the formulas are even wrong.
+</div>
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
           <code>SELECT&nbsp;*&nbsp;{&nbsp;|X|&nbsp;|iri|&nbsp;|Y|&nbsp;}</code> at that point in the query evaluation.</p>
         <div class="defn">
@@ -10135,6 +10168,13 @@ ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOn
         either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>)
         or {(<var>X</var>, <var>xn</var>), (<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }</pre>
         </div>
+<div class="issue" data-number="394">
+  <p>The previous definition does not correctly cover cases in which |X| or |Y| are a blank node.</p>
+  <p>Moreover, the definition needs to be explicit about the multiplicity of the resulting solution mappings.
+    Is the result of `ppeval`(<var>X</var>, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>)
+    just a set of solution mappings?
+    The question is relevant because `ppeval`(<var>X</var>, <var>ppe</var>, <var>Y</var>) may produce a multiset of solution mappings.</p>
+</div>
         <p>We define an auxiliary function, <a href="#defn_evalALP">ALP</a>, used in the definitions of <a href="#defn_evalZeroOrMorePath">ZeroOrMorePath</a> and
           <a href="#defn_evalOneOrMorePath">OneOrMorePath</a>. Note that the algorithm given here serves to specify the feature. An
           implementor is free to implement evaluation by any method that produces the same results
@@ -10186,8 +10226,34 @@ ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOr
 ppeval(<var>x</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) = 
     { { } } if { (<var>vy</var>:var,<var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
     { } otherwise
+
+ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
+    { <var>μ</var> &cup; {(<var>vy</var>, <var>n</var>)} |
+         <var>μ</var> is a <a href="#defn_sparqlSolutionMapping">solution mapping</a> with dom(<var>μ</var>) = vars(<var>X</var>) and
+         (<var>vy</var>, <var>n</var>) in ppeval(<var>P</var>(<var>X</var>), <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>),
+         where vars(<var>X</var>) is the set of all variables in <var>X</var> and
+               <var>P</var> = <var>μ</var>(<var>σ</var>) is a <a href="#defn_PatternInstanceMapping">pattern instance mapping</a>
+               with an arbitrary <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>&nbsp;<var>σ</var>
+               such that <var>P</var>(<var>X</var>) is a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
+               and {(<var>vy</var>, <var>n</var>)} and <var>μ</var> are <a href="#defn_algCompatibleMapping">compatible</a> }
+
+ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:term) = ? <em>(TODO)</em>
+
+ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) = ? <em>(TODO)</em>
+
+ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
+    { <var>μ</var> | <var>μ</var> is a <a href="#defn_sparqlSolutionMapping">solution mapping</a> with dom(<var>μ</var>) = vars(<var>Y</var>)
+          such that <var>μ</var>(<var>σ</var>(<var>Y</var>)) in <a href="#defn_evalALP">ALP</a>(<var>X</var>, <var>ppe</var>)
+              where <var>σ</var> is an arbitrary <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>
+              and vars(<var>Y</var>) is the set of all variables in <var>Y</var> }
+
+ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) = ? <em>(TODO)</em>
           </pre>
         </div>
+<div class="issue">
+  The previous definition needs to be extended to cover cases in which |X| or |Y| is a triple pattern.
+  Notice that this will add five more cases to the definition!
+</div>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalOneOrMorePath">Evaluation of OneOrMorePath</span></b></p>
           <p>Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
@@ -10219,6 +10285,10 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
     { } otherwise
 </pre>
         </div>
+<div class="issue">
+  The previous definition needs to be extended to cover cases in which |x| or |y| is a triple pattern.
+  Notice that this will add five more cases to the definition!
+</div>
         <div class="defn">
           <p><b>Definition: <span id="eval_negatedPropertySet">Evaluation of NegatedPropertySet</span></b></p>
           <pre class="nohighlight">
@@ -10234,6 +10304,16 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
        { <var>μ</var> | ∃ triple(<var>μ'</var>(<var>μ</var>, <var>x</var>), <var>p</var>, <var>μ'</var>(<var>μ</var>, <var>y</var>)) in <var>G</var>, such that the IRI of <var>p</var> ∉ <var>S</var> }
           </pre>
         </div>
+<div class="issue">
+  The previous definition needs to be extended to cover cases in which |x| or |y| is a triple pattern.
+</div>
+<div class="issue" data-number="395">
+  <p>The previous definition does not correctly cover cases in which |x| or |y| are a blank node.</p>
+  <p>Moreover, the definition needs to be explicit about the multiplicity of the resulting solution mappings.
+    Is the result of `ppeval`(<var>x</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>)
+    just a set of solution mappings?
+    The question is relevant because there may be multiple such <var>p</var> ∉ <var>S</var> (and, also, |x| or |y| may be a blank node).</p>
+</div>
       </section>
       <section id="sparqlAlgebra">
         <h3>SPARQL Algebra</h3>
@@ -13056,6 +13136,8 @@ _:x rdf:type xsd:decimal .
             <ul>
                 <li>Update grammar for triple terms, reifiers, reified triples, annotation syntax, and triple term functions
                   in <a href="#sparqlGrammar" class="sectionRef"></a></li>
+                <li>Extend the <a href="#PropertyPathPatterns">evaluation of property path patterns</a>
+                  to cover <a href="#defn_PropertyPathPattern">property path patterns</a> that contain triple patterns.</li>
                 <li>Add functions related to <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> to
                   <a href="#func-triple-terms" class="sectionRef"></a>:
                   `TRIPLE`, `isTRIPLE`, `SUBJECT`, `PREDICATE`, `OBJECT`</li>
