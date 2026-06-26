@@ -10205,6 +10205,28 @@ ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOr
 ppeval(<var>x</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) = 
     { { } } if { (<var>vy</var>:var,<var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
     { } otherwise
+
+ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
+    { <var>μ</var> &cup; {(<var>vy</var>, <var>n</var>)} |
+         <var>μ</var> is a <a href="#defn_sparqlSolutionMapping">solution mapping</a> with dom(<var>μ</var>) = vars(<var>X</var>) and
+         (<var>vy</var>, <var>n</var>) in ppeval(<var>P</var>(<var>X</var>), <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>),
+         where vars(<var>X</var>) is the set of all variables in <var>X</var> and
+               <var>P</var> = <var>μ</var>(<var>σ</var>) is a <a href="#defn_PatternInstanceMapping">pattern instance mapping</a>
+               with an arbitrary <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>&nbsp;<var>σ</var>
+               such that <var>P</var>(<var>X</var>) is a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
+               and {(<var>vy</var>, <var>n</var>)} and <var>μ</var> are <a href="#defn_algCompatibleMapping">compatible</a> }
+
+ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:term) = ? <em>(TODO)</em>
+
+ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) = ? <em>(TODO)</em>
+
+ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
+    { <var>μ</var> | <var>μ</var> is a <a href="#defn_sparqlSolutionMapping">solution mapping</a> with dom(<var>μ</var>) = vars(<var>Y</var>)
+          such that <var>μ</var>(<var>σ</var>(<var>Y</var>)) in <a href="#defn_evalALP">ALP</a>(<var>X</var>, <var>ppe</var>)
+              where <var>σ</var> is an arbitrary <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>
+              and vars(<var>Y</var>) is the set of all variables in <var>Y</var> }
+
+ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) = ? <em>(TODO)</em>
           </pre>
         </div>
 <div class="issue">
