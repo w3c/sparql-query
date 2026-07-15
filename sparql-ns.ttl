@@ -317,8 +317,8 @@ sparql:replace rdf:type sparql:Function ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-replace> ;
     .
 
-sparql:encode rdf:type sparql:Function ;
-    rdfs:comment "This function encodes a string using a specified method (e.g., URI-encoding), returning the encoded version." ;
+sparql:encodeForUri rdf:type sparql:Function ;
+    rdfs:comment "This function encodes a string using a specified method (here, URI-encoding), returning the encoded version." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-encode> ;
     .
 
