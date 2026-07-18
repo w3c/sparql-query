@@ -117,7 +117,7 @@ sparql:logical-and rdf:type sparql:FunctionalForm ;
     .
 
 sparql:logical-not rdf:type sparql:Function ;
-    rdfs:comment "This form computes the logical NOT of a boolean expression." ;
+    rdfs:comment "This function computes the logical NOT of a boolean expression." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-not> ;
     .
 
