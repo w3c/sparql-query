@@ -8827,10 +8827,11 @@ WHERE {
             |exprlist| is a nonempty sequence of <a href="#expressions">expressions</a> and
             |A| is an algebraic query expression.</li>
           <li id="defn_absAggregation">
-            <a href="#defn_absAggregation" class="absOp">Aggregation</a>(|exprlist|, |func|, |scalarvals|, |grp|)
+            <a href="#defn_absAggregation" class="absOp">Aggregation</a>(|exprlist|, |func|, |distinct|, |scalarvals|, |grp|)
             is an algebraic query expression if
             |exprlist| is a nonempty sequence of <a href="#expressions">expressions</a> or the asterisk character (*),
             |func| is a <a href="#setFunctions">set function</a>,
+            |distinct| is a boolean `true` or `false`,
             |scalarvals| is a partial function (which may be the empty function, i.e., with an empty domain), and
             |grp| is an algebraic query expression of the form <a href="#defn_absGroup" class="absOp">Group</a>(<var>exprlist'</var>, |A|) where
             <var>exprlist'</var> is a sequence of <a href="#expressions">expressions</a> and
@@ -8846,7 +8847,7 @@ WHERE {
             <var>A<sub>1</sub></var>, ..., <var>A<sub>|n|</sub></var> is
             a non-empty sequence of algebraic query expressions (i.e., |n| &geq; 1)
             such that every expression <var>A<sub>|i|</sub></var> in this sequence
-            is of the form <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>exprlist<sub>|i|</sub></var>, <var>func<sub>|i|</sub></var>, <var>scalarvals<sub>|i|</sub></var>, <var>grp<sub>|i|</sub></var>)
+            is of the form <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>exprlist<sub>|i|</sub></var>, <var>func<sub>|i|</sub></var>, <var>distinct<sub>|i|</sub></var>, <var>scalarvals<sub>|i|</sub></var>, <var>grp<sub>|i|</sub></var>)
             that is captured by <a href="#defn_absAggregation">the previous point</a>.</li>
           <li id="defn_absOrderBy">
             <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|A|, |condition|)
@@ -9711,14 +9712,19 @@ For each (<var>X</var> AS <var>Var</var>) in SELECT, each HAVING(<var>X</var>), 
       End
   For each aggregate <var>R</var>(<var>args</var> ; <var>scalarvals</var>) now in <var>X</var>
       # note: <var>scalarvals</var> may be omitted; if so, it is equivalent to the empty function
-      <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>args</var>, <var>R</var>, <var>scalarvals</var>, <var>Grp</var>)
+      If the aggregate contains DISTINCT
+          <var>distinct</var> = true
+      Else
+          <var>distinct</var> = false
+      End
+      <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>args</var>, <var>R</var>, <var>distinct</var>, <var>scalarvals</var>, <var>Grp</var>)
       Replace <var>R</var>(...) with agg<sub><var>i</var></sub> in <var>Q</var>
       <var>i</var> := <var>i</var> + 1
       End
   End
 
 For each variable <var>V</var> appearing outside of an aggregate
-   <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>V</var>, <a href="#defn_aggSample" class="aggFct">Sample</a>, {}, <var>Grp</var>)
+   <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>V</var>, <a href="#defn_aggSample" class="aggFct">Sample</a>, false, {}, <var>Grp</var>)
    <var>E</var> := <var>E</var> append (<var>V</var>, agg<sub><var>i</var></sub>)
    <var>i</var> := <var>i</var> + 1
    End
@@ -10523,20 +10529,21 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
               <b>Definition: Aggregation</b>
             </div>
             <p>Let <var>exprlist</var> be a list of expressions or `*`; <var>func</var>, a set function;
+              <var>distinct</var>, a boolean (`true` or `false`);
               <var>scalarvals</var>, a partial function (possibly with an empty domain) passed from the aggregate
               in the query; and { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
               <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> }, a partial function from keys to
               solution sequences as produced by the grouping step.</p>
             <p><a href="#defn_algAggregation" class="algFct">Aggregation</a> applies the set function <var>func</var> to the given set and produces a
               single value for each key and a group of solutions for that key.</p>
-            <p><a href="#defn_algAggregation" class="algFct">Aggregation</a>(<var>exprlist</var>, <var>func</var>, <var>scalarvals</var>, { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
+            <p><a href="#defn_algAggregation" class="algFct">Aggregation</a>(<var>exprlist</var>, <var>func</var>, <var>distinct</var>, <var>scalarvals</var>, { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
               <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> } )<br>
-              &nbsp;&nbsp;&nbsp;= { (<var>key</var>, <var>F</var>(<var>Ψ</var>)) | <var>key</var> → <var>Ψ</var> in { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
+              &nbsp;&nbsp;&nbsp;= { (<var>key</var>, <var>F</var>(<var>Ψ</var>, <var>distinct</var>)) | <var>key</var> → <var>Ψ</var> in { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
               <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> } }</p>
             <p>where<br>
               &nbsp;&nbsp;M(<var>Ψ</var>) = [ <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ</var>) | <var>μ</var> in <var>Ψ</var> ]<br>
-              &nbsp;&nbsp;F(<var>Ψ</var>) = <var>func</var>(M(<var>Ψ</var>), <var>scalarvals</var>), for non-<code>DISTINCT</code><br>
-              &nbsp;&nbsp;F(<var>Ψ</var>) = <var>func</var>(Dedup(M(<var>Ψ</var>)), <var>scalarvals</var>), for <code>DISTINCT</code></p>
+              &nbsp;&nbsp;F(<var>Ψ</var>, `false`) = <var>func</var>(M(<var>Ψ</var>), <var>scalarvals</var>) — non-<code>DISTINCT</code> case<br>
+              &nbsp;&nbsp;F(<var>Ψ</var>, `true`) = <var>func</var>(Dedup(M(<var>Ψ</var>)), <var>scalarvals</var>) — <code>DISTINCT</code> case</p>
             <p>with Dedup(M(<var>Ψ</var>)) being an order-preserving, duplicate-free version of the sequence M(<var>Ψ</var>); that is, Dedup(M(<var>Ψ</var>)) is a sequence of lists that has the following four properties
               (where each such list in this sequence may contain RDF terms and
               errors, as it is produced by the <a href="#defn_ListEval">ListEval</a> function).</p>
@@ -10607,7 +10614,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             ?x.</p>
           <p>We produce <var>G</var> = <a href="#defn_algGroup" class="algFct">Group</a>((?x), <var>Ψ</var>) = { (1) → [<var>μ<sub>1</sub></var>, <var>μ<sub>2</sub></var>], (2) →
           [<var>μ<sub>3</sub></var>] }</p>
-          <p>And so <a href="#defn_algAggregation" class="algFct">Aggregation</a>((?y, ?z), ex:agg, {}, <var>G</var>) =<br>
+          <p>And so <a href="#defn_algAggregation" class="algFct">Aggregation</a>((?y, ?z), ex:agg, `false`, {}, <var>G</var>) =<br>
             { ((1), eg:agg([(2, 3), (3, 4)], {})), ((2), eg:agg([(5, 6)], {})) }.</p>
           <div class="defn">
             <div id="defn_algAggregateJoin">
