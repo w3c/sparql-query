@@ -10542,8 +10542,8 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
               <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> } }</p>
             <p>where<br>
               &nbsp;&nbsp;M(<var>Ψ</var>) = [ <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ</var>) | <var>μ</var> in <var>Ψ</var> ]<br>
-              &nbsp;&nbsp;F(<var>Ψ</var>, `false`) = <var>func</var>(M(<var>Ψ</var>), <var>scalarvals</var>) — non-<code>DISTINCT</code> case<br>
-              &nbsp;&nbsp;F(<var>Ψ</var>, `true`) = <var>func</var>(Dedup(M(<var>Ψ</var>)), <var>scalarvals</var>) — <code>DISTINCT</code> case</p>
+              &nbsp;&nbsp;F(<var>Ψ</var>, `false`) = <var>func</var>(M(<var>Ψ</var>), <var>scalarvals</var>)<br>
+              &nbsp;&nbsp;F(<var>Ψ</var>, `true`) = <var>func</var>(Dedup(M(<var>Ψ</var>)), <var>scalarvals</var>)</p>
             <p>with Dedup(M(<var>Ψ</var>)) being an order-preserving, duplicate-free version of the sequence M(<var>Ψ</var>); that is, Dedup(M(<var>Ψ</var>)) is a sequence of lists that has the following four properties
               (where each such list in this sequence may contain RDF terms and
               errors, as it is produced by the <a href="#defn_ListEval">ListEval</a> function).</p>
