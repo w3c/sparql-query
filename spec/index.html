@@ -10569,10 +10569,9 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             </ol>
 
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
-              <code>*</code>, then F(<var>Ψ</var>) is the cardinality of the group solution sequence,
-              i.e., F(<var>Ψ</var>)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<var>Ψ</var>),
-              or F(<var>Ψ</var>)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<a href="#defn_algDistinct">Distinct</a>(<var>Ψ</var>))
-              if the <code>DISTINCT</code> keyword is present.</p>
+              <code>*</code>, then F(<var>Ψ</var>, <var>distinct</var>) is the cardinality of the group solution sequence,
+              i.e., F(<var>Ψ</var>, `false`)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<var>Ψ</var>),
+              and F(<var>Ψ</var>, `true`)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<a href="#defn_algDistinct">Distinct</a>(<var>Ψ</var>)).</p>
           </div>
           <p><var>scalarvals</var> are used to pass values to the underlying set function, bypassing
             the mechanics of the grouping. For example, the aggregate expression
