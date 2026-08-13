@@ -1413,7 +1413,7 @@ _:b0  :p        "v" .
           and a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>.
           The identifier becomes a way to indirectly refer
           to the <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>, which
-          may or may not be asserted within the query.
+          may be used elsewhere within the query.
         </p>
         <p class="note">Reification using triple terms is a concept distinct from the
           <a data-cite="RDF12-SEMANTICS#Reif">Reification vocabulary</a> originally
@@ -1445,7 +1445,7 @@ _:b0  :p        "v" .
         </p>
         <p class="note"><a href="#rReifiedTriple"><code>ReifiedTriple</code>'s</a> may be nested,
           like
-          <br/>`&lt;&lt; ?subject1 :predicate1 &lt;&lt; :subject2 :predicate2 :object2 &gt;&gt; ~ :IRIREF1 &gt;&gt;`
+          <br/>`&lt;&lt; ?subject1 :predicate1 &lt;&lt; :subject2 :predicate2 :object2 &gt;&gt; ~ :IRIREF1 &gt;&gt;`<br/>
           or <br/>`&lt;&lt; :subject4 :predicate4 &lt;&lt; :subject3 :predicate3 ?object3 ~ :IRIREF3 &gt;&gt; &gt;&gt;`.
         </p>
         <p>The example below shows a reifying triple with an implicit reifier.</p>
@@ -1488,10 +1488,9 @@ _:b0  :p        "v" .
 
         <section id="syntaxAnnotation">
           <h3>Annotation Syntax</h3>
-          <p>SPARQL also defines an <dfn data-lt="annotation-syntax">annotation syntax</dfn>
-            to represent <a href="#defn_TriplePattern">triple patterns</a> that simultaneously
-            match reified and asserted triples,
-            which provides a convenient shortcut.
+          <p>SPARQL also defines <dfn data-lt="annotation-syntax">annotation syntax</dfn>
+            as a shortcut form for matching both reified and asserted triples with a
+            <a href="#defn_TriplePattern">triple pattern</a>.
             An annotation can be used to simultaneously assert a triple pattern,
             via an explicit or implicit identifier,
             and have that triple pattern be the
