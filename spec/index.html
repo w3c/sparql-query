@@ -1403,16 +1403,16 @@ _:b0  :p        "v" .
           as the <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of a <a data-cite="RDF12-CONCEPTS#dfn-rdf-triple">triple</a>
           with a <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a> of `rdf:reifies`.
           Such a triple is called a <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</a>.
-          SPARQL provides a shorthand notation for writing triple patterns that are meant to match such <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a>
+          SPARQL provides a shorthand notation for writing triple patterns that are meant to match such <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a> and reifying triple patterns
           using the <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> grammar production.</p>
         </p>
         <p>A <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
-          provides syntactic sugar to represent a <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</a>,
-          which defines a specific relationship between an
-          identifier (<dfn data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</dfn>)
-          and a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>.
+          provides syntactic sugar to represent a triple pattern that can match <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a>.
+          It defines a specific relationship between an
+          identifier (<a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>)
+          and a <a href="#defn_TriplePattern">triple pattern</a>.
           The identifier becomes a way to indirectly refer
-          to the <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>, which
+          to the <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> matched by the <a href="#defn_TriplePattern">triple pattern</a>, which
           may be used elsewhere within the query.
         </p>
         <p class="note">Reification using triple terms is a concept distinct from the
@@ -1448,7 +1448,7 @@ _:b0  :p        "v" .
           <br/>`&lt;&lt; ?subject1 :predicate1 &lt;&lt; :subject2 :predicate2 :object2 &gt;&gt; ~ :IRIREF1 &gt;&gt;`<br/>
           or <br/>`&lt;&lt; :subject4 :predicate4 &lt;&lt; :subject3 :predicate3 ?object3 ~ :IRIREF3 &gt;&gt; &gt;&gt;`.
         </p>
-        <p>The example below shows a reifying triple with an implicit reifier.</p>
+        <p>The example below matches reifying triples with an implicit reifier.</p>
         <pre class="query nohighlight">
               VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
@@ -1459,7 +1459,7 @@ _:b0  :p        "v" .
                   &lt;&lt; ?person :jobTitle "Designer" &gt;&gt; :accordingTo ?authority .
               }
         </pre>
-        <p>The example below shows a reifying triple with an explicit reifier.</p>
+        <p>The example below matches reifying triples with an explicit reifier.</p>
         <pre class="query nohighlight">
               VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
@@ -1496,30 +1496,30 @@ _:b0  :p        "v" .
             and have that triple pattern be the
             <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a> or
             <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of further triple patterns.
-            If explicitly identified, the same <a>reifier</a> can then be used as the
+            If explicitly identified, the same <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> can then be used as the
             <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a> or
             <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of additional
             triple patterns and/or <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>.
           </p>
           <p>Like a <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>,
-            the annotation syntax uses a <a>reifier</a> — written as either a
+            the annotation syntax uses a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> — written as either a
             <a href="#rVar">variable</a>, an <a href="#riri">IRI</a>, or a <a href="#rBlankNode">blank node</a>,
             preceded by a tilde (<code title="tilde">~</code>) —
             to identify the
             <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a> being reified.
             However, while the
             <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> syntax
-            may contain at most one <a>reifier</a>, the annotation syntax may contain
-            any number of <a>reifiers</a>. Each <a>reifier</a> causes a corresponding
+            may contain at most one <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>, the annotation syntax may contain
+            any number of <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a>. Each <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> causes a corresponding
             reifying triple to be produced.
           </p>
-          <p>A <a>reifier</a> can be followed by an annotation block.
-            If a <a>reifier</a> is not followed by an annotation block, it is treated
+          <p>A <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> can be followed by an annotation block.
+            If a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> is not followed by an annotation block, it is treated
             analogously to a
             <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
             without additional annotations.
-            If an annotation block is not immediately preceded by a <a>reifier</a>,
-            a fresh RDF blank node is allocated to serve as the <a>reifier</a> of the
+            If an annotation block is not immediately preceded by a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>,
+            a fresh RDF blank node is allocated to serve as the <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> of the
             <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>.
           </p>
           <p class="note">The annotation syntax is a syntactic shortcut in SPARQL.
@@ -1573,8 +1573,8 @@ _:b0  :p        "v" .
           </pre>
           <p>An <a href="#rAnnotation"><code>Annotation</code></a>
             may include any number of annotation blocks. If such blocks are not
-            immediately preceded by explicit <a>reifiers</a>, each block is associated
-            with a fresh blank node allocated as its <a>reifier</a>, as seen in the example below.</p>
+            immediately preceded by explicit <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a>, each block is associated
+            with a fresh blank node allocated as its <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>, as seen in the example below.</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -1603,7 +1603,7 @@ _:b0  :p        "v" .
                 }
           </pre>
           <p>The annotation syntax may also contain multiple explicit
-            <a>reifiers</a> without annotation blocks, as shown in the example below. Each such <a>reifier</a>
+            <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a> without annotation blocks, as shown in the example below. Each such <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>
             causes a corresponding reifying triple to be produced.</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
