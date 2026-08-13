@@ -1369,21 +1369,19 @@ _:b0  :p        "v" .
           </pre>
         </section>
       </section>
-      <section id="syntaxTripleTerms">
-        <h3>Triple Terms</h3>
-        <p>Within the object position of a <a href="#defn_TriplePattern">triple pattern</a>,
-          we can use a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
-          or another <a href="#defn_TriplePattern">triple pattern</a>.
+      <section id="syntaxNestedTriplePatterns">
+        <h3>Nested Triple Patterns</h3>
+        <p> <a href="#defn_TriplePattern">Triple patterns</a> can be nested, as their subject or object can be
+          another <a href="#defn_TriplePattern">triple patterns</a>.
+          These nested triple patterns are meant to match triples that contain <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>.
         </p>
-        <p>Such a <a href="#defn_TriplePattern">triple pattern</a> or nested <a href="#defn_TriplePattern">triple pattern</a>
+        <p>Such a nested <a href="#defn_TriplePattern">triple pattern</a>
           is represented as a <a href="#rTripleTerm"><code>TripleTerm</code></a> with
           <a href="#rTripleTermSubject"><code>TripleTermSubject</code></a>,
           <a href="#rVerb"><code>Verb</code></a>, and
           <a href="#rTripleTermObject"><code>TripleTermObject</code></a>, all
           preceded by <code>&lt;&lt;(</code>, and
           followed by <code>)&gt;&gt;</code>.
-          Note that <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> and <a href="#defn_TriplePattern">triple patterns</a>
-          can be nested.
         </p>
         <p>The example below shows how a <a href="#defn_TriplePattern">triple pattern</a>
           can be used in the object position of another <a href="#defn_TriplePattern">triple pattern</a>.</p>
@@ -13297,7 +13295,7 @@ _:x rdf:type xsd:decimal .
             <ul>
                 <li>Update grammar for triple terms, reifiers, reified triples, annotation syntax, and triple term functions
                   in <a href="#sparqlGrammar" class="sectionRef"></a> and explain them
-                  in <a href="#syntaxTripleTerms" class="sectionRef"></a>
+                  in <a href="#syntaxNestedTriplePatterns" class="sectionRef"></a>
                   and <a href="#syntaxReifyingTriples" class="sectionRef"></a></li>
                 <li>Add functions related to <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> to
                   <a href="#func-triple-terms" class="sectionRef"></a>:
