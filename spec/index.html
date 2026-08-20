@@ -1399,7 +1399,7 @@ _:b0  :p        "v" .
       </section>
       <section id="syntaxReifyingTriples">
         <h3>Reifying Triples</h3>
-        <p><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple terms</a> are mostly used
+        <p><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple terms</a> are used
           as the <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of a <a data-cite="RDF12-CONCEPTS#dfn-rdf-triple">triple</a>
           with a <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a> of `rdf:reifies`.
           Such a triple is called a <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</a>.
@@ -1448,7 +1448,7 @@ _:b0  :p        "v" .
           <br/>`&lt;&lt; ?subject1 :predicate1 &lt;&lt; :subject2 :predicate2 :object2 &gt;&gt; ~ :IRIREF1 &gt;&gt;`<br/>
           or <br/>`&lt;&lt; :subject4 :predicate4 &lt;&lt; :subject3 :predicate3 ?object3 ~ :IRIREF3 &gt;&gt; &gt;&gt;`.
         </p>
-        <p>The example below matches reifying triples with an implicit reifier.</p>
+        <p>The example below matches reifying triples without regard to the reifier.</p>
         <pre class="query nohighlight">
               VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
@@ -1459,7 +1459,7 @@ _:b0  :p        "v" .
                   &lt;&lt; ?person :jobTitle "Designer" &gt;&gt; :accordingTo ?authority .
               }
         </pre>
-        <p>The example below matches reifying triples with an explicit reifier.</p>
+        <p>The example below matches reifying triples with a variable to match the reifier.</p>
         <pre class="query nohighlight">
               VERSION "1.2"
               PREFIX : &lt;http://example/&gt;
