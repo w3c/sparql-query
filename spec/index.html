@@ -1371,19 +1371,16 @@ _:b0  :p        "v" .
       </section>
       <section id="syntaxNestedTriplePatterns">
         <h3>Nested Triple Patterns</h3>
-        <p> <a href="#defn_TriplePattern">Triple patterns</a> can be nested, as their subject or object can be
-          another <a href="#defn_TriplePattern">triple patterns</a>.
-          These nested triple patterns are meant to match triples that contain <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>.
+        <p> <a href="#defn_TriplePattern">Triple patterns</a> can be nested; that is, their subject or object can be
+          another <a href="#defn_TriplePattern">triple pattern</a>.
+          Such nested triple patterns are meant to match triples that contain <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>.
         </p>
-        <p>Such a nested <a href="#defn_TriplePattern">triple pattern</a>
-          is represented as a <a href="#rTripleTerm"><code>TripleTerm</code></a> with
-          <a href="#rTripleTermSubject"><code>TripleTermSubject</code></a>,
-          <a href="#rVerb"><code>Verb</code></a>, and
-          <a href="#rTripleTermObject"><code>TripleTermObject</code></a>, all
+        <p>To write a nested <a href="#defn_TriplePattern">triple pattern</a>
+          the triple pattern that it contains must be
           preceded by <code>&lt;&lt;(</code>, and
           followed by <code>)&gt;&gt;</code>.
         </p>
-        <p>The example below shows how a <a href="#defn_TriplePattern">triple pattern</a>
+        <p>The example below illustrates how a <a href="#defn_TriplePattern">triple pattern</a>
           can be used in the object position of another <a href="#defn_TriplePattern">triple pattern</a>.</p>
         <pre class="query nohighlight">
               VERSION "1.2"
@@ -1396,96 +1393,83 @@ _:b0  :p        "v" .
                   _:anno :accordingTo ?authority .
               }
         </pre>
-      </section>
-      <section id="syntaxReifyingTriples">
-        <h3>Reifying Triples</h3>
-        <p><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple terms</a> are used
-          as the <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of a <a data-cite="RDF12-CONCEPTS#dfn-rdf-triple">triple</a>
-          with a <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a> of `rdf:reifies`.
-          Such a triple is called a <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</a>.
-          SPARQL provides a shorthand notation for writing triple patterns that are meant to match such <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a> and reifying triple patterns
-          using the <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> grammar production.</p>
-        </p>
-        <p>A <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
-          provides syntactic sugar to represent a triple pattern that can match <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a>.
-          It defines a specific relationship between an
-          identifier (<a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>)
-          and a <a href="#defn_TriplePattern">triple pattern</a>.
-          The identifier becomes a way to indirectly refer
-          to the <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> matched by the <a href="#defn_TriplePattern">triple pattern</a>, which
-          may be used elsewhere within the query.
-        </p>
-        <p class="note">Reification using triple terms is a concept distinct from the
-          <a data-cite="RDF12-SEMANTICS#Reif">Reification vocabulary</a> originally
-          defined in <a data-cite="RDF-MT#Reif">RDF Semantics</a>.
-          While both terms describe a representation of an RDF triple using components,
-          RDF 1.2 and SPARQL 1.2 uses the term to identify a <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
-          using the `rdf:reifies` predicate.
-        </p>
-        <p>A <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</a> is represented using the
-          <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> production
-          starting with <code>&lt;&lt;</code>,
-          followed by a <a href="#rReifiedTripleSubject"><code>ReifiedTripleSubject</code></a>,
-          a <a href="#rVerb"><code>Verb</code></a>, and
-          a <a href="#rReifiedTripleObject"><code>ReifiedTripleObject</code></a>,
-          followed by an optional <a href="#rReifier"><code>Reifier</code></a>,
-          and ending with <code>&gt;&gt;</code>.
-          This <a href="#rReifier"><code>Reifier</code></a> is composed of a <code title="tilde">~</code>
-          followed by an optional <a href="#rVarOrReifierId"><code>rVarOrReifierId</code></a> production.
-          This <a href="#rVarOrReifierId"><code>rVarOrReifierId</code></a> is composed of
-          a <a href="#rVar">variable</a>, an <a href="#riri">IRI</a>, or a <a href="#rBlankNode">blank node</a>;
-          for example, `&lt;&lt; :subject :predicate :object ~ :IRIREF &gt;&gt;`.
-          If no reifier is present,
-          or the <code title="tilde">~</code>
-          is not immediately followed by <a href="#rVar">variable</a>,
-          an <a href="#riri">IRI</a>, or a <a href="#rBlankNode">blank node</a> —
-          as in `&lt;&lt; :subject :predicate :object &gt;&gt;`,
-          or `&lt;&lt; :subject :predicate :object ~ &gt;&gt;` —
-          a fresh <a data-cite="RDF12-CONCEPTS#dfn-blank-node">RDF blank node</a> is allocated.
-        </p>
-        <p class="note"><a href="#rReifiedTriple"><code>ReifiedTriple</code>'s</a> may be nested,
-          like
-          <br/>`&lt;&lt; ?subject1 :predicate1 &lt;&lt; :subject2 :predicate2 :object2 &gt;&gt; ~ :IRIREF1 &gt;&gt;`<br/>
-          or <br/>`&lt;&lt; :subject4 :predicate4 &lt;&lt; :subject3 :predicate3 ?object3 ~ :IRIREF3 &gt;&gt; &gt;&gt;`.
-        </p>
-        <p>The example below matches reifying triples without regard to the reifier.</p>
-        <pre class="query nohighlight">
-              VERSION "1.2"
-              PREFIX : &lt;http://example/&gt;
-              PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-
-              SELECT ?person ?authority {
-                  ?person :familyName "Smith" .
-                  &lt;&lt; ?person :jobTitle "Designer" &gt;&gt; :accordingTo ?authority .
-              }
-        </pre>
-        <p>The example below matches reifying triples with a variable to match the reifier.</p>
-        <pre class="query nohighlight">
-              VERSION "1.2"
-              PREFIX : &lt;http://example/&gt;
-              PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-
-              SELECT ?person ?authority ?id {
-                  ?person :familyName "Smith" .
-                  &lt;&lt; ?person :jobTitle "Designer" ~ ?id &gt;&gt; :accordingTo ?authority .
-              }
-        </pre>
-        <p>The syntactic sugar of the example above expands to the following query:</p>
-        <pre class="query nohighlight">
-              VERSION "1.2"
-              PREFIX : &lt;http://example/&gt;
-              PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-
-              SELECT ?person ?authority ?id {
-                  ?person :familyName "Smith" .
-                  ?id rdf:reifies &lt;&lt;( ?person :jobTitle "Designer" )&gt;&gt; .
-                  ?id :accordingTo ?authority .
-              }
-        </pre>
-        <p class="note">Note the subtle difference in syntax between the syntactic sugar of
-          the <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> (i.e., `&lt;&lt; ... >>`)
-          and the regular <a href="#rTripleTerm"><code>TripleTerm</code></a> (i.e., `&lt;&lt;( ... )>>`).</p>
-
+        <section id="syntaxReifyingTriples">
+          <h3>Shorthand to Match Reifying Triples</h3>
+          <p><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple terms</a> are used
+            as the <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of a <a data-cite="RDF12-CONCEPTS#dfn-rdf-triple">triple</a>
+            with a <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a> of `rdf:reifies`.
+            Such a triple is called a <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</a>.
+            SPARQL provides a shorthand notation for writing triple patterns that are meant to match such <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triples</a>.</p>
+          </p>
+          <p class="note">Reification using triple terms is a concept distinct from the
+            <a data-cite="RDF12-SEMANTICS#Reif">Reification vocabulary</a> originally
+            defined in <a data-cite="RDF-MT#Reif">RDF Semantics</a>.
+            While both concepts describe a representation of an RDF triple using components,
+            RDF 1.2 and SPARQL 1.2 have a dedicated <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>,
+            which can be used with the `rdf:reifies` predicate.
+          </p>
+          <p>The example below matches reifying triples.</p>
+          <pre class="query nohighlight">
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+  
+                SELECT ?person ?authority {
+                    ?person :familyName "Smith" .
+                    &lt;&lt; ?person :jobTitle "Designer" &gt;&gt; :accordingTo ?authority .
+                }
+          </pre>
+          <p>The syntactic sugar of the example above expands to the following query:</p>
+          <pre class="query nohighlight">
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+  
+                SELECT ?person ?authority ?id {
+                    ?person :familyName "Smith" .
+                    _:id rdf:reifies &lt;&lt;( ?person :jobTitle "Designer" )&gt;&gt; .
+                    _:id :accordingTo ?authority .
+                }
+          </pre>
+          <p>This shorthand notation for matching reifying triples
+            also allows the <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>
+            of these reifying triples to be matched. This is done by placing
+            a variable, IRI, or blank node after a tilde (<code title="tilde">~</code>).
+            As shown in the example above; if no reifier is explicitly mentioned,
+            then a new blank node is minted for as reifier within the scope of this query.
+          </p>
+          <p class="note"><a href="#rReifiedTriple"><code>ReifiedTriple</code>'s</a> may be nested,
+            like
+            <br/>`&lt;&lt; ?subject1 :predicate1 &lt;&lt; :subject2 :predicate2 :object2 &gt;&gt; ~ :IRIREF1 &gt;&gt;`<br/>
+            or <br/>`&lt;&lt; :subject4 :predicate4 &lt;&lt; :subject3 :predicate3 ?object3 ~ :IRIREF3 &gt;&gt; &gt;&gt;`.
+          </p>
+          <p>The example below matches reifying triples with a variable to match the reifier.</p>
+          <pre class="query nohighlight">
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+  
+                SELECT ?person ?authority ?id {
+                    ?person :familyName "Smith" .
+                    &lt;&lt; ?person :jobTitle "Designer" ~ ?id &gt;&gt; :accordingTo ?authority .
+                }
+          </pre>
+          <p>The syntactic sugar of the example above expands to the following query:</p>
+          <pre class="query nohighlight">
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+  
+                SELECT ?person ?authority ?id {
+                    ?person :familyName "Smith" .
+                    ?id rdf:reifies &lt;&lt;( ?person :jobTitle "Designer" )&gt;&gt; .
+                    ?id :accordingTo ?authority .
+                }
+          </pre>
+          <p class="note">Note the subtle difference in syntax between the syntactic sugar of
+            the <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> (i.e., `&lt;&lt; ... >>`)
+            and the regular <a href="#rTripleTerm"><code>TripleTerm</code></a> (i.e., `&lt;&lt;( ... )>>`).</p>
+        </section>
         <section id="syntaxAnnotation">
           <h3>Annotation Syntax</h3>
           <p>SPARQL also defines <dfn data-lt="annotation-syntax">annotation syntax</dfn>
@@ -1568,7 +1552,7 @@ _:b0  :p        "v" .
                 PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
           
                 SELECT ?person ?authority {
-                    ?person :name "Alice" ~ :t {| :statedBy ?authority ; :recorded "2021-07-07"^^xsd:date |} .
+                    ?person :name "Alice" {| :statedBy ?authority ; :recorded "2021-07-07"^^xsd:date |} .
                 }
           </pre>
           <p>An <a href="#rAnnotation"><code>Annotation</code></a>
@@ -1611,7 +1595,7 @@ _:b0  :p        "v" .
                 PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
           
                 SELECT ?person {
-                    ?person :name "Alice" ~ :stmt1 ~ stmt2 .
+                    ?person :name "Alice" ~ :stmt1 ~ :stmt2 .
                 }
           </pre>
           <p>The query above will be fully expanded to the query below.</p>
@@ -1624,6 +1608,33 @@ _:b0  :p        "v" .
                     ?person :name "Alice" .
                     :stmt1 rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; .
                     :stmt2 rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; .
+                }
+          </pre>
+          <p>The annotation syntax could also contain multiple explicit
+            <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a> with annotation blocks, as shown in the example below.</p>
+          <pre class="query nohighlight">
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+          
+                SELECT ?person {
+                    ?person :name "Alice"
+                      ~ :stmt1 {| :statedBy ?authority1 |}
+                      ~ :stmt2 {| :statedBy ?authority2 |} .
+                }
+          </pre>
+          <p>The query above will be fully expanded to the query below.</p>
+          <pre class="query nohighlight">
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+          
+                SELECT ?person {
+                    ?person :name "Alice" .
+                    :stmt1 rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; .
+                    :stmt1 :statedBy ?authority1 .
+                    :stmt2 rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; .
+                    :stmt2 :statedBy ?authority2 .
                 }
           </pre>
         </section>
