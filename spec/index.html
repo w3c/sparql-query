@@ -7094,12 +7094,23 @@ WHERE {
           <section id="func-strlen">
             <h5>STRLEN</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:integer</span>  <span class="operator">STRLEN</span>(<span class="type">string literal</span> str)</pre>
-            <p>The <code>strlen</code> function corresponds to the XPath
+            <p>The <code>strlen</code> function returns an <code>xsd:integer</code> equal
+              to the length in codepoints of the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
+              of the literal. This corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
+              function, with the exception that <code>strlen</code> covers codepoints outside those supported by
               <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
-              function and returns an
-              <code>xsd:integer</code> equal to the length in characters of the 
-              <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> of the
-              literal.
+              (covering all codepoints instead of just those corresponding to <a data-cite="XML11#charsets">XML Characters</a>).
+            </p>
+            
+            <p class="note">
+              The expanded support for codepoints beyond what
+              <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
+              supports allows for correctly computing the length of strings which include, for example,
+              the NULL character (<span class="monoplain">U+0000</span>). While the NULL character is not
+              valid in the value space of <code>xsd:string</code>, it is valid in a
+              <a data-cite="RDF12-CONCEPTS#dfn-language-tagged-string">language-tagged string</a>
+              or <a data-cite="RDF12-CONCEPTS#dfn-dir-lang-string">directional language-tagged string</a>
+              such as: "\u0000"@fr.
             </p>
             <div class="result">
               <table>
@@ -7119,6 +7130,10 @@ WHERE {
                   <tr>
                     <td><code>strlen("chat"^^xsd:string)</code></td>
                     <td>4</td>
+                  </tr>
+                  <tr>
+                    <td><code>strlen("\u0000"@fr)</code></td>
+                    <td>1</td>
                   </tr>
                 </tbody>
               </table>
