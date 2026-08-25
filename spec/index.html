@@ -7090,6 +7090,14 @@ WHERE {
               </tbody>
             </table>
           </div>
+          <p>
+            String functions with operands which are <a data-cite="RDF12-CONCEPTS#dfn-language-tagged-string">language-tagged string</a>
+            or <a data-cite="RDF12-CONCEPTS#dfn-dir-lang-string">directional language-tagged string</a> may operate over
+            data which would not be valid as an <code>xsd:string</code> (for example, a language-tagged string containing
+            the NULL character <span class="monoplain">U+0000</span>). In such cases, the semantics of the underlying XPath
+            string function are extended to support the larger value space covering all codepoints instead of just those
+            corresponding to <a data-cite="XML11#charsets">XML Characters</a>.
+          </p>
           
           <section id="func-strlen">
             <h5>STRLEN</h5>
@@ -7097,21 +7105,9 @@ WHERE {
             <p>The <code>strlen</code> function returns an <code>xsd:integer</code> equal
               to the length in codepoints of the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
               of the literal. This corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
-              function, with the exception that <code>strlen</code> covers codepoints outside those supported by
-              <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
-              (covering all codepoints instead of just those corresponding to <a data-cite="XML11#charsets">XML Characters</a>).
+              function.
             </p>
             
-            <p class="note">
-              The expanded support for codepoints beyond what
-              <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
-              supports allows for correctly computing the length of strings which include, for example,
-              the NULL character (<span class="monoplain">U+0000</span>). While the NULL character is not
-              valid in the value space of <code>xsd:string</code>, it is valid in a
-              <a data-cite="RDF12-CONCEPTS#dfn-language-tagged-string">language-tagged string</a>
-              or <a data-cite="RDF12-CONCEPTS#dfn-dir-lang-string">directional language-tagged string</a>
-              such as: "\u0000"@fr.
-            </p>
             <div class="result">
               <table>
                 <tbody>
@@ -7184,6 +7180,10 @@ WHERE {
                     <td><code>substr("foobar"^^xsd:string, 4, 1)</code></td>
                     <td>"b"^^xsd:string</td>
                   </tr>
+                  <tr>
+                    <td><code>substr("foo\u0000bar"@en, 5, 1)</code></td>
+                    <td>"b"@en</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7215,6 +7215,10 @@ WHERE {
                     <td><code>ucase("foo"^^xsd:string)</code></td>
                     <td>"FOO"^^xsd:string</td>
                   </tr>
+                  <tr>
+                    <td><code>ucase("Foo\u0000"@en)</code></td>
+                    <td>"FOO\u0000"@en</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7244,6 +7248,10 @@ WHERE {
                   <tr>
                     <td><code>lcase("BAR"^^xsd:string)</code></td>
                     <td>"bar"^^xsd:string</td>
+                  </tr>
+                  <tr>
+                    <td><code>lcase("Bar\u0000"@en)</code></td>
+                    <td>"bar\u0000"@en</td>
                   </tr>
                 </tbody>
               </table>
@@ -7299,6 +7307,10 @@ WHERE {
                     <td><code>strStarts("foobar", "foo"@en)</code></td>
                     <td><i>error</i></td>
                   </tr>
+                  <tr>
+                    <td><code>strStarts("foo\u0000bar"@en, "foo"@en)</code></td>
+                    <td>true</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7350,8 +7362,12 @@ WHERE {
                     <td>true</td>
                   </tr>
                   <tr>
-                    <td><code>strEnds("foobar"@en, "bar"@en)</code></td>
+                    <td><code>strEnds("foobar", "bar"@en)</code></td>
                     <td><i>error</i></td>
+                  </tr>
+                  <tr>
+                    <td><code>strEnds("foo\u0000bar"@en, "bar"@en)</code></td>
+                    <td>true</td>
                   </tr>
                 </tbody>
               </table>
@@ -7361,6 +7377,7 @@ WHERE {
             <h5>CONTAINS</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">CONTAINS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
             <p>The <code>CONTAINS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-contains">fn:contains</a>.
+              It returns an `xsd:boolean` value indicating whether <code>arg1</code> contains <code>arg2</code> as a substring.
               The arguments must be <a>argument compatible</a>,
               otherwise an error is raised.
             </p>
@@ -7399,6 +7416,10 @@ WHERE {
                     <td><code>contains("foobar", "bar"@en)</code></td>
                     <td><i>error</i></td>
                   </tr>
+                  <tr>
+                    <td><code>contains("foo\u0000bar"@en, "\u0000b"@en)</code></td>
+                    <td>true</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7413,7 +7434,8 @@ WHERE {
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
               the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
-              language tag). The lexical form of the result is the substring of the lexical
+              language tag, or literal with the same language tag and base direction).
+              The lexical form of the result is the substring of the lexical
               form of <code>arg1</code> that precedes the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the empty string.</p>
@@ -7458,6 +7480,10 @@ WHERE {
                     <td>`strBefore("abc"@en, "")`</td>
                     <td>`""@en`</td>
                   </tr>
+                  <tr>
+                    <td>`strBefore("ab\u0000c"@en, "\u0000"@en)`</td>
+                    <td>`"ab"@en`</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7472,7 +7498,8 @@ WHERE {
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
               the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
-              language tag). The lexical form of the result is the substring of the lexical
+              language tag, or literal with the same language tag and base direction).
+              The lexical form of the result is the substring of the lexical
               form of <code>arg1</code> that follows the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the lexical form of
@@ -7516,6 +7543,10 @@ WHERE {
                   <tr>
                     <td>`strAfter("abc"@en, "")`</td>
                     <td>`"abc"@en`</td>
+                  </tr>
+                  <tr>
+                    <td>`strAfter("ab\u0000c"@en, "\u0000"@en)`</td>
+                    <td>`"c"@en`</td>
                   </tr>
                 </tbody>
               </table>
@@ -7596,6 +7627,10 @@ WHERE {
                   <tr>
                     <td><code>concat()</code></td>
                     <td>""</td>
+                  </tr>
+                  <tr>
+                    <td><code>concat("foo"@en, "\u0000"@en, "bar"@en)</code></td>
+                    <td>"foo\u0000bar"@en</td>
                   </tr>
                 </tbody>
               </table>
@@ -7786,6 +7821,10 @@ WHERE {
                   <tr>
                     <td><code>encode_for_uri("Los Angeles"^^xsd:string)</code></td>
                     <td><code>"Los%20Angeles"</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>encode_for_uri("\u0000"@en)</code></td>
+                    <td><code>"%00"</code></td>
                   </tr>
                 </tbody>
               </table>
