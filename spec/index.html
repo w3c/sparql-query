@@ -7091,12 +7091,15 @@ WHERE {
             </table>
           </div>
           <p>
-            String functions with operands which are <a data-cite="RDF12-CONCEPTS#dfn-language-tagged-string">language-tagged string</a>
-            or <a data-cite="RDF12-CONCEPTS#dfn-dir-lang-string">directional language-tagged string</a> may operate over
-            data which would not be valid as an <code>xsd:string</code> (for example, a language-tagged string containing
-            the NULL character <span class="monoplain">U+0000</span>). In such cases, the semantics of the underlying XPath
-            string function are extended to support the larger value space covering all codepoints instead of just those
-            corresponding to <a data-cite="XML11#charsets">XML Characters</a>.
+            String functions operate over <a data-cite="RDF12-CONCEPTS#dfn-rdf-string">RDF strings</a>
+            corresponding to the lexical value of the argument(s).
+            For <a data-cite="RDF12-CONCEPTS#dfn-language-tagged-string">language-tagged string</a>
+            and <a data-cite="RDF12-CONCEPTS#dfn-dir-lang-string">directional language-tagged string</a>,
+            this may include data which would not be valid as an <code>xsd:string</code>
+            (for example, a string containing the NULL character <span class="monoplain">U+0000</span>).
+            In such cases, the semantics of the underlying XPath string function are extended to support
+            the larger value space covering all <a data-cite="I18N-GLOSSARY#dfn-scalar-value" class="lint-ignore">Unicode scalar values</a>
+            instead of just those corresponding to <a data-cite="XML11#charsets">XML Characters</a>.
           </p>
           
           <section id="func-strlen">
