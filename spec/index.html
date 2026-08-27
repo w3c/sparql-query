@@ -1419,7 +1419,8 @@ _:b0  :p        "v" .
                     &lt;&lt; ?person :jobTitle "Designer" &gt;&gt; :accordingTo ?authority .
                 }
           </pre>
-          <p>The syntactic sugar of the example above expands to the following query:</p>
+          <p>The syntactic sugar of the example above expands to the following query,
+            in which `_:id` represents a fresh blank node that is not used anywhere else in the query (and every such expansion has to use a different fresh blank node).</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -1431,17 +1432,11 @@ _:b0  :p        "v" .
                     _:id :accordingTo ?authority .
                 }
           </pre>
-          <p>This shorthand notation for matching reifying triples
+          <p>The shorthand notation for matching reifying triples
             also allows the <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>
             of these reifying triples to be matched. This is done by placing
-            a variable, IRI, or blank node after a tilde (<code title="tilde">~</code>).
-            As shown in the example above; if no reifier is explicitly mentioned,
-            then a new blank node is minted for as reifier within the scope of this query.
-          </p>
-          <p class="note"><a href="#rReifiedTriple"><code>ReifiedTriple</code>'s</a> may be nested,
-            like
-            <br/>`&lt;&lt; ?subject1 :predicate1 &lt;&lt; :subject2 :predicate2 :object2 &gt;&gt; ~ :IRIREF1 &gt;&gt;`<br/>
-            or <br/>`&lt;&lt; :subject4 :predicate4 &lt;&lt; :subject3 :predicate3 ?object3 ~ :IRIREF3 &gt;&gt; &gt;&gt;`.
+            an IRI, a variable, or a blank node after a tilde (<code title="tilde">~</code>),
+            as demonstrated by the following query.
           </p>
           <p>The example below matches reifying triples with a variable to match the reifier.</p>
           <pre class="query nohighlight">
@@ -1466,15 +1461,26 @@ _:b0  :p        "v" .
                     ?id :accordingTo ?authority .
                 }
           </pre>
+          <p class="note">The grammar production for this shorthand notation,
+            <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>,
+            permits nesting.
+            For instance, it is possible to write
+            <br/>`&lt;&lt; ?subject1 :predicate1 &lt;&lt; :subject2 :predicate2 :object2 &gt;&gt; ~ :IRIREF1 &gt;&gt;`<br/>
+            and <br/>`&lt;&lt; :subject4 :predicate4 &lt;&lt; :subject3 :predicate3 ?object3 ~ :IRIREF3 &gt;&gt; &gt;&gt;`<br/>
+            in which cases the expansion is applied recursively.
+          </p>
           <p class="note">Note the subtle difference in syntax between the syntactic sugar of
-            the <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> (i.e., `&lt;&lt; ... >>`)
-            and the regular <a href="#rTripleTerm"><code>TripleTerm</code></a> (i.e., `&lt;&lt;( ... )>>`).</p>
+            the <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> rule (i.e., `&lt;&lt; ... >>`)
+            and the regular <a href="#rTripleTerm"><code>TripleTerm</code></a> rule (i.e., `&lt;&lt;( ... )>>`).</p>
         </section>
         <section id="syntaxAnnotation">
           <h3>Annotation Syntax</h3>
-          <p>SPARQL also defines <dfn data-lt="annotation-syntax">annotation syntax</dfn>
-            as a shortcut form for matching both reified and asserted triples with a
-            <a href="#defn_TriplePattern">triple pattern</a>.
+          <p>SPARQL also defines the so-called <dfn data-lt="annotation-syntax">annotation syntax</dfn>,
+            which is a shorthand notation for matching the combination of
+            a <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</a>
+            together with an <a data-cite="RDF12-CONCEPTS#dfn-asserted-triple">asserted triple</a>
+            that corresponds to the <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
+            of the reifying triple.
             An annotation can be used to simultaneously match an asserted triple,
             via an explicit or implicit identifier,
             and have that triple pattern be the
