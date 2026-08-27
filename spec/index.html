@@ -1482,17 +1482,34 @@ _:b0  :p        "v" .
             that corresponds to the <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
             of the reifying triple.
             An annotation can be used to simultaneously match an asserted triple,
-            via an explicit or implicit identifier,
             and have that triple pattern be the
             <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a> or
             <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of further triple patterns.
-            If explicitly identified, the same <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> can then be used as the
-            <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a> or
-            <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of additional
-            triple patterns and/or <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>.
           </p>
+          <p>The example below shows an annotated triple pattern.</p>
+          <pre class="query nohighlight">
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+          
+                SELECT ?person ?authority {
+                    ?person :name "Alice" {| :statedBy ?authority ; :recorded "2021-07-07"^^xsd:date |} .
+                }
+          </pre>
+          <p>The syntactic sugar of the example above expands to the following query.</p>
+          <pre class="query nohighlight">
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+          
+                SELECT ?person ?authority {
+                    ?person :name "Alice" .
+                    &lt;&lt; ?person :name "Alice" &gt;&gt; :statedBy ?authority ;
+                                                :recorded "2021-07-07"^^xsd:date .
+                }
+          </pre>
           <p>Like a <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>,
-            the annotation syntax uses a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> — written as either a
+            the annotation syntax can also use a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> — written as either a
             <a href="#rVar">variable</a>, an <a href="#riri">IRI</a>, or a <a href="#rBlankNode">blank node</a>,
             preceded by a tilde (<code title="tilde">~</code>) —
             to identify the
@@ -1504,6 +1521,10 @@ _:b0  :p        "v" .
             reifying triple to be produced.
           </p>
           <p>A <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> can be followed by an annotation block.
+            This <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> can be used as the
+            <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a> or
+            <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of additional
+            triple patterns and/or <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>.
             If a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> is not followed by an annotation block, it is treated
             analogously to a
             <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
@@ -1534,10 +1555,10 @@ _:b0  :p        "v" .
                 SELECT ?person ?authority {
                     ?person :name "Alice" .
                     &lt;&lt; ?person :name "Alice" ~ :t &gt;&gt; :statedBy ?authority ;
-                                                    :recorded "2021-07-07"^^xsd:date .
+                                                     :recorded "2021-07-07"^^xsd:date .
                 }
           </pre>
-          <p>If we fully expand this query to use <a href="#rTripleTerm"><code>TripleTerm</code>'s</a> instead of reifiers,
+          <p>If we fully expand this query to not use the shorthand for matching reifying triples,
           the query is expanded to the following:</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
@@ -1551,17 +1572,7 @@ _:b0  :p        "v" .
                     :t :recorded "2021-07-07"^^xsd:date .
                 }
           </pre>
-          <p>The example below shows an annotated triple pattern with an implicit reifier, for which a fresh blank node is allocated.</p>
-          <pre class="query nohighlight">
-                VERSION "1.2"
-                PREFIX : &lt;http://example/&gt;
-                PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
-          
-                SELECT ?person ?authority {
-                    ?person :name "Alice" {| :statedBy ?authority ; :recorded "2021-07-07"^^xsd:date |} .
-                }
-          </pre>
-          <p>An <a href="#rAnnotation"><code>Annotation</code></a>
+          <p>An annotation
             may include any number of annotation blocks. If such blocks are not
             immediately preceded by explicit <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a>, each block is associated
             with a fresh blank node allocated as its <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>, as seen in the example below.</p>
