@@ -9131,7 +9131,7 @@ WHERE {
               patterns.
             </li>
             <li>
-              <a href="#replaceBlankNodes">Replace blank nodes</a> by fresh variables.
+              <a href="#replaceBlankNodes">Replace blank nodes</a> with fresh variables.
             </li>
             <li>
               <a href="#sparqlTranslatePathExpressions">Translate property path expressions</a>
@@ -9313,7 +9313,7 @@ For each form FILTER(expr) in the group graph pattern
               and that neither the subject end point nor the object end point is a blank node
               (as <a href="#replaceBlankNodes">blank nodes have been replaced</a> before).
               The result of this step may be blank-node-free triple patterns or an
-              <a href="#defn_AlgebraicQueryExpression">algebraic query expressions</a>
+              <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>
               of the form <a href="#defn_absPath" class="absOp">Path</a>(...).</p>
             <p>Notes:</p>
             <ul>
@@ -9991,11 +9991,11 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
             because, during the <a href="#translation">translation to the algebraic syntax</a>,
             blank nodes have been replaced by fresh variables (see Section&nbsp;<a href="#replaceBlankNodes" class="sectionRef"></a>).
             Blank-node-free basic graph patterns can be instantiated
-            by replacing variables by RDF terms
+            by replacing variables with RDF terms
             according to a <a href="#defn_sparqlSolutionMapping">solution mapping</a>.</p>
           <p>For every basic graph pattern |B| and every solution mapping <var>μ</var>,
             <var>μ</var>(|B|) denotes the result of replacing every occurrence of variable |v|
-            in |B| by <var>μ</var>(|v|) for every variable |v| in dom(<var>μ</var>).</p>
+            in |B| with <var>μ</var>(|v|) for every variable |v| in dom(<var>μ</var>).</p>
           <div class="defn">
             <b>Definition: Evaluation of a Basic Graph Pattern</b>
             <p>Let |BGP| be a blank-node-free basic graph pattern and let |G| be an RDF graph.</p>
