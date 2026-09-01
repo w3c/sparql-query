@@ -1478,15 +1478,15 @@ _:b0  :p        "v" .
           <p>SPARQL also defines the so-called <dfn data-lt="annotation-syntax">annotation syntax</dfn>,
             which is a shorthand notation for matching the combination of
             a <a data-cite="RDF12-CONCEPTS#dfn-reifying-triple">reifying triple</a>
-            together with an <a data-cite="RDF12-CONCEPTS#dfn-asserted-triple">asserted triple</a>
+            together with both an <a data-cite="RDF12-CONCEPTS#dfn-asserted-triple">asserted triple</a>
             that corresponds to the <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>
-            of the reifying triple.
-            An annotation can be used to simultaneously match an asserted triple,
-            and have that triple pattern be the
-            <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a> or
-            <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of further triple patterns.
+            of the reifying triple and further triples that have the
+            <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> of the reifying triple
+            as their <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a>.
           </p>
-          <p>The example below shows an annotated triple pattern.</p>
+          <p>The following query is an example in which the annotation syntax is used
+            for a triple pattern.
+          </p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -1508,35 +1508,29 @@ _:b0  :p        "v" .
                                                 :recorded "2021-07-07"^^xsd:date .
                 }
           </pre>
-          <p>Like a <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>,
-            the annotation syntax can also use a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> — written as either a
-            <a href="#rVar">variable</a>, an <a href="#riri">IRI</a>, or a <a href="#rBlankNode">blank node</a>,
+          <p>This query expands further as per Section&nbsp;<a href="#syntaxReifyingTriples" class="sectionRef"></a>,
+            resulting in the following query.</p>
+          <pre>
+                VERSION "1.2"
+                PREFIX : &lt;http://example/&gt;
+                PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+          
+                SELECT ?person ?authority {
+                    ?person :name "Alice" .
+                    :id rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; ;
+                        :statedBy ?authority ;
+                        :recorded "2021-07-07"^^xsd:date .
+                }
+          </pre>
+          <p>As in the shorthand notation for matching of reified triples
+            (Section&nbsp;<a href="#syntaxReifyingTriples" class="sectionRef"></a>),
+            the annotation syntax can also refer explicitly to the corresponding <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> — written as either a
+            <a href="#rVar">variable</a>, a <a href="#rBlankNode">blank node</a>, or an <a href="#riri">IRI</a>,
             preceded by a tilde (<code title="tilde">~</code>) —
             to identify the
             <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a> being reified.
-            However, while the
-            <a href="#rReifiedTriple"><code>ReifiedTriple</code></a> syntax
-            may contain at most one <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>, the annotation syntax may contain
-            any number of <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a>. Each <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> causes a corresponding
-            reifying triple to be produced.
+            The following query illustrates this use of the annotation syntax
           </p>
-          <p>A <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> can be followed by an annotation block.
-            This <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> can be used as the
-            <a data-cite="RDF12-CONCEPTS#dfn-subject">subject</a> or
-            <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of additional
-            triple patterns and/or <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a>.
-            If a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> is not followed by an annotation block, it is treated
-            analogously to a
-            <a href="#rReifiedTriple"><code>ReifiedTriple</code></a>
-            without additional annotations.
-            If an annotation block is not immediately preceded by a <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>,
-            a fresh RDF blank node is allocated to serve as the <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a> of the
-            <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple term</a>.
-          </p>
-          <p class="note">The annotation syntax is a syntactic shortcut in SPARQL.
-            The RDF Abstract Syntax [[RDF11-CONCEPTS]] does not
-            distinguish how the triples were written.</p>
-          <p>The example below shows an annotated triple pattern with an explicit reifier.</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -1572,10 +1566,10 @@ _:b0  :p        "v" .
                     :t :recorded "2021-07-07"^^xsd:date .
                 }
           </pre>
-          <p>An annotation
-            may include any number of annotation blocks. If such blocks are not
-            immediately preceded by explicit <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a>, each block is associated
-            with a fresh blank node allocated as its <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>, as seen in the example below.</p>
+          <p>The annotation syntax can be used with multiple separate annotation blocks.
+            For each such block that is not immediately preceded by the tilde-based construct for matching the corresponding reifier,
+            a separate fresh blank node is allocated when expanding this shorthand notation.
+            The following example query illustrates such a case.</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -1595,17 +1589,19 @@ _:b0  :p        "v" .
           
                 SELECT ?person ?authority1 ?authority2 {
                     ?person :name "Alice" .
+
                     _:b0 rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; .
                     _:b0 :statedBy ?authority1 .
                     _:b0 :recorded "2021-02-01"^^xsd:date .
+
                     _:b1 rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; .
                     _:b1 :statedBy ?authority2 .
                     _:b1 :recorded "2021-07-07"^^xsd:date .
                 }
           </pre>
-          <p>The annotation syntax may also contain multiple explicit
-            <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a> without annotation blocks, as shown in the example below. Each such <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifier</a>
-            causes a corresponding reifying triple to be produced.</p>
+          <p>The annotation syntax may also contain multiple references to
+            <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a> without annotation blocks, as shown in the example below. Each such a tilde-based construct
+            causes a corresponding reifying triple to be matched.</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -1627,7 +1623,7 @@ _:b0  :p        "v" .
                     :stmt2 rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; .
                 }
           </pre>
-          <p>The annotation syntax could also contain multiple explicit
+          <p>The annotation syntax could also contain multiple references to
             <a data-cite="RDF12-CONCEPTS#dfn-reifier">reifiers</a> with annotation blocks, as shown in the example below.</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
