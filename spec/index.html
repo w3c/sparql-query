@@ -8660,6 +8660,8 @@ WHERE {
             <p>Triple patterns do not permit cycles
               (i.e., a triple pattern cannot be contained within itself).</p>
           </div>
+          <p>A triple pattern (|s|, |p|, |o|) is said to be <em>blank node free</em>
+            if neither |s| nor |o| is a blank node.</p>
 
           <div class="note">
             <p>This definition of Triple Pattern includes literal subjects. 
@@ -8693,6 +8695,8 @@ WHERE {
               <a href="#defn_TriplePattern">Triple Patterns</a>.</p>
           </div>
           <p>The empty graph pattern is a basic graph pattern which is the empty set.</p>
+          <p>A basic graph pattern is said to be <em>blank node free</em>
+            if all of its triple patterns are blank node free.</p>
         </section>
         <section id="sparqlPropertyPaths">
           <h4>Property Path Patterns</h4>
@@ -8818,7 +8822,7 @@ WHERE {
           is defined recursively as follows:</p>
         <ul>
           <li>
-            A <a href="#defn_BasicGraphPattern">basic graph pattern</a>
+            A blank-node-free <a href="#defn_BasicGraphPattern">basic graph pattern</a>
             is an algebraic query expression.</li>
           <li>
             A multiset of <a href="#defn_sparqlSolutionMapping">solution mappings</a>
@@ -8835,8 +8839,14 @@ WHERE {
             <a href="#defn_absPath" class="absOp">Path</a>(|x|, |ppe|, |y|)
             is an algebraic query expression if
             |ppe| is an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>,
-            |x| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> or a <a href="#defn_QueryVariable">variable</a>, and
-            |y| is an <a data-cite="RDF12-CONCEPTS#dfn-rdf-term">RDF term</a> or a <a href="#defn_QueryVariable">variable</a>.</li>
+            |x| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>,
+            a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>,
+            a <a href="#defn_QueryVariable">variable</a>, or
+            a <a href="#defn_TriplePattern">triple pattern</a>, and
+            |y| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>,
+            a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>,
+            a <a href="#defn_QueryVariable">variable</a>, or
+            a <a href="#defn_TriplePattern">triple pattern</a>.</li>
           <li id="defn_absUnion">
             <a href="#defn_absUnion" class="absOp">Union</a>(<var>A<sub>1</sub></var>, <var>A<sub>2</sub></var>)
             is an algebraic query expression if
@@ -9178,6 +9188,9 @@ WHERE {
               patterns.
             </li>
             <li>
+              <a href="#replaceBlankNodes">Replace blank nodes</a> with fresh variables.
+            </li>
+            <li>
               <a href="#sparqlTranslatePathExpressions">Translate property path expressions</a>
             </li>
             <li>
@@ -9229,6 +9242,36 @@ WHERE {
             <h5>Expand Syntax Forms</h5>
             <p>Expand abbreviations for IRIs and triple patterns given in
               Section&nbsp;<a href="#sparqlSyntax" class="sectionRef"></a>.</p>
+          </section>
+          <section id="replaceBlankNodes">
+            <h5>Replace Blank Nodes</h5>
+            <p>The <a href="#algebraicSyntax">algebraic syntax</a> does not use blank nodes.
+              Therefore, all mentions of blank nodes in the group graph pattern are
+              replaced by fresh variables (i.e., variables that are not already used
+              anywhere else within the whole query).
+              Specifically, every such mention with the same blank node identifier
+              is replaced by the same fresh variable,
+              whereas for different blank node identifiers,
+              different fresh variables need to be used.</p>
+            <p>For example, the first of the following two graph patterns
+              is converted into the second one,
+              where `?x`, `?y`, and `?z` are fresh variables.</p>
+            <div class="algExample">
+              <div class="algExample1">
+                ?s :p _:b1 .<br/>
+                ?s :q _:b2 .<br/>
+                _:b2 :q ?o .<br/>
+                ?o :p/:p/:p _:b3 .
+              </div>
+              <div class="algExample2">
+                ?s :p ?x .<br/>
+                ?s :q ?y .<br/>
+                ?y :q ?o .<br/>
+                ?o :p/:p/:p ?z .
+              </div>
+            </div>
+            <p>All the fresh variables introduced in this translation step are collected in a set
+              that is used later when processing SELECT expressions (see Section&nbsp;<a href="#sparqlSelectExpressions" class="sectionRef"></a>).</p>
           </section>
           <section id="sparqlCollectFilters">
             <h5>Collect <code>FILTER</code> Elements</h5>
@@ -9323,13 +9366,22 @@ For each form FILTER(expr) in the group graph pattern
               point.
               This step assumes that the property path expression
               of the property path pattern is already given in the form of an
-              <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
-              The result of this step may be triple patterns and
-              <a href="#defn_AlgebraicQueryExpression">algebraic query expressions</a>
+              <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>
+              and that neither the subject end point nor the object end point is a blank node
+              (as <a href="#replaceBlankNodes">blank nodes have been replaced</a> before).
+              The result of this step may be blank-node-free triple patterns or an
+              <a href="#defn_AlgebraicQueryExpression">algebraic query expression</a>
               of the form <a href="#defn_absPath" class="absOp">Path</a>(...).</p>
             <p>Notes:</p>
             <ul>
-              <li>|x| and |y| are <a data-cite="RDF12-CONCEPTS#dfn-rdf-terms">RDF terms</a> or <a href="#defn_QueryVariable">variables</a>.</li>
+              <li>|x| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>,
+                a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>,
+                a <a href="#defn_QueryVariable">variable</a>, or
+                a <a href="#defn_TriplePattern">triple pattern</a>.</li>
+              <li>|y| is an <a data-cite="RDF12-CONCEPTS#dfn-iri">IRI</a>,
+                a <a data-cite="RDF12-CONCEPTS#dfn-literal">literal</a>,
+                a <a href="#defn_QueryVariable">variable</a>, or
+                a <a href="#defn_TriplePattern">triple pattern</a>.</li>
               <li>|var| is a fresh <a href="#defn_QueryVariable">variable</a>.</li>
               <li>|ppe|, <var>ppe<sub>1</sub></var>, and <var>ppe<sub>2</sub></var> are <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>.</li>
               <li>These are only applied to property path patterns, not within property path
@@ -9403,7 +9455,8 @@ For each form FILTER(expr) in the group graph pattern
           <section id="sparqlTranslateBasicGraphPatterns">
             <h5>Translate Basic Graph Patterns</h5>
             <p>After translating property paths, any adjacent triple patterns are collected together
-              to form a basic graph pattern <code>BGP(triples)</code>.</p>
+              to form a basic graph pattern <code>BGP(triples)</code>,
+              which will be blank node free.</p>
           </section>
           <section id="sparqlTranslateGraphPatterns">
             <h5>Translate Graph Patterns</h5>
@@ -9841,12 +9894,14 @@ Let <var>VS</var> := set of all variables visible in the pattern,
            so restricted by sub-SELECT projected variables and GROUP BY variables.
            Not visible: only in filter, exists/not exists, masked by a subselect, 
                         non-projected GROUP variables, only in the right hand side of MINUS
+Let <var>VS'</var> := <var>VS</var> \ <var>BV</var>, where <var>BV</var> is the set of fresh variables that were used when
+                    replacing blank nodes (Section&nbsp;<a href="#replaceBlankNodes" class="sectionRef"></a>)
 
 Let <var>PV</var> := {}, a set of variable names
 Let <var>E</var> := a list of pairs of the form (variable, expression), populated in Section&nbsp;<a href="#sparqlGroupAggregate" class="sectionRef"></a>
   
 If "SELECT *"
-    <var>PV</var> := <var>VS</var>
+    <var>PV</var> := <var>VS'</var>
 
 If  "SELECT selItem ..."
     For each selItem
@@ -9854,7 +9909,7 @@ If  "SELECT selItem ..."
             <var>PV</var> := <var>PV</var> ∪ { variable }
         End
         If selItem is (<var>expr</var> AS <var>var</var>)
-            <var>var</var> must not appear in <var>VS</var> nor in <var>PV</var>; if it does then generate a syntax error and stop
+            <var>var</var> must not appear in <var>VS'</var> nor in <var>PV</var>; if it does then generate a syntax error and stop
             <var>PV</var> := <var>PV</var> ∪ { <var>var</var> }
             <var>E</var> := <var>E</var> append (<var>var</var>, <var>expr</var>) 
         End
@@ -9988,31 +10043,33 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
         </div>
         <section id="BGPsparql">
           <h4>SPARQL Basic Graph Pattern Matching</h4>
-          <p>A basic graph pattern is matched against the active graph for that part of the query.
-            Basic graph patterns can be instantiated by replacing both variables and blank nodes by
-            terms, giving two notions of instance. Blank nodes are replaced using an
-            <a data-cite="RDF12-SEMANTICS#dfn-instance">RDF instance mapping</a>, &nbsp;σ, from blank nodes to RDF terms;
-            variables are replaced by a solution mapping from query variables to RDF terms.</p>
+          <p>A <a href="#defn_BasicGraphPattern">basic graph pattern</a> is matched against the active graph for that part of the query.
+            This is defined only for basic graph patterns that are blank node free,
+            because, during the <a href="#translation">translation to the algebraic syntax</a>,
+            blank nodes have been replaced by fresh variables (see Section&nbsp;<a href="#replaceBlankNodes" class="sectionRef"></a>).
+            Blank-node-free basic graph patterns can be instantiated
+            by replacing variables with RDF terms
+            according to a <a href="#defn_sparqlSolutionMapping">solution mapping</a>.</p>
+          <p>For every basic graph pattern |B| and every solution mapping <var>μ</var>,
+            <var>μ</var>(|B|) denotes the result of replacing every occurrence of variable |v|
+            in |B| with <var>μ</var>(|v|) for every variable |v| in dom(<var>μ</var>).</p>
           <div class="defn">
-            <p><b>Definition: <span id="defn_PatternInstanceMapping">Pattern Instance Mapping</span></b></p>
-            <p>A <b>Pattern Instance Mapping</b>, P, is the combination of an RDF instance mapping,
-              σ, and solution mapping, μ. P(x) = μ(σ(x))</p>
+            <b>Definition: Evaluation of a Basic Graph Pattern</b>
+            <p>Let |BGP| be a blank-node-free basic graph pattern and let |G| be an RDF graph.</p>
+            <p>A <a href="#defn_sparqlSolutionMapping">solution mapping</a> <var>μ</var>
+              is a <b>solution</b> for |BGP| in |G|
+              if dom(<var>μ</var>) is the set of all query variables in |BGP|
+              and <var>μ</var>(|BGP|) ⊆ |G|.</p>
+            <p>The result of evaluating |BGP| over |G|,
+              denoted by [[|BGP|]]<sub>|G|</sub>,
+              is a multiset <var>Ω</var> of solution mappings such that,
+              for every solution mapping <var>μ</var>, it holds that:</p>
+            <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> ) = 1
+              if <var>μ</var> is a solution for |BGP| in |G|</p>
+            <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ω</var> ) = 0
+              if <var>μ</var> is not a solution for |BGP| in |G|</p>
           </div>
-          <p>For a BGP 'x', P(x) denotes the result of replacing blank nodes b in x for which σ is
-            defined with σ(b) and all variables v in x for which μ is defined with μ(v).</p>
-          <p>Any pattern instance mapping defines a unique solution mapping and a unique RDF instance
-            mapping obtained by restricting it to query variables and blank nodes respectively.</p>
-          <div class="defn">
-            <b>Definition: Basic Graph Pattern Matching</b>
-            <p>Let BGP be a basic graph pattern and let G be an RDF graph.</p>
-            <p>μ is a <b>solution</b> for BGP from G when there is a pattern instance mapping P such
-              that P(BGP) is a subgraph of G and μ is the restriction of P to the query variables in
-              BGP.</p>
-            <p><a href="#defn_Multiplicity">multiplicity</a>( μ | Ω ) =
-              number of distinct RDF instance mappings, σ, such that P = μ(σ)
-              is a pattern instance mapping and P(BGP) is a subgraph of G.</p>
-          </div>
-          <p>If a basic graph pattern is the empty set, then the solution is Ω<sub>0</sub>.</p>
+          <p>If a basic graph pattern is the empty set, then the result is Ω<sub>0</sub>.</p>
         </section>
         <section id="BGPsparqlBNodes">
           <h4>Treatment of Blank Nodes</h4>
@@ -10024,28 +10081,18 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
             pattern solutions are therefore understood to be not from the active graph of DS itself,
             but from an RDF graph, called the <i>scoping graph</i>. This graph is the
             active graph of DS but with its blank nodes uniformly replaced by new blank nodes
-            that are neither in DS nor in the BGP, much as is done when 
+            that are not in DS, much as is done when
             <a data-cite="RDF12-SEMANTICS#dfn-merging">merging</a> RDF graphs.
             The same scoping graph is
             used for all solutions to a single query. The scoping graph is purely a theoretical
             construct; in practice, the effect is obtained simply by the document scope conventions for
             blank node identifiers.</p>
-          <p>Since RDF blank nodes allow infinitely many redundant solutions for many patterns, there
-            can be infinitely many pattern solutions (obtained by replacing blank nodes by different
-            blank nodes). It is necessary, therefore, to somehow delimit the solutions for a basic
-            graph pattern. SPARQL uses the subgraph match criterion to determine the solutions of a
-            basic graph pattern. There is one solution for each distinct pattern instance mapping from
-            the basic graph pattern to a subset of the active graph.</p>
-          <p>This is optimized for ease of computation rather than redundancy elimination. It allows
-            query results to contain redundancies even when the active graph of the dataset is
-            <a data-cite="RDF12-SEMANTICS#dfn-lean">lean</a>, and it allows logically equivalent datasets to
-            yield different query results.</p>
         </section>
       </section>
       <section id="PropertyPathPatterns">
         <h3>Property Path Patterns</h3>
         <p>This section defines the evaluation of <a href="#defn_PropertyPathPattern">property path
-            patterns</a>. A property path pattern consists of a subject endpoint (an RDF term or a variable), a
+            patterns</a>. A property path pattern consists of a subject endpoint (an IRI, a literal, a variable, or a triple pattern), a
           <a href="#defn_PropertyPathExpr">property path expression</a>, and an object endpoint.</p>
         <p>The <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a>
           converts every <a href="#defn_PropertyPathExpr">property path expression</a>
@@ -10089,7 +10136,7 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
               </tr>
               <tr>
                 <td><code>|x|:term</code></td>
-                <td>an RDF term</td>
+                <td>an IRI or a literal</td>
               </tr>
               <tr>
                 <td><code>|x|:var</code></td>
@@ -10098,6 +10145,12 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
             </tbody>
           </table>
         </div>
+<div class="ednote">
+  The table above needs to be extended with an entry for the case of |x| being a triple pattern,
+  and all the definitions in the rest of this section need to be extended for this case as well.
+  This work has been started in <a href="https://github.com/w3c/sparql-query/pull/396">PR #396</a>
+  but is currently on hold until the removal of blank nodes from the algebraic syntax is completed.
+</div>
 <div class="issue" data-number="349">
   The signature of `ppeval` should be extended to be:
   `ppeval`(|X|, |ppe|, |Y|, |G|),
@@ -10156,8 +10209,9 @@ ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>ir
           that can be <a href="#sparqlTranslatePathExpressions">translated</a> into the
           <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> <var>ppe<sub>1</sub></var>,
           and <var>P<sub>2</sub></var> can be translated into <var>ppe<sub>2</sub></var>.
-          This observation is based on the fact that a blank node <code>_:a</code> acts like a variable (under simple
-          entailment) except it does not appear in the results from <code>SELECT *</code>.</p>
+          This observation is based on the fact that a blank node <code>_:a</code>
+          would be replaced by a variable (see Section&nbsp;<a href="#replaceBlankNodes" class="sectionRef"></a>)
+          that does not appear in the results from <code>SELECT *</code>.</p>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalPP_alternative">Evaluation of Alternative Property Path</span></b></p>
           <p>Let <var>ppe<sub>1</sub></var> and <var>ppe<sub>2</sub></var> be <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expressions</a>.
@@ -10931,8 +10985,8 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
   |AQE| is a sequence or a multiset of solution mappings.</div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalBasicGraphPattern">Evaluation of a Basic Graph Pattern</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), |BGP|, <var>μ<sub>ctx</sub></var> ) = multiset of solution mappings</p>
-            <p>See section <a href="#BasicGraphPattern">Basic Graph Patterns</a></p>
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), |BGP|, <var>μ<sub>ctx</sub></var> ) = [[|BGP|]]<sub>|G|</sub></p>
+            <p>See Section&nbsp;<a href="#BGPsparql" class="sectionRef"></a></p>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalPropertyPathPattern">Evaluation of a Property Path Pattern</span></b></p>
@@ -11077,19 +11131,12 @@ the result is <var>Ω</var>
           <h3>Extending SPARQL Basic Graph Matching</h3>
           <p>The overall SPARQL design can be used for queries which assume a more elaborate form of
             entailment than simple entailment, by re-writing the matching conditions for basic graph
-            patterns. Since it is an open research problem to state such conditions in a single general
+            patterns (which, due to the <a href="#replaceBlankNodes">blank node replacement step</a> of the translation procedure, can be assumed to be blank node free).
+            Since it is an open research problem to state such conditions in a single general
             form which applies to all forms of entailment and optimally eliminates needless or
             inappropriate redundancy, this document only gives necessary conditions which any such
             solution should satisfy. These will need to be extended to full definitions for each
             particular case.</p>
-          <p>Basic graph patterns stand in the same relation to triple patterns that RDF graphs do to
-            RDF triples, and much of the same terminology can be applied to them. In particular, two
-            basic graph patterns are said to be <i>equivalent</i> if there is a bijection M between the
-            terms of the triple patterns that maps blank nodes to blank nodes and maps variables,
-            literals and IRIs to themselves, such that a triple ( s, p, o ) is in the first pattern if
-            and only if the triple ( M(s), M(p), M(o) ) is in the second. This definition extends that
-            for RDF graph equivalence to basic graph patterns by preserving variable names across
-            equivalent patterns.</p>
           <p>An <i>entailment regime</i> specifies</p>
           <ol>
             <li>a subset of RDF graphs called <i>well-formed</i> for the regime</li>
@@ -11108,25 +11155,23 @@ _:x rdf:type xsd:decimal .
             inconsistent graph is not covered by this specification, but must be specified by the
             particular SPARQL extension.</p>
           <p>An entailment regime E must provide conditions on basic graph pattern evaluation such
-            that for any basic graph pattern BGP, any RDF graph G, and any evaluation that satisfies
+            that for any blank-node-free basic graph pattern BGP, any RDF graph G, and any evaluation that satisfies
             the conditions, the resulting multiset of solutions is uniquely determined up to RDF graph
             equivalence. We denote the multiset of solutions from evaluating BGP over G using E with
-            Eval-E(G, BGP).<br>
-            An entailment regime must further satisfy the following conditions:</p>
+            Eval-E(G, BGP).</p>
+          <p>An entailment regime must further satisfy the following conditions:</p>
           <ol>
             <li>For any E-consistent active graph AG, the entailment regime E uniquely specifies a
               <a href="#BGPsparqlBNodes">scoping graph</a> SG that is E-equivalent to AG.
             </li>
-            <li>A set of well-formed graphs for E is specified such that, for any basic graph pattern
+            <li>A set of well-formed graphs for E is specified such that, for any blank-node-free basic graph pattern
               BGP, scoping graph SG, and solution mapping μ in Eval-E(SG, BGP), the graph μ(BGP) is
               well-formed for E.</li>
-            <li>For any basic graph pattern BGP and scoping graph SG, if μ<sub>1</sub>, ...,
-              μ<sub>n</sub> in Eval-E(SG, BGP) and BGP<sub>1</sub>, ..., BGP<sub>n</sub> are basic
-              graph patterns all equivalent to BGP but not sharing any blank nodes with each other or
-              with SG, then
+            <li>For any blank-node-free basic graph pattern BGP and scoping graph SG, if μ<sub>1</sub>, ...,
+              μ<sub>n</sub> in Eval-E(SG, BGP), then
               <blockquote>
-                <p>SG E-entails (SG union μ<sub>1</sub>(BGP<sub>1</sub>) union ... union
-                  μ<sub>n</sub>(BGP<sub>n</sub>))</p>
+                <p>SG E-entails (SG union μ<sub>1</sub>(BGP) union ... union
+                  μ<sub>n</sub>(BGP))</p>
               </blockquote>
               <p>These conditions do not fully determine the set of possible answers, since RDF
                 allows unlimited amounts of redundancy. In addition, therefore, the following must
@@ -11150,42 +11195,15 @@ _:x rdf:type xsd:decimal .
               <p>SG E-entails μ(BGP) for each solution mapping μ.</p>
             </blockquote>
             <p>(c) These conditions do not impose the SPARQL requirement that SG shares no blank
-              nodes with AG or BGP. In particular, it allows SG to actually be AG. This allows query
-              protocols in which blank node identifiers retain their meaning between the query and the
-              source document, or across multiple queries. Such protocols are not supported by the
-              current SPARQL protocol specification, however.</p>
+              nodes with AG. In particular, it allows SG to actually be AG.</p>
             <p>(d) Since conditions 1 to 3 are only necessary conditions on answers, condition 4
               allows cases where the set of legal answers can be restricted in various ways.</p>
-            <p>(e) None of these conditions refer explicitly to instance mappings on blank nodes in
-              BGP. For some entailment regimes, the existential interpretation of blank nodes cannot be
-              fully captured by the existence of a single instance mapping. These conditions allow such
-              regimes to give blank nodes in query patterns a 'fully existential' reading.</p>
             <p>It is straightforward to show that SPARQL satisfies these conditions for the case
               where E is simple entailment, given that the SPARQL condition on SG is that it is
-              graph-equivalent to AG but shares no blank nodes with AG or BGP (which satisfies the
-              first condition). The only condition which is nontrivial is (3).</p>
-            <p>For every solution mapping μ<sub>i</sub>, there is, by definition of basic graph
-              pattern matching, an RDF instance mapping σ<sub>i</sub> such that
-              P<sub>i</sub>(BGP<sub>i</sub>) is a subgraph of SG where P<sub>i</sub> is the pattern
-              instance mapping composed of μ<sub>i</sub> and σ<sub>i</sub>. Since BGP<sub>i</sub> and
-              SG have no blank nodes in common, the ranges of σ<sub>i</sub> and μ<sub>i</sub> contain
-              no blank nodes from BGP<sub>i</sub>; therefore, the solution mapping μ<sub>i</sub> and
-              the RDF instance mapping σ<sub>i</sub> of P<sub>i</sub> commute, so
-              P<sub>i</sub>(BGP<sub>i</sub>) = σ<sub>i</sub>(μ<sub>i</sub>(BGP<sub>i</sub>)). So</p>
-            <p>P<sub>1</sub>(BGP<sub>1</sub>) union ... union P<sub>n</sub>(BGP<sub>n</sub>)<br>
-              = σ<sub>1</sub>(μ<sub>1</sub>(BGP<sub>1</sub>)) union ... union
-              σ<sub>n</sub>(μ<sub>n</sub>(BGP<sub>n</sub>))<br>
-              = [ σ<sub>1</sub> + ... + σ<sub>n</sub>]( μ<sub>1</sub>(BGP<sub>1</sub>) union ... union
-              μ<sub>n</sub>(BGP<sub>n</sub>) )</p>
-            <p>since the domains of the σ<sub>i</sub> RDF instance mappings are all mutually
-              exclusive. Since they are also exclusive from SG,</p>
-            <p>SG union [ σ<sub>1</sub> + ... + σ<sub>n</sub>]( μ<sub>1</sub>(BGP<sub>1</sub>) union
-              ... union μ<sub>n</sub>(BGP<sub>n</sub>) )<br>
-              = [ σ<sub>1</sub> + ... + σ<sub>n</sub>](SG union μ<sub>1</sub>(BGP<sub>1</sub>) union
-              ... union μ<sub>n</sub>(BGP<sub>n</sub>) )</p>
-            <p>i.e.</p>
-            <p>SG union μ<sub>1</sub>(BGP<sub>1</sub>) union ... union
-              μ<sub>n</sub>(BGP<sub>n</sub>)</p>
+              graph-equivalent to AG but shares no blank nodes with AG (which satisfies the
+              first condition). For the third condition, note that</p>
+            <p>SG union μ<sub>1</sub>(BGP) union ... union
+              μ<sub>n</sub>(BGP)</p>
             <p>has an instance which is a subgraph of SG, so is simply entailed by SG by the
               <a data-cite="RDF12-SEMANTICS#dfn-interpolation">RDF interpolation lemma</a> [[RDF12-SEMANTICS]].</p>
           </section>
@@ -13154,6 +13172,13 @@ _:x rdf:type xsd:decimal .
                   Escape sequence processing has been changed to be processed during parsing, not before. 
                   This aligns SPARQL with 
                   <a data-cite="RDF12-TURTLE#sec-escapes">escape sequences in Turtle</a>.
+                </li>
+                <li>
+                  Remove blank nodes as possible elements of
+                  <a href="#defn_TriplePattern">triple patterns</a>,
+                  <a href="#defn_BasicGraphPattern">basic graph patterns</a>, and
+                  <a href="#defn_PropertyPathPattern">property path patterns</a>
+                  in the <a href="#algebraicSyntax">algebraic syntax</a>.
                 </li>
             </ul>
         </li>
