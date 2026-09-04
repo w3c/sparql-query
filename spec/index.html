@@ -1394,7 +1394,7 @@ _:b0  :p        "v" .
               }
         </pre>
         <section id="syntaxReifyingTriples">
-          <h3>Shorthand to Match Reifying Triples</h3>
+          <h4>Shorthand to Match Reifying Triples</h4>
           <p><a data-cite="RDF12-CONCEPTS#dfn-triple-term">Triple terms</a> are used
             as the <a data-cite="RDF12-CONCEPTS#dfn-object">object</a> of a <a data-cite="RDF12-CONCEPTS#dfn-rdf-triple">triple</a>
             with a <a data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</a> of `rdf:reifies`.
@@ -1510,16 +1510,16 @@ _:b0  :p        "v" .
           </pre>
           <p>This query expands further as per Section&nbsp;<a href="#syntaxReifyingTriples" class="sectionRef"></a>,
             resulting in the following query.</p>
-          <pre>
+          <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
                 PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
           
                 SELECT ?person ?authority {
                     ?person :name "Alice" .
-                    :id rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; ;
-                        :statedBy ?authority ;
-                        :recorded "2021-07-07"^^xsd:date .
+                    _:id rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; ;
+                         :statedBy ?authority ;
+                         :recorded "2021-07-07"^^xsd:date .
                 }
           </pre>
           <p>As in the shorthand notation for matching of reified triples
@@ -1537,7 +1537,8 @@ _:b0  :p        "v" .
                 PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
           
                 SELECT ?person ?authority {
-                    ?person :name "Alice" ~ :t {| :statedBy ?authority ; :recorded "2021-07-07"^^xsd:date |} .
+                    ?person :name "Alice" ~ :t {| :statedBy ?authority ;
+                                                  :recorded "2021-07-07"^^xsd:date |}
                 }
           </pre>
           <p>The syntactic sugar of the annotation syntax in the example above expands to the following query:</p>
