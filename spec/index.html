@@ -10035,9 +10035,11 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
       </section>
       <section id="PropertyPathPatterns">
         <h3>Property Path Patterns</h3>
-        <p>This section defines the evaluation of <a href="#defn_PropertyPathPattern">property path
-            patterns</a>. A property path pattern consists of a subject endpoint (an IRI, a literal, a variable, or a triple pattern), a
-          <a href="#defn_PropertyPathExpr">property path expression</a>, and an object endpoint.</p>
+        <p>This section defines the evaluation of <a href="#defn_PropertyPathPattern">property path patterns</a>.
+          Such a pattern consists of a subject endpoint,
+          a <a href="#defn_PropertyPathExpr">property path expression</a>,
+          and an object endpoint,
+          where each of the two endpoints can be an IRI, a literal, a variable, or a triple pattern.</p>
         <p>The <a href="#sparqlTranslatePathExpressions">translation of property path expressions</a>
           converts every <a href="#defn_PropertyPathExpr">property path expression</a>
           into an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
