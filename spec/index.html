@@ -10345,17 +10345,24 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
         </div>
         <div class="defn">
           <p><b>Definition: <span id="eval_negatedPropertySet">Evaluation of NegatedPropertySet</span></b></p>
+          <p>Let <var>ppe</var> be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>.
+          Let <var>G</var> be the <a href="#defn_ActiveGraph">active graph</a>.</p>
           <pre class="nohighlight">
-Write <var>μ'</var> as the extension of a solution mapping:
-<var>μ'</var>(<var>μ</var>, <var>x</var>) = <var>μ</var>(<var>x</var>)   if <var>x</var> is a variable
-<var>μ'</var>(<var>μ</var>, <var>t</var>) = <var>t</var>      if <var>t</var> is an RDF term
-          </pre>
-          <pre class="nohighlight">
-Let <var>x</var> and <var>y</var> be variables or RDF terms, <var>S</var> a set of IRIs,
-and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
+ppeval(<var>vx</var>:var, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>vy</var>:var) =
+     { { (<var>vx</var>, <var>s</var>), (<var>vy</var>, <var>o</var>) } |
+         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>s</var>, <var>p</var>, <var>o</var>) in <var>G</var> }
 
-   ppeval(<var>x</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>) =
-       { <var>μ</var> | ∃ triple(<var>μ'</var>(<var>μ</var>, <var>x</var>), <var>p</var>, <var>μ'</var>(<var>μ</var>, <var>y</var>)) in <var>G</var>, such that the IRI of <var>p</var> ∉ <var>S</var> }
+ppeval(<var>vx</var>:var, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>:term) =
+     { { (<var>vx</var>, <var>s</var>) } |
+         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>s</var>, <var>p</var>, <var>y</var>) in <var>G</var> }
+
+ppeval(<var>x</var>:term, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>vy</var>:var) =
+     { { ( (<var>vy</var>, <var>o</var>) } |
+         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>x</var>, <var>p</var>, <var>o</var>) in <var>G</var> }
+
+ppeval(<var>x</var>:term, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>:term) =
+     { {} |
+         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>x</var>, <var>p</var>, <var>y</var>) in <var>G</var> }
           </pre>
         </div>
       </section>
