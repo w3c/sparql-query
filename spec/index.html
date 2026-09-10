@@ -1426,7 +1426,7 @@ _:b0  :p        "v" .
                 PREFIX : &lt;http://example/&gt;
                 PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
   
-                SELECT ?person ?authority ?id {
+                SELECT ?person ?authority {
                     ?person :familyName "Smith" .
                     _:id rdf:reifies &lt;&lt;( ?person :jobTitle "Designer" )&gt;&gt; .
                     _:id :accordingTo ?authority .
@@ -1496,7 +1496,7 @@ _:b0  :p        "v" .
                     ?person :name "Alice" {| :statedBy ?authority ; :recorded "2021-07-07"^^xsd:date |} .
                 }
           </pre>
-          <p>The syntactic sugar of the example above expands to the following query.</p>
+          <p>The annotation syntax used in the previous query expands as illustrated in the following query.</p>
           <pre class="query nohighlight">
                 VERSION "1.2"
                 PREFIX : &lt;http://example/&gt;
@@ -1631,7 +1631,7 @@ _:b0  :p        "v" .
                 PREFIX : &lt;http://example/&gt;
                 PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
           
-                SELECT ?person {
+                SELECT ?person ?authority1 ?authority2 {
                     ?person :name "Alice"
                       ~ :stmt1 {| :statedBy ?authority1 |}
                       ~ :stmt2 {| :statedBy ?authority2 |} .
@@ -1643,7 +1643,7 @@ _:b0  :p        "v" .
                 PREFIX : &lt;http://example/&gt;
                 PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
           
-                SELECT ?person {
+                SELECT ?person ?authority1 ?authority2 {
                     ?person :name "Alice" .
                     :stmt1 rdf:reifies &lt;&lt;( ?person :name "Alice" )&gt;&gt; .
                     :stmt1 :statedBy ?authority1 .
