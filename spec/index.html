@@ -701,6 +701,14 @@ PREFIX xsd:  &lt;http://www.w3.org/2001/XMLSchema#&gt;
               </table>
             </div>
           </div>
+          <p>
+            SPARQL also supports matching a given
+            <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>.
+            As in Turtle, it is written following the language tag, for example,
+            <code>@en--ltr</code>.
+            The base direction is restricted to either `ltr` or `rtl`.
+            Unlike a language tag, it is always lower case.
+          </p>
         </section>
         <section id="matchNumber">
           <h4>Matching Literals with Numeric Types</h4>
@@ -1679,14 +1687,27 @@ _:b0  :p        "v" .
                   :myreifier :tripleAdded ?date .
               }
 </pre>
+        <p>
+          <p>
+            The [[[SPARQL12-PROTOCOL]]] also provides a 
+            <a data-cite="sparql12-protocol/#section-version-announcement"
+               >version announcement</a> using the `version` parameter
+            of the <a href=#mediaType>Media Type</a>.
+            This is considered if there is no `VERSION` directive.
+        </p>
+
         <section id="versionLabels">
           <h4>Version Labels</h4>
           <p>
-            A <dfn class="export">SPARQL version label</dfn> is a string that identifies the syntax and semantics conformance
-            for the SPARQL query.
+            A <dfn class="export">SPARQL version label</dfn> is a string that identifies 
+            the syntax and semantics conformance for the SPARQL query.
           </p>
           <p class="note">
-            Even though the version label strings in SPARQL are the same as <a data-cite="RDF12-CONCEPTS#defined-version-labels">the version labels defined by RDF</a>, their meaning is different. Namely, the SPARQL version labels refer to SPARQL syntax and semantics, while the RDF version labels refer to RDF syntax and semantics.
+            Even though the version label strings in SPARQL are the same
+            as <a data-cite="RDF12-CONCEPTS#defined-version-labels">the version labels defined by
+            RDF</a>, their meaning is different. Specifically, the SPARQL version labels refer to
+            SPARQL syntax and semantics, while the RDF version labels refer to RDF syntax 
+            and semantics.
           </p>
           <table id="tab-version-labels" class="simple">
             <caption>SPARQL Version Labels</caption>
@@ -3447,8 +3468,9 @@ WHERE {
       <p>An RDF Dataset may contain zero named graphs; an RDF Dataset always contains one default
         graph. A query does not need to involve matching the default graph; the query can just involve
         matching named graphs.</p>
-      <p>The graph that is used for matching a basic graph pattern is the <i>active graph</i>. In the
-        previous sections, all queries have been shown executed against a single graph, the default
+      <p>The graph that is used for matching a basic graph pattern is the 
+        <a href="#defn_ActiveGraph">active graph</a>. 
+        In the previous sections, all queries have been shown executed against a single graph, the default
         graph of an RDF dataset as the active graph. The <code>GRAPH</code> keyword is used to make the
         active graph one of all of the named graphs in the dataset for part of the query.</p>
       <section id="exampleDatasets">
@@ -7352,17 +7374,27 @@ WHERE {
               </tbody>
             </table>
           </div>
+          <p>
+            String functions operate over <a data-cite="RDF12-CONCEPTS#dfn-rdf-string">RDF strings</a>
+            corresponding to the lexical value of the argument(s).
+            For <a data-cite="RDF12-CONCEPTS#dfn-language-tagged-string">language-tagged strings</a>
+            and <a data-cite="RDF12-CONCEPTS#dfn-dir-lang-string">directional language-tagged strings</a>,
+            this may include data which would not be valid as an <code>xsd:string</code>
+            (for example, a string containing the NULL character <span class="monoplain">U+0000</span>).
+            In such cases, the semantics of the underlying XPath string function are extended to support
+            the larger value space covering all <a data-cite="I18N-GLOSSARY#dfn-scalar-value" class="lint-ignore">Unicode scalar values</a>,
+            instead of just those corresponding to <a data-cite="XML11#charsets">XML Characters</a>.
+          </p>
           
           <section id="func-strlen">
             <h5>STRLEN</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:integer</span>  <span class="operator">STRLEN</span>(<span class="type">string literal</span> str)</pre>
-            <p>The <code>strlen</code> function corresponds to the XPath
-              <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
-              function and returns an
-              <code>xsd:integer</code> equal to the length in characters of the 
-              <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a> of the
-              literal.
+            <p>The <code>strlen</code> function returns an <code>xsd:integer</code> equal
+              to the length in codepoints of the <a data-cite="RDF12-CONCEPTS#dfn-lexical-form">lexical form</a>
+              of the literal. This corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-string-length">fn:string-length</a>
+              function.
             </p>
+            
             <div class="result">
               <table>
                 <tbody>
@@ -7381,6 +7413,10 @@ WHERE {
                   <tr>
                     <td><code>strlen("chat"^^xsd:string)</code></td>
                     <td>4</td>
+                  </tr>
+                  <tr>
+                    <td><code>strlen("\u0000"@fr)</code></td>
+                    <td>1</td>
                   </tr>
                 </tbody>
               </table>
@@ -7431,6 +7467,10 @@ WHERE {
                     <td><code>substr("foobar"^^xsd:string, 4, 1)</code></td>
                     <td>"b"^^xsd:string</td>
                   </tr>
+                  <tr>
+                    <td><code>substr("foo\u0000bar"@en, 5, 1)</code></td>
+                    <td>"b"@en</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7462,6 +7502,10 @@ WHERE {
                     <td><code>ucase("foo"^^xsd:string)</code></td>
                     <td>"FOO"^^xsd:string</td>
                   </tr>
+                  <tr>
+                    <td><code>ucase("Foo\u0000"@en)</code></td>
+                    <td>"FOO\u0000"@en</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7491,6 +7535,10 @@ WHERE {
                   <tr>
                     <td><code>lcase("BAR"^^xsd:string)</code></td>
                     <td>"bar"^^xsd:string</td>
+                  </tr>
+                  <tr>
+                    <td><code>lcase("Bar\u0000"@en)</code></td>
+                    <td>"bar\u0000"@en</td>
                   </tr>
                 </tbody>
               </table>
@@ -7546,6 +7594,10 @@ WHERE {
                     <td><code>strStarts("foobar", "foo"@en)</code></td>
                     <td><i>error</i></td>
                   </tr>
+                  <tr>
+                    <td><code>strStarts("foo\u0000bar"@en, "foo"@en)</code></td>
+                    <td>true</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7597,8 +7649,12 @@ WHERE {
                     <td>true</td>
                   </tr>
                   <tr>
-                    <td><code>strEnds("foobar"@en, "bar"@en)</code></td>
+                    <td><code>strEnds("foobar", "bar"@en)</code></td>
                     <td><i>error</i></td>
+                  </tr>
+                  <tr>
+                    <td><code>strEnds("foo\u0000bar"@en, "bar"@en)</code></td>
+                    <td>true</td>
                   </tr>
                 </tbody>
               </table>
@@ -7608,6 +7664,7 @@ WHERE {
             <h5>CONTAINS</h5>
             <pre class="prototype nohighlight"><span class="return">xsd:boolean</span>  <span class="operator">CONTAINS</span>(<span class="type">string literal</span> arg1, <span class="type">string literal</span> arg2)</pre>
             <p>The <code>CONTAINS</code> function corresponds to the XPath <a data-cite="XPATH-FUNCTIONS-31#func-contains">fn:contains</a>.
+              It returns an `xsd:boolean` value indicating whether <code>arg1</code> contains <code>arg2</code> as a substring.
               The arguments must be <a>argument compatible</a>,
               otherwise an error is raised.
             </p>
@@ -7646,6 +7703,10 @@ WHERE {
                     <td><code>contains("foobar", "bar"@en)</code></td>
                     <td><i>error</i></td>
                   </tr>
+                  <tr>
+                    <td><code>contains("foo\u0000bar"@en, "\u0000b"@en)</code></td>
+                    <td>true</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7660,7 +7721,8 @@ WHERE {
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
               the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
-              language tag). The lexical form of the result is the substring of the lexical
+              language tag, or literal with the same language tag and base direction).
+              The lexical form of the result is the substring of the lexical
               form of <code>arg1</code> that precedes the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the empty string.</p>
@@ -7705,6 +7767,10 @@ WHERE {
                     <td>`strBefore("abc"@en, "")`</td>
                     <td>`""@en`</td>
                   </tr>
+                  <tr>
+                    <td>`strBefore("ab\u0000c"@en, "\u0000"@en)`</td>
+                    <td>`"ab"@en`</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7719,7 +7785,8 @@ WHERE {
             <p>For compatible arguments, if the lexical part of the second argument occurs as a
               substring of the lexical part of the first argument, the function returns a literal of
               the same kind as the first argument <code>arg1</code> (literal with datatype <code>xsd:string</code>, literal with the same
-              language tag). The lexical form of the result is the substring of the lexical
+              language tag, or literal with the same language tag and base direction).
+              The lexical form of the result is the substring of the lexical
               form of <code>arg1</code> that follows the first occurrence of the lexical form of
               <code>arg2</code>. If the lexical form of <code>arg2</code> is the empty string, this is
               considered to be a match and the lexical form of the result is the lexical form of
@@ -7763,6 +7830,10 @@ WHERE {
                   <tr>
                     <td>`strAfter("abc"@en, "")`</td>
                     <td>`"abc"@en`</td>
+                  </tr>
+                  <tr>
+                    <td>`strAfter("ab\u0000c"@en, "\u0000"@en)`</td>
+                    <td>`"c"@en`</td>
                   </tr>
                 </tbody>
               </table>
@@ -7843,6 +7914,10 @@ WHERE {
                   <tr>
                     <td><code>concat()</code></td>
                     <td>""</td>
+                  </tr>
+                  <tr>
+                    <td><code>concat("foo"@en, "\u0000"@en, "bar"@en)</code></td>
+                    <td>"foo\u0000bar"@en</td>
                   </tr>
                 </tbody>
               </table>
@@ -8033,6 +8108,10 @@ WHERE {
                   <tr>
                     <td><code>encode_for_uri("Los Angeles"^^xsd:string)</code></td>
                     <td><code>"Los%20Angeles"</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>encode_for_uri("\u0000"@en)</code></td>
+                    <td><code>"%00"</code></td>
                   </tr>
                 </tbody>
               </table>
@@ -9089,10 +9168,11 @@ WHERE {
             |exprlist| is a nonempty sequence of <a href="#expressions">expressions</a> and
             |A| is an algebraic query expression.</li>
           <li id="defn_absAggregation">
-            <a href="#defn_absAggregation" class="absOp">Aggregation</a>(|exprlist|, |func|, |scalarvals|, |grp|)
+            <a href="#defn_absAggregation" class="absOp">Aggregation</a>(|exprlist|, |func|, |distinct|, |scalarvals|, |grp|)
             is an algebraic query expression if
             |exprlist| is a nonempty sequence of <a href="#expressions">expressions</a> or the asterisk character (*),
             |func| is a <a href="#setFunctions">set function</a>,
+            |distinct| is a boolean `true` or `false`,
             |scalarvals| is a partial function (which may be the empty function, i.e., with an empty domain), and
             |grp| is an algebraic query expression of the form <a href="#defn_absGroup" class="absOp">Group</a>(<var>exprlist'</var>, |A|) where
             <var>exprlist'</var> is a sequence of <a href="#expressions">expressions</a> and
@@ -9108,7 +9188,7 @@ WHERE {
             <var>A<sub>1</sub></var>, ..., <var>A<sub>|n|</sub></var> is
             a non-empty sequence of algebraic query expressions (i.e., |n| &geq; 1)
             such that every expression <var>A<sub>|i|</sub></var> in this sequence
-            is of the form <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>exprlist<sub>|i|</sub></var>, <var>func<sub>|i|</sub></var>, <var>scalarvals<sub>|i|</sub></var>, <var>grp<sub>|i|</sub></var>)
+            is of the form <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>exprlist<sub>|i|</sub></var>, <var>func<sub>|i|</sub></var>, <var>distinct<sub>|i|</sub></var>, <var>scalarvals<sub>|i|</sub></var>, <var>grp<sub>|i|</sub></var>)
             that is captured by <a href="#defn_absAggregation">the previous point</a>.</li>
           <li id="defn_absOrderBy">
             <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|A|, |condition|)
@@ -9352,6 +9432,8 @@ WHERE {
               </tr>
             </tbody>
           </table>
+          <p>Variable occurrence within BGPs and paths includes variables that occur within nested triple patterns.
+          </p>
           <p>The variable `v` must not be in-scope at the point of the
             `(expr AS v)` form. The scoping for `(expr AS v)`
             applies immediately in `SELECT` expressions.
@@ -9971,16 +10053,21 @@ For each (<var>X</var> AS <var>Var</var>) in SELECT, each HAVING(<var>X</var>), 
   For each unaggregated variable <var>V</var> in <var>X</var>
       Replace <var>V</var> with SAMPLE(<var>V</var>)
       End
-  For each aggregate <var>R</var>(<var>args</var> ; <var>scalarvals</var>) now in <var>X</var>
+  For each aggregate <var>R</var>(<var>args</var> ; <var>scalarvals</var>) or <var>R</var>(DISTINCT <var>args</var> ; <var>scalarvals</var>) now in <var>X</var>
       # note: <var>scalarvals</var> may be omitted; if so, it is equivalent to the empty function
-      <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>args</var>, <var>R</var>, <var>scalarvals</var>, <var>Grp</var>)
+      If the aggregate contains DISTINCT
+          <var>distinct</var> = true
+      Else
+          <var>distinct</var> = false
+      End
+      <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>args</var>, <var>R</var>, <var>distinct</var>, <var>scalarvals</var>, <var>Grp</var>)
       Replace <var>R</var>(...) with agg<sub><var>i</var></sub> in <var>Q</var>
       <var>i</var> := <var>i</var> + 1
       End
   End
 
 For each variable <var>V</var> appearing outside of an aggregate
-   <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>V</var>, <a href="#defn_aggSample" class="aggFct">Sample</a>, {}, <var>Grp</var>)
+   <var>A</var><sub><var>i</var></sub> := <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>V</var>, <a href="#defn_aggSample" class="aggFct">Sample</a>, false, {}, <var>Grp</var>)
    <var>E</var> := <var>E</var> append (<var>V</var>, agg<sub><var>i</var></sub>)
    <var>i</var> := <var>i</var> + 1
    End
@@ -10785,20 +10872,21 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
               <b>Definition: Aggregation</b>
             </div>
             <p>Let <var>exprlist</var> be a list of expressions or `*`; <var>func</var>, a set function;
+              <var>distinct</var>, a boolean (`true` or `false`);
               <var>scalarvals</var>, a partial function (possibly with an empty domain) passed from the aggregate
               in the query; and { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
               <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> }, a partial function from keys to
               solution sequences as produced by the grouping step.</p>
             <p><a href="#defn_algAggregation" class="algFct">Aggregation</a> applies the set function <var>func</var> to the given set and produces a
               single value for each key and a group of solutions for that key.</p>
-            <p><a href="#defn_algAggregation" class="algFct">Aggregation</a>(<var>exprlist</var>, <var>func</var>, <var>scalarvals</var>, { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
+            <p><a href="#defn_algAggregation" class="algFct">Aggregation</a>(<var>exprlist</var>, <var>func</var>, <var>distinct</var>, <var>scalarvals</var>, { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
               <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> } )<br>
-              &nbsp;&nbsp;&nbsp;= { (<var>key</var>, <var>F</var>(<var>Ψ</var>)) | <var>key</var> → <var>Ψ</var> in { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
+              &nbsp;&nbsp;&nbsp;= { (<var>key</var>, <var>F</var>(<var>Ψ</var>, <var>distinct</var>)) | <var>key</var> → <var>Ψ</var> in { <var>key<sub>1</sub></var>→<var>Ψ<sub>1</sub></var>, ...,
               <var>key<sub><var>m</var></sub></var>→<var>Ψ<sub><var>m</var></sub></var> } }</p>
             <p>where<br>
               &nbsp;&nbsp;M(<var>Ψ</var>) = [ <a href="#defn_ListEval">ListEval</a>(<var>exprlist</var>, <var>μ</var>) | <var>μ</var> in <var>Ψ</var> ]<br>
-              &nbsp;&nbsp;F(<var>Ψ</var>) = <var>func</var>(M(<var>Ψ</var>), <var>scalarvals</var>), for non-<code>DISTINCT</code><br>
-              &nbsp;&nbsp;F(<var>Ψ</var>) = <var>func</var>(Dedup(M(<var>Ψ</var>)), <var>scalarvals</var>), for <code>DISTINCT</code></p>
+              &nbsp;&nbsp;F(<var>Ψ</var>, `false`) = <var>func</var>(M(<var>Ψ</var>), <var>scalarvals</var>)<br>
+              &nbsp;&nbsp;F(<var>Ψ</var>, `true`) = <var>func</var>(Dedup(M(<var>Ψ</var>)), <var>scalarvals</var>)</p>
             <p>with Dedup(M(<var>Ψ</var>)) being an order-preserving, duplicate-free version of the sequence M(<var>Ψ</var>); that is, Dedup(M(<var>Ψ</var>)) is a sequence of lists that has the following four properties
               (where each such list in this sequence may contain RDF terms and
               errors, as it is produced by the <a href="#defn_ListEval">ListEval</a> function).</p>
@@ -10824,10 +10912,9 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             </ol>
 
             <p><b>Special Case:</b> when <code>COUNT</code> is used with the expression
-              <code>*</code>, then F(<var>Ψ</var>) is the cardinality of the group solution sequence,
-              i.e., F(<var>Ψ</var>)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<var>Ψ</var>),
-              or F(<var>Ψ</var>)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<a href="#defn_algDistinct">Distinct</a>(<var>Ψ</var>))
-              if the <code>DISTINCT</code> keyword is present.</p>
+              <code>*</code>, then F(<var>Ψ</var>, <var>distinct</var>) is the cardinality of the group solution sequence,
+              i.e., F(<var>Ψ</var>, `false`)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<var>Ψ</var>),
+              and F(<var>Ψ</var>, `true`)&nbsp;=&nbsp;<a href="#defn_Card">Card</a>(<a href="#defn_algDistinct">Distinct</a>(<var>Ψ</var>)).</p>
           </div>
           <p><var>scalarvals</var> are used to pass values to the underlying set function, bypassing
             the mechanics of the grouping. For example, the aggregate expression
@@ -10869,7 +10956,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
             ?x.</p>
           <p>We produce <var>G</var> = <a href="#defn_algGroup" class="algFct">Group</a>((?x), <var>Ψ</var>) = { (1) → [<var>μ<sub>1</sub></var>, <var>μ<sub>2</sub></var>], (2) →
           [<var>μ<sub>3</sub></var>] }</p>
-          <p>And so <a href="#defn_algAggregation" class="algFct">Aggregation</a>((?y, ?z), ex:agg, {}, <var>G</var>) =<br>
+          <p>So <a href="#defn_algAggregation" class="algFct">Aggregation</a>((?y, ?z), ex:agg, `false`, {}, <var>G</var>) =<br>
             { ((1), eg:agg([(2, 3), (3, 4)], {})), ((2), eg:agg([(5, 6)], {})) }.</p>
           <div class="defn">
             <div id="defn_algAggregateJoin">
@@ -13314,114 +13401,132 @@ _:x rdf:type xsd:decimal .
     <section id="changes-1-1" class="appendix informative">
       <h2>Changes between SPARQL 1.1 Query Language and SPARQL 1.2 Query Language</h2>
       <ul>
-        <li>
-            Normative changes:
+        <li>Normative changes:
             <ul>
                 <li>Update grammar for triple terms, reifiers, reified triples, annotation syntax, and triple term functions
                   in <a href="#sparqlGrammar" class="sectionRef"></a> and explain them
                   in <a href="#syntaxNestedTriplePatterns" class="sectionRef"></a>
-                  and <a href="#syntaxReifyingTriples" class="sectionRef"></a></li>
+                  and <a href="#syntaxReifyingTriples" class="sectionRef"></a>.</li>
                 <li>Add functions related to <a data-cite="RDF12-CONCEPTS#dfn-triple-term">triple terms</a> to
                   <a href="#func-triple-terms" class="sectionRef"></a>:
-                  `TRIPLE`, `isTRIPLE`, `SUBJECT`, `PREDICATE`, `OBJECT`</li>
-                <li>Update grammar for literal <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a> syntax</li>
-                <li>Update grammar for VERSION declaration and a <a href="#syntaxVersionAnnouncement" class="sectionRef">new section</a> to describe its usage</li>
+                  `TRIPLE`, `isTRIPLE`, `SUBJECT`, `PREDICATE`, `OBJECT`.</li>
+                <li>Update grammar for literal <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a> syntax.</li>
+                <li>Update grammar for `VERSION` declaration and a <a href="#syntaxVersionAnnouncement" class="sectionRef">new 
+                  section</a> to describe its use.</li>
                 <li>Add functions related to 
                   <a data-cite="RDF12-CONCEPTS#dfn-language-tag">language tag</a> and
                   <a data-cite="RDF12-CONCEPTS#dfn-base-direction">base direction</a>:
-                  `LANGDIR`, `hasLANG`, hasLANGDIR, and `STRLANGDIR`</li>
+                  `LANGDIR`, `hasLANG`, `hasLANGDIR`, and `STRLANGDIR`.</li>
                 <li>Define parser input as being an 
-                  <a data-cite="RDF12-CONCEPTS#dfn-rdf-string">RDF string</a>. 
-                  Exclude Unicode surrogates from Unicode escape sequences</li>
-                <li>Remove concepts of plain and simple literals, in favor of explicit mentions of `xsd:string`</li>
+                  <a data-cite="RDF12-CONCEPTS#dfn-rdf-string">RDF string</a>.</li>
+                <li>Exclude Unicode surrogates from Unicode escape sequences.</li>
+                <li>Remove concepts of plain and simple literals, in favor of explicit mentions of `xsd:string`.</li>
                 <li>Migrate XML Schema references to 1.1. 
-                Note that for datatypes involving years, the year 1 BCE is represented by `0000` and not as `-0001`.
-                See the note about the
-                <a data-cite="XMLSCHEMA11-2#dateTime-value-space">date/timeSevenPropertyModel</a>
-                for details.
-                </li>
-                <li>Update references to XPath from 2.0 to 3.1</li>
-                <li>Define `EBV` as a functional form</li>
-                <li>Forbid duplicated variables in `VALUES`</li>
-                <li>Add in-between term type ORDER BY support for triple terms in <a href="#modOrderBy" class="sectionRef"></a></li>
-                <li>Fixes the previously informal definition of `EXISTS` by adding a formal definition in <a href="#func-filter-exists" class="sectionRef"></a>, which includes extending the <a href="#defn_eval" class="evalFct">eval</a> function with a solution mapping <var>μ<sub>ctx</sub></var> as third argument</li>
+                  Note that for datatypes involving years, the year 1 BCE is represented by `0000` and not as `-0001`.
+                  See the note about the
+                  <a data-cite="XMLSCHEMA11-2#dateTime-value-space">date/timeSevenPropertyModel</a>
+                  for details.</li>
+                <li>Update references to XPath from 2.0 to 3.1.</li>
+                <li>Define `EBV` as a functional form.</li>
+                <li>Forbid duplicated variables in `VALUES`.</li>
+                <li>Add in-between term type `ORDER BY` support for triple terms in <a href="#modOrderBy" class="sectionRef"></a>.</li>
+                <li>Fix the previously informal definition of `EXISTS` by adding a formal definition in 
+                  <a href="#func-filter-exists" class="sectionRef"></a>, which includes extending the
+                  <a href="#defn_eval" class="evalFct">`eval`</a> function with a solution mapping <var>μ<sub>ctx</sub></var>
+                  as a third argument.</li>
                 <li>Rename function `RDFterm-equal` as <a href="#func-sameValue"></a> and
                   expand the definition to cover literal arguments of differing datatypes where the
-                  values are known to be equal or to be not equal</li>
-                <li>Expand the restriction on the use of `*` projection on queries that have implicit grouping</li>
-                <li>
-                  Escape sequence processing has been changed to be processed during parsing, not before. 
+                  values are known to be equal or not equal.</li>
+                <li>Expand the restriction on the use of `*` projection on queries that have implicit grouping.</li>
+                <li>Change escape sequence processing to be processed during parsing, not before. 
                   This aligns SPARQL with 
                   <a data-cite="RDF12-TURTLE#sec-escapes">escape sequences in Turtle</a>.
                 </li>
             </ul>
         </li>
-        <li>
-            Editorial changes:
+        <li>Editorial changes:
             <ul>
-                <li>Give an actual function signature to <a href="#func-sameValue" class="sectionRef"></a></li>
-                <li>Improve wording of blank nodes in <a href="#templatesWithBNodes" class="sectionRef"></a></li>
-                <li>Improve display on mobile</li>
-                <li>Move `sameValue` (was `RDFterm-equal`) and `sameTerm` to <a href="#func-rdfTerms" class="sectionRef"></a></li>
-                <li>Add note on deduplication of triples produced by CONSTRUCT to <a href="#construct" class="sectionRef"></a></li>
-                <li>Remove historical notes on rdf:langString datatype from <a href="#func-datatype" class="sectionRef"></a></li>
-                <li>Remove inconsistencies between the definitions of the set functions</li>
-                <li>Introduce a function called multiplicity to replace card[Ω](μ) in <a href="#BasicGraphPattern" class="sectionRef"></a></li>
-                <li>Update to Media Type language instead of MIME Type language</li>
-                <li>Clarify that aggregation returns a single partial function in <a href="#sparqlGroupAggregate" class="sectionRef"></a></li>
-                <li>Update Filter Evaluation language to reference more functional forms in <a href="#expression-evaluation" class="sectionRef"></a></li>
-                <li>Use PREFIX instead of @prefix</li>
-                <li>More accurate definition of the <a href="#defn_algSlice" class="algFct">Slice</a> algebra operator</li>
-                <li>Clarify definition of the Sum set function in <a href="#aggSum" class="sectionRef"></a></li>
-                <li>Improve definition of Group operator in <a href="#aggregateAlgebra" class="sectionRef"></a></li>
-                <li>Move definitions of Flatten and Card to <a href="#setFunctions" class="sectionRef"></a></li>
-                <li>Improve definitions in <a href="#initDefinitions" class="sectionRef"></a></li>
-                <li>Fix algorithm for translation SELECT expressions <a href="#sparqlSelectExpressions" class="sectionRef"></a></li>
-                <li>Clarify the use of ToList in algebra expressions in <a href="#translation" class="sectionRef"></a></li>
+                <li>Give an actual function signature to <a href="#func-sameValue" class="sectionRef"></a>.</li>
+                <li>Improve wording of blank nodes in <a href="#templatesWithBNodes" class="sectionRef"></a>.</li>
+                <li>Improve display on mobile.</li>
+                <li>Move `sameValue` (was `RDFterm-equal`) and `sameTerm` to <a href="#func-rdfTerms" class="sectionRef"></a>.</li>
+                <li>Add note on deduplication of triples produced by `CONSTRUCT` to <a href="#construct" class="sectionRef"></a>.</li>
+                <li>Remove historical notes on `rdf:langString` datatype from <a href="#func-datatype" class="sectionRef"></a>.</li>
+                <li>Remove inconsistencies among the definitions of the set functions.</li>
+                <li>Update to Media Type language instead of MIME Type language.</li>
+                <li>Introduce a function called `multiplicity` to replace `card[Ω](μ)` in <a href="#BasicGraphPattern" class="sectionRef"></a>.</li>
+                <li>Clarify that aggregation returns a single partial function in <a href="#sparqlGroupAggregate" class="sectionRef"></a>.</li>
+                <li>Update Filter Evaluation language to reference more functional forms in <a href="#expression-evaluation" class="sectionRef"></a>.</li>
+                <li>Use `PREFIX` instead of `@prefix`.</li>
+                <li>More accurate definition of the <a href="#defn_algSlice" class="algFct">Slice</a> algebra operator.</li>
+                <li>Clarify definition of the `Sum` set function in <a href="#aggSum" class="sectionRef"></a>.</li>
+                <li>Improve definition of `Group` operator in <a href="#aggregateAlgebra" class="sectionRef"></a>.</li>
+                <li>Move definitions of `Flatten` and `Card` to <a href="#setFunctions" class="sectionRef"></a>.</li>
+                <li>Improve definitions in <a href="#initDefinitions" class="sectionRef"></a>.</li>
+                <li>Fix algorithm for translation `SELECT` expressions <a href="#sparqlSelectExpressions" class="sectionRef"></a>.</li>
+                <li>Clarify the use of ToList in algebra expressions in <a href="#translation" class="sectionRef"></a>.</li>
                 <li>Add an explicit definition of the algebraic syntax
                   (<a href="#algebraicSyntax" class="sectionRef"></a>) into which the AST
                   expressions are translated according to <a href="#translation"
                   class="sectionRef"></a>, and mark up all mentions of symbols of this
                   syntax as links to their respective definition; similarly, mark up all
                   mentions of operators of the <a href="#sparqlAlgebra">SPARQL algebra</a>
-                  as links to their respective definition</li>
+                  as links to their respective definition.</li>
                 <li>Rename the function used to define the evaluation of property path expressions
                   in <a href="#PropertyPathPatterns" class="sectionRef"></a>
-                  from <i>eval</i> to <i>ppeval</i></li>
+                  from <i>eval</i> to <i>ppeval</i>.</li>
                 <li>Rename the function used within the definition of
                   the <a href="#defn_evalALP">ALP</a> function
-                  from <i>eval</i> to <i>reachableTerms</i></li>
-                <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors</li>
-                <li>Rename section "Filter evaluation" as <a href="#expression-evaluation" class="sectionRef"></a></li>
+                  from <i>eval</i> to <i>reachableTerms</i>.</li>
+                <li>Add section <a href="#sparql-error" class="sectionRef"></a> about SPARQL expression evaluation errors.</li>
+                <li>Rename section "Filter evaluation" as <a href="#expression-evaluation" class="sectionRef"></a>.</li>
                 <li>Improve definitions of all algebra operators that involve expressions
                   (<a href="#defn_algFilter" class="algFct">Filter</a>, <a href="#defn_algDiff" class="algFct">Diff</a>,
-                  <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>, and <a href="#defn_algExtend" class="algFct">Extend</a>)</li>
+                  <a href="#defn_algLeftJoin" class="algFct">LeftJoin</a>, and <a href="#defn_algExtend" class="algFct">Extend</a>).</li>
             </ul>
         </li>
-        <li>
-            Errata:
+        <li>Errata:
             <ul>
-              <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-1">editorial-query-1</a>: Missing right parenthesis in <a href="#defn_evalGraph">Evaluation of Graph definition</a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-2">editorial-query-2</a>: Missing space in <a href="#defn_algJoin">Join definition</a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-3">editorial-query-3</a>: Incorrect link for DELETE DATA in <a href="#grammarBNodes" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-1">clarification-query-1</a>: Fix explanation of IN and NOT IN in <a href="#func-in" class="sectionRef"></a> and <a href="#func-not-in" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-2">clarification-query-2</a>: Remove unneeded reference to the semantics above in <a href="#operatorExtensibility"
-class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-3">clarification-query-3</a>: Rephrase equality definition in <a href="#func-sameValue" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-1">errata-query-1</a>: Let V be an empty set instead of empty multiset in <a href="#defn_evalALP">Function ALP definition</a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-2">errata-query-2</a>: Fix grammar of PropertyListPathNotEmpty in <a href="#grammar" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-4">errata-query-4</a>: Fix CONCAT definition for zero and one argument in <a href="#func-concat" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-5">errata-query-5</a>: Mention illegal nesting of aggregates in <a href="#sparqlGrammar" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-7">errata-query-7</a> and <a href="https://www.w3.org/2013/sparql-errata#errata-query-7a">errata-query-7a</a>: Remove incorrect full example <a href="#defn_algLeftJoin">LeftJoin definition</a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-9">errata-query-9</a>: Fix examples in <a href="#sparqlAlgebraExamples" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-11">errata-query-11</a>: Rename group variable in <a href="#sparqlGroupAggregate" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-12">errata-query-12</a>: Clarify definition of Diff in <a href="#sparqlAlgebra" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-13">errata-query-13</a>: Fix definition of Project cardinality in <a href="#sparqlAlgebra" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-18">errata-query-18</a>: Fix table in <a href="#sparqlTranslatePathPatterns" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-19">errata-query-19</a>: Fix translation in <a href="#sparqlTranslateGraphPatterns" class="sectionRef"></a></li>
-              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-23">errata-query-23</a>: Fix inconsistenties between <a href="#defn_aggMin">MIN</a> and <a
-href="#defn_aggMax">MAX</a></li>
-              <li>Grammar rule `UnaryExpression` to allow `!!`</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-1">editorial-query-1</a>:
+                Missing right parenthesis in <a href="#defn_evalGraph">Evaluation of Graph definition</a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-2">editorial-query-2</a>:
+                Missing space in <a href="#defn_algJoin">Join definition</a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#editorial-query-3">editorial-query-3</a>:
+                Incorrect link for `DELETE DATA` in <a href="#grammarBNodes" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-1">clarification-query-1</a>:
+                Fix explanation of `IN` and `NOT IN` in <a href="#func-in" class="sectionRef"></a> and
+                <a href="#func-not-in" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-2">clarification-query-2</a>:
+                Remove unneeded reference to the semantics above in
+                <a href="#operatorExtensibility" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#clarification-query-3">clarification-query-3</a>:
+                Rephrase equality definition in <a href="#func-sameValue" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-1">errata-query-1</a>:
+                Let V be an empty set instead of empty multiset in <a href="#defn_evalALP">Function ALP definition</a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-2">errata-query-2</a>:
+                Fix grammar of `PropertyListPathNotEmpty` in <a href="#grammar" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-4">errata-query-4</a>:
+                Fix `CONCAT` definition for zero and one argument in <a href="#func-concat" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-5">errata-query-5</a>:
+                Mention illegal nesting of aggregates in <a href="#sparqlGrammar" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-7">errata-query-7</a> and
+                <a href="https://www.w3.org/2013/sparql-errata#errata-query-7a">errata-query-7a</a>:
+                Remove incorrect full example <a href="#defn_algLeftJoin">LeftJoin definition</a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-9">errata-query-9</a>:
+                Fix examples in <a href="#sparqlAlgebraExamples" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-11">errata-query-11</a>:
+                Rename group variable in <a href="#sparqlGroupAggregate" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-12">errata-query-12</a>:
+                Clarify definition of Diff in <a href="#sparqlAlgebra" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-13">errata-query-13</a>:
+                Fix definition of Project cardinality in <a href="#sparqlAlgebra" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-18">errata-query-18</a>:
+                Fix table in <a href="#sparqlTranslatePathPatterns" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-19">errata-query-19</a>:
+                Fix translation in <a href="#sparqlTranslateGraphPatterns" class="sectionRef"></a>.</li>
+              <li><a href="https://www.w3.org/2013/sparql-errata#errata-query-23">errata-query-23</a>:
+                Fix inconsistencies between <a href="#defn_aggMin">`MIN`</a> and <a href="#defn_aggMax">`MAX`</a>.</li>
+              <li>Grammar rule `UnaryExpression` to allow `!!`.</li>
             </ul>
         </li>
       </ul>

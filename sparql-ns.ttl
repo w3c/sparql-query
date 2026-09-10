@@ -116,13 +116,13 @@ sparql:logical-and rdf:type sparql:FunctionalForm ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-and> ;
     .
 
-sparql:logical-not rdf:type sparql:FunctionalForm ;
-    rdfs:comment "This form computes the logical NOT of a boolean expression." ;
+sparql:logical-not rdf:type sparql:Function ;
+    rdfs:comment "This function computes the logical NOT of a boolean expression." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-logical-not> ;
     .
 
-sparql:ebv rdf:type sparql:FunctionalForm ;
-    rdfs:comment "This form computes the effective boolean value." ;
+sparql:ebv rdf:type sparql:Function ;
+    rdfs:comment "This function computes the effective boolean value." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-ebv> ;
     .
 
@@ -317,8 +317,8 @@ sparql:replace rdf:type sparql:Function ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-replace> ;
     .
 
-sparql:encode rdf:type sparql:Function ;
-    rdfs:comment "This function encodes a string using a specified method (e.g., URI-encoding), returning the encoded version." ;
+sparql:encodeForUri rdf:type sparql:Function ;
+    rdfs:comment "This function performs URI-encoding on a string, returning the encoded version." ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/#func-encode> ;
     .
 
@@ -457,18 +457,8 @@ sparql:agg-count rdf:type sparql:Aggregate ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:agg-count-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "Aggregate function COUNT with DISTINCT" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-    .
-
 sparql:agg-sum rdf:type sparql:Aggregate ;
     rdfs:comment "Aggregate function SUM" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-    .
-
-sparql:agg-sum-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "Aggregate function SUM with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
@@ -477,18 +467,8 @@ sparql:agg-min rdf:type sparql:Aggregate ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:agg-min-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "Aggregate function MIN with DISTINCT" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-    .
-
 sparql:agg-max rdf:type sparql:Aggregate ;
     rdfs:comment "Aggregate function MAX" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-    .
-
-sparql:agg-max-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "Aggregate function MAX with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
@@ -497,28 +477,13 @@ sparql:agg-avg rdf:type sparql:Aggregate ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:agg-avg-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "Aggregate function AVG with DISTINCT" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-    .
-
 sparql:agg-sample rdf:type sparql:Aggregate ;
     rdfs:comment "Aggregate function SAMPLE" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
-sparql:agg-sample-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "Aggregate function SAMPLE with DISTINCT" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-    .
-
 sparql:agg-group-concat rdf:type sparql:Aggregate ;
     rdfs:comment "Aggregate function GROUP_CONCAT" ;
-    rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
-    .
-
-sparql:agg-group-concat-distinct rdf:type sparql:Aggregate ;
-    rdfs:comment "Aggregate function GROUP_CONCAT with DISTINCT" ;
     rdfs:isDefinedBy <http://www.w3.org/TR/sparql12-query/> ;
     .
 
