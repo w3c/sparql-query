@@ -4809,6 +4809,10 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         </p>
         <ul>
           <li>
+            Variables are evaluated to the corresponding RDF term in the <a href="#defn_sparqlSolutionMapping">solution mapping</a>
+            or an error if the variable is not in it.
+          </li>
+          <li>
             Unlike functions in XPath/XQuery, functions in SPARQL do not
             process node sequences.
           </li>
