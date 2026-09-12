@@ -121,8 +121,8 @@ div.grammarExtract
 
 /* Examples */
 pre.data    { border: thin solid #88AA88;
-                  background-color: #E8F0E8;
-                  margin: 1em 1em 1em 0em ; }
+              background-color: #E8F0E8;
+              margin: 1em 1em 1em 0em ; }
 
 pre.dataExcerpt { border: thin solid #88AA88;
                   background-color: #E8F0E8;
@@ -134,20 +134,20 @@ pre.query   { border:thin solid #8888aa;
                   margin: 1em 1em 1em 0em ; }
 /* Example Results */
 .result     { border: thin solid  #888888 ;
-                  background-color: #F0F0F0 ; }
-pre.resultGraph {  margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
+              background-color: #F0F0F0 ; }
+pre.resultGraph  { margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
                    padding: 0ex;
                    font-size: 100% ;
                    page-break-inside: avoid ; }
-pre.resultSet   {  margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
+pre.resultSet    { margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
                    padding: 0ex;
                    font-size: 100% ;
                    page-break-inside: avoid ; }
-pre.resultAsk   {  margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
+pre.resultAsk    { margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
                    padding: 0ex;
                    font-size: 100% ;
                    page-break-inside: avoid ; }
-pre.resultTurtle{  margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
+pre.resultTurtle { margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
                    padding: 0ex;
                    font-size: 100% ;
                    page-break-inside: avoid ; }
@@ -155,25 +155,25 @@ pre.resultTurtle{  margin: 0em 0em 0em 0em ; /* Top Right Bottom Left */
 pre.result  { margin: 1em 1em 1em 0em ; }
 
 div.result  { font-family: monospace;
-                  margin:  1em 1em 1em 0em ;
-                  padding: 1ex ;}
+              margin:  1em 1em 1em 0em ;
+               padding: 1ex ;}
 
-.result table   { border-collapse: collapse; }
-.result table td{ border-width: 1px ;
-                  border-color : black ; 
-                  font-family: monospace ;
-                  empty-cells: show;
-                  padding-left: 1ex ; padding-right: 1ex ;
-                  vertical-align:top;
-                  text-align: left ; } 
+.result table    { border-collapse: collapse; }
+.result table td { border-width: 1px ;
+                   border-color : black ; 
+                   font-family: monospace ;
+                   empty-cells: show;
+                   padding-left: 1ex ; padding-right: 1ex ;
+                   vertical-align:top;
+                   text-align: left ; } 
 /*  spacing: 0 ;*/
-.result table th{ border-width: 1px ;
-                  font-family: monospace ;
-                  border-color: black ;
-                  empty-cells: show;
-                  padding-left: 1ex ; padding-right: 1ex ;
-                  vertical-align:top;
-                  text-align:center; } 
+.result table th { border-width: 1px ;
+                   font-family: monospace ;
+                   border-color: black ;
+                   empty-cells: show;
+                   padding-left: 1ex ; padding-right: 1ex ;
+                   vertical-align:top;
+                   text-align:center; } 
 
 /* Examples : Algebra */
 div.algExample {  border: thin solid #888888;
@@ -190,29 +190,35 @@ div.algExample2 { padding:0.5em ; margin-top: 0.5em ; background-color: #F0FFF0 
 .function   { color: #3f3f5f; }
 
 /* Tuned to cope with different browsers behaviours */
-div.grammarTable table  { border-style: solid ;
+div.grammarTable table  {
+              border-style: solid ;
               border-width: 1px ;
               border-color: #AAA ;
               border-spacing: 0px ; 
               border-collapse: collapse ; }
 
-div.grammarTable table * { border-left-width: 0px ;
+div.grammarTable table * {
+               border-left-width: 0px ;
                border-right-width: 0px ;
                border-color: #AAA ; } 
 
-div.grammarTable table * tr   { border-top-style: solid ;
+div.grammarTable table * tr   {
+              border-top-style: solid ;
               border-top-width: 1px ;
               border-top-color: #AAA ; } 
 
 monoplain { font-family: monospace ; font-size: 100% ; }
 
 .grammar    { text-align: left ;
-                  vertical-align: top ; }
-.token     { color: #3f3f5f; }
+              vertical-align: top ; }
+
+.grammar .token           { color: #101010; }
+.darkmode .grammar .token { color: #F0F0F0; }
+
 table.FAndOTable .token    { color: #00c; }
 table.FAndOTable .token:visited    { color: #a0c; }
 .gRuleHead  { font-style: italic ;
-                  font-family: monospace ; }
+              font-family: monospace ; }
 .gRuleBody  { font-family: monospace ; }
 .gRuleLabel { font-family: monospace ; }
 
@@ -12174,7 +12180,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[69]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rDataBlockValue">DataBlockValue</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><a href="#riri">iri</a> |   <a href="#rRDFLiteral">RDFLiteral</a> |  <a href="#rNumericLiteral">NumericLiteral</a> |   <a href="#rBooleanLiteral">BooleanLiteral</a> | <span class="token">'UNDEF'</span> |   <a href="#rTripleTermData">TripleTermData</a></code></td>
+                <td><code class="gRuleBody"><a href="#riri">iri</a> | <a href="#rRDFLiteral">RDFLiteral</a> | <a href="#rNumericLiteral">NumericLiteral</a> | <a href="#rBooleanLiteral">BooleanLiteral</a> | <span class="token">'UNDEF'</span> | <a href="#rTripleTermData">TripleTermData</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12482,14 +12488,14 @@ _:x rdf:type xsd:decimal .
                 <td><code>[113]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rGraphNode">GraphNode</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><a href="#rVarOrTerm">VarOrTerm</a> |   <a href="#rTriplesNode">TriplesNode</a> |   <a href="#rReifiedTriple">ReifiedTriple</a></code></td>
+                <td><code class="gRuleBody"><a href="#rVarOrTerm">VarOrTerm</a> | <a href="#rTriplesNode">TriplesNode</a> | <a href="#rReifiedTriple">ReifiedTriple</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
                 <td><code>[114]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rGraphNodePath">GraphNodePath</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><a href="#rVarOrTerm">VarOrTerm</a> |   <a href="#rTriplesNodePath">TriplesNodePath</a> |   <a href="#rReifiedTriple">ReifiedTriple</a></code></td>
+                <td><code class="gRuleBody"><a href="#rVarOrTerm">VarOrTerm</a> | <a href="#rTriplesNodePath">TriplesNodePath</a> | <a href="#rReifiedTriple">ReifiedTriple</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12636,7 +12642,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[135]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rUnaryExpression">UnaryExpression</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">&nbsp;&nbsp;<span class="token">'!'</span> <a href="#rUnaryExpression">UnaryExpression</a> <br/>|   <span class="token">'+'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>|   <span class="token">'-'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>| <a href="#rPrimaryExpression">PrimaryExpression</a></code></td>
+                <td><code class="gRuleBody">&nbsp;&nbsp;<span class="token">'!'</span> <a href="#rUnaryExpression">UnaryExpression</a> <br/>| <span class="token">'+'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>| <span class="token">'-'</span> <a href="#rPrimaryExpression">PrimaryExpression</a> <br/>| <a href="#rPrimaryExpression">PrimaryExpression</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12678,7 +12684,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[141]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rBuiltInCall">BuiltInCall</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody">&nbsp;&nbsp;<a href="#rAggregate">Aggregate</a> <br/>|  <span class="token">'STR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'LANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'LANGMATCHES'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'LANGDIR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'DATATYPE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'BOUND'</span> <span class="token">'('</span> <a href="#rVar">Var</a> <span class="token">')'</span> <br/>|  <span class="token">'IRI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'URI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'BNODE'</span> ( <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> | <a href="#rNIL">NIL</a> ) <br/>| <span class="token">'RAND'</span> <a href="#rNIL">NIL</a> <br/>|   <span class="token">'ABS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'CEIL'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'FLOOR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'ROUND'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'CONCAT'</span> <a href="#rExpressionList">ExpressionList</a> <br/>| <a href="#rSubstringExpression">SubstringExpression</a> <br/>|  <span class="token">'STRLEN'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <a href="#rStrReplaceExpression">StrReplaceExpression</a> <br/>|   <span class="token">'UCASE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'LCASE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'ENCODE_FOR_URI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'CONTAINS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'STRSTARTS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'STRENDS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'STRBEFORE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'STRAFTER'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'YEAR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'MONTH'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'DAY'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'HOURS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'MINUTES'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'SECONDS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'TIMEZONE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|    <span class="token">'TZ'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'NOW'</span> <a href="#rNIL">NIL</a> <br/>| <span class="token">'UUID'</span> <a href="#rNIL">NIL</a> <br/>|    <span class="token">'STRUUID'</span> <a href="#rNIL">NIL</a> <br/>| <span class="token">'MD5'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'SHA1'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|    <span class="token">'SHA256'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'SHA384'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'SHA512'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <span class="token">'COALESCE'</span> <a href="#rExpressionList">ExpressionList</a> <br/>|  <span class="token">'IF'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'STRLANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'STRLANGDIR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'STRDT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'sameTerm'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'isIRI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'isURI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'isBLANK'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'isLITERAL'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'isNUMERIC'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'hasLANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'hasLANGDIR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|  <a href="#rRegexExpression">RegexExpression</a> <br/>|  <a href="#rExistsFunc">ExistsFunc</a> <br/>|    <a href="#rNotExistsFunc">NotExistsFunc</a> <br/>|  <span class="token">'isTRIPLE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'TRIPLE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'SUBJECT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'PREDICATE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>|   <span class="token">'OBJECT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span></code></td>
+                <td><code class="gRuleBody">&nbsp;&nbsp;<a href="#rAggregate">Aggregate</a> <br/>| <span class="token">'STR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'LANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'LANGMATCHES'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'LANGDIR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'DATATYPE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'BOUND'</span> <span class="token">'('</span> <a href="#rVar">Var</a> <span class="token">')'</span> <br/>| <span class="token">'IRI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'URI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'BNODE'</span> ( <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> | <a href="#rNIL">NIL</a> ) <br/>| <span class="token">'RAND'</span> <a href="#rNIL">NIL</a> <br/>| <span class="token">'ABS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'CEIL'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'FLOOR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'ROUND'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'CONCAT'</span> <a href="#rExpressionList">ExpressionList</a> <br/>| <a href="#rSubstringExpression">SubstringExpression</a> <br/>| <span class="token">'STRLEN'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <a href="#rStrReplaceExpression">StrReplaceExpression</a> <br/>| <span class="token">'UCASE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'LCASE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'ENCODE_FOR_URI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'CONTAINS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'STRSTARTS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'STRENDS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'STRBEFORE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'STRAFTER'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'YEAR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'MONTH'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'DAY'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'HOURS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'MINUTES'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'SECONDS'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'TIMEZONE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'TZ'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'NOW'</span> <a href="#rNIL">NIL</a> <br/>| <span class="token">'UUID'</span> <a href="#rNIL">NIL</a> <br/>| <span class="token">'STRUUID'</span> <a href="#rNIL">NIL</a> <br/>| <span class="token">'MD5'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'SHA1'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'SHA256'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'SHA384'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'SHA512'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'COALESCE'</span> <a href="#rExpressionList">ExpressionList</a> <br/>| <span class="token">'IF'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'STRLANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'STRLANGDIR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'STRDT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'sameTerm'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'isIRI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'isURI'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'isBLANK'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'isLITERAL'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'isNUMERIC'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'hasLANG'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'hasLANGDIR'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <a href="#rRegexExpression">RegexExpression</a> <br/>| <a href="#rExistsFunc">ExistsFunc</a> <br/>| <a href="#rNotExistsFunc">NotExistsFunc</a> <br/>| <span class="token">'isTRIPLE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'TRIPLE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">','</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'SUBJECT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'PREDICATE'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span> <br/>| <span class="token">'OBJECT'</span> <span class="token">'('</span> <a href="#rExpression">Expression</a> <span class="token">')'</span></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
@@ -12748,7 +12754,7 @@ _:x rdf:type xsd:decimal .
                 <td><code>[151]&nbsp;&nbsp;</code></td>
                 <td><code><span class="doc-ref" id="rNumericLiteralUnsigned">NumericLiteralUnsigned</span></code></td>
                 <td>&nbsp;&nbsp;::=&nbsp;&nbsp;</td>
-                <td><code class="gRuleBody"><a href="#rINTEGER">INTEGER</a> |   <a href="#rDECIMAL">DECIMAL</a> |   <a href="#rDOUBLE">DOUBLE</a></code></td>
+                <td><code class="gRuleBody"><a href="#rINTEGER">INTEGER</a> | <a href="#rDECIMAL">DECIMAL</a> | <a href="#rDOUBLE">DOUBLE</a></code></td>
               </tr>
 
               <tr style="vertical-align: baseline">
