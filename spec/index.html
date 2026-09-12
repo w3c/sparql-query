@@ -10350,15 +10350,15 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
           <pre class="nohighlight">
 ppeval(<var>vx</var>:var, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>vy</var>:var) =
      { { (<var>vx</var>, <var>s</var>), (<var>vy</var>, <var>o</var>) } |
-         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>s</var>, <var>p</var>, <var>o</var>) in <var>G</var> }
+         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>s</var>, <var>p</var>, <var>o</var>) is in <var>G</var> }
 
 ppeval(<var>vx</var>:var, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>:term) =
      { { (<var>vx</var>, <var>s</var>) } |
-         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>s</var>, <var>p</var>, <var>y</var>) in <var>G</var> }
+         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>s</var>, <var>p</var>, <var>y</var>) is in <var>G</var> }
 
 ppeval(<var>x</var>:term, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>vy</var>:var) =
      { { ( (<var>vy</var>, <var>o</var>) } |
-         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>x</var>, <var>p</var>, <var>o</var>) in <var>G</var> }
+         ∃ <var>p</var> ∉ <var>S</var> such that triple(<var>x</var>, <var>p</var>, <var>o</var>) is in <var>G</var> }
 
 ppeval(<var>x</var>:term, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>:term) =
      { {} |
