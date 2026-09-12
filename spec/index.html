@@ -4809,13 +4809,6 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
         </p>
         <ul>
           <li>
-            If the SPARQL expression is a variable
-            and the solution mapping with respect to which the expression is evaluated contains that variable,
-            then the result of this evaluation is the RDF term that the solution mapping assigns to that variable.
-            If the SPARQL expression is a variable that the solution mapping does not contain,
-            then the result of evaluating the expression is an error.
-          </li>
-          <li>
             Unlike functions in XPath/XQuery, functions in SPARQL do not
             process node sequences.
           </li>
@@ -4852,6 +4845,13 @@ WHERE { ?annot  a:annotates  &lt;http://www.w3.org/TR/rdf-sparql-query/&gt; .
           </li>
           <li>A <a href="#func-logical-or">logical-or</a> or <a href="#func-logical-and">logical-and</a> 
             that encounters errors on both branches will produce <em>either</em> of the [=errors=].
+          </li>
+          <li>
+            If the SPARQL expression is a variable
+            and the solution mapping with respect to which the expression is evaluated contains that variable,
+            then the result of this evaluation is the RDF term that the solution mapping assigns to that variable.
+            If the SPARQL expression is a variable that the solution mapping does not contain,
+            then the result of evaluating the expression is an error.
           </li>
         </ul>
         <p>The logical-and and logical-or truth table for true (<span class="truth">T</span>), false
