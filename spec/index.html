@@ -4007,7 +4007,7 @@ WHERE {
       <section id="modOrderBy">
         <h3>ORDER BY</h3>
         <p>The <code>ORDER BY</code> clause establishes the order of a solution sequence.</p>
-        <p>Following the <code>ORDER BY</code> clause is a sequence of order comparators, composed of
+        <p>Following the <code>ORDER BY</code> clause is a sequence of <dfn>order comparators</dfn>, composed of
           an expression and an optional order modifier (either <code>ASC()</code> or
           <code>DESC()</code>). Each ordering comparator is either ascending (indicated by the
           <code>ASC()</code> modifier or by no modifier) or descending (indicated by the
@@ -9207,11 +9207,10 @@ WHERE {
             is of the form <a href="#defn_absAggregation" class="absOp">Aggregation</a>(<var>exprlist<sub>|i|</sub></var>, <var>func<sub>|i|</sub></var>, <var>distinct<sub>|i|</sub></var>, <var>scalarvals<sub>|i|</sub></var>, <var>grp<sub>|i|</sub></var>)
             that is captured by <a href="#defn_absAggregation">the previous point</a>.</li>
           <li id="defn_absOrderBy">
-            <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|A|, |condition|)
+            <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|A|, |comparators|)
             is an algebraic query expression if
             |A| is an algebraic query expression and
-            |condition| is an ordering condition.
-<div class="issue" data-number="229">The term "ordering condition" should link to some definition of this notion.</div>
+            |comparators| is a list of <a href="#dfn-order-comparators">order comparators</a>).
             </li>
           <li id="defn_absProject">
             <a href="#defn_absProject" class="absOp">Project</a>(|A|, |PV|)
@@ -10807,7 +10806,7 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
         <div class="defn">
           <p><b>Definition: <span id="defn_algOrderBy">OrderBy</span><span id="defn_algOrdered"><!-- obsolete id --></span></b></p>
           <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
-          <p><a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, condition) = [ <var>μ</var> | <var>μ</var> in <var>Ψ</var> and the sequence satisfies the ordering condition]</p>
+          <p><a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, comparators) = [ <var>μ</var> | <var>μ</var> in <var>Ψ</var> and the sequence satisfies the order comparators]</p>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, condition) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ψ</var> )</p>
         </div>
@@ -11404,7 +11403,7 @@ the result is <var>Ω</var>
           </div>
           <div class="defn">
             <p><b>Definition: <span id="defn_evalOrderBy">Evaluation of OrderBy</span></b></p>
-            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|A|, |condition|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algOrderBy" class="algFct">OrderBy</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|, <var>μ<sub>ctx</sub></var>), |condition| )
+            <p><a href="#defn_eval" class="evalFct">eval</a>( |D|(|G|), <a href="#defn_absOrderBy" class="absOp">OrderBy</a>(|A|, |comparators|), <var>μ<sub>ctx</sub></var> ) = <a href="#defn_algOrderBy" class="algFct">OrderBy</a>( <a href="#defn_eval" class="evalFct">eval</a>(|D|(|G|), |A|, <var>μ<sub>ctx</sub></var>), |comparators| )
             </p>
           </div>
           <div class="defn">
