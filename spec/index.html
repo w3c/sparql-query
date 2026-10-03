@@ -10517,7 +10517,9 @@ and <var>G</var> the <a href="#defn_ActiveGraph">active graph</a>.
         <div class="defn">
           <p><b>Definition: <span id="defn_algOrderBy">OrderBy</span><span id="defn_algOrdered"><!-- obsolete id --></span></b></p>
           <p>Let <var>Ψ</var> be a sequence of solution mappings. We define:</p>
-          <p><a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, comparators) = [ <var>μ</var> | <var>μ</var> in <var>Ψ</var> and the sequence satisfies the order comparators]</p>
+          <p><a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>,
+            |comparators|) = a sequence of all solution mappings in <var>Ψ</var>
+            that satisfy |comparators|</p>
           <p><a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <a href="#defn_algOrderBy" class="algFct">OrderBy</a>(<var>Ψ</var>, condition) ) =
             <a href="#defn_Multiplicity">multiplicity</a>( <var>μ</var> | <var>Ψ</var> )</p>
         </div>
