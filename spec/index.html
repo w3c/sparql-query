@@ -10468,27 +10468,6 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
 ppeval(<var>X</var>, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>) = <a href="#BasicGraphPattern">evaluation of basic graph pattern</a> {<var>X</var> <var>iri</var> <var>Y</var>}
             </pre>
         </div>
-        <p>If both |X| and |Y| are variables, this is the same as:</p>
-        <pre class="nohighlight">
-ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:var) =
-    { (<var>X</var>, <var>xn</var>:term) (<var>Y</var>, <var>yn</var>:term) | triple (<var>xn</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
-        <p>If |X| is a variable and |Y| an RDF term:</p>
-        <pre class="nohighlight">
-ppeval(<var>X</var>:var, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:term) =
-    { (<var>X</var>, <var>xn</var>:term) | triple (<var>xn</var>, <var>iri</var>, <var>Y</var>) is in the active graph }</pre>
-        <p>If |X| is an RDF term and |Y| is a variable:</p>
-        <pre class="nohighlight">
-ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:var) =
-    { (<var>Y</var>, <var>yn</var>:term) | triple (<var>X</var>, <var>iri</var>, <var>yn</var>) is in the active graph }</pre>
-        <p>If both |X| and |Y| are RDF terms:</p>
-        <pre class="nohighlight">
-ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:term)
-    = { μ<sub>0</sub> } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is in the active graph
-    = { { } } = Ω<sub>0</sub> 
-
-ppeval(<var>X</var>:term, <a href="#defn_ppeLink" class="ppeOp">Link</a>(<var>iri</var>), <var>Y</var>:term) =
-     { } if triple (<var>X</var>, <var>iri</var>, <var>Y</var>) is not in the active graph
-        </pre>
         <p>Informally, evaluating a Predicate Property Path is the same as executing a subquery
           <code>SELECT&nbsp;*&nbsp;{&nbsp;|X|&nbsp;|iri|&nbsp;|Y|&nbsp;}</code> at that point in the query evaluation.</p>
         <div class="defn">
