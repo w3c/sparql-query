@@ -10549,33 +10549,8 @@ ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOn
     { (<var>X</var>, <var>xn</var>) (<var>Y</var>, <var>yn</var>) | 
         either (<var>yn</var> in <a href="#defn_nodeSet">nodes</a>(<var>G</var>) and <var>xn</var> = <var>yn</var>)
         or {(<var>X</var>, <var>xn</var>), (<var>Y</var>, <var>yn</var>)} in ppeval(<var>X</var>, <var>ppe</var>, <var>Y</var>) }</pre>
-
-          <pre class="nohighlight">
-ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:term) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>)
-          such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>) is not empty }
-
-ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
-          such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>X</var>, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
-          such that <var>μ</var>(<var>X</var>) and <var>μ</var>(<var>Y</var>) are triple terms in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>vy</var>:var) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; {<var>vy</var>}
-          such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>μ</var>(<var>vy</var>)) is not empty }
-
-ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>) &cup; {<var>vx</var>}
-          such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>vx</var>), <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
-          </pre>
+          <p>The cases in which |X| or |Y| is a triple pattern are covered by the
+            <a href="#defn_evalPP_WithTriplePatterns">Evaluation of Property Path Patterns with Triple Patterns</a>.</p>
         </div>
         <p>We define an auxiliary function, <a href="#defn_evalALP">ALP</a>, used in the definitions of <a href="#defn_evalZeroOrMorePath">ZeroOrMorePath</a> and
           <a href="#defn_evalOneOrMorePath">OneOrMorePath</a>. Note that the algorithm given here serves to specify the feature. An
@@ -10628,32 +10603,9 @@ ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOr
 ppeval(<var>x</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) = 
     { { } } if { (<var>vy</var>:var,<var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
     { } otherwise
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:term) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>)
-          such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>) is not empty }
-
-ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
-          such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>X</var>, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
-          such that <var>μ</var>(<var>X</var>) and <var>μ</var>(<var>Y</var>) are triple terms in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; {<var>vy</var>}
-          such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>μ</var>(<var>vy</var>)) is not empty }
-
-ppeval(<var>vx</var>:var, <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>) &cup; {<var>vx</var>}
-          such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>vx</var>), <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
           </pre>
+          <p>The cases in which |X| or |Y| is a triple pattern are covered by the
+            <a href="#defn_evalPP_WithTriplePatterns">Evaluation of Property Path Patterns with Triple Patterns</a>.</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="defn_evalOneOrMorePath">Evaluation of OneOrMorePath</span></b></p>
@@ -10684,32 +10636,9 @@ ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMo
 ppeval(<var>x</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>y</var>:term) =
     { { } } if { (<var>vy</var>:var, <var>y</var>) } in ppeval(<var>x</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>)
     { } otherwise
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>Y</var>:term) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>)
-          such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>Y</var>) is not empty }
-
-ppeval(<var>X</var>:term, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
-          such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>X</var>, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
-          such that <var>μ</var>(<var>X</var>) and <var>μ</var>(<var>Y</var>) are triple terms in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>vy</var>:var) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; {<var>vy</var>}
-          such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>μ</var>(<var>vy</var>)) is not empty }
-
-ppeval(<var>vx</var>:var, <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>Y</var>:TP) =
-    { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>) &cup; {<var>vx</var>}
-          such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>vx</var>), <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe</var>), <var>μ</var>(<var>Y</var>)) is not empty }
 </pre>
+          <p>The cases in which |x| or |y| is a triple pattern are covered by the
+            <a href="#defn_evalPP_WithTriplePatterns">Evaluation of Property Path Patterns with Triple Patterns</a>.</p>
         </div>
         <div class="defn">
           <p><b>Definition: <span id="eval_negatedPropertySet">Evaluation of NegatedPropertySet</span></b></p>
@@ -10731,31 +10660,58 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</v
 ppeval(<var>x</var>:term, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>y</var>:term) =
      { {} |
          ∃ an IRI <var>p</var> such that <var>p</var> ∉ <var>S</var> and the triple (<var>x</var>, <var>p</var>, <var>y</var>) is in <var>G</var> }
-
-ppeval(<var>X</var>:TP, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>Y</var>:term) =
+          </pre>
+          <p>The cases in which |x| or |y| is a triple pattern are covered by the
+            <a href="#defn_evalPP_WithTriplePatterns">Evaluation of Property Path Patterns with Triple Patterns</a>.</p>
+        </div>
+        <p>The following definition of the evaluation of property path patterns with triple patterns
+          covers only cases in which the <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a> is
+          <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>,
+          <a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>,
+          <a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>, or
+          <a href="#defn_ppeNPS" class="ppeOp">NPS</a>.
+          The cases in which the algebraic property path expression is of any of the other types
+          (<a href="#defn_ppeLink" class="ppeOp">Link</a>,
+          <a href="#defn_ppeSeq" class="ppeOp">Seq</a>,
+          <a href="#defn_ppeAlt" class="ppeOp">Alt</a>, and
+          <a href="#defn_ppeInv" class="ppeOp">Inv</a>)
+          are already covered indirectly by the corresponding definitions above.</p>
+        <div class="defn">
+          <p><b>Definition: <span id="defn_evalPP_WithTriplePatterns">Evaluation of Property Path Patterns with Triple Patterns</span></b></p>
+          <p>Let |ppe| be an <a href="#defn_AlgebraicPropertyPathExpression">algebraic property path expression</a>
+            of any of the following four forms:</p>
+          <ul>
+            <li><a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe'</var>)</li>
+            <li><a href="#defn_ppeZeroOrMorePath" class="ppeOp">ZeroOrMorePath</a>(<var>ppe'</var>)</li>
+            <li><a href="#defn_ppeOneOrMorePath" class="ppeOp">OneOrMorePath</a>(<var>ppe'</var>)</li>
+            <li><a href="#defn_ppeNPS" class="ppeOp">NPS</a>(|I|)</li>
+          </ul>
+          <p>Let |G| be the <a href="#defn_ActiveGraph">active graph</a>.</p>
+          <pre class="nohighlight">
+ppeval(<var>X</var>:TP, <var>ppe</var>, <var>Y</var>:term) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>)
           such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>Y</var>) is not empty }
+          and ppeval(<var>μ</var>(<var>X</var>), <var>ppe</var>, <var>Y</var>) is not empty }
 
-ppeval(<var>X</var>:term, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>Y</var>:TP) =
+ppeval(<var>X</var>:term, <var>ppe</var>, <var>Y</var>:TP) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
           such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>X</var>, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>μ</var>(<var>Y</var>)) is not empty }
+          and ppeval(<var>X</var>, <var>ppe</var>, <var>μ</var>(<var>Y</var>)) is not empty }
 
-ppeval(<var>X</var>:TP, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>Y</var>:TP) =
+ppeval(<var>X</var>:TP, <var>ppe</var>, <var>Y</var>:TP) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
           such that <var>μ</var>(<var>X</var>) and <var>μ</var>(<var>Y</var>) are triple terms in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>μ</var>(<var>Y</var>)) is not empty }
+          and ppeval(<var>μ</var>(<var>X</var>), <var>ppe</var>, <var>μ</var>(<var>Y</var>)) is not empty }
 
-ppeval(<var>X</var>:TP, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>vy</var>:var) =
+ppeval(<var>X</var>:TP, <var>ppe</var>, <var>vy</var>:var) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; {<var>vy</var>}
           such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>X</var>), <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>μ</var>(<var>vy</var>)) is not empty }
+          and ppeval(<var>μ</var>(<var>X</var>), <var>ppe</var>, <var>μ</var>(<var>vy</var>)) is not empty }
 
-ppeval(<var>vx</var>:var, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>Y</var>:TP) =
+ppeval(<var>vx</var>:var, <var>ppe</var>, <var>Y</var>:TP) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>) &cup; {<var>vx</var>}
           such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
-          and ppeval(<var>μ</var>(<var>vx</var>), <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</var>), <var>μ</var>(<var>Y</var>)) is not empty }
+          and ppeval(<var>μ</var>(<var>vx</var>), <var>ppe</var>, <var>μ</var>(<var>Y</var>)) is not empty }
           </pre>
         </div>
       </section>
