@@ -10690,27 +10690,27 @@ ppeval(<var>x</var>:term, <a href="#defn_ppeNPS" class="ppeOp">NPS</a>(<var>S</v
           <pre class="nohighlight">
 ppeval(<var>X</var>:TP, <var>ppe</var>, <var>Y</var>:term) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>)
-          such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
+          such that the triple term <var>μ</var>(<var>X</var>) is in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
           and ppeval(<var>μ</var>(<var>X</var>), <var>ppe</var>, <var>Y</var>) is not empty }
 
 ppeval(<var>X</var>:term, <var>ppe</var>, <var>Y</var>:TP) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
-          such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
+          such that the triple term <var>μ</var>(<var>Y</var>) is in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
           and ppeval(<var>X</var>, <var>ppe</var>, <var>μ</var>(<var>Y</var>)) is not empty }
 
 ppeval(<var>X</var>:TP, <var>ppe</var>, <var>Y</var>:TP) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>)
-          such that <var>μ</var>(<var>X</var>) and <var>μ</var>(<var>Y</var>) are triple terms in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
+          such that the triple terms <var>μ</var>(<var>X</var>) and <var>μ</var>(<var>Y</var>) are in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
           and ppeval(<var>μ</var>(<var>X</var>), <var>ppe</var>, <var>μ</var>(<var>Y</var>)) is not empty }
 
 ppeval(<var>X</var>:TP, <var>ppe</var>, <var>vy</var>:var) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>X</var>) &cup; {<var>vy</var>}
-          such that <var>μ</var>(<var>X</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
+          such that the triple term <var>μ</var>(<var>X</var>) is in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
           and ppeval(<var>μ</var>(<var>X</var>), <var>ppe</var>, <var>μ</var>(<var>vy</var>)) is not empty }
 
 ppeval(<var>vx</var>:var, <var>ppe</var>, <var>Y</var>:TP) =
     { <var>μ</var> | <var>μ</var> is a solution mapping with dom(<var>μ</var>) = <a href="#defn_VarsOfTriplePattern">vars</a>(<var>Y</var>) &cup; {<var>vx</var>}
-          such that <var>μ</var>(<var>Y</var>) is a triple term in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
+          such that the triple term <var>μ</var>(<var>Y</var>) is in <a href="#defn_nodeSet">nodes</a>(<var>G</var>)
           and ppeval(<var>μ</var>(<var>vx</var>), <var>ppe</var>, <var>μ</var>(<var>Y</var>)) is not empty }
           </pre>
         </div>
