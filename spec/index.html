@@ -10444,29 +10444,23 @@ The set <var>PV</var> is used later for projection (see Section&nbsp;<a href="#s
             <tbody>
               <tr>
                 <th>Write</th>
-                <th>When <code>|x|</code> is</th>
+                <th>If <code>|X|</code> is</th>
               </tr>
               <tr>
-                <td><code>|x|:term</code></td>
-                <td>an IRI or a literal</td>
+                <td><code>|X|:term</code></td>
+                <td>an IRI, a literal, or a triple term</td>
               </tr>
               <tr>
-                <td><code>|x|:var</code></td>
+                <td><code>|X|:var</code></td>
                 <td>a variable</td>
               </tr>
               <tr>
-                <td><code>|x|:TP</code></td>
+                <td><code>|X|:TP</code></td>
                 <td>a triple pattern</td>
               </tr>
             </tbody>
           </table>
         </div>
-<div class="ednote">
-  The table above needs to be extended with an entry for the case of |x| being a triple pattern,
-  and all the definitions in the rest of this section need to be extended for this case as well.
-  This work has been started in <a href="https://github.com/w3c/sparql-query/pull/396">PR #396</a>
-  but is currently on hold until the removal of blank nodes from the algebraic syntax is completed.
-</div>
 <div class="issue" data-number="349">
   The signature of `ppeval` should be extended to be:
   `ppeval`(|X|, |ppe|, |Y|, |G|),
