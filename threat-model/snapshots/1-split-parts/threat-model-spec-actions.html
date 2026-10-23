@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPARQL Spec Security Actions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&amp;family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&amp;display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#f7f7f5; --card:#fffffe; --sunk:#efefea;
+  --ink:#161a1d; --body:#2e3338; --muted:#6b7177; --faint:#8c9298;
+  --rule:#d9d9d3; --rule-soft:#e6e6e0;
+  --teal:#1f4e5f; --teal-lift:#2c6b80; --teal-wash:#e7eef0; --on-accent:#ffffff;
+  --crit:#8c1d18; --high:#b4531a; --med:#8a6d1f; --low:#4a6b4f;
+  --crit-wash:#f6e6e4; --high-wash:#f8ebe0; --med-wash:#f4efdd; --low-wash:#e8efe8;
+  --ff-head:"IBM Plex Sans Condensed",ui-sans-serif,system-ui,"Helvetica Neue",Arial,sans-serif;
+  --ff-body:"IBM Plex Serif",ui-serif,Georgia,"Times New Roman",serif;
+  --ff-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --measure:68ch;
+  --s1:.25rem; --s2:.5rem; --s3:.75rem; --s4:1rem; --s5:1.5rem; --s6:2rem; --s7:3rem; --s8:4.5rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#131619; --card:#191d21; --sunk:#1f2429;
+    --ink:#eceeef; --body:#c3c8cc; --muted:#8e959b; --faint:#737a80;
+    --rule:#2d3338; --rule-soft:#232830;
+    --teal:#7fb8c9; --teal-lift:#a3d0dd; --teal-wash:#1b2a30; --on-accent:#10161a;
+    --crit:#e8958c; --high:#e0a276; --med:#d4bd75; --low:#9bc0a2;
+    --crit-wash:#2e1c1a; --high-wash:#2e231a; --med-wash:#2b2719; --low-wash:#1c271f;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#131619; --card:#191d21; --sunk:#1f2429;
+  --ink:#eceeef; --body:#c3c8cc; --muted:#8e959b; --faint:#737a80;
+  --rule:#2d3338; --rule-soft:#232830;
+  --teal:#7fb8c9; --teal-lift:#a3d0dd; --teal-wash:#1b2a30; --on-accent:#10161a;
+  --crit:#e8958c; --high:#e0a276; --med:#d4bd75; --low:#9bc0a2;
+  --crit-wash:#2e1c1a; --high-wash:#2e231a; --med-wash:#2b2719; --low-wash:#1c271f;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--body);
+  font-family:var(--ff-body); font-size:16.5px; line-height:1.62;
+  font-feature-settings:"kern" 1;
+}
+img{max-width:100%}
+[hidden]{display:none!important}
+::selection{background:var(--teal-wash); color:var(--ink)}
+a{color:var(--teal); text-decoration-thickness:1px; text-underline-offset:2px}
+a:hover{color:var(--teal-lift)}
+:focus-visible{outline:2px solid var(--teal-lift); outline-offset:2px; border-radius:2px}
+
+/* ---------- shell ---------- */
+.shell{display:grid; grid-template-columns:15.5rem minmax(0,1fr); gap:0; max-width:92rem; margin:0 auto}
+.rail{
+  grid-column:1; border-right:1px solid var(--rule); padding:var(--s6) var(--s4) var(--s7) var(--s5);
+  position:sticky; top:0; align-self:start; max-height:100vh; overflow-y:auto;
+}
+.col{grid-column:2; padding:var(--s6) var(--s6) var(--s8) var(--s7); min-width:0}
+@media (max-width:62rem){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{grid-column:1; position:static; max-height:none; border-right:0; border-bottom:1px solid var(--rule); padding:var(--s5) var(--s4)}
+  .col{grid-column:1; padding:var(--s5) var(--s4) var(--s7)}
+}
+
+/* ---------- nav ---------- */
+.rail-ti{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--faint); margin:0 0 var(--s3)}
+.nav{list-style:none; margin:0 0 var(--s5); padding:0; display:flex; flex-direction:column; gap:1px}
+.nav a{
+  display:flex; align-items:baseline; gap:.5rem; padding:.3rem .45rem; border-radius:3px;
+  font-family:var(--ff-head); font-size:.875rem; line-height:1.3; color:var(--body); text-decoration:none;
+}
+.nav a:hover{background:var(--sunk); color:var(--ink)}
+.nav a.on{background:var(--teal-wash); color:var(--ink); font-weight:600}
+.nav .n{font-family:var(--ff-mono); font-size:.72rem; color:var(--faint); min-width:1.9rem; flex:none; font-variant-numeric:tabular-nums}
+.nav a.on .n{color:var(--teal)}
+.nav .ct{margin-left:auto; font-family:var(--ff-mono); font-size:.68rem; color:var(--faint); flex:none}
+.nav--sub a{padding-left:2.4rem; font-size:.825rem; color:var(--muted)}
+.nav--parts{margin-bottom:var(--s5); padding-bottom:var(--s4); border-bottom:1px solid var(--rule)}
+.nav--parts a{font-weight:600}
+.nav--parts a[aria-current="page"]{background:var(--teal); color:var(--on-accent)}
+.nav--parts a[aria-current="page"] .n{color:var(--on-accent)}
+.partbar{display:flex; flex-wrap:wrap; gap:var(--s2) var(--s3); align-items:baseline; margin:0 0 var(--s4); font-family:var(--ff-head); font-size:.85rem}
+.partbar .pb-l{font-size:.68rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--faint)}
+.partbar a{color:var(--teal); text-decoration:none; border-bottom:1px dotted currentColor}
+.partbar .cur{color:var(--ink); font-weight:600}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:2px solid var(--ink); padding-bottom:var(--s5); margin-bottom:var(--s5)}
+.eyebrow{
+  font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--teal); margin:0 0 var(--s3);
+  display:flex; flex-wrap:wrap; gap:.55rem; align-items:center;
+}
+.eyebrow .sep{color:var(--rule)}
+h1{
+  font-family:var(--ff-head); font-weight:700; font-size:clamp(2.3rem,5.4vw,3.6rem);
+  line-height:1.02; letter-spacing:-.018em; color:var(--ink); margin:0; text-wrap:balance;
+}
+.mast .sub{
+  font-family:var(--ff-head); font-weight:400; font-size:clamp(1.05rem,2.2vw,1.35rem);
+  color:var(--muted); margin:var(--s2) 0 0; letter-spacing:-.005em;
+}
+.facts{
+  list-style:none; margin:var(--s5) 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:var(--s4) var(--s5);
+}
+.facts dt{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--faint); margin-bottom:.1rem}
+.facts dd{margin:0; font-size:.9rem; color:var(--ink)}
+.facts dd code{font-size:.84rem}
+
+/* ---------- status banner ---------- */
+.status{
+  border:1px solid var(--rule); border-left:3px solid var(--high);
+  background:var(--card); padding:var(--s4) var(--s4) var(--s4) var(--s5);
+  margin:var(--s5) 0 var(--s6); border-radius:0 3px 3px 0; max-width:var(--measure);
+}
+.status p{margin:0; font-size:.93rem; color:var(--body)}
+.status strong{font-family:var(--ff-head); color:var(--ink); font-weight:600}
+
+/* ---------- headings ---------- */
+h2{
+  font-family:var(--ff-head); font-weight:700; font-size:1.95rem; line-height:1.14; letter-spacing:-.012em;
+  color:var(--ink); margin:var(--s8) 0 var(--s4); padding-top:var(--s4);
+  border-top:1px solid var(--rule); text-wrap:balance;
+  display:flex; gap:.7rem; align-items:baseline;
+}
+h2 .hn{font-family:var(--ff-mono); font-size:1rem; font-weight:500; color:var(--teal); flex:none; font-variant-numeric:tabular-nums}
+h2:first-of-type{margin-top:var(--s6)}
+h3{font-family:var(--ff-head); font-weight:600; font-size:1.3rem; line-height:1.2; color:var(--ink); margin:var(--s6) 0 var(--s3); text-wrap:balance}
+h3 .hn{font-family:var(--ff-mono); font-size:.86rem; font-weight:500; color:var(--faint); margin-right:.45rem}
+h4{font-family:var(--ff-head); font-weight:600; font-size:1.08rem; line-height:1.25; color:var(--ink); margin:0; text-wrap:balance}
+h5{
+  font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--faint); margin:var(--s4) 0 var(--s2);
+}
+p{margin:0 0 var(--s4); max-width:var(--measure)}
+.lede{font-size:1.06rem; color:var(--body)}
+ul,ol{margin:0 0 var(--s4); padding-left:1.35rem; max-width:var(--measure)}
+li{margin-bottom:.4rem}
+li>ul,li>ol{margin-top:.4rem; margin-bottom:.2rem}
+strong{color:var(--ink); font-weight:600}
+em{font-style:italic}
+hr{border:0; border-top:1px solid var(--rule); margin:var(--s6) 0}
+
+/* ---------- code & anchors ---------- */
+code,kbd{font-family:var(--ff-mono); font-size:.855em; font-feature-settings:"zero" 1}
+p code,li code,td code,dd code,h4 code{
+  background:var(--sunk); padding:.08em .34em; border-radius:2px; color:var(--ink);
+}
+pre{
+  font-family:var(--ff-mono); font-size:.8rem; line-height:1.55; margin:0 0 var(--s4);
+  background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--teal);
+  padding:var(--s3) var(--s4); overflow-x:auto; border-radius:0 3px 3px 0; color:var(--ink);
+  max-width:var(--measure);
+}
+pre code{background:none; padding:0; font-size:1em}
+.ebnf{border-left-color:var(--med)}
+a.spec{
+  font-family:var(--ff-mono); font-size:.82em; white-space:nowrap;
+  color:var(--teal); text-decoration:none; border-bottom:1px dotted currentColor;
+}
+a.spec:hover{border-bottom-style:solid; background:var(--teal-wash)}
+a.spec::before{content:"§"; margin-right:.12em; opacity:.6}
+
+/* ---------- chips ---------- */
+.sev,.chip{
+  display:inline-flex; align-items:center; gap:.3rem; font-family:var(--ff-head);
+  font-size:.705rem; font-weight:600; letter-spacing:.055em; text-transform:uppercase;
+  padding:.15rem .45rem; border-radius:2px; border:1px solid; white-space:nowrap;
+}
+.sev::before{content:""; width:.42rem; height:.42rem; border-radius:50%; background:currentColor; flex:none}
+.sev-c{color:var(--crit); background:var(--crit-wash); border-color:var(--crit)}
+.sev-h{color:var(--high); background:var(--high-wash); border-color:var(--high)}
+.sev-m{color:var(--med); background:var(--med-wash); border-color:var(--med)}
+.sev-l{color:var(--low); background:var(--low-wash); border-color:var(--low)}
+.sev-n{color:var(--faint); background:transparent; border-color:var(--rule)}
+.sev-n::before{background:none; border:1px solid currentColor}
+.chip{color:var(--muted); background:var(--sunk); border-color:var(--rule-soft); font-weight:500}
+.chip-p{color:var(--teal); background:var(--teal-wash); border-color:var(--teal); font-family:var(--ff-mono); letter-spacing:0; text-transform:none}
+
+/* ---------- controls ---------- */
+.controls{
+  position:sticky; top:0; z-index:5; background:var(--paper);
+  border-bottom:1px solid var(--rule); padding:var(--s3) 0 var(--s3);
+  margin:0 0 var(--s5); display:flex; flex-wrap:wrap; gap:var(--s4) var(--s5); align-items:center;
+}
+.ctl{display:flex; align-items:center; gap:.5rem; flex-wrap:wrap}
+.ctl-lb{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--faint)}
+.seg{display:flex; border:1px solid var(--rule); border-radius:3px; overflow:hidden; background:var(--card)}
+.seg button{
+  font-family:var(--ff-mono); font-size:.78rem; padding:.28rem .6rem; border:0; background:none;
+  color:var(--muted); cursor:pointer; border-right:1px solid var(--rule-soft); line-height:1.4;
+}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--sunk); color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--teal); color:var(--on-accent); font-weight:600}
+.legend{display:flex; gap:.45rem; flex-wrap:wrap; align-items:center}
+.pfnote{font-size:.85rem; color:var(--muted); margin:0; font-style:italic}
+
+/* ---------- threat entries ---------- */
+.cat{margin:var(--s7) 0 0}
+.cat-hd{border-top:2px solid var(--teal); padding-top:var(--s3); margin-bottom:var(--s4)}
+.cat-hd h3{margin:0}
+.cat-hd .cat-note{font-size:.95rem; color:var(--muted); margin:var(--s2) 0 0; max-width:var(--measure)}
+.threat{
+  border:1px solid var(--rule); background:var(--card); border-radius:3px;
+  padding:var(--s4) var(--s5); margin:0 0 var(--s4); scroll-margin-top:5rem;
+}
+.threat.dim{opacity:.42}
+.threat.dim .tbody{display:none}
+.threat-hd{display:flex; flex-wrap:wrap; gap:var(--s2) var(--s4); align-items:baseline; margin-bottom:var(--s2)}
+.tid{
+  font-family:var(--ff-mono); font-size:.76rem; font-weight:600; letter-spacing:.02em;
+  color:var(--teal); background:var(--teal-wash); border:1px solid var(--teal);
+  padding:.1rem .4rem; border-radius:2px; flex:none; text-decoration:none;
+}
+a.tid:hover{background:var(--teal); color:var(--on-accent)}
+.threat-hd h4{flex:1 1 20rem; min-width:0}
+.rating{
+  display:flex; flex-wrap:wrap; gap:var(--s2) var(--s4); margin:var(--s2) 0 var(--s3);
+  padding:var(--s2) 0; border-top:1px solid var(--rule-soft); border-bottom:1px solid var(--rule-soft);
+}
+.rating>div{display:flex; align-items:center; gap:.4rem}
+.rating dt{font-family:var(--ff-head); font-size:.67rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+.rating dd{margin:0; font-size:.86rem; color:var(--ink); font-family:var(--ff-head)}
+.rating .qual{font-family:var(--ff-mono); font-size:.76rem; color:var(--muted)}
+.tbody>*:last-child{margin-bottom:0}
+.tbody p,.tbody ul,.tbody ol{max-width:var(--measure)}
+.tbody>h5:first-child{margin-top:0}
+.xref{font-family:var(--ff-mono); font-size:.76rem; color:var(--muted); white-space:nowrap}
+.xref a{color:var(--teal); text-decoration:none; border-bottom:1px dotted currentColor}
+
+/* ---------- blockquote ---------- */
+blockquote{
+  margin:0 0 var(--s4); padding:var(--s3) var(--s4); max-width:var(--measure);
+  background:var(--sunk); border-left:3px solid var(--med); border-radius:0 3px 3px 0;
+}
+blockquote p{margin:0; font-style:italic; color:var(--ink); font-size:.95rem}
+blockquote p+p{margin-top:var(--s2)}
+blockquote cite{display:block; margin-top:var(--s2); font-style:normal; font-family:var(--ff-mono); font-size:.76rem; color:var(--muted)}
+.callout{
+  border:1px solid var(--teal); background:var(--teal-wash); border-radius:3px;
+  padding:var(--s4); margin:0 0 var(--s4); max-width:var(--measure);
+}
+.callout>*:last-child{margin-bottom:0}
+.callout h5{margin-top:0; color:var(--teal)}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; margin:0 0 var(--s5); border:1px solid var(--rule); border-radius:3px; background:var(--card)}
+table{border-collapse:collapse; width:100%; font-size:.875rem; font-family:var(--ff-head)}
+caption{
+  caption-side:top; text-align:left; padding:var(--s3) var(--s4); border-bottom:1px solid var(--rule);
+  font-family:var(--ff-head); font-size:.82rem; color:var(--muted); background:var(--sunk);
+}
+caption strong{color:var(--ink)}
+th,td{padding:.42rem .6rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--rule-soft)}
+thead th{
+  font-size:.68rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--faint); background:var(--sunk); border-bottom:1px solid var(--rule); white-space:nowrap;
+  position:sticky; top:0;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--sunk)}
+td code,th code{font-size:.8rem}
+.matrix td.r{text-align:center; font-family:var(--ff-mono); font-size:.76rem; font-weight:600; width:3.4rem}
+.matrix td.r[data-v="c"]{color:var(--crit); background:var(--crit-wash)}
+.matrix td.r[data-v="h"]{color:var(--high); background:var(--high-wash)}
+.matrix td.r[data-v="m"]{color:var(--med); background:var(--med-wash)}
+.matrix td.r[data-v="l"]{color:var(--low); background:var(--low-wash)}
+.matrix td.r[data-v="n"]{color:var(--faint)}
+.matrix td.id{white-space:nowrap}
+.matrix td.id a{font-family:var(--ff-mono); font-size:.78rem; color:var(--teal); text-decoration:none}
+.matrix td.id a:hover{text-decoration:underline}
+.matrix th.rh{text-align:center; width:3.4rem}
+.matrix th.rh .rh-s{display:block; font-weight:400; letter-spacing:0; text-transform:none; font-size:.62rem; color:var(--faint)}
+.matrix.focus td.r{opacity:.3}
+.matrix.focus td.r.on{opacity:1; outline:1px solid var(--teal); outline-offset:-1px}
+
+/* ---------- figures ---------- */
+figure{margin:0 0 var(--s5); max-width:54rem}
+figure svg{display:block; width:100%; height:auto; color:var(--ink)}
+figcaption{
+  font-size:.85rem; color:var(--muted); margin-top:var(--s3); padding-top:var(--s2);
+  border-top:1px solid var(--rule-soft); max-width:var(--measure);
+}
+figcaption b{font-family:var(--ff-head); color:var(--ink); font-weight:600}
+.svg-frame{border:1px solid var(--rule); background:var(--card); border-radius:3px; padding:var(--s4); overflow-x:auto}
+
+/* ---------- checklists ---------- */
+.cl{list-style:none; padding:0; margin:0 0 var(--s5); max-width:var(--measure);
+  display:flex; flex-direction:column; gap:1px}
+.cl li{
+  display:flex; gap:.6rem; align-items:flex-start; margin:0; padding:.42rem .5rem;
+  font-size:.92rem; border-bottom:1px solid var(--rule-soft);
+}
+.cl li:hover{background:var(--card)}
+.cl li::before{
+  content:""; flex:none; width:.85rem; height:.85rem; margin-top:.32rem;
+  border:1.5px solid var(--muted); border-radius:2px;
+}
+.cl .to{margin-left:auto; flex:none; font-family:var(--ff-mono); font-size:.72rem; color:var(--faint); white-space:nowrap; padding-left:.5rem}
+.cl .to a{color:var(--teal); text-decoration:none}
+.cl-hd{font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--teal); margin:var(--s5) 0 var(--s2)}
+
+/* ---------- misc ---------- */
+.deck{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:var(--s4); margin:0 0 var(--s5)}
+.deck .cell{border:1px solid var(--rule); background:var(--card); border-radius:3px; padding:var(--s4)}
+.deck .cell h5{margin-top:0}
+.deck .cell p{margin-bottom:0; font-size:.9rem; max-width:none}
+.deck .cell .k{font-family:var(--ff-mono); font-size:.76rem; color:var(--teal); font-weight:600}
+.foot{margin-top:var(--s8); padding-top:var(--s4); border-top:2px solid var(--ink); font-size:.85rem; color:var(--muted)}
+.foot p{max-width:var(--measure)}
+.skip{position:absolute; left:-9999px}
+.skip:focus{left:var(--s4); top:var(--s4); z-index:20; background:var(--card); color:var(--ink); padding:var(--s2) var(--s3); border:1px solid var(--teal); border-radius:3px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important; transition:none!important; scroll-behavior:auto!important}}
+@media print{
+  .rail,.controls{display:none}
+  .shell{grid-template-columns:1fr; max-width:none}
+  .col{grid-column:1; padding:0}
+  .threat{break-inside:avoid; border-color:#999}
+  body{background:#fff; color:#000; font-size:10pt}
+}
+
+/* ---------- diagrams ---------- */
+.dg{font-family:var(--ff-head)}
+.dg .bx{fill:var(--card); stroke:var(--rule); stroke-width:1.5}
+.dg .bx-s{fill:var(--sunk); stroke:var(--rule); stroke-width:1.5}
+.dg .lb{fill:var(--ink); font-size:13px; font-weight:600}
+.dg .lb-s{fill:var(--muted); font-size:10.5px; font-weight:400}
+.dg .mono{font-family:var(--ff-mono)}
+.dg .tb{stroke:var(--faint); stroke-width:1.4; stroke-dasharray:6 5; fill:none}
+.dg .tb-lb{fill:var(--faint); font-size:10px; font-weight:700; letter-spacing:.09em}
+.dg .fl{stroke:var(--ink); stroke-width:1.5; fill:none}
+.dg .fl-lb{fill:var(--muted); font-size:10.5px; font-family:var(--ff-mono)}
+.dg .th{stroke:var(--high); stroke-width:2; fill:none}
+.dg .th-lb{fill:var(--high); font-size:10.5px; font-family:var(--ff-mono); font-weight:500}
+.dg .th-bx{fill:var(--high-wash); stroke:var(--high); stroke-width:1.5}
+.dg .th-tx{fill:var(--high); font-size:12px; font-weight:600}
+.dg .ok{stroke:var(--low); stroke-width:2; fill:none}
+.dg .ok-lb{fill:var(--low); font-size:10.5px; font-family:var(--ff-mono); font-weight:500}
+.dg .ok-bx{fill:var(--low-wash); stroke:var(--low); stroke-width:1.5}
+.dg .ok-tx{fill:var(--low); font-size:12px; font-weight:600}
+.dg .ar-ink{fill:var(--ink)}
+.dg .ar-th{fill:var(--high)}
+.dg .ar-ok{fill:var(--low)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+<nav class="rail" aria-label="Contents">
+  <p class="rail-ti">Threat model &#183; 3 parts</p>
+  <ul class="nav nav--parts">
+      <li><a href="threat-model.html"><span class="n">1</span>Analysis</a></li>
+      <li><a href="#main" aria-current="page"><span class="n">2</span>Spec actions</a></li>
+      <li><a href="threat-model-advice.html"><span class="n">3</span>Advice</a></li>
+    </ul>
+  <p class="rail-ti">This part</p>
+  <ul class="nav">
+    <li><a href="#recs"><span class="n">6</span>Recommendations</a></li>
+  </ul>
+</nav>
+
+<div class="col">
+<header class="mast">
+  <p class="eyebrow"><span>W3C RDF-star Working Group</span><span class="sep">/</span><span>Working document</span><span class="sep">/</span><span>Part 2 of 3</span></p>
+  <h1>Specification Actions</h1>
+  <p class="sub">SPARQL 1.2 Query Language threat model</p>
+  <dl class="facts">
+    <div><dt>Subject</dt><dd><code>spec/index.html</code> — Editor's Draft</dd></div>
+    <div><dt>Reviewed at</dt><dd><code>7f707ff</code> · 2026-10-01</dd></div>
+    <div><dt>Recommendations</dt><dd>4 — R-1 to R-4</dd></div>
+    <div><dt>This part</dt><dd>Editorial actions for the WG</dd></div>
+  </dl>
+</header>
+
+<div class="status">
+  <p><strong>Status.</strong> Analysis input for the <a class="spec" href="../../../spec/index.html#security">security</a> and <a class="spec" href="../../../spec/index.html#privacy">privacy</a> sections of the Editor's Draft. This is not a W3C publication, carries no normative weight, and does not represent Working Group consensus. Section references are given as stable fragment ids rather than published section numbers, because the numbers are generated by ReSpec and move as the draft changes.</p>
+</div>
+
+<main id="main">
+
+<p class="partbar"><span class="pb-l">Threat model</span> <a href="threat-model.html">1. Analysis</a> <span class="cur">2. Spec actions</span> <a href="threat-model-advice.html">3. Advice</a> </p>
+
+<h2 id="recs"><span class="hn">6</span>Recommendations for the specification</h2>
+<p>Ordered by the gap each one closes. <a href="#R-1">R-1</a> through <a href="#R-3">R-3</a> are the substantive ones.</p>
+
+<h3 id="R-1"><span class="hn">R-1</span>State that imposing resource limits and refusing queries is conforming behaviour</h3>
+<p><strong>Gap.</strong> Per <a href="threat-model.html#scope">&#167;1.4</a>, the only refusal licence in the document is dataset-shaped. <a class="spec" href="../../../spec/index.html#conformance">conformance</a> addresses query strings, results and media type, and says nothing about a service declining or aborting work. Every mitigation in <a href="threat-model.html#cat-dos">&#167;3.B</a> therefore has no conformance cover, and an implementer can reasonably read the spec as requiring unbounded effort on any syntactically valid query.</p>
+<p><strong>Recommendation.</strong> Add to <a class="spec" href="../../../spec/index.html#security">security</a>, with a cross-reference from <a class="spec" href="../../../spec/index.html#conformance">conformance</a>, language to the effect that: SPARQL defines the results of a query, not the resources required to produce them; several constructs &mdash; notably unbounded property paths, nested <code>OPTIONAL</code>, <code>EXISTS</code>, aggregation and regular-expression matching &mdash; permit short queries whose evaluation cost grows superlinearly in the data or the query; a service <strong>MAY</strong> impose implementation-defined limits on query complexity, evaluation time, memory, intermediate and final result size, nesting depth, and string and numeric magnitude, and <strong>MAY</strong> refuse or abort a request that exceeds them; and a service that does so remains conforming.</p>
+<p>The last clause is the point: without it, hardening looks like non-conformance.</p>
+
+<h3 id="R-2"><span class="hn">R-2</span>Draft the privacy section (currently <code>TODO</code>)</h3>
+<p>Candidate content, each item traced to a threat above.</p>
+<ol>
+  <li><strong>Query text is sensitive.</strong> Queries carry the selectors &mdash; identifiers, locations, contact details. They accumulate in logs, URLs, <code>Referer</code> headers and shared links, which are rarely classified at the sensitivity of the data they select over. Prefer POST; classify, redact and set retention on query logs. <span class="xref">(<a href="threat-model.html#SQ-CONF-07">SQ-CONF-07</a>)</span></li>
+  <li><strong>Dereference discloses interest to third parties.</strong> <code>FROM</code>, <code>FROM NAMED</code> and <code>SERVICE</code> reveal to an external party which graphs a requester is interested in. <span class="xref">(<a href="threat-model.html#SQ-CONF-07">SQ-CONF-07</a>, <a href="threat-model.html#SQ-NET-03">SQ-NET-03</a>)</span></li>
+  <li><strong>Hashing is not de-identification.</strong> An unsalted hash of a low-entropy identifier &mdash; email, phone number, national id &mdash; is reversible by enumeration; providing <code>MD5</code>/<code>SHA1</code>/<code>SHA2</code> does not make such a construction anonymizing. <span class="xref">(<a href="threat-model.html#SQ-CONF-06">SQ-CONF-06</a>)</span></li>
+  <li><strong>Aggregate-only exposure is not anonymity.</strong> Differencing over <code>COUNT</code> recovers individual facts. <span class="xref">(<a href="threat-model.html#SQ-CONF-08">SQ-CONF-08</a>)</span></li>
+  <li><strong>Joining enables re-identification,</strong> and federation does it across administrative and jurisdictional boundaries as a side effect of evaluation. <span class="xref">(<a href="threat-model.html#SQ-CONF-08">SQ-CONF-08</a>)</span></li>
+  <li><strong>Metadata is data.</strong> Graph names and predicate vocabularies are enumerable in one query and commonly encode tenant, customer and case identifiers. <span class="xref">(<a href="threat-model.html#SQ-CONF-02">SQ-CONF-02</a>)</span></li>
+  <li><strong>Blank node labels should not be correlatable</strong> across result sets, since the language's scoping rules permit &mdash; but do not require &mdash; opaque per-result-set labels. <span class="xref">(<a href="threat-model.html#SQ-CONF-05">SQ-CONF-05</a>)</span></li>
+</ol>
+
+<h3 id="R-3"><span class="hn">R-3</span>Extend the security section</h3>
+<p>The section is inherited largely unchanged from SPARQL 1.1 and predates <code>SERVICE</code> being in this grammar, triple terms, and the escape-processing change. Suggested additions, with the existing dereference, <code>file:</code>, extension and confusables paragraphs retained.</p>
+<div class="tw">
+<table>
+  <thead><tr><th>Add</th><th>Substance</th><th>Threat</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Resource limits</strong></td><td>Per <a href="#R-1">R-1</a></td><td><a href="threat-model.html#cat-dos">&#167;3.B</a></td></tr>
+    <tr><td><strong>No access-control model</strong></td><td>The language defines no authorization; <code>GRAPH ?g</code> ranges over all named graphs in the active dataset; where dataset choice is a security boundary, set it in the protocol request and refuse in-query dataset descriptions &mdash; both explicitly permitted today</td><td><a href="threat-model.html#SQ-CONF-01">SQ-CONF-01</a></td></tr>
+    <tr><td><strong><code>SERVICE</code></strong></td><td>Not mentioned at all, though <code>ServiceGraphPattern</code> is in this grammar. Note that the endpoint may be a <strong>variable</strong> bound at evaluation time, so static inspection of query text cannot allowlist it; that federated evaluation sends local bindings outward and so is an <strong>exfiltration</strong> channel independent of what the client is shown; and that <code>SILENT</code> suppresses errors from the client but should still be logged</td><td><a href="threat-model.html#SQ-NET-03">SQ-NET-03</a></td></tr>
+    <tr><td><strong>Exfiltration direction</strong></td><td>The current text covers inbound indirection only. Outbound data flow is the more severe case</td><td><a href="threat-model.html#SQ-NET-03">SQ-NET-03</a></td></tr>
+    <tr><td><strong>Scheme restriction</strong></td><td>Make the existing <code>file:</code> observation actionable: services dereferencing IRIs should restrict schemes and refuse loopback, link-local and private address ranges, re-checking after redirects</td><td><a href="threat-model.html#SQ-NET-01">SQ-NET-01</a>, <a href="threat-model.html#SQ-NET-02">SQ-NET-02</a></td></tr>
+    <tr><td><strong>Query injection</strong></td><td>Applications constructing queries from untrusted input should use parameterized construction over string concatenation; if text must be built, escape per <a class="spec" href="../../../spec/index.html#sec-escapes">sec-escapes</a>. Note the comment-termination vector, since <code>#</code> comments end at U+000A or U+000D</td><td><a href="threat-model.html#SQ-INJ-01">SQ-INJ-01</a></td></tr>
+    <tr><td><strong>Escape processing</strong> <span class="chip">a hardening</span></td><td>Processing escapes during parsing rather than before, with no rescanning of substituted output, removes an injection class present in SPARQL 1.1; excluding surrogates from numeric escapes removes an ill-formed-UTF-8 smuggling class. Implementations retaining a 1.1-era pre-parse pass are non-conforming <strong>and</strong> vulnerable</td><td><a href="threat-model.html#SQ-INJ-04">SQ-INJ-04</a></td></tr>
+    <tr><td><strong>Nesting limits</strong></td><td>Grammar recursion is unbounded; limits should be applied after syntactic-sugar expansion, and in recursive term walkers as well as the parser</td><td><a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a>, <a href="threat-model.html#SQ-DOS-07">SQ-DOS-07</a></td></tr>
+    <tr><td><strong>Blank node labels</strong></td><td>Should be opaque and scoped to one result set; deriving them from storage identifiers or from solution content leaks internal structure and enables cross-query correlation</td><td><a href="threat-model.html#SQ-CONF-05">SQ-CONF-05</a></td></tr>
+    <tr><td><strong><code>RAND</code>, <code>UUID</code>, <code>STRUUID</code></strong></td><td>Not cryptographic; must not generate secrets, tokens or capability identifiers. <code>UUID()</code>'s version being implementation-dependent means a conforming result may be predictable and host-identifying</td><td><a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></td></tr>
+    <tr><td><strong>MD5 / SHA-1</strong></td><td>Legacy; unsuitable for security purposes. In-engine hashing also permits bulk guessing against values the requester cannot read</td><td><a href="threat-model.html#SQ-CONF-06">SQ-CONF-06</a></td></tr>
+    <tr><td><strong><code>DESCRIBE</code></strong></td><td>Implementation-defined and unbounded; a neighbourhood walk can cross an authorization boundary in a way no pattern-level control can inspect</td><td><a href="threat-model.html#SQ-CONF-04">SQ-CONF-04</a></td></tr>
+    <tr><td><strong>Extension functions</strong></td><td>Run with the engine's privileges. Function IRIs must not be resolved dynamically and must never be dereferenced; registration should be a privileged deployment-time action</td><td><a href="threat-model.html#SQ-EXT-01">SQ-EXT-01</a></td></tr>
+    <tr><td><strong>Parser differentials</strong></td><td>A control that inspects query text can be desynchronized from the engine; enforce policy on the translated algebra. <a class="spec" href="../../../spec/index.html#whitespace">whitespace</a>'s <code>?a&lt;?b&amp;&amp;?c&gt;?d</code> example is the cautionary case</td><td><a href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a></td></tr>
+    <tr><td><strong>Triple terms mention, not assert</strong></td><td>A triple term's presence is not an assertion, and a reifier's identity is not provenance. Relevant precisely because provenance is reification's main use</td><td><a href="threat-model.html#SQ-ID-03">SQ-ID-03</a></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="R-4"><span class="hn">R-4</span>Smaller, optional notes</h3>
+<ul>
+  <li><a class="spec" href="../../../spec/index.html#propertypath-arbitrary-length">propertypath-arbitrary-length</a> &mdash; a non-normative note that termination is guaranteed but cost is not, and that evaluation may be quadratic in graph size when both endpoints are unbound. The section currently reassures on termination, which could be read as reassurance about cost.</li>
+  <li><a class="spec" href="../../../spec/index.html#func-regex">func-regex</a> &mdash; a note that the pattern may be a variable and that backtracking implementations of <code>fn:matches</code> have exponential worst cases; implementations are encouraged to use a linear-time matcher. <strong>Worth WG discussion</strong>, since back-references in the XPath 3.1 regex language may be unimplementable in such a matcher &mdash; a genuine conformance-versus-safety tension.</li>
+  <li><a class="spec" href="../../../spec/index.html#modOrderBy">modOrderBy</a> &mdash; note that because the ordering is partial, consumers must not rely on result byte-equality for integrity checks without canonicalizing.</li>
+  <li><a class="spec" href="../../../spec/index.html#syntaxVersionAnnouncement">syntaxVersionAnnouncement</a> &mdash; note that a <code>VERSION</code> declaration is an author's announcement, not a verified property of the query, so processors should not gate on it for security purposes.</li>
+  <li><a class="spec" href="../../../spec/index.html#extensionFunctions">extensionFunctions</a> &mdash; the error-case extension licence is appropriate for interoperability, but worth a note that it means "this expression raises an error" is not a portable property, which affects anything built on error behaviour.</li>
+</ul>
+
+<footer class="foot">
+  <p><strong>Threat Model &mdash; SPARQL 1.2 Query Language, part 2 of 3: Spec actions.</strong> Analysis input for the <a class="spec" href="../../../spec/index.html#security">security</a> and <a class="spec" href="../../../spec/index.html#privacy">privacy</a> sections of the Editor's Draft. Reviewed against <code>spec/index.html</code> at commit <code>7f707ff</code>, 2026-10-01. Not a W3C publication; carries no normative weight; does not represent Working Group consensus.</p>
+  <p>The other parts are <code>threat-model.html</code>, <code>threat-model-advice.html</code>. Section and threat numbering is inherited from the undivided threat model, so identifiers such as <code>SQ-NET-03</code> and <code>R-1</code> mean the same thing in all three. A Markdown edition of this part is at <code>threat-model-spec-actions.md</code>.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "sq-tm-profile";
+  var seg = document.getElementById("pf");
+  var note = document.getElementById("pf-note");
+  var matrix = document.getElementById("matrix");
+  var threats = Array.prototype.slice.call(document.querySelectorAll(".threat"));
+  var LBL = {p1:"P1 public open endpoint", p2:"P2 authenticated multi-tenant", p3:"P3 embedded library",
+             p4:"P4 internal analytics", p5:"P5 federation participant"};
+  var NAME = {c:"critical", h:"high", m:"medium", l:"low", n:"not applicable"};
+
+  function apply(pf){
+    var shown = 0, counts = {c:0,h:0,m:0,l:0,n:0};
+    threats.forEach(function(el){
+      if (pf === "all"){ el.classList.remove("dim"); shown++; return; }
+      var v = el.getAttribute("data-" + pf) || "m";
+      counts[v] = (counts[v]||0) + 1;
+      var low = (v === "l" || v === "n");
+      el.classList.toggle("dim", low);
+      if (!low) shown++;
+    });
+    if (seg) Array.prototype.forEach.call(seg.querySelectorAll("button"), function(b){
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-pf") === pf));
+    });
+    if (matrix){
+      matrix.classList.toggle("focus", pf !== "all");
+      Array.prototype.forEach.call(matrix.querySelectorAll("td.r"), function(td){
+        td.classList.toggle("on", pf !== "all" && td.classList.contains("c-" + pf));
+      });
+    }
+    if (note){
+      note.textContent = (pf === "all")
+        ? "Showing all 34 threats."
+        : LBL[pf] + ": " + shown + " of 34 threats rated medium or above; " +
+          (counts.l + counts.n) + " dimmed as low or not applicable.";
+    }
+    try { window.localStorage.setItem(KEY, pf); } catch (e) {}
+  }
+
+  if (seg) seg.addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-pf]");
+    if (b) apply(b.getAttribute("data-pf"));
+  });
+
+  var start = "all";
+  try { var s = window.localStorage.getItem(KEY); if (s && (s === "all" || LBL[s])) start = s; } catch (e) {}
+  apply(start);
+
+  // scroll-spy on the rail
+  var links = Array.prototype.slice.call(document.querySelectorAll(".nav a[href^='#']"));
+  var targets = links.map(function(a){ return document.getElementById(a.getAttribute("href").slice(1)); });
+  if ("IntersectionObserver" in window){
+    var seen = new Set();
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ e.isIntersecting ? seen.add(e.target.id) : seen.delete(e.target.id); });
+      var hit = -1;
+      for (var i = 0; i < targets.length; i++){ if (targets[i] && seen.has(targets[i].id)){ hit = i; break; } }
+      links.forEach(function(a, i){ a.classList.toggle("on", i === hit); });
+    }, { rootMargin: "-12% 0px -70% 0px" });
+    targets.forEach(function(t){ if (t) io.observe(t); });
+  }
+})();
+</script>
+</body>
+</html>

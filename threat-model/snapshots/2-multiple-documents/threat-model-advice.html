@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPARQL Threat Mitigation Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&amp;family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&amp;display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#f7f7f5; --card:#fffffe; --sunk:#efefea;
+  --ink:#161a1d; --body:#2e3338; --muted:#6b7177; --faint:#8c9298;
+  --rule:#d9d9d3; --rule-soft:#e6e6e0;
+  --teal:#1f4e5f; --teal-lift:#2c6b80; --teal-wash:#e7eef0; --on-accent:#ffffff;
+  --crit:#8c1d18; --high:#b4531a; --med:#8a6d1f; --low:#4a6b4f;
+  --crit-wash:#f6e6e4; --high-wash:#f8ebe0; --med-wash:#f4efdd; --low-wash:#e8efe8;
+  --ff-head:"IBM Plex Sans Condensed",ui-sans-serif,system-ui,"Helvetica Neue",Arial,sans-serif;
+  --ff-body:"IBM Plex Serif",ui-serif,Georgia,"Times New Roman",serif;
+  --ff-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --measure:68ch;
+  --s1:.25rem; --s2:.5rem; --s3:.75rem; --s4:1rem; --s5:1.5rem; --s6:2rem; --s7:3rem; --s8:4.5rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#131619; --card:#191d21; --sunk:#1f2429;
+    --ink:#eceeef; --body:#c3c8cc; --muted:#8e959b; --faint:#737a80;
+    --rule:#2d3338; --rule-soft:#232830;
+    --teal:#7fb8c9; --teal-lift:#a3d0dd; --teal-wash:#1b2a30; --on-accent:#10161a;
+    --crit:#e8958c; --high:#e0a276; --med:#d4bd75; --low:#9bc0a2;
+    --crit-wash:#2e1c1a; --high-wash:#2e231a; --med-wash:#2b2719; --low-wash:#1c271f;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#131619; --card:#191d21; --sunk:#1f2429;
+  --ink:#eceeef; --body:#c3c8cc; --muted:#8e959b; --faint:#737a80;
+  --rule:#2d3338; --rule-soft:#232830;
+  --teal:#7fb8c9; --teal-lift:#a3d0dd; --teal-wash:#1b2a30; --on-accent:#10161a;
+  --crit:#e8958c; --high:#e0a276; --med:#d4bd75; --low:#9bc0a2;
+  --crit-wash:#2e1c1a; --high-wash:#2e231a; --med-wash:#2b2719; --low-wash:#1c271f;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--body);
+  font-family:var(--ff-body); font-size:16.5px; line-height:1.62;
+  font-feature-settings:"kern" 1;
+}
+img{max-width:100%}
+[hidden]{display:none!important}
+::selection{background:var(--teal-wash); color:var(--ink)}
+a{color:var(--teal); text-decoration-thickness:1px; text-underline-offset:2px}
+a:hover{color:var(--teal-lift)}
+:focus-visible{outline:2px solid var(--teal-lift); outline-offset:2px; border-radius:2px}
+
+/* ---------- shell ---------- */
+.shell{display:grid; grid-template-columns:15.5rem minmax(0,1fr); gap:0; max-width:92rem; margin:0 auto}
+.rail{
+  grid-column:1; border-right:1px solid var(--rule); padding:var(--s6) var(--s4) var(--s7) var(--s5);
+  position:sticky; top:0; align-self:start; max-height:100vh; overflow-y:auto;
+}
+.col{grid-column:2; padding:var(--s6) var(--s6) var(--s8) var(--s7); min-width:0}
+@media (max-width:62rem){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{grid-column:1; position:static; max-height:none; border-right:0; border-bottom:1px solid var(--rule); padding:var(--s5) var(--s4)}
+  .col{grid-column:1; padding:var(--s5) var(--s4) var(--s7)}
+}
+
+/* ---------- nav ---------- */
+.rail-ti{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--faint); margin:0 0 var(--s3)}
+.nav{list-style:none; margin:0 0 var(--s5); padding:0; display:flex; flex-direction:column; gap:1px}
+.nav a{
+  display:flex; align-items:baseline; gap:.5rem; padding:.3rem .45rem; border-radius:3px;
+  font-family:var(--ff-head); font-size:.875rem; line-height:1.3; color:var(--body); text-decoration:none;
+}
+.nav a:hover{background:var(--sunk); color:var(--ink)}
+.nav a.on{background:var(--teal-wash); color:var(--ink); font-weight:600}
+.nav .n{font-family:var(--ff-mono); font-size:.72rem; color:var(--faint); min-width:1.9rem; flex:none; font-variant-numeric:tabular-nums}
+.nav a.on .n{color:var(--teal)}
+.nav .ct{margin-left:auto; font-family:var(--ff-mono); font-size:.68rem; color:var(--faint); flex:none}
+.nav--sub a{padding-left:2.4rem; font-size:.825rem; color:var(--muted)}
+.solo{max-width:56rem; margin:0 auto; padding:var(--s6) var(--s5) var(--s8)}
+.mit{border:1px solid var(--rule); background:var(--card); border-radius:3px;
+     padding:var(--s4) var(--s5); margin:0 0 var(--s4); scroll-margin-top:2rem}
+.mit-hd{display:flex; flex-wrap:wrap; gap:var(--s2) var(--s4); align-items:baseline;
+        margin-bottom:var(--s3); padding-bottom:var(--s2); border-bottom:1px solid var(--rule-soft)}
+.mit-hd h4{flex:1 1 20rem; min-width:0}
+.mit>*:last-child{margin-bottom:0}
+.mit p,.mit ul,.mit ol{max-width:var(--measure)}
+.doclist{display:flex; flex-direction:column; gap:var(--s4); margin:0 0 var(--s5)}
+.doclist .d{border:1px solid var(--rule); background:var(--card); border-radius:3px; padding:var(--s4) var(--s5)}
+.doclist .d h3{margin:0 0 var(--s2)}
+.doclist .d h3 a{text-decoration:none}
+.doclist .d .role{font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--teal); margin:0 0 var(--s2)}
+.doclist .d p{margin-bottom:var(--s2)}
+.doclist .d .fm{font-family:var(--ff-mono); font-size:.76rem; color:var(--faint); margin:0}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:2px solid var(--ink); padding-bottom:var(--s5); margin-bottom:var(--s5)}
+.eyebrow{
+  font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--teal); margin:0 0 var(--s3);
+  display:flex; flex-wrap:wrap; gap:.55rem; align-items:center;
+}
+.eyebrow .sep{color:var(--rule)}
+h1{
+  font-family:var(--ff-head); font-weight:700; font-size:clamp(2.3rem,5.4vw,3.6rem);
+  line-height:1.02; letter-spacing:-.018em; color:var(--ink); margin:0; text-wrap:balance;
+}
+.mast .sub{
+  font-family:var(--ff-head); font-weight:400; font-size:clamp(1.05rem,2.2vw,1.35rem);
+  color:var(--muted); margin:var(--s2) 0 0; letter-spacing:-.005em;
+}
+.facts{
+  list-style:none; margin:var(--s5) 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:var(--s4) var(--s5);
+}
+.facts dt{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--faint); margin-bottom:.1rem}
+.facts dd{margin:0; font-size:.9rem; color:var(--ink)}
+.facts dd code{font-size:.84rem}
+
+/* ---------- status banner ---------- */
+.status{
+  border:1px solid var(--rule); border-left:3px solid var(--high);
+  background:var(--card); padding:var(--s4) var(--s4) var(--s4) var(--s5);
+  margin:var(--s5) 0 var(--s6); border-radius:0 3px 3px 0; max-width:var(--measure);
+}
+.status p{margin:0; font-size:.93rem; color:var(--body)}
+.status strong{font-family:var(--ff-head); color:var(--ink); font-weight:600}
+
+/* ---------- headings ---------- */
+h2{
+  font-family:var(--ff-head); font-weight:700; font-size:1.95rem; line-height:1.14; letter-spacing:-.012em;
+  color:var(--ink); margin:var(--s8) 0 var(--s4); padding-top:var(--s4);
+  border-top:1px solid var(--rule); text-wrap:balance;
+  display:flex; gap:.7rem; align-items:baseline;
+}
+h2 .hn{font-family:var(--ff-mono); font-size:1rem; font-weight:500; color:var(--teal); flex:none; font-variant-numeric:tabular-nums}
+h2:first-of-type{margin-top:var(--s6)}
+h3{font-family:var(--ff-head); font-weight:600; font-size:1.3rem; line-height:1.2; color:var(--ink); margin:var(--s6) 0 var(--s3); text-wrap:balance}
+h3 .hn{font-family:var(--ff-mono); font-size:.86rem; font-weight:500; color:var(--faint); margin-right:.45rem}
+h4{font-family:var(--ff-head); font-weight:600; font-size:1.08rem; line-height:1.25; color:var(--ink); margin:0; text-wrap:balance}
+h5{
+  font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--faint); margin:var(--s4) 0 var(--s2);
+}
+p{margin:0 0 var(--s4); max-width:var(--measure)}
+.lede{font-size:1.06rem; color:var(--body)}
+ul,ol{margin:0 0 var(--s4); padding-left:1.35rem; max-width:var(--measure)}
+li{margin-bottom:.4rem}
+li>ul,li>ol{margin-top:.4rem; margin-bottom:.2rem}
+strong{color:var(--ink); font-weight:600}
+em{font-style:italic}
+hr{border:0; border-top:1px solid var(--rule); margin:var(--s6) 0}
+
+/* ---------- code & anchors ---------- */
+code,kbd{font-family:var(--ff-mono); font-size:.855em; font-feature-settings:"zero" 1}
+p code,li code,td code,dd code,h4 code{
+  background:var(--sunk); padding:.08em .34em; border-radius:2px; color:var(--ink);
+}
+pre{
+  font-family:var(--ff-mono); font-size:.8rem; line-height:1.55; margin:0 0 var(--s4);
+  background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--teal);
+  padding:var(--s3) var(--s4); overflow-x:auto; border-radius:0 3px 3px 0; color:var(--ink);
+  max-width:var(--measure);
+}
+pre code{background:none; padding:0; font-size:1em}
+.ebnf{border-left-color:var(--med)}
+a.spec{
+  font-family:var(--ff-mono); font-size:.82em; white-space:nowrap;
+  color:var(--teal); text-decoration:none; border-bottom:1px dotted currentColor;
+}
+a.spec:hover{border-bottom-style:solid; background:var(--teal-wash)}
+a.spec::before{content:"§"; margin-right:.12em; opacity:.6}
+
+/* ---------- chips ---------- */
+.sev,.chip{
+  display:inline-flex; align-items:center; gap:.3rem; font-family:var(--ff-head);
+  font-size:.705rem; font-weight:600; letter-spacing:.055em; text-transform:uppercase;
+  padding:.15rem .45rem; border-radius:2px; border:1px solid; white-space:nowrap;
+}
+.sev::before{content:""; width:.42rem; height:.42rem; border-radius:50%; background:currentColor; flex:none}
+.sev-c{color:var(--crit); background:var(--crit-wash); border-color:var(--crit)}
+.sev-h{color:var(--high); background:var(--high-wash); border-color:var(--high)}
+.sev-m{color:var(--med); background:var(--med-wash); border-color:var(--med)}
+.sev-l{color:var(--low); background:var(--low-wash); border-color:var(--low)}
+.sev-n{color:var(--faint); background:transparent; border-color:var(--rule)}
+.sev-n::before{background:none; border:1px solid currentColor}
+.chip{color:var(--muted); background:var(--sunk); border-color:var(--rule-soft); font-weight:500}
+.chip-p{color:var(--teal); background:var(--teal-wash); border-color:var(--teal); font-family:var(--ff-mono); letter-spacing:0; text-transform:none}
+
+/* ---------- controls ---------- */
+.controls{
+  position:sticky; top:0; z-index:5; background:var(--paper);
+  border-bottom:1px solid var(--rule); padding:var(--s3) 0 var(--s3);
+  margin:0 0 var(--s5); display:flex; flex-wrap:wrap; gap:var(--s4) var(--s5); align-items:center;
+}
+.ctl{display:flex; align-items:center; gap:.5rem; flex-wrap:wrap}
+.ctl-lb{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--faint)}
+.seg{display:flex; border:1px solid var(--rule); border-radius:3px; overflow:hidden; background:var(--card)}
+.seg button{
+  font-family:var(--ff-mono); font-size:.78rem; padding:.28rem .6rem; border:0; background:none;
+  color:var(--muted); cursor:pointer; border-right:1px solid var(--rule-soft); line-height:1.4;
+}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--sunk); color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--teal); color:var(--on-accent); font-weight:600}
+.legend{display:flex; gap:.45rem; flex-wrap:wrap; align-items:center}
+.pfnote{font-size:.85rem; color:var(--muted); margin:0; font-style:italic}
+
+/* ---------- threat entries ---------- */
+.cat{margin:var(--s7) 0 0}
+.cat-hd{border-top:2px solid var(--teal); padding-top:var(--s3); margin-bottom:var(--s4)}
+.cat-hd h3{margin:0}
+.cat-hd .cat-note{font-size:.95rem; color:var(--muted); margin:var(--s2) 0 0; max-width:var(--measure)}
+.threat{
+  border:1px solid var(--rule); background:var(--card); border-radius:3px;
+  padding:var(--s4) var(--s5); margin:0 0 var(--s4); scroll-margin-top:5rem;
+}
+.threat.dim{opacity:.42}
+.threat.dim .tbody{display:none}
+.threat-hd{display:flex; flex-wrap:wrap; gap:var(--s2) var(--s4); align-items:baseline; margin-bottom:var(--s2)}
+.tid{
+  font-family:var(--ff-mono); font-size:.76rem; font-weight:600; letter-spacing:.02em;
+  color:var(--teal); background:var(--teal-wash); border:1px solid var(--teal);
+  padding:.1rem .4rem; border-radius:2px; flex:none; text-decoration:none;
+}
+a.tid:hover{background:var(--teal); color:var(--on-accent)}
+.threat-hd h4{flex:1 1 20rem; min-width:0}
+.rating{
+  display:flex; flex-wrap:wrap; gap:var(--s2) var(--s4); margin:var(--s2) 0 var(--s3);
+  padding:var(--s2) 0; border-top:1px solid var(--rule-soft); border-bottom:1px solid var(--rule-soft);
+}
+.rating>div{display:flex; align-items:center; gap:.4rem}
+.rating dt{font-family:var(--ff-head); font-size:.67rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+.rating dd{margin:0; font-size:.86rem; color:var(--ink); font-family:var(--ff-head)}
+.rating .qual{font-family:var(--ff-mono); font-size:.76rem; color:var(--muted)}
+.tbody>*:last-child{margin-bottom:0}
+.tbody p,.tbody ul,.tbody ol{max-width:var(--measure)}
+.tbody>h5:first-child{margin-top:0}
+.xref{font-family:var(--ff-mono); font-size:.76rem; color:var(--muted); white-space:nowrap}
+.xref a{color:var(--teal); text-decoration:none; border-bottom:1px dotted currentColor}
+
+/* ---------- blockquote ---------- */
+blockquote{
+  margin:0 0 var(--s4); padding:var(--s3) var(--s4); max-width:var(--measure);
+  background:var(--sunk); border-left:3px solid var(--med); border-radius:0 3px 3px 0;
+}
+blockquote p{margin:0; font-style:italic; color:var(--ink); font-size:.95rem}
+blockquote p+p{margin-top:var(--s2)}
+blockquote cite{display:block; margin-top:var(--s2); font-style:normal; font-family:var(--ff-mono); font-size:.76rem; color:var(--muted)}
+.callout{
+  border:1px solid var(--teal); background:var(--teal-wash); border-radius:3px;
+  padding:var(--s4); margin:0 0 var(--s4); max-width:var(--measure);
+}
+.callout>*:last-child{margin-bottom:0}
+.callout h5{margin-top:0; color:var(--teal)}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; margin:0 0 var(--s5); border:1px solid var(--rule); border-radius:3px; background:var(--card)}
+table{border-collapse:collapse; width:100%; font-size:.875rem; font-family:var(--ff-head)}
+caption{
+  caption-side:top; text-align:left; padding:var(--s3) var(--s4); border-bottom:1px solid var(--rule);
+  font-family:var(--ff-head); font-size:.82rem; color:var(--muted); background:var(--sunk);
+}
+caption strong{color:var(--ink)}
+th,td{padding:.42rem .6rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--rule-soft)}
+thead th{
+  font-size:.68rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--faint); background:var(--sunk); border-bottom:1px solid var(--rule); white-space:nowrap;
+  position:sticky; top:0;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--sunk)}
+td code,th code{font-size:.8rem}
+.matrix td.r{text-align:center; font-family:var(--ff-mono); font-size:.76rem; font-weight:600; width:3.4rem}
+.matrix td.r[data-v="c"]{color:var(--crit); background:var(--crit-wash)}
+.matrix td.r[data-v="h"]{color:var(--high); background:var(--high-wash)}
+.matrix td.r[data-v="m"]{color:var(--med); background:var(--med-wash)}
+.matrix td.r[data-v="l"]{color:var(--low); background:var(--low-wash)}
+.matrix td.r[data-v="n"]{color:var(--faint)}
+.matrix td.id{white-space:nowrap}
+.matrix td.id a{font-family:var(--ff-mono); font-size:.78rem; color:var(--teal); text-decoration:none}
+.matrix td.id a:hover{text-decoration:underline}
+.matrix th.rh{text-align:center; width:3.4rem}
+.matrix th.rh .rh-s{display:block; font-weight:400; letter-spacing:0; text-transform:none; font-size:.62rem; color:var(--faint)}
+.matrix.focus td.r{opacity:.3}
+.matrix.focus td.r.on{opacity:1; outline:1px solid var(--teal); outline-offset:-1px}
+
+/* ---------- figures ---------- */
+figure{margin:0 0 var(--s5); max-width:54rem}
+figure svg{display:block; width:100%; height:auto; color:var(--ink)}
+figcaption{
+  font-size:.85rem; color:var(--muted); margin-top:var(--s3); padding-top:var(--s2);
+  border-top:1px solid var(--rule-soft); max-width:var(--measure);
+}
+figcaption b{font-family:var(--ff-head); color:var(--ink); font-weight:600}
+.svg-frame{border:1px solid var(--rule); background:var(--card); border-radius:3px; padding:var(--s4); overflow-x:auto}
+
+/* ---------- checklists ---------- */
+.cl{list-style:none; padding:0; margin:0 0 var(--s5); max-width:var(--measure);
+  display:flex; flex-direction:column; gap:1px}
+.cl li{
+  display:flex; gap:.6rem; align-items:flex-start; margin:0; padding:.42rem .5rem;
+  font-size:.92rem; border-bottom:1px solid var(--rule-soft);
+}
+.cl li:hover{background:var(--card)}
+.cl li::before{
+  content:""; flex:none; width:.85rem; height:.85rem; margin-top:.32rem;
+  border:1.5px solid var(--muted); border-radius:2px;
+}
+.cl .to{margin-left:auto; flex:none; font-family:var(--ff-mono); font-size:.72rem; color:var(--faint); white-space:nowrap; padding-left:.5rem}
+.cl .to a{color:var(--teal); text-decoration:none}
+.cl-hd{font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--teal); margin:var(--s5) 0 var(--s2)}
+
+/* ---------- misc ---------- */
+.deck{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:var(--s4); margin:0 0 var(--s5)}
+.deck .cell{border:1px solid var(--rule); background:var(--card); border-radius:3px; padding:var(--s4)}
+.deck .cell h5{margin-top:0}
+.deck .cell p{margin-bottom:0; font-size:.9rem; max-width:none}
+.deck .cell .k{font-family:var(--ff-mono); font-size:.76rem; color:var(--teal); font-weight:600}
+.foot{margin-top:var(--s8); padding-top:var(--s4); border-top:2px solid var(--ink); font-size:.85rem; color:var(--muted)}
+.foot p{max-width:var(--measure)}
+.skip{position:absolute; left:-9999px}
+.skip:focus{left:var(--s4); top:var(--s4); z-index:20; background:var(--card); color:var(--ink); padding:var(--s2) var(--s3); border:1px solid var(--teal); border-radius:3px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important; transition:none!important; scroll-behavior:auto!important}}
+@media print{
+  .rail,.controls{display:none}
+  .shell{grid-template-columns:1fr; max-width:none}
+  .col{grid-column:1; padding:0}
+  .threat{break-inside:avoid; border-color:#999}
+  body{background:#fff; color:#000; font-size:10pt}
+}
+
+/* ---------- diagrams ---------- */
+.dg{font-family:var(--ff-head)}
+.dg .bx{fill:var(--card); stroke:var(--rule); stroke-width:1.5}
+.dg .bx-s{fill:var(--sunk); stroke:var(--rule); stroke-width:1.5}
+.dg .lb{fill:var(--ink); font-size:13px; font-weight:600}
+.dg .lb-s{fill:var(--muted); font-size:10.5px; font-weight:400}
+.dg .mono{font-family:var(--ff-mono)}
+.dg .tb{stroke:var(--faint); stroke-width:1.4; stroke-dasharray:6 5; fill:none}
+.dg .tb-lb{fill:var(--faint); font-size:10px; font-weight:700; letter-spacing:.09em}
+.dg .fl{stroke:var(--ink); stroke-width:1.5; fill:none}
+.dg .fl-lb{fill:var(--muted); font-size:10.5px; font-family:var(--ff-mono)}
+.dg .th{stroke:var(--high); stroke-width:2; fill:none}
+.dg .th-lb{fill:var(--high); font-size:10.5px; font-family:var(--ff-mono); font-weight:500}
+.dg .th-bx{fill:var(--high-wash); stroke:var(--high); stroke-width:1.5}
+.dg .th-tx{fill:var(--high); font-size:12px; font-weight:600}
+.dg .ok{stroke:var(--low); stroke-width:2; fill:none}
+.dg .ok-lb{fill:var(--low); font-size:10.5px; font-family:var(--ff-mono); font-weight:500}
+.dg .ok-bx{fill:var(--low-wash); stroke:var(--low); stroke-width:1.5}
+.dg .ok-tx{fill:var(--low); font-size:12px; font-weight:600}
+.dg .ar-ink{fill:var(--ink)}
+.dg .ar-th{fill:var(--high)}
+.dg .ar-ok{fill:var(--low)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+<nav class="rail" aria-label="Contents">
+  <p class="rail-ti">Contents</p>
+  <ul class="nav">
+    <li><a href="#defence"><span class="n">1</span>Defence architecture</a></li>
+    <li><a href="#mitigations"><span class="n">2</span>Mitigations by threat<span class="ct">33</span></a></li>
+    <li><a href="#residual"><span class="n">3</span>Residual risks</a></li>
+    <li><a href="#section-map"><span class="n">A</span>Section map</a></li>
+    <li><a href="#impl-checklist"><span class="n">B</span>Implementers</a></li>
+    <li><a href="#deploy-checklist"><span class="n">C</span>Deployers</a></li>
+    <li><a href="#app-checklist"><span class="n">D</span>Applications</a></li>
+  </ul>
+</nav>
+
+<div class="col">
+<header class="mast">
+  <p class="eyebrow"><span>W3C RDF-star Working Group</span><span class="sep">/</span><span>Working document</span></p>
+  <h1>Implementation Advice</h1>
+  <p class="sub">SPARQL 1.2 Query Language threat model</p>
+  <dl class="facts">
+    <div><dt>Subject</dt><dd><code>spec/index.html</code> &mdash; Editor's Draft</dd></div>
+    <div><dt>Reviewed at</dt><dd><code>7f707ff</code> &#183; 2026-10-01</dd></div>
+    <div><dt>Checklists</dt><dd>3 &mdash; implementer, deployer, application</dd></div>
+    <div><dt>Builds on</dt><dd><code>threat-model.html</code></dd></div>
+  </dl>
+</header>
+
+<div class="status">
+  <p><strong>Status.</strong> Analysis input for the <a class="spec" href="../../../spec/index.html#security">security</a> and <a class="spec" href="../../../spec/index.html#privacy">privacy</a> sections of the Editor's Draft. This is not a W3C publication, carries no normative weight, and does not represent Working Group consensus. Section references are given as stable fragment ids rather than published section numbers, because the numbers are generated by ReSpec and move as the draft changes.</p>
+</div>
+
+<main id="main">
+
+<p class="lede">This document collects the countermeasures for the threats described in the companion <a href="threat-model.html">threat model</a>. That document describes what can go wrong and how severely; this one says what to do about it. Threat identifiers (<code>SQ-NET-03</code> and so on) are shared between the two.</p>
+<p>&#167; 1 gives the layered picture; &#167; 2 gives the per-threat detail; &#167; 3 records what is left over once the countermeasures are in place. The appendices are working checklists.</p>
+
+<h2 id="defence"><span class="hn">1</span>Defence architecture</h2>
+<p>Six layers, in evaluation order. The division matters: most failed deployments put the whole policy in layer 2, where parser differentials (<a href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a>) defeat it.</p>
+
+<div class="deck">
+  <div class="cell">
+    <h5>Layer 1 &mdash; Admission</h5>
+    <p class="k">before parsing</p>
+    <p>Authenticate. Rate-limit in <em>work units</em>, not request counts (<a href="threat-model.html#SQ-DOS-09">SQ-DOS-09</a>). Cap request body size &mdash; as a coarse outer bound only, since expansion (<a href="threat-model.html#SQ-DOS-07">SQ-DOS-07</a>) makes it unsound as the real limit. Pin method and content type; prefer POST so query text stays out of URLs and logs (<a href="threat-model.html#SQ-CONF-07">SQ-CONF-07</a>).</p>
+  </div>
+  <div class="cell">
+    <h5>Layer 2 &mdash; Parse and analyse</h5>
+    <p class="k">with the engine's own parser</p>
+    <p>Select the grammar entry point from the protocol operation, never from content (<a href="threat-model.html#SQ-INJ-02">SQ-INJ-02</a>). Enforce nesting-depth limits in the parser <em>and</em> in every recursive term walker (<a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a>). Apply AST and algebra size limits <strong>after</strong> sugar expansion (<a href="threat-model.html#SQ-DOS-07">SQ-DOS-07</a>). Feature-gate <code>SERVICE</code>, dereference, <code>DESCRIBE</code> and extension functions on what the parse <em>contains</em>, not on any <code>VERSION</code> declaration (<a href="threat-model.html#SQ-INJ-05">SQ-INJ-05</a>). Estimate cost and refuse above a threshold.</p>
+  </div>
+  <div class="cell">
+    <h5>Layer 3 &mdash; Authorize</h5>
+    <p class="k">by constructing the dataset</p>
+    <p>Set the dataset in the <strong>protocol request</strong> and refuse in-query dataset descriptions (<a href="threat-model.html#SQ-CONF-01">SQ-CONF-01</a>). The active dataset should contain exactly what the requester may see, so protected triples never enter evaluation &mdash; this is what makes layer 4's inference channels (<a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a>) moot rather than merely narrower. Post-filtering results is a leak-rate reduction, not a confidentiality control.</p>
+  </div>
+  <div class="cell">
+    <h5>Layer 4 &mdash; Execute under caps</h5>
+    <p class="k">enforced, not cooperative</p>
+    <p>Wall-clock and memory limits enforced by the executor. Bound <em>intermediate</em> cardinality (<a href="threat-model.html#SQ-DOS-01">SQ-DOS-01</a>). Budget path expansion (<a href="threat-model.html#SQ-DOS-02">SQ-DOS-02</a>) and <code>EXISTS</code> inner evaluations (<a href="threat-model.html#SQ-DOS-08">SQ-DOS-08</a>). Cap string length, numeric digits and bit-length, group count and accumulator size (<a href="threat-model.html#SQ-DOS-03">SQ-DOS-03</a>, <a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a>). Non-backtracking regex engine (<a href="threat-model.html#SQ-DOS-05">SQ-DOS-05</a>). Abort rather than truncate. Enforce egress policy on the <strong>resolved address</strong> with redirects re-checked (<a href="threat-model.html#SQ-NET-01">SQ-NET-01</a>, <a href="threat-model.html#SQ-ID-02">SQ-ID-02</a>), from a distinct network identity with no ambient cloud credentials. Run least-privilege, extension code inside the same caps (<a href="threat-model.html#SQ-EXT-01">SQ-EXT-01</a>).</p>
+  </div>
+  <div class="cell">
+    <h5>Layer 5 &mdash; Results and egress</h5>
+    <p class="k">on the way out</p>
+    <p>Opaque, per-result-set blank node labels (<a href="threat-model.html#SQ-CONF-05">SQ-CONF-05</a>). Hard result-size cap. Uniform error reporting that does not vary with hidden data or engine version (<a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a>, <a href="threat-model.html#SQ-INJ-05">SQ-INJ-05</a>). Mark non-deterministic queries uncacheable; include requester identity and effective dataset in every cache key (<a href="threat-model.html#SQ-INT-01">SQ-INT-01</a>).</p>
+  </div>
+  <div class="cell">
+    <h5>Layer 6 &mdash; Observe</h5>
+    <p class="k">the right artifact</p>
+    <p>Log the <strong>algebra actually executed</strong> and the <strong>dereference targets actually resolved and contacted</strong> &mdash; not the received text, which is the wrong artifact for exactly the reasons in <a href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a>. Log <code>SILENT</code> failures server-side (<a href="threat-model.html#SQ-NET-03">SQ-NET-03</a>). Treat query logs at the classification of the data they select over (<a href="threat-model.html#SQ-CONF-07">SQ-CONF-07</a>). Alert on query <em>shape</em> anomalies &mdash; the only practical detection for <a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a> and <a href="threat-model.html#SQ-CONF-08">SQ-CONF-08</a>.</p>
+  </div>
+</div>
+
+<h2 id="mitigations"><span class="hn">2</span>Mitigations by threat</h2>
+<p class="lede">One entry per threat, in catalogue order. Each heading links to that threat's analysis in the threat model, which states the mechanism and impact this mitigation answers.</p>
+
+<section class="cat" id="mit-cat-net">
+  <div class="cat-hd">
+    <h3><span class="hn">2.A</span>Outbound requests &mdash; the service as a confused deputy</h3>
+  </div>
+
+  <div class="mit" id="mit-SQ-NET-01">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-NET-01">SQ-NET-01</a><h4>SSRF via <code>FROM</code> / <code>FROM NAMED</code></h4></div>
+    <ul>
+            <li>Do not dereference by default. Interpret <code>FROM</code>/<code>FROM NAMED</code> as <em>selection from the local store</em>. The spec permits this reading: the dataset description is "used in place of any dataset that the query service would use", and a service "may refuse a query request if the dataset description is not acceptable". Most mainstream engines already behave this way; it should be stated as the recommended default.</li>
+            <li>Where dereference is wanted, allowlist IRIs or hosts, and decide policy on the <strong>resolved IP address</strong>, not the IRI string (<a href="threat-model.html#SQ-ID-02">SQ-ID-02</a>).</li>
+            <li>Deny loopback, link-local (<code>169.254.0.0/16</code>, <code>fd00::/8</code>), RFC 1918 and multicast ranges; re-check <strong>after every redirect</strong>, and refuse cross-scheme redirects.</li>
+            <li>Give the fetcher a distinct network identity and egress-proxy it; never let it inherit ambient cloud credentials.</li>
+            <li>Cap per-fetch bytes, time, and total fetches per query.</li>
+          </ul>
+  </div>
+
+  <div class="mit" id="mit-SQ-NET-02">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-NET-02">SQ-NET-02</a><h4>Local file disclosure via <code>file:</code> and other schemes</h4></div>
+    <p>Scheme allowlist (<code>http</code>, <code>https</code> only, if any). Run the engine as an unprivileged user with no readable secrets. Treat "dereference disabled" as the default. Note that disabling <code>file:</code> alone is insufficient &mdash; <code>http://localhost/</code> reaches a local server, and some URI stacks normalize unexpected schemes into file access.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-NET-03">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-NET-03">SQ-NET-03</a><h4>SSRF <em>and bidirectional exfiltration</em> via <code>SERVICE</code>, including variable endpoints</h4></div>
+    <ul>
+            <li><code>SERVICE</code> disabled by default; enabled per-deployment with an explicit endpoint allowlist.</li>
+            <li><strong>Enforce the allowlist at evaluation time, on the bound value</strong>, not on the query text. Rejecting <code>SERVICE ?var</code> outright is the simplest sound rule and is what most locked-down deployments want.</li>
+            <li>Never forward the service's own credentials to a federated endpoint; never let a variable-sourced endpoint inherit any credential.</li>
+            <li>Egress-proxy and log the <strong>resolved</strong> endpoints actually contacted &mdash; not the query text.</li>
+            <li>Log <code>SILENT</code> failures server-side even though they are hidden from the client.</li>
+            <li>Treat a value drawn from the dataset as never acceptable as an endpoint (<a href="threat-model.html#SQ-INT-02">SQ-INT-02</a>).</li>
+          </ul>
+  </div>
+
+  <div class="mit" id="mit-SQ-NET-04">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-NET-04">SQ-NET-04</a><h4>Base IRI ambiguity relocates the dereference target</h4></div>
+    <p>Require absolute IRIs for dataset and service references; reject relative ones there. Pin the base explicitly. For <em>policy</em> decisions &mdash; never for term identity, which must stay strict per RDF semantics &mdash; apply full RFC 3986 &#167;6 normalization and resolve to an address before deciding.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-NET-05">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-NET-05">SQ-NET-05</a><h4>Ingestion of attacker-controlled RDF</h4></div>
+    <p>Byte and time caps per fetch; enforce <code>Content-Type</code> rather than sniffing; no cross-scheme or cross-host redirect following; parse under a memory cap. Treat any graph obtained by dereference as untrusted for downstream purposes, and label it as such in provenance.</p>
+  </div>
+
+</section>
+
+<section class="cat" id="mit-cat-dos">
+  <div class="cat-hd">
+    <h3><span class="hn">2.B</span>Availability &mdash; resource exhaustion</h3>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-01">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-01">SQ-DOS-01</a><h4>Join and cross-product explosion</h4></div>
+    <p>Bound <strong>intermediate</strong> cardinality, not just final result size &mdash; this is the one that matters, because <code>LIMIT</code> does not help (see <a href="threat-model.html#SQ-DOS-03">SQ-DOS-03</a>). Estimate cost before evaluating and refuse above a threshold. Cap the number of triple patterns and the join graph's disconnected-component count. Hard wall-clock and memory limits per query, enforced by the executor rather than cooperatively.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-02">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-02">SQ-DOS-02</a><h4>Property path explosion</h4></div>
+    <p>A step budget inside <code>ALP</code>, checked per expansion and <strong>aborting the query rather than silently truncating</strong> &mdash; silent truncation returns wrong answers, which is worse. Cap closure-expression nesting depth. Require at least one bound endpoint for unbounded paths in hardened profiles. Convert recursion to an explicit worklist so traversal depth does not consume the call stack (<a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a>).</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-03">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-03">SQ-DOS-03</a><h4>Sort, grouping and aggregation memory</h4></div>
+    <p>Spill to disk with a disk budget, or refuse. Cap group count, per-group accumulator size, and <code>GROUP_CONCAT</code> result length. Note explicitly in operator documentation that <code>LIMIT</code> is not a cost bound.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-04">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a><h4>String and numeric amplification</h4></div>
+    <p>Cap literal length at parse time and intermediate string length at evaluation time, as hard errors. Cap digit count for numeric literals and bit-length for arbitrary-precision results. Clamp or reject <code>LIMIT</code>/<code>OFFSET</code> above a configured maximum; use a width that cannot overflow, and test the boundary.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-05">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-05">SQ-DOS-05</a><h4>Regular-expression denial of service</h4></div>
+    <p>Use a non-backtracking matcher (Thompson NFA / RE2-style) with linear-time guarantees &mdash; the only robust fix. Note the genuine tension worth flagging to the WG: back-references are not expressible in such engines, so a linear-time implementation may be unable to support the full <code>fn:matches</code> language. Failing that: per-call timeouts, pattern-length and nesting caps, compiled-pattern caching keyed on the pattern, and refusal of data-sourced patterns.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-06">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a><h4>Parser and evaluator stack exhaustion from unbounded nesting</h4></div>
+    <p>An explicit configured depth limit, returning a syntax error. Apply it in the parser <em>and</em> in every recursive walk over terms and algebra &mdash; comparison, ordering, hashing, serialization and <code>CONSTRUCT</code> instantiation are each a separate recursion. Prefer an explicit stack to native recursion in the term walkers. A guard-page fallback is not sufficient alone, since stack exhaustion in a shared process may be unrecoverable.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-07">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-07">SQ-DOS-07</a><h4>Syntactic-sugar expansion defeats input-size limits</h4></div>
+    <p>Apply size and depth limits to the <strong>post-expansion AST or algebra</strong>, not to the request body. Keep a request-body limit as well, but treat it as a coarse outer bound only.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-08">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-08">SQ-DOS-08</a><h4>Correlated <code>EXISTS</code> / <code>NOT EXISTS</code> / <code>MINUS</code> cost</h4></div>
+    <p>Cap <code>EXISTS</code> nesting depth. Account inner evaluations against the query's overall budget rather than treating each as fresh. Where an optimizing rewrite is used, ensure it preserves semantics. Short-circuit on first match, which the definition's "is not empty" permits.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-DOS-09">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-DOS-09">SQ-DOS-09</a><h4>Amplification asymmetry <span class="chip">summary</span></h4></div>
+    <p>Because request count is a poor proxy for load, the budget must be denominated in work units &mdash; time, memory, intermediate cardinality &mdash; rather than requests.</p>
+  </div>
+
+</section>
+
+<section class="cat" id="mit-cat-inj">
+  <div class="cat-hd">
+    <h3><span class="hn">2.C</span>Injection and parsing integrity</h3>
+  </div>
+
+  <div class="mit" id="mit-SQ-INJ-01">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-INJ-01">SQ-INJ-01</a><h4>Query injection via string construction</h4></div>
+    <ol>
+            <li><strong>Do not build query text by concatenation.</strong> Use a parameterized API that substitutes <em>RDF terms</em> into a pre-parsed query or algebra &mdash; <code>VALUES</code> or <code>BIND</code> of terms, not text.</li>
+            <li>If text must be built, escape with a library implementing <a class="spec" href="../../../spec/index.html#sec-escapes">sec-escapes</a> exactly &mdash; and validate IRIs after resolution, not before.</li>
+            <li>Separate read-only and read-write endpoints with separate credentials; parse read endpoints at the <code>QueryUnit</code> entry point only.</li>
+            <li>Validate structurally, on the parsed form, not with text patterns or denylists.</li>
+          </ol>
+  </div>
+
+  <div class="mit" id="mit-SQ-INJ-02">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-INJ-02">SQ-INJ-02</a><h4>Grammar-entry-point confusion (read &#8594; write escalation)</h4></div>
+    <p>Select the entry point from the protocol operation and the endpoint, never from the content. Reject anything that does not parse at the expected entry point. Enforce read-only at the <em>storage</em> layer too, so a mis-dispatch cannot write.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-INJ-03">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a><h4>Parser differentials desynchronize security controls</h4></div>
+    <p><strong>Enforce policy on the translated algebra, inside the engine, after <a class="spec" href="../../../spec/index.html#translation">translation</a></strong> &mdash; never on the text. Use one parser for both the control and the engine. Never re-serialize and re-parse a query between the control and the engine. Log the algebra actually executed and the dereference targets actually contacted, not the received text.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-INJ-05">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-INJ-05">SQ-INJ-05</a><h4><code>VERSION</code> is a client assertion, not a guarantee</h4></div>
+    <p>Gate on what the parse actually contains, never on the declaration. Treat unknown labels consistently (prefer error). Keep error text uniform across versions.</p>
+  </div>
+
+</section>
+
+<section class="cat" id="mit-cat-conf">
+  <div class="cat-hd">
+    <h3><span class="hn">2.D</span>Confidentiality and inference</h3>
+  </div>
+
+  <div class="mit" id="mit-SQ-CONF-01">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-CONF-01">SQ-CONF-01</a><h4>The language defines no access-control model</h4></div>
+    <div class="callout">
+            <p><strong>Where dataset choice is a security boundary: set the dataset in the protocol request, and refuse queries that carry their own dataset description.</strong> Both halves are explicitly permitted &mdash; the protocol override, and "A query service may refuse a query request if the dataset description is not acceptable to the service."</p>
+          </div>
+          <p>Beyond that: <strong>the active dataset should contain exactly what the requester is permitted to see.</strong> Authorize by <em>constructing the dataset</em>, not by filtering results &mdash; the diagram below shows why the alternative fails.</p>
+
+          <figure>
+          <div class="svg-frame">
+          <svg class="dg" viewBox="0 0 900 420" role="img" aria-label="Comparison of two authorization placements. On the left, post-filtering: a dataset containing both authorized and protected triples all enters evaluation, results are filtered afterwards, and an oracle channel of errors, timing and counts routes around the filter back to the client. On the right, pre-restriction: the protocol restricts the dataset to authorized triples only before evaluation, so there is no oracle channel because protected triples never entered evaluation.">
+            <defs>
+              <marker id="c-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ar-ink"/></marker>
+              <marker id="c-th" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ar-th"/></marker>
+              <marker id="c-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="ar-ok"/></marker>
+            </defs>
+
+            <!-- panel A -->
+            <rect class="bx" x="16" y="48" width="420" height="352" rx="3" fill="none"/>
+            <text class="th-tx" x="226" y="36" text-anchor="middle">Filter the results</text>
+            <text class="lb-s" x="226" y="66" text-anchor="middle">authorization after evaluation</text>
+
+            <rect class="bx-s" x="56" y="80" width="340" height="68" rx="3"/>
+            <rect class="bx" x="66" y="88" width="320" height="26" rx="2"/>
+            <text class="lb-s" x="226" y="105" text-anchor="middle">authorized triples</text>
+            <rect class="th-bx" x="66" y="116" width="320" height="26" rx="2"/>
+            <text class="th-lb" x="226" y="133" text-anchor="middle">protected triples</text>
+
+            <line class="th" x1="226" y1="150" x2="226" y2="178" marker-end="url(#c-th)"/>
+            <text class="th-lb" x="234" y="168">all of it enters</text>
+            <rect class="bx" x="96" y="180" width="260" height="40" rx="3"/>
+            <text class="lb" x="226" y="205" text-anchor="middle">Evaluate</text>
+            <line class="fl" x1="226" y1="222" x2="226" y2="248" marker-end="url(#c-ink)"/>
+            <rect class="bx" x="96" y="250" width="260" height="40" rx="3"/>
+            <text class="lb" x="226" y="275" text-anchor="middle">Filter results</text>
+            <line class="fl" x1="226" y1="292" x2="226" y2="318" marker-end="url(#c-ink)"/>
+            <rect class="bx" x="136" y="320" width="180" height="38" rx="3"/>
+            <text class="lb" x="226" y="344" text-anchor="middle">Results to client</text>
+
+            <polyline class="th" points="96,200 40,200 40,339 132,339" marker-end="url(#c-th)"/>
+            <text class="th-lb" x="34" y="270" text-anchor="middle" transform="rotate(-90 34 270)">errors &#183; timing &#183; counts</text>
+            <text class="th-lb" x="226" y="380" text-anchor="middle">the oracle channel routes around the filter</text>
+
+            <!-- panel B -->
+            <rect class="bx" x="464" y="48" width="420" height="352" rx="3" fill="none"/>
+            <text class="ok-tx" x="674" y="36" text-anchor="middle">Restrict the dataset</text>
+            <text class="lb-s" x="674" y="66" text-anchor="middle">authorization before evaluation</text>
+
+            <rect class="ok-bx" x="544" y="80" width="260" height="44" rx="3"/>
+            <text class="ok-tx" x="674" y="100" text-anchor="middle">Restrict dataset</text>
+            <text class="ok-lb" x="674" y="116" text-anchor="middle">protocol sets it &#183; query's own refused</text>
+            <line class="ok" x1="674" y1="126" x2="674" y2="152" marker-end="url(#c-ok)"/>
+            <rect class="ok-bx" x="504" y="154" width="340" height="44" rx="3"/>
+            <text class="ok-lb" x="674" y="181" text-anchor="middle">authorized triples only</text>
+            <line class="fl" x1="674" y1="200" x2="674" y2="228" marker-end="url(#c-ink)"/>
+            <rect class="bx" x="544" y="230" width="260" height="40" rx="3"/>
+            <text class="lb" x="674" y="255" text-anchor="middle">Evaluate</text>
+            <line class="fl" x1="674" y1="272" x2="674" y2="318" marker-end="url(#c-ink)"/>
+            <rect class="bx" x="584" y="320" width="180" height="38" rx="3"/>
+            <text class="lb" x="674" y="344" text-anchor="middle">Results to client</text>
+            <text class="ok-lb" x="674" y="380" text-anchor="middle">no oracle channel: nothing protected entered</text>
+          </svg>
+          </div>
+          <figcaption><b>The difference is the ordering, not the strictness of the filter.</b> On the left, protected triples enter evaluation, so their contents remain observable through error, timing, cardinality and existence channels that bypass the output filter entirely (<a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a>). On the right, the dataset is restricted first, so those channels have nothing to reveal. This is why <em>result-level filtering is a leak-rate reduction, not a confidentiality control</em>.</figcaption>
+          </figure>
+  </div>
+
+  <div class="mit" id="mit-SQ-CONF-02">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-CONF-02">SQ-CONF-02</a><h4>Metadata enumeration</h4></div>
+    <p>Restrict the active dataset per requester so unauthorized names are not present (<a href="threat-model.html#SQ-CONF-01">SQ-CONF-01</a>). Do not encode sensitive information in graph IRIs &mdash; use opaque names with the sensitive mapping held separately. Treat graph-name enumeration as a privileged operation.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-CONF-03">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a><h4>Inference oracles: result-level filtering is not confidentiality</h4></div>
+    <p>Authorize by restricting the <strong>data</strong>, before evaluation &mdash; dataset selection or pattern rewriting &mdash; so protected triples never enter the evaluation at all. If post-filtering is unavoidable, accept that it is a leak-rate reduction and not a confidentiality control: normalize error reporting, add per-identity rate limits and anomaly detection on query volume and shape, and log for after-the-fact detection. Timing mitigation in a query engine is impractical, which is itself an argument for the dataset-restriction approach.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-CONF-04">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-CONF-04">SQ-CONF-04</a><h4><code>DESCRIBE</code> is unbounded, implementation-defined disclosure</h4></div>
+    <p>Disable <code>DESCRIBE</code> in access-controlled deployments, or implement it as an explicit, inspectable, ACL-respecting pattern with a hard size cap. <strong>Do not implement it as "walk the store outward from this node."</strong> Document the chosen description algorithm so deployers can reason about it.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-CONF-05">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-CONF-05">SQ-CONF-05</a><h4>Blank node labels as a leak and a correlation handle</h4></div>
+    <p>Emit opaque labels generated per result set, randomized or salted per result set. Never derive a label from a storage identifier, and never derive one deterministically from solution content. This deserves a note in <a class="spec" href="../../../spec/index.html#security">security</a> &mdash; the scoping rules make it <em>permitted</em>, but nothing currently makes it <em>advised</em>.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-CONF-06">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-CONF-06">SQ-CONF-06</a><h4>Hash functions: a guessing oracle, and two broken algorithms in the standard library</h4></div>
+    <p>Treat an unsalted hash of a low-entropy identifier as <strong>not</strong> de-identification &mdash; this belongs in <a class="spec" href="../../../spec/index.html#privacy">privacy</a>, since it is the most common anonymization mistake in RDF data publishing. Document MD5 and SHA-1 as legacy and unsuitable for security purposes. Do not expose hash functions over values the requester cannot read.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-CONF-07">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-CONF-07">SQ-CONF-07</a><h4>Query text is itself sensitive data</h4></div>
+    <p>A <a class="spec" href="../../../spec/index.html#privacy">privacy</a> item. Prefer POST for queries carrying identifiers; treat query logs at the data's classification; redact literals in logs where feasible while keeping the structure for debugging; set retention. Note the third-party disclosure inherent in dereference.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-CONF-08">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-CONF-08">SQ-CONF-08</a><h4>Linkage, re-identification and aggregate differencing</h4></div>
+    <p>A <a class="spec" href="../../../spec/index.html#privacy">privacy</a> item, and largely a governance one: query logging and review, minimum group sizes for aggregate release, suppression of small cells, and awareness that aggregate-only exposure is not a privacy control. For federation, control which endpoints may be contacted (<a href="threat-model.html#SQ-NET-03">SQ-NET-03</a>) and record cross-domain flows.</p>
+  </div>
+
+</section>
+
+<section class="cat" id="mit-cat-ext">
+  <div class="cat-hd">
+    <h3><span class="hn">2.E</span>Extensibility</h3>
+  </div>
+
+  <div class="mit" id="mit-SQ-EXT-01">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-EXT-01">SQ-EXT-01</a><h4>Extension functions are arbitrary code in the evaluation path, named by the query</h4></div>
+    <p>An explicit static registry; never resolve a function IRI dynamically; <strong>never dereference a function IRI</strong>. Treat registration as a privileged deployment-time action, not a runtime one. Apply the engine's resource caps and sandbox to extension code, and account its work against the query budget. Require each extension to document its own security considerations &mdash; the current <a class="spec" href="../../../spec/index.html#security">security</a> sentence, "The SPARQL language permits extensions, which will have their own security implications", is correct but does not ask anything of anyone.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-EXT-02">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-EXT-02">SQ-EXT-02</a><h4>Entailment regimes: unbounded cost, and inference around triple-level ACLs</h4></div>
+    <p>Bound reasoning work and depth. Decide authorization over the <strong>entailed</strong> view, not the asserted one &mdash; or do not combine entailment with triple-level ACLs. Define behaviour on inconsistent input rather than leaving it to chance.</p>
+  </div>
+
+</section>
+
+<section class="cat" id="mit-cat-id">
+  <div class="cat-hd">
+    <h3><span class="hn">2.F</span>Identity and naming confusion</h3>
+  </div>
+
+  <div class="mit" id="mit-SQ-ID-01">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-ID-01">SQ-ID-01</a><h4>IRI spoofing via confusables and bidirectional text</h4></div>
+    <p>Compare allowlists on a normalized or Punycode form, never on display form. Apply confusable detection and script restriction in any tool that <em>displays</em> queries for review. Render IRIs so bidi reordering cannot mislead. Where a query is approved by a human, show the resolved and normalized targets separately from the source text.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-ID-02">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-ID-02">SQ-ID-02</a><h4>No normalization: strict term identity, loose policy identity</h4></div>
+    <p>Never use IRI string equality for an authorization decision; decide on the resolved network target, re-checked after redirects. Canonicalize at ingest so data has one spelling. Keep policy normalization strictly separate from term identity &mdash; normalizing terms would break RDF semantics.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-ID-03">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-ID-03">SQ-ID-03</a><h4>Triple terms mention, they do not assert <span class="chip">new in 1.2</span></h4></div>
+    <p>Be explicit in application code and UI about mention versus assertion. Never treat a reifier's existence as evidence of truth, or its IRI as provenance, without an independent trust path &mdash; signature, trusted graph, verified source. Worth a note in <a class="spec" href="../../../spec/index.html#security">security</a> given that this is new surface in 1.2 and that provenance is its primary use case.</p>
+  </div>
+
+</section>
+
+<section class="cat" id="mit-cat-int">
+  <div class="cat-hd">
+    <h3><span class="hn">2.G</span>Integrity and non-determinism</h3>
+  </div>
+
+  <div class="mit" id="mit-SQ-INT-01">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-INT-01">SQ-INT-01</a><h4>Non-determinism breaks signing, caching and audit replay</h4></div>
+    <p>Do not sign or cache results of queries containing non-deterministic functions; detect them at parse time and mark the query uncacheable. Include requester identity and effective dataset in every cache key. Canonicalize &mdash; including blank node labels and ordering &mdash; before hashing. If a specific ordering matters, specify it fully in the query rather than relying on the partial order.</p>
+  </div>
+
+  <div class="mit" id="mit-SQ-INT-02">
+    <div class="mit-hd"><a class="tid" href="threat-model.html#SQ-INT-02">SQ-INT-02</a><h4><code>RAND()</code> and <code>UUID()</code> are not security primitives, and data must not become control</h4></div>
+    <p>State plainly that <code>RAND()</code>, <code>UUID()</code> and <code>STRUUID()</code> are not cryptographic primitives and must not generate secrets, tokens or capability identifiers. Generate those outside the query with a CSPRNG and pass them in. Implementations should prefer UUIDv4 from a CSPRNG so that the common misuse fails safe.</p>
+    <p>A value drawn from the dataset must never be used as an endpoint, a pattern or a function name without validation against a static allowlist. In hardened profiles, reject variable <code>SERVICE</code> endpoints outright. Keep ingest provenance so data-sourced values can be identified as such.</p>
+  </div>
+
+</section>
+
+<h2 id="residual"><span class="hn">3</span>Residual risks and non-threats</h2>
+
+<h3>Accepted as inherent</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>Risk</th><th>Why it stays</th></tr></thead>
+  <tbody>
+    <tr><td><strong>RR1</strong> Query evaluation is computationally hard</td><td>Inherent in a pattern-matching language with <code>OPTIONAL</code> and paths. Manageable by limits (<a href="threat-model-spec-actions.html#R-1">R-1</a>), not removable</td></tr>
+    <tr><td><strong>RR2</strong> Timing side channels</td><td>Cost-based optimization and short-circuit evaluation make execution time data-dependent by construction. Only dataset restriction (layer 3) addresses it</td></tr>
+    <tr><td><strong>RR3</strong> Expressiveness enables inference</td><td>A sufficiently expressive query language over a dataset permits inferences the publisher did not intend. Governance, not a language fix</td></tr>
+    <tr><td><strong>RR4</strong> Implementation divergence in error cases</td><td>Explicitly licensed by <a class="spec" href="../../../spec/index.html#extensionFunctions">extensionFunctions</a>. Interoperability cost accepted; security controls must not depend on error behaviour</td></tr>
+    <tr><td><strong>RR5</strong> Federation moves trust outside the deployment</td><td>Inherent in federation. Endpoint allowlisting bounds it; nothing eliminates it</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Explicitly <em>not</em> threats</h3>
+<p>Worth stating, to keep the model honest.</p>
+<ul>
+  <li><strong>Reading public data from a public endpoint.</strong> P1's data is public. Enumeration and bulk download are the service working as designed; only availability (A3) and the host's position (A4, A6) need defending.</li>
+  <li><strong>A query being expensive.</strong> Expensive is not malicious. The defence is a budget, not intent detection &mdash; which is also why cost heuristics should refuse rather than attempt attribution.</li>
+  <li><strong>Blank node labels differing between runs.</strong> Required latitude, not a bug (<a class="spec" href="../../../spec/index.html#BlankNodesInResults">BlankNodesInResults</a>). The threat is labels that are <em>too stable</em>, not unstable ones.</li>
+  <li><strong><code>SERVICE</code> and <code>FROM</code> existing.</strong> Federation and dataset-by-reference are features. The threat is unrestricted egress, not the constructs.</li>
+  <li><strong>Non-total <code>ORDER BY</code>.</strong> A deliberate design decision (<a class="spec" href="../../../spec/index.html#modOrderBy">modOrderBy</a>). It becomes a problem only for consumers that assume byte-stable results.</li>
+</ul>
+
+<h2 id="section-map"><span class="hn">A</span>Threat to specification section map</h2>
+<p>Every anchor below was verified to resolve against <code>spec/index.html</code> at the reviewed commit.</p>
+<div class="tw">
+<table>
+  <caption><strong>41 sections</strong> of the draft carry at least one threat</caption>
+  <thead><tr><th>Specification section</th><th>Threats</th></tr></thead>
+  <tbody>
+    <tr><td><a class="spec" href="../../../spec/index.html#docTerminology">docTerminology</a></td><td><a href="threat-model.html#SQ-ID-02">SQ-ID-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#relIRIs">relIRIs</a></td><td><a href="threat-model.html#SQ-NET-04">SQ-NET-04</a>, <a href="threat-model.html#SQ-ID-02">SQ-ID-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#QSynLiterals">QSynLiterals</a></td><td><a href="threat-model.html#SQ-INJ-01">SQ-INJ-01</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#QSynBlankNodes">QSynBlankNodes</a> <a class="spec" href="../../../spec/index.html#grammarBNodes">grammarBNodes</a></td><td><a href="threat-model.html#SQ-CONF-05">SQ-CONF-05</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#collections">collections</a></td><td><a href="threat-model.html#SQ-DOS-07">SQ-DOS-07</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#syntaxNestedTriplePatterns">syntaxNestedTriplePatterns</a></td><td><a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a>, <a href="threat-model.html#SQ-ID-03">SQ-ID-03</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#syntaxReifyingTriples">syntaxReifyingTriples</a> <a class="spec" href="../../../spec/index.html#syntaxAnnotation">syntaxAnnotation</a></td><td><a href="threat-model.html#SQ-DOS-07">SQ-DOS-07</a>, <a href="threat-model.html#SQ-ID-03">SQ-ID-03</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#syntaxVersionAnnouncement">syntaxVersionAnnouncement</a></td><td><a href="threat-model.html#SQ-INJ-05">SQ-INJ-05</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#GroupPatterns">GroupPatterns</a> <a class="spec" href="../../../spec/index.html#emptyGroupPattern">emptyGroupPattern</a></td><td><a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a>, <a href="threat-model.html#SQ-CONF-02">SQ-CONF-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#MultipleOptionals">MultipleOptionals</a> <a class="spec" href="../../../spec/index.html#alternatives">alternatives</a></td><td><a href="threat-model.html#SQ-DOS-01">SQ-DOS-01</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#negation">negation</a> <a class="spec" href="../../../spec/index.html#neg-exists">neg-exists</a></td><td><a href="threat-model.html#SQ-DOS-08">SQ-DOS-08</a>, <a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#propertypaths">propertypaths</a> <a class="spec" href="../../../spec/index.html#propertypath-arbitrary-length">propertypath-arbitrary-length</a> <a class="spec" href="../../../spec/index.html#PropertyPathPatterns">PropertyPathPatterns</a></td><td><a href="threat-model.html#SQ-DOS-02">SQ-DOS-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#bind">bind</a> <a class="spec" href="../../../spec/index.html#inline-data">inline-data</a></td><td><a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a>, <a href="threat-model.html#SQ-CONF-06">SQ-CONF-06</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#aggregates">aggregates</a> <a class="spec" href="../../../spec/index.html#aggGroupConcat">aggGroupConcat</a> <a class="spec" href="../../../spec/index.html#setFunctions">setFunctions</a></td><td><a href="threat-model.html#SQ-DOS-03">SQ-DOS-03</a>, <a href="threat-model.html#SQ-CONF-08">SQ-CONF-08</a>, <a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#subqueries">subqueries</a></td><td><a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a>, <a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#specifyingDataset">specifyingDataset</a></td><td><a href="threat-model.html#SQ-NET-01">SQ-NET-01</a>, <a href="threat-model.html#SQ-NET-02">SQ-NET-02</a>, <a href="threat-model.html#SQ-NET-05">SQ-NET-05</a>, <a href="threat-model.html#SQ-CONF-01">SQ-CONF-01</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#queryDataset">queryDataset</a> <a class="spec" href="../../../spec/index.html#accessByIdentifier">accessByIdentifier</a> <a class="spec" href="../../../spec/index.html#restrictInQuery">restrictInQuery</a></td><td><a href="threat-model.html#SQ-CONF-01">SQ-CONF-01</a>, <a href="threat-model.html#SQ-CONF-02">SQ-CONF-02</a>, <a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#basic-federated-query">basic-federated-query</a></td><td><a href="threat-model.html#SQ-NET-03">SQ-NET-03</a>, <a href="threat-model.html#SQ-CONF-08">SQ-CONF-08</a>, <a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#modOrderBy">modOrderBy</a> <a class="spec" href="../../../spec/index.html#modDistinct">modDistinct</a> <a class="spec" href="../../../spec/index.html#modReduced">modReduced</a></td><td><a href="threat-model.html#SQ-DOS-03">SQ-DOS-03</a>, <a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#modOffset">modOffset</a> <a class="spec" href="../../../spec/index.html#modResultLimit">modResultLimit</a></td><td><a href="threat-model.html#SQ-DOS-03">SQ-DOS-03</a>, <a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#construct">construct</a> <a class="spec" href="../../../spec/index.html#templatesWithBNodes">templatesWithBNodes</a></td><td><a href="threat-model.html#SQ-CONF-05">SQ-CONF-05</a>, <a href="threat-model.html#SQ-NET-05">SQ-NET-05</a>, <a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#ask">ask</a></td><td><a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#describe">describe</a></td><td><a href="threat-model.html#SQ-CONF-04">SQ-CONF-04</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#expressions">expressions</a> <a class="spec" href="../../../spec/index.html#invocation">invocation</a> <a class="spec" href="../../../spec/index.html#sparql-error">sparql-error</a> <a class="spec" href="../../../spec/index.html#ebv">ebv</a></td><td><a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a>, <a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#operatorExtensibility">operatorExtensibility</a> <a class="spec" href="../../../spec/index.html#extensionFunctions">extensionFunctions</a></td><td><a href="threat-model.html#SQ-EXT-01">SQ-EXT-01</a>, <a href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a>, <a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#func-forms">func-forms</a></td><td><a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#func-bnode">func-bnode</a></td><td><a href="threat-model.html#SQ-CONF-05">SQ-CONF-05</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#func-iri">func-iri</a></td><td><a href="threat-model.html#SQ-NET-01">SQ-NET-01</a>, <a href="threat-model.html#SQ-ID-02">SQ-ID-02</a>, <a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#func-concat">func-concat</a> <a class="spec" href="../../../spec/index.html#func-substr">func-substr</a></td><td><a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#func-regex">func-regex</a> <a class="spec" href="../../../spec/index.html#func-replace">func-replace</a></td><td><a href="threat-model.html#SQ-DOS-05">SQ-DOS-05</a>, <a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#func-rand">func-rand</a> <a class="spec" href="../../../spec/index.html#func-uuid">func-uuid</a> <a class="spec" href="../../../spec/index.html#func-struuid">func-struuid</a> <a class="spec" href="../../../spec/index.html#func-now">func-now</a></td><td><a href="threat-model.html#SQ-INT-01">SQ-INT-01</a>, <a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#func-hash">func-hash</a></td><td><a href="threat-model.html#SQ-CONF-06">SQ-CONF-06</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#func-triple-terms">func-triple-terms</a></td><td><a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a>, <a href="threat-model.html#SQ-ID-03">SQ-ID-03</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#FunctionMapping">FunctionMapping</a> <a class="spec" href="../../../spec/index.html#operandDataTypes">operandDataTypes</a></td><td><a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a>, <a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#sparqlBGPExtend">sparqlBGPExtend</a> <a class="spec" href="../../../spec/index.html#bgpExtend">bgpExtend</a></td><td><a href="threat-model.html#SQ-EXT-02">SQ-EXT-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#grammar">grammar</a> <a class="spec" href="../../../spec/index.html#sparqlGrammar">sparqlGrammar</a></td><td><a href="threat-model.html#SQ-INJ-02">SQ-INJ-02</a>, <a href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a>, <a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a>, <a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#sec-escapes">sec-escapes</a></td><td><a href="threat-model.html#SQ-INJ-01">SQ-INJ-01</a>, <a href="threat-model.html#SQ-INJ-04">SQ-INJ-04</a>, <a href="threat-model.html#SQ-ID-02">SQ-ID-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#whitespace">whitespace</a> <a class="spec" href="../../../spec/index.html#grammarComments">grammarComments</a></td><td><a href="threat-model.html#SQ-INJ-01">SQ-INJ-01</a>, <a href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#iriRefs">iriRefs</a></td><td><a href="threat-model.html#SQ-ID-01">SQ-ID-01</a>, <a href="threat-model.html#SQ-ID-02">SQ-ID-02</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#conformance">conformance</a></td><td><a href="threat-model-spec-actions.html#R-1">R-1</a></td></tr>
+    <tr><td><a class="spec" href="../../../spec/index.html#mediaType">mediaType</a></td><td><a href="threat-model.html#SQ-CONF-07">SQ-CONF-07</a></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="impl-checklist"><span class="hn">B</span>Implementer checklist</h2>
+<p class="cl-hd">Parsing</p>
+<ul class="cl">
+  <li>Configurable nesting-depth limit, enforced in the parser <span class="to"><a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a></span></li>
+  <li>Depth limits in every recursive term walker: comparison, ordering, hashing, serialization, <code>CONSTRUCT</code> instantiation <span class="to"><a href="threat-model.html#SQ-DOS-06">SQ-DOS-06</a></span></li>
+  <li>Size limits applied to the post-expansion AST/algebra, not the request body <span class="to"><a href="threat-model.html#SQ-DOS-07">SQ-DOS-07</a></span></li>
+  <li>Escape processing during parsing, single-pass, no rescan; surrogates rejected <span class="to"><a href="threat-model.html#SQ-INJ-04">SQ-INJ-04</a></span></li>
+  <li>Literal length and numeric digit-count caps at parse time <span class="to"><a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a></span></li>
+  <li><code>LIMIT</code>/<code>OFFSET</code> clamped; no integer overflow at the boundary <span class="to"><a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a></span></li>
+</ul>
+<p class="cl-hd">Evaluation</p>
+<ul class="cl">
+  <li>Enforced wall-clock and memory limits; abort, never truncate <span class="to"><a href="threat-model.html#cat-dos">&#167;3.B</a></span></li>
+  <li>Intermediate cardinality bounded, not just final result size <span class="to"><a href="threat-model.html#SQ-DOS-01">SQ-DOS-01</a></span></li>
+  <li>Property-path step budget inside <code>ALP</code> <span class="to"><a href="threat-model.html#SQ-DOS-02">SQ-DOS-02</a></span></li>
+  <li><code>EXISTS</code> inner evaluations accounted against the query budget; nesting capped <span class="to"><a href="threat-model.html#SQ-DOS-08">SQ-DOS-08</a></span></li>
+  <li>Group count, accumulator size and <code>GROUP_CONCAT</code> length capped <span class="to"><a href="threat-model.html#SQ-DOS-03">SQ-DOS-03</a></span></li>
+  <li>Intermediate string length capped <span class="to"><a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a></span></li>
+  <li>Arbitrary-precision numeric results bounded by bit-length <span class="to"><a href="threat-model.html#SQ-DOS-04">SQ-DOS-04</a></span></li>
+  <li>Non-backtracking regex engine; pattern caps; compiled-pattern cache <span class="to"><a href="threat-model.html#SQ-DOS-05">SQ-DOS-05</a></span></li>
+</ul>
+<p class="cl-hd">Dereference and egress</p>
+<ul class="cl">
+  <li>Dereference of <code>FROM</code>/<code>FROM NAMED</code> <strong>off</strong> by default <span class="to"><a href="threat-model.html#SQ-NET-01">SQ-NET-01</a></span></li>
+  <li>Scheme allowlist; <code>file:</code> excluded <span class="to"><a href="threat-model.html#SQ-NET-02">SQ-NET-02</a></span></li>
+  <li>Loopback, link-local and private ranges denied; re-checked after each redirect; no cross-scheme redirects <span class="to"><a href="threat-model.html#SQ-NET-01">SQ-NET-01</a></span></li>
+  <li><code>SERVICE</code> off by default; endpoint allowlist enforced <strong>on the bound value at evaluation time</strong> <span class="to"><a href="threat-model.html#SQ-NET-03">SQ-NET-03</a></span></li>
+  <li>Variable <code>SERVICE</code> endpoints rejected in the hardened profile <span class="to"><a href="threat-model.html#SQ-NET-03">SQ-NET-03</a></span></li>
+  <li>No credential forwarding to federated endpoints <span class="to"><a href="threat-model.html#SQ-NET-03">SQ-NET-03</a></span></li>
+  <li>Per-fetch byte and time caps; <code>Content-Type</code> enforced, not sniffed <span class="to"><a href="threat-model.html#SQ-NET-05">SQ-NET-05</a></span></li>
+</ul>
+<p class="cl-hd">Results and functions</p>
+<ul class="cl">
+  <li>Blank node labels opaque, per result set; never from storage ids or solution content <span class="to"><a href="threat-model.html#SQ-CONF-05">SQ-CONF-05</a></span></li>
+  <li><code>UUID()</code> from a CSPRNG (prefer v4) so the common misuse fails safe <span class="to"><a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></span></li>
+  <li><code>DESCRIBE</code> implemented as an explicit, inspectable, size-capped pattern &mdash; not an open graph walk <span class="to"><a href="threat-model.html#SQ-CONF-04">SQ-CONF-04</a></span></li>
+  <li>Error messages do not vary with hidden data or engine version <span class="to"><a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a></span></li>
+  <li>Extension functions from a static registry; function IRIs never dynamically resolved or dereferenced <span class="to"><a href="threat-model.html#SQ-EXT-01">SQ-EXT-01</a></span></li>
+  <li>Non-deterministic queries flagged uncacheable <span class="to"><a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></span></li>
+  <li>Documented: the chosen <code>DESCRIBE</code> algorithm, all limits and their defaults, every registered extension's security considerations <span class="to"><a href="threat-model-spec-actions.html#R-1">R-1</a></span></li>
+</ul>
+
+<h2 id="deploy-checklist"><span class="hn">C</span>Deployer checklist</h2>
+<ul class="cl">
+  <li>Deployment profile identified; threats scoped accordingly <span class="to"><a href="threat-model.html#model">&#167;2.2</a></span></li>
+  <li><strong>Dataset set in the protocol request; in-query dataset descriptions refused</strong> <span class="to"><a href="threat-model.html#SQ-CONF-01">SQ-CONF-01</a></span></li>
+  <li>Active dataset contains exactly what the requester may see &mdash; authorization by dataset construction, not result filtering <span class="to"><a href="threat-model.html#SQ-CONF-03">SQ-CONF-03</a></span></li>
+  <li>Read-only and read-write endpoints separated, with separate credentials; read-only enforced at the storage layer <span class="to"><a href="threat-model.html#SQ-INJ-02">SQ-INJ-02</a></span></li>
+  <li>Engine runs least-privilege, with no readable secrets and no ambient cloud credentials <span class="to"><a href="threat-model.html#SQ-NET-02">SQ-NET-02</a></span></li>
+  <li>Fetcher has a distinct network identity, egress-proxied <span class="to"><a href="threat-model.html#SQ-NET-01">SQ-NET-01</a></span></li>
+  <li>Network position audited as an asset: what can the engine's host reach? <span class="to">A4</span></li>
+  <li>Graph IRIs carry no sensitive information; graph-name enumeration treated as privileged <span class="to"><a href="threat-model.html#SQ-CONF-02">SQ-CONF-02</a></span></li>
+  <li>Rate limits denominated in work units, not request counts <span class="to"><a href="threat-model.html#SQ-DOS-09">SQ-DOS-09</a></span></li>
+  <li>All engine limits reviewed and set, not left at defaults <span class="to"><a href="threat-model.html#cat-dos">&#167;3.B</a></span></li>
+  <li>Executed algebra and resolved dereference targets logged, not received text <span class="to"><a href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a></span></li>
+  <li><code>SILENT</code> failures logged server-side <span class="to"><a href="threat-model.html#SQ-NET-03">SQ-NET-03</a></span></li>
+  <li>Query logs classified at the data's sensitivity; redaction and retention set <span class="to"><a href="threat-model.html#SQ-CONF-07">SQ-CONF-07</a></span></li>
+  <li>Alerting on query-shape anomalies <span class="to"><a href="threat-model.html#SQ-CONF-08">SQ-CONF-08</a></span></li>
+  <li>Policy enforced inside the engine on the algebra &mdash; not by a text-inspecting proxy <span class="to"><a href="threat-model.html#SQ-INJ-03">SQ-INJ-03</a></span></li>
+  <li>Engine confirmed to process escapes during parsing (1.2 behaviour), not in a pre-pass <span class="to"><a href="threat-model.html#SQ-INJ-04">SQ-INJ-04</a></span></li>
+</ul>
+
+<h2 id="app-checklist"><span class="hn">D</span>Application developer checklist</h2>
+<ul class="cl">
+  <li>Queries built by parameterized substitution of <strong>RDF terms</strong>, never by string concatenation <span class="to"><a href="threat-model.html#SQ-INJ-01">SQ-INJ-01</a></span></li>
+  <li>If text must be built: a library implementing <a class="spec" href="../../../spec/index.html#sec-escapes">sec-escapes</a>, and IRIs validated after resolution <span class="to"><a href="threat-model.html#SQ-INJ-01">SQ-INJ-01</a></span></li>
+  <li>Input validated structurally on the parsed form, never by text patterns or denylists <span class="to"><a href="threat-model.html#SQ-INJ-01">SQ-INJ-01</a></span></li>
+  <li>Nothing from the dataset used as a <code>SERVICE</code> endpoint, <code>GRAPH</code> target, regex pattern or function name without allowlist validation <span class="to"><a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></span></li>
+  <li><code>RAND()</code>, <code>UUID()</code>, <code>STRUUID()</code> not used for tokens, secrets or capability identifiers; generated outside the query with a CSPRNG <span class="to"><a href="threat-model.html#SQ-INT-02">SQ-INT-02</a></span></li>
+  <li>Unsalted hashes of low-entropy identifiers not treated as de-identification <span class="to"><a href="threat-model.html#SQ-CONF-06">SQ-CONF-06</a></span></li>
+  <li>Mention and assertion distinguished for triple terms; a reifier's existence not treated as evidence of truth, nor its IRI as provenance <span class="to"><a href="threat-model.html#SQ-ID-03">SQ-ID-03</a></span></li>
+  <li>Results of non-deterministic queries not signed, cached or diffed without canonicalization <span class="to"><a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></span></li>
+  <li>Cache keys include requester identity and effective dataset <span class="to"><a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></span></li>
+  <li>Ordering specified fully in the query where it matters; byte-equality of results not assumed <span class="to"><a href="threat-model.html#SQ-INT-01">SQ-INT-01</a></span></li>
+  <li>Queries carrying identifiers sent by POST; query text kept out of URLs, logs and shared links <span class="to"><a href="threat-model.html#SQ-CONF-07">SQ-CONF-07</a></span></li>
+  <li>IRIs displayed for human review normalized and bidi-isolated <span class="to"><a href="threat-model.html#SQ-ID-01">SQ-ID-01</a></span></li>
+</ul>
+
+<footer class="foot">
+  <p><strong>Threat Model: Implementation Advice &mdash; SPARQL 1.2 Query Language.</strong> Countermeasures for implementers and deployers. Builds on <code>threat-model.html</code>, which describes the threats themselves. Reviewed against <code>spec/index.html</code> at commit <code>7f707ff</code>, 2026-10-01. Not a W3C publication; carries no normative weight; does not represent Working Group consensus.</p>
+  <p>Identifiers are shared across the document set: <code>SQ-NET-03</code> means the same thing here as in the threat model. A Markdown edition of this document is at <code>threat-model-advice.md</code>.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "sq-tm-profile";
+  var seg = document.getElementById("pf");
+  var note = document.getElementById("pf-note");
+  var matrix = document.getElementById("matrix");
+  var threats = Array.prototype.slice.call(document.querySelectorAll(".threat"));
+  var LBL = {p1:"P1 public open endpoint", p2:"P2 authenticated multi-tenant", p3:"P3 embedded library",
+             p4:"P4 internal analytics", p5:"P5 federation participant"};
+  var NAME = {c:"critical", h:"high", m:"medium", l:"low", n:"not applicable"};
+
+  function apply(pf){
+    var shown = 0, counts = {c:0,h:0,m:0,l:0,n:0};
+    threats.forEach(function(el){
+      if (pf === "all"){ el.classList.remove("dim"); shown++; return; }
+      var v = el.getAttribute("data-" + pf) || "m";
+      counts[v] = (counts[v]||0) + 1;
+      var low = (v === "l" || v === "n");
+      el.classList.toggle("dim", low);
+      if (!low) shown++;
+    });
+    if (seg) Array.prototype.forEach.call(seg.querySelectorAll("button"), function(b){
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-pf") === pf));
+    });
+    if (matrix){
+      matrix.classList.toggle("focus", pf !== "all");
+      Array.prototype.forEach.call(matrix.querySelectorAll("td.r"), function(td){
+        td.classList.toggle("on", pf !== "all" && td.classList.contains("c-" + pf));
+      });
+    }
+    if (note){
+      note.textContent = (pf === "all")
+        ? "Showing all 34 threats."
+        : LBL[pf] + ": " + shown + " of 34 threats rated medium or above; " +
+          (counts.l + counts.n) + " dimmed as low or not applicable.";
+    }
+    try { window.localStorage.setItem(KEY, pf); } catch (e) {}
+  }
+
+  if (seg) seg.addEventListener("click", function(ev){
+    var b = ev.target.closest("button[data-pf]");
+    if (b) apply(b.getAttribute("data-pf"));
+  });
+
+  var start = "all";
+  try { var s = window.localStorage.getItem(KEY); if (s && (s === "all" || LBL[s])) start = s; } catch (e) {}
+  apply(start);
+
+  // scroll-spy on the rail
+  var links = Array.prototype.slice.call(document.querySelectorAll(".nav a[href^='#']"));
+  var targets = links.map(function(a){ return document.getElementById(a.getAttribute("href").slice(1)); });
+  if ("IntersectionObserver" in window){
+    var seen = new Set();
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ e.isIntersecting ? seen.add(e.target.id) : seen.delete(e.target.id); });
+      var hit = -1;
+      for (var i = 0; i < targets.length; i++){ if (targets[i] && seen.has(targets[i].id)){ hit = i; break; } }
+      links.forEach(function(a, i){ a.classList.toggle("on", i === hit); });
+    }, { rootMargin: "-12% 0px -70% 0px" });
+    targets.forEach(function(t){ if (t) io.observe(t); });
+  }
+})();
+</script>
+</body>
+</html>

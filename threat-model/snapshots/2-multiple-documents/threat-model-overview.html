@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPARQL Threat Model Overview</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&amp;family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&amp;display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#f7f7f5; --card:#fffffe; --sunk:#efefea;
+  --ink:#161a1d; --body:#2e3338; --muted:#6b7177; --faint:#8c9298;
+  --rule:#d9d9d3; --rule-soft:#e6e6e0;
+  --teal:#1f4e5f; --teal-lift:#2c6b80; --teal-wash:#e7eef0; --on-accent:#ffffff;
+  --crit:#8c1d18; --high:#b4531a; --med:#8a6d1f; --low:#4a6b4f;
+  --crit-wash:#f6e6e4; --high-wash:#f8ebe0; --med-wash:#f4efdd; --low-wash:#e8efe8;
+  --ff-head:"IBM Plex Sans Condensed",ui-sans-serif,system-ui,"Helvetica Neue",Arial,sans-serif;
+  --ff-body:"IBM Plex Serif",ui-serif,Georgia,"Times New Roman",serif;
+  --ff-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --measure:68ch;
+  --s1:.25rem; --s2:.5rem; --s3:.75rem; --s4:1rem; --s5:1.5rem; --s6:2rem; --s7:3rem; --s8:4.5rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#131619; --card:#191d21; --sunk:#1f2429;
+    --ink:#eceeef; --body:#c3c8cc; --muted:#8e959b; --faint:#737a80;
+    --rule:#2d3338; --rule-soft:#232830;
+    --teal:#7fb8c9; --teal-lift:#a3d0dd; --teal-wash:#1b2a30; --on-accent:#10161a;
+    --crit:#e8958c; --high:#e0a276; --med:#d4bd75; --low:#9bc0a2;
+    --crit-wash:#2e1c1a; --high-wash:#2e231a; --med-wash:#2b2719; --low-wash:#1c271f;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#131619; --card:#191d21; --sunk:#1f2429;
+  --ink:#eceeef; --body:#c3c8cc; --muted:#8e959b; --faint:#737a80;
+  --rule:#2d3338; --rule-soft:#232830;
+  --teal:#7fb8c9; --teal-lift:#a3d0dd; --teal-wash:#1b2a30; --on-accent:#10161a;
+  --crit:#e8958c; --high:#e0a276; --med:#d4bd75; --low:#9bc0a2;
+  --crit-wash:#2e1c1a; --high-wash:#2e231a; --med-wash:#2b2719; --low-wash:#1c271f;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--body);
+  font-family:var(--ff-body); font-size:16.5px; line-height:1.62;
+  font-feature-settings:"kern" 1;
+}
+img{max-width:100%}
+[hidden]{display:none!important}
+::selection{background:var(--teal-wash); color:var(--ink)}
+a{color:var(--teal); text-decoration-thickness:1px; text-underline-offset:2px}
+a:hover{color:var(--teal-lift)}
+:focus-visible{outline:2px solid var(--teal-lift); outline-offset:2px; border-radius:2px}
+
+/* ---------- shell ---------- */
+.shell{display:grid; grid-template-columns:15.5rem minmax(0,1fr); gap:0; max-width:92rem; margin:0 auto}
+.rail{
+  grid-column:1; border-right:1px solid var(--rule); padding:var(--s6) var(--s4) var(--s7) var(--s5);
+  position:sticky; top:0; align-self:start; max-height:100vh; overflow-y:auto;
+}
+.col{grid-column:2; padding:var(--s6) var(--s6) var(--s8) var(--s7); min-width:0}
+@media (max-width:62rem){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .rail{grid-column:1; position:static; max-height:none; border-right:0; border-bottom:1px solid var(--rule); padding:var(--s5) var(--s4)}
+  .col{grid-column:1; padding:var(--s5) var(--s4) var(--s7)}
+}
+
+/* ---------- nav ---------- */
+.rail-ti{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--faint); margin:0 0 var(--s3)}
+.nav{list-style:none; margin:0 0 var(--s5); padding:0; display:flex; flex-direction:column; gap:1px}
+.nav a{
+  display:flex; align-items:baseline; gap:.5rem; padding:.3rem .45rem; border-radius:3px;
+  font-family:var(--ff-head); font-size:.875rem; line-height:1.3; color:var(--body); text-decoration:none;
+}
+.nav a:hover{background:var(--sunk); color:var(--ink)}
+.nav a.on{background:var(--teal-wash); color:var(--ink); font-weight:600}
+.nav .n{font-family:var(--ff-mono); font-size:.72rem; color:var(--faint); min-width:1.9rem; flex:none; font-variant-numeric:tabular-nums}
+.nav a.on .n{color:var(--teal)}
+.nav .ct{margin-left:auto; font-family:var(--ff-mono); font-size:.68rem; color:var(--faint); flex:none}
+.nav--sub a{padding-left:2.4rem; font-size:.825rem; color:var(--muted)}
+.solo{max-width:54rem; margin:0 auto; padding:var(--s6) var(--s5) var(--s8)}
+.doclist{display:flex; flex-direction:column; gap:var(--s4); margin:0 0 var(--s5)}
+.doclist .d{border:1px solid var(--rule); background:var(--card); border-radius:3px; padding:var(--s4) var(--s5)}
+.doclist .d.lead{border-left:3px solid var(--teal)}
+.doclist .d h3{margin:0 0 var(--s1); font-size:1.18rem}
+.doclist .d h3 a{text-decoration:none}
+.doclist .d .role{font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--teal); margin:0 0 var(--s3)}
+.doclist .d p{margin-bottom:var(--s3)}
+.doclist .d .fm{font-family:var(--ff-mono); font-size:.76rem; color:var(--faint); margin:0}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:2px solid var(--ink); padding-bottom:var(--s5); margin-bottom:var(--s5)}
+.eyebrow{
+  font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--teal); margin:0 0 var(--s3);
+  display:flex; flex-wrap:wrap; gap:.55rem; align-items:center;
+}
+.eyebrow .sep{color:var(--rule)}
+h1{
+  font-family:var(--ff-head); font-weight:700; font-size:clamp(2.3rem,5.4vw,3.6rem);
+  line-height:1.02; letter-spacing:-.018em; color:var(--ink); margin:0; text-wrap:balance;
+}
+.mast .sub{
+  font-family:var(--ff-head); font-weight:400; font-size:clamp(1.05rem,2.2vw,1.35rem);
+  color:var(--muted); margin:var(--s2) 0 0; letter-spacing:-.005em;
+}
+.facts{
+  list-style:none; margin:var(--s5) 0 0; padding:0;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(11rem,1fr)); gap:var(--s4) var(--s5);
+}
+.facts dt{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--faint); margin-bottom:.1rem}
+.facts dd{margin:0; font-size:.9rem; color:var(--ink)}
+.facts dd code{font-size:.84rem}
+
+/* ---------- status banner ---------- */
+.status{
+  border:1px solid var(--rule); border-left:3px solid var(--high);
+  background:var(--card); padding:var(--s4) var(--s4) var(--s4) var(--s5);
+  margin:var(--s5) 0 var(--s6); border-radius:0 3px 3px 0; max-width:var(--measure);
+}
+.status p{margin:0; font-size:.93rem; color:var(--body)}
+.status strong{font-family:var(--ff-head); color:var(--ink); font-weight:600}
+
+/* ---------- headings ---------- */
+h2{
+  font-family:var(--ff-head); font-weight:700; font-size:1.95rem; line-height:1.14; letter-spacing:-.012em;
+  color:var(--ink); margin:var(--s8) 0 var(--s4); padding-top:var(--s4);
+  border-top:1px solid var(--rule); text-wrap:balance;
+  display:flex; gap:.7rem; align-items:baseline;
+}
+h2 .hn{font-family:var(--ff-mono); font-size:1rem; font-weight:500; color:var(--teal); flex:none; font-variant-numeric:tabular-nums}
+h2:first-of-type{margin-top:var(--s6)}
+h3{font-family:var(--ff-head); font-weight:600; font-size:1.3rem; line-height:1.2; color:var(--ink); margin:var(--s6) 0 var(--s3); text-wrap:balance}
+h3 .hn{font-family:var(--ff-mono); font-size:.86rem; font-weight:500; color:var(--faint); margin-right:.45rem}
+h4{font-family:var(--ff-head); font-weight:600; font-size:1.08rem; line-height:1.25; color:var(--ink); margin:0; text-wrap:balance}
+h5{
+  font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--faint); margin:var(--s4) 0 var(--s2);
+}
+p{margin:0 0 var(--s4); max-width:var(--measure)}
+.lede{font-size:1.06rem; color:var(--body)}
+ul,ol{margin:0 0 var(--s4); padding-left:1.35rem; max-width:var(--measure)}
+li{margin-bottom:.4rem}
+li>ul,li>ol{margin-top:.4rem; margin-bottom:.2rem}
+strong{color:var(--ink); font-weight:600}
+em{font-style:italic}
+hr{border:0; border-top:1px solid var(--rule); margin:var(--s6) 0}
+
+/* ---------- code & anchors ---------- */
+code,kbd{font-family:var(--ff-mono); font-size:.855em; font-feature-settings:"zero" 1}
+p code,li code,td code,dd code,h4 code{
+  background:var(--sunk); padding:.08em .34em; border-radius:2px; color:var(--ink);
+}
+pre{
+  font-family:var(--ff-mono); font-size:.8rem; line-height:1.55; margin:0 0 var(--s4);
+  background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--teal);
+  padding:var(--s3) var(--s4); overflow-x:auto; border-radius:0 3px 3px 0; color:var(--ink);
+  max-width:var(--measure);
+}
+pre code{background:none; padding:0; font-size:1em}
+.ebnf{border-left-color:var(--med)}
+a.spec{
+  font-family:var(--ff-mono); font-size:.82em; white-space:nowrap;
+  color:var(--teal); text-decoration:none; border-bottom:1px dotted currentColor;
+}
+a.spec:hover{border-bottom-style:solid; background:var(--teal-wash)}
+a.spec::before{content:"§"; margin-right:.12em; opacity:.6}
+
+/* ---------- chips ---------- */
+.sev,.chip{
+  display:inline-flex; align-items:center; gap:.3rem; font-family:var(--ff-head);
+  font-size:.705rem; font-weight:600; letter-spacing:.055em; text-transform:uppercase;
+  padding:.15rem .45rem; border-radius:2px; border:1px solid; white-space:nowrap;
+}
+.sev::before{content:""; width:.42rem; height:.42rem; border-radius:50%; background:currentColor; flex:none}
+.sev-c{color:var(--crit); background:var(--crit-wash); border-color:var(--crit)}
+.sev-h{color:var(--high); background:var(--high-wash); border-color:var(--high)}
+.sev-m{color:var(--med); background:var(--med-wash); border-color:var(--med)}
+.sev-l{color:var(--low); background:var(--low-wash); border-color:var(--low)}
+.sev-n{color:var(--faint); background:transparent; border-color:var(--rule)}
+.sev-n::before{background:none; border:1px solid currentColor}
+.chip{color:var(--muted); background:var(--sunk); border-color:var(--rule-soft); font-weight:500}
+.chip-p{color:var(--teal); background:var(--teal-wash); border-color:var(--teal); font-family:var(--ff-mono); letter-spacing:0; text-transform:none}
+
+/* ---------- controls ---------- */
+.controls{
+  position:sticky; top:0; z-index:5; background:var(--paper);
+  border-bottom:1px solid var(--rule); padding:var(--s3) 0 var(--s3);
+  margin:0 0 var(--s5); display:flex; flex-wrap:wrap; gap:var(--s4) var(--s5); align-items:center;
+}
+.ctl{display:flex; align-items:center; gap:.5rem; flex-wrap:wrap}
+.ctl-lb{font-family:var(--ff-head); font-size:.68rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--faint)}
+.seg{display:flex; border:1px solid var(--rule); border-radius:3px; overflow:hidden; background:var(--card)}
+.seg button{
+  font-family:var(--ff-mono); font-size:.78rem; padding:.28rem .6rem; border:0; background:none;
+  color:var(--muted); cursor:pointer; border-right:1px solid var(--rule-soft); line-height:1.4;
+}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:var(--sunk); color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--teal); color:var(--on-accent); font-weight:600}
+.legend{display:flex; gap:.45rem; flex-wrap:wrap; align-items:center}
+.pfnote{font-size:.85rem; color:var(--muted); margin:0; font-style:italic}
+
+/* ---------- threat entries ---------- */
+.cat{margin:var(--s7) 0 0}
+.cat-hd{border-top:2px solid var(--teal); padding-top:var(--s3); margin-bottom:var(--s4)}
+.cat-hd h3{margin:0}
+.cat-hd .cat-note{font-size:.95rem; color:var(--muted); margin:var(--s2) 0 0; max-width:var(--measure)}
+.threat{
+  border:1px solid var(--rule); background:var(--card); border-radius:3px;
+  padding:var(--s4) var(--s5); margin:0 0 var(--s4); scroll-margin-top:5rem;
+}
+.threat.dim{opacity:.42}
+.threat.dim .tbody{display:none}
+.threat-hd{display:flex; flex-wrap:wrap; gap:var(--s2) var(--s4); align-items:baseline; margin-bottom:var(--s2)}
+.tid{
+  font-family:var(--ff-mono); font-size:.76rem; font-weight:600; letter-spacing:.02em;
+  color:var(--teal); background:var(--teal-wash); border:1px solid var(--teal);
+  padding:.1rem .4rem; border-radius:2px; flex:none; text-decoration:none;
+}
+a.tid:hover{background:var(--teal); color:var(--on-accent)}
+.threat-hd h4{flex:1 1 20rem; min-width:0}
+.rating{
+  display:flex; flex-wrap:wrap; gap:var(--s2) var(--s4); margin:var(--s2) 0 var(--s3);
+  padding:var(--s2) 0; border-top:1px solid var(--rule-soft); border-bottom:1px solid var(--rule-soft);
+}
+.rating>div{display:flex; align-items:center; gap:.4rem}
+.rating dt{font-family:var(--ff-head); font-size:.67rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+.rating dd{margin:0; font-size:.86rem; color:var(--ink); font-family:var(--ff-head)}
+.rating .qual{font-family:var(--ff-mono); font-size:.76rem; color:var(--muted)}
+.tbody>*:last-child{margin-bottom:0}
+.tbody p,.tbody ul,.tbody ol{max-width:var(--measure)}
+.tbody>h5:first-child{margin-top:0}
+.xref{font-family:var(--ff-mono); font-size:.76rem; color:var(--muted); white-space:nowrap}
+.xref a{color:var(--teal); text-decoration:none; border-bottom:1px dotted currentColor}
+
+/* ---------- blockquote ---------- */
+blockquote{
+  margin:0 0 var(--s4); padding:var(--s3) var(--s4); max-width:var(--measure);
+  background:var(--sunk); border-left:3px solid var(--med); border-radius:0 3px 3px 0;
+}
+blockquote p{margin:0; font-style:italic; color:var(--ink); font-size:.95rem}
+blockquote p+p{margin-top:var(--s2)}
+blockquote cite{display:block; margin-top:var(--s2); font-style:normal; font-family:var(--ff-mono); font-size:.76rem; color:var(--muted)}
+.callout{
+  border:1px solid var(--teal); background:var(--teal-wash); border-radius:3px;
+  padding:var(--s4); margin:0 0 var(--s4); max-width:var(--measure);
+}
+.callout>*:last-child{margin-bottom:0}
+.callout h5{margin-top:0; color:var(--teal)}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; margin:0 0 var(--s5); border:1px solid var(--rule); border-radius:3px; background:var(--card)}
+table{border-collapse:collapse; width:100%; font-size:.875rem; font-family:var(--ff-head)}
+caption{
+  caption-side:top; text-align:left; padding:var(--s3) var(--s4); border-bottom:1px solid var(--rule);
+  font-family:var(--ff-head); font-size:.82rem; color:var(--muted); background:var(--sunk);
+}
+caption strong{color:var(--ink)}
+th,td{padding:.42rem .6rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--rule-soft)}
+thead th{
+  font-size:.68rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--faint); background:var(--sunk); border-bottom:1px solid var(--rule); white-space:nowrap;
+  position:sticky; top:0;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--sunk)}
+td code,th code{font-size:.8rem}
+.matrix td.r{text-align:center; font-family:var(--ff-mono); font-size:.76rem; font-weight:600; width:3.4rem}
+.matrix td.r[data-v="c"]{color:var(--crit); background:var(--crit-wash)}
+.matrix td.r[data-v="h"]{color:var(--high); background:var(--high-wash)}
+.matrix td.r[data-v="m"]{color:var(--med); background:var(--med-wash)}
+.matrix td.r[data-v="l"]{color:var(--low); background:var(--low-wash)}
+.matrix td.r[data-v="n"]{color:var(--faint)}
+.matrix td.id{white-space:nowrap}
+.matrix td.id a{font-family:var(--ff-mono); font-size:.78rem; color:var(--teal); text-decoration:none}
+.matrix td.id a:hover{text-decoration:underline}
+.matrix th.rh{text-align:center; width:3.4rem}
+.matrix th.rh .rh-s{display:block; font-weight:400; letter-spacing:0; text-transform:none; font-size:.62rem; color:var(--faint)}
+.matrix.focus td.r{opacity:.3}
+.matrix.focus td.r.on{opacity:1; outline:1px solid var(--teal); outline-offset:-1px}
+
+/* ---------- figures ---------- */
+figure{margin:0 0 var(--s5); max-width:54rem}
+figure svg{display:block; width:100%; height:auto; color:var(--ink)}
+figcaption{
+  font-size:.85rem; color:var(--muted); margin-top:var(--s3); padding-top:var(--s2);
+  border-top:1px solid var(--rule-soft); max-width:var(--measure);
+}
+figcaption b{font-family:var(--ff-head); color:var(--ink); font-weight:600}
+.svg-frame{border:1px solid var(--rule); background:var(--card); border-radius:3px; padding:var(--s4); overflow-x:auto}
+
+/* ---------- checklists ---------- */
+.cl{list-style:none; padding:0; margin:0 0 var(--s5); max-width:var(--measure);
+  display:flex; flex-direction:column; gap:1px}
+.cl li{
+  display:flex; gap:.6rem; align-items:flex-start; margin:0; padding:.42rem .5rem;
+  font-size:.92rem; border-bottom:1px solid var(--rule-soft);
+}
+.cl li:hover{background:var(--card)}
+.cl li::before{
+  content:""; flex:none; width:.85rem; height:.85rem; margin-top:.32rem;
+  border:1.5px solid var(--muted); border-radius:2px;
+}
+.cl .to{margin-left:auto; flex:none; font-family:var(--ff-mono); font-size:.72rem; color:var(--faint); white-space:nowrap; padding-left:.5rem}
+.cl .to a{color:var(--teal); text-decoration:none}
+.cl-hd{font-family:var(--ff-head); font-size:.69rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--teal); margin:var(--s5) 0 var(--s2)}
+
+/* ---------- misc ---------- */
+.deck{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:var(--s4); margin:0 0 var(--s5)}
+.deck .cell{border:1px solid var(--rule); background:var(--card); border-radius:3px; padding:var(--s4)}
+.deck .cell h5{margin-top:0}
+.deck .cell p{margin-bottom:0; font-size:.9rem; max-width:none}
+.deck .cell .k{font-family:var(--ff-mono); font-size:.76rem; color:var(--teal); font-weight:600}
+.foot{margin-top:var(--s8); padding-top:var(--s4); border-top:2px solid var(--ink); font-size:.85rem; color:var(--muted)}
+.foot p{max-width:var(--measure)}
+.skip{position:absolute; left:-9999px}
+.skip:focus{left:var(--s4); top:var(--s4); z-index:20; background:var(--card); color:var(--ink); padding:var(--s2) var(--s3); border:1px solid var(--teal); border-radius:3px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important; transition:none!important; scroll-behavior:auto!important}}
+@media print{
+  .rail,.controls{display:none}
+  .shell{grid-template-columns:1fr; max-width:none}
+  .col{grid-column:1; padding:0}
+  .threat{break-inside:avoid; border-color:#999}
+  body{background:#fff; color:#000; font-size:10pt}
+}
+
+/* ---------- diagrams ---------- */
+.dg{font-family:var(--ff-head)}
+.dg .bx{fill:var(--card); stroke:var(--rule); stroke-width:1.5}
+.dg .bx-s{fill:var(--sunk); stroke:var(--rule); stroke-width:1.5}
+.dg .lb{fill:var(--ink); font-size:13px; font-weight:600}
+.dg .lb-s{fill:var(--muted); font-size:10.5px; font-weight:400}
+.dg .mono{font-family:var(--ff-mono)}
+.dg .tb{stroke:var(--faint); stroke-width:1.4; stroke-dasharray:6 5; fill:none}
+.dg .tb-lb{fill:var(--faint); font-size:10px; font-weight:700; letter-spacing:.09em}
+.dg .fl{stroke:var(--ink); stroke-width:1.5; fill:none}
+.dg .fl-lb{fill:var(--muted); font-size:10.5px; font-family:var(--ff-mono)}
+.dg .th{stroke:var(--high); stroke-width:2; fill:none}
+.dg .th-lb{fill:var(--high); font-size:10.5px; font-family:var(--ff-mono); font-weight:500}
+.dg .th-bx{fill:var(--high-wash); stroke:var(--high); stroke-width:1.5}
+.dg .th-tx{fill:var(--high); font-size:12px; font-weight:600}
+.dg .ok{stroke:var(--low); stroke-width:2; fill:none}
+.dg .ok-lb{fill:var(--low); font-size:10.5px; font-family:var(--ff-mono); font-weight:500}
+.dg .ok-bx{fill:var(--low-wash); stroke:var(--low); stroke-width:1.5}
+.dg .ok-tx{fill:var(--low); font-size:12px; font-weight:600}
+.dg .ar-ink{fill:var(--ink)}
+.dg .ar-th{fill:var(--high)}
+.dg .ar-ok{fill:var(--low)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="solo">
+<header class="mast">
+  <p class="eyebrow"><span>W3C RDF-star Working Group</span><span class="sep">/</span><span>Working document</span><span class="sep">/</span><span>Overview</span></p>
+  <h1>Threat Model Documents</h1>
+  <p class="sub">SPARQL 1.2 Query Language</p>
+  <dl class="facts">
+    <div><dt>Subject</dt><dd><code>spec/index.html</code> &mdash; Editor's Draft</dd></div>
+    <div><dt>Reviewed at</dt><dd><code>7f707ff</code> &#183; 2026-10-01</dd></div>
+    <div><dt>Documents</dt><dd>3, plus this index</dd></div>
+    <div><dt>Threats</dt><dd>34 across 7 categories</dd></div>
+  </dl>
+</header>
+<div class="status">
+  <p><strong>Status.</strong> Analysis input for the <a class="spec" href="../../../spec/index.html#security">security</a> and <a class="spec" href="../../../spec/index.html#privacy">privacy</a> sections of the Editor's Draft. This is not a W3C publication, carries no normative weight, and does not represent Working Group consensus. Section references are given as stable fragment ids rather than published section numbers, because the numbers are generated by ReSpec and move as the draft changes.</p>
+</div>
+
+<main id="main">
+
+<p class="lede">The threat analysis for the SPARQL 1.2 Query Language is split into three documents, divided by what each one is <em>for</em> rather than by subject matter. The split exists because the three have different destinations: the first is intended for the specification itself, the other two as related work.</p>
+
+<div class="doclist">
+  <div class="d lead">
+    <p class="role">Description &mdash; intended for the specification</p>
+    <h3><a href="threat-model.html">Threat Model</a></h3>
+    <p>What the threats are. For each of 34 threats: the mechanism by which the language gives rise to it, quoted against the draft; its impact; and its severity in each of five deployment profiles. Also the system model and trust boundaries, the risk matrix, and STRIDE coverage.</p>
+    <p><strong>Deliberately contains no countermeasures.</strong> It describes and does not prescribe, so that it can stand as analysis on its own and read naturally as specification prose. It is self-contained and does not depend on the other two documents.</p>
+    <p class="fm">threat-model.html &#183; threat-model.md</p>
+  </div>
+  <div class="d">
+    <p class="role">Action &mdash; for the Working Group</p>
+    <h3><a href="threat-model-spec-actions.html">Specification Actions</a></h3>
+    <p>What the Working Group could change in the draft: four recommendations, <code>R-1</code> to <code>R-4</code>. These include making explicit that a service may impose resource limits and refuse queries, draft content for the <code>TODO</code> privacy section, and fifteen suggested additions to the security section.</p>
+    <p class="fm">threat-model-spec-actions.html &#183; threat-model-spec-actions.md</p>
+  </div>
+  <div class="d">
+    <p class="role">Action &mdash; for implementers and deployers</p>
+    <h3><a href="threat-model-advice.html">Implementation Advice</a></h3>
+    <p>What to do about the threats outside the specification: a six-layer defence architecture, per-threat countermeasures for 33 of the 34 threats, the residual risks that remain once those are in place, a threat-to-specification-section map, and three working checklists for implementers, deployers and application developers.</p>
+    <p class="fm">threat-model-advice.html &#183; threat-model-advice.md</p>
+  </div>
+</div>
+
+<h2 id="reading">How the three fit together</h2>
+<p>Each document is numbered from 1 in its own right. What is shared between them is the <strong>identifiers</strong>, not the section numbers:</p>
+<ul>
+  <li><code>SQ-NET-03</code>, <code>SQ-CONF-01</code> and the other 32 threat identifiers mean the same thing in all three documents, and are defined in the threat model.</li>
+  <li><code>R-1</code> to <code>R-4</code> are the specification recommendations, defined in Specification Actions.</li>
+  <li><code>P1</code> to <code>P5</code> are the deployment profiles and <code>A1</code> to <code>A8</code> the assets, both defined in the threat model's system model.</li>
+</ul>
+<p>Dependencies run one way. Specification Actions and Implementation Advice both cite the threat model; the threat model cites neither of them. A reader who wants only the analysis needs one document; a reader deciding what to do needs two.</p>
+
+<h2 id="provenance">Provenance</h2>
+<p>All three documents were written against <code>spec/index.html</code> at commit <code>7f707ff</code> (2026-10-01), and every specification citation in them was checked to resolve against that revision. Section references use stable fragment ids rather than published section numbers, because the numbers are generated by ReSpec and move as the draft changes.</p>
+<p>Earlier revisions are kept under <code>snapshots/</code>: <code>first-draft/</code> holds the undivided document, <code>split-parts/</code> the first three-way split before the description/action division was introduced.</p>
+
+<footer class="foot">
+  <p><strong>Threat Model Documents &mdash; SPARQL 1.2 Query Language.</strong> An index to the three-document threat analysis. Reviewed against <code>spec/index.html</code> at commit <code>7f707ff</code>, 2026-10-01. Not a W3C publication; carries no normative weight; does not represent Working Group consensus.</p>
+  <p>A Markdown edition of this document is at <code>threat-model-overview.md</code>.</p>
+</footer>
+
+</main>
+</div>
+</body>
+</html>
