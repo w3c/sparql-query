@@ -10528,7 +10528,7 @@ ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOn
           </pre>
           <pre class="nohighlight">
 ppeval(<var>X</var>:term, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:term) = 
-    { {} } if <var>X</var> = <var>Y</var> or ppeval(<var>X</var>,<var>ppe</var>,<var>X</var>) is not empty
+    { {} } if <var>X</var> = <var>Y</var> or ppeval(<var>X</var>,<var>ppe</var>,<var>Y</var>) is not empty
     { } otherwise</pre>
           <pre class="nohighlight">
 ppeval(<var>X</var>:var, <a href="#defn_ppeZeroOrOnePath" class="ppeOp">ZeroOrOnePath</a>(<var>ppe</var>), <var>Y</var>:var) = 
