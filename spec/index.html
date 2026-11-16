@@ -600,7 +600,7 @@ WHERE
           zero, one or multiple solutions to a query.</p>
         <p>Data:</p>
         <div class="exampleGroup">
-<pre class="data nohighlight">PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt; .
+<pre class="data nohighlight">PREFIX foaf:  &lt;http://xmlns.com/foaf/0.1/&gt;
 
 _:a  foaf:name   "Johnny Lee Outlaw" .
 _:a  foaf:mbox   &lt;mailto:jlow@example.com&gt; .
@@ -643,11 +643,11 @@ WHERE
           the above example, the following two subsets of the data provided the two matches.</p>
         <pre class="data nohighlightExcerpt"> 
 _:a foaf:name  "Johnny Lee Outlaw" .
-_:a foaf:box   &lt;mailto:jlow@example.com&gt; .
+_:a foaf:mbox   &lt;mailto:jlow@example.com&gt; .
 </pre>
         <pre class="data nohighlightExcerpt"> 
 _:b foaf:name  "Peter Goodguy" .
-_:b foaf:box   &lt;mailto:peter@example.org&gt; .
+_:b foaf:mbox   &lt;mailto:peter@example.org&gt; .
 </pre>
         <p>This is a <a href="#BGPsparql">basic graph pattern match</a>; all the variables used in
           the query pattern must be bound in every solution.</p>
