@@ -3360,8 +3360,8 @@ GROUP BY ?g</pre>
       <p>Subqueries are a way to embed SPARQL queries within other queries, normally to achieve
         results which cannot otherwise be achieved, such as limiting the number of results from some
         sub-expression within the query.</p>
-      <p>Due to the bottom-up nature of SPARQL query evaluation, the subqueries are evaluated
-        logically first, and the results are projected up to the outer query.</p>
+      <p>Since SPARQL query evaluation is defined in a bottom-up manner, subqueries are evaluated
+        logically first, and their results are projected up to the outer query.</p>
       <p>Note that only variables projected out of the subquery will be visible, or
         <a href="#variableScope">in scope</a>, to the outer query.</p>
       <h3 id="subquery-example">Example</h3>
